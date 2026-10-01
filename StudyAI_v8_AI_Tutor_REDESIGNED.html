@@ -662,7 +662,34 @@ function appendMsg(containerId,text,cls){
   return div;
 }
 function toggleFloatTutor(){let p=document.getElementById("tutorPop");p.style.display=p.style.display==="block"?"none":"block"}
-function floatExplain(){appendMsg("floatMsgs","The tutor will explain the currently selected topic. For true screen-aware explanation, connect the AI backend and pass the active page/chapter context to it.","bot")}
+function getScreenContext(){
+  const active=document.querySelector(".section.active");
+  if(!active) return document.title;
+  const h1=active.querySelector("h1");
+  let ctx = h1 ? h1.textContent.trim() : active.id;
+  if(active.id==="notes"){
+    const cls=document.getElementById("noteClass")?.value;
+    const subj=document.getElementById("noteSubject")?.value;
+    const chap=document.getElementById("noteChapter")?.value;
+    if(cls&&subj&&chap) ctx=`Study Notes — Class ${cls}, ${subj}, chapter "${chap}"`;
+  } else if(active.id==="quiz"){
+    const cls=document.getElementById("quizClass")?.value;
+    const subj=document.getElementById("quizSubject")?.value;
+    const chap=document.getElementById("quizChapter")?.value;
+    if(cls&&subj&&chap) ctx=`Practice Quiz — Class ${cls}, ${subj}, chapter "${chap}"`;
+  }
+  return ctx;
+}
+async function floatExplain(){
+  const ctx=getScreenContext();
+  appendMsg("floatMsgs","Haan, screen samjhao","me");
+  const thinking=appendMsg("floatMsgs","Thinking…","bot");
+  const message=`Please explain this in simple, step-by-step terms for a school student: ${ctx}. Give the key concept clearly with one short example.`;
+  let ep=localStorage.getItem("endpoint");
+  if(!ep){thinking.textContent=demo(message);return}
+  try{let r=await fetch(ep,{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({message,class:localStorage.getItem("class")||"10",screenContext:ctx,systemPrompt:localStorage.getItem("instruction")||""})});let d=await r.json();thinking.textContent=d.reply||"No reply returned."}catch(e){thinking.textContent="AI backend connect nahi hua. Settings check karo."}
+  document.getElementById("floatMsgs").scrollTop=document.getElementById("floatMsgs").scrollHeight;
+}
 function floatAsk(){document.getElementById("floatText").focus();appendMsg("floatMsgs","Bilkul. Apna doubt neeche likho.","bot")}
 async function floatSend(){
  const input=document.getElementById("floatText");
