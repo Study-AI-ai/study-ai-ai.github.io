@@ -8,7 +8,6 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
 <style>
-  
 :root{
   --bg:#f4f7ff;--panel:#ffffff;--text:#15213b;--muted:#68738a;--line:#e6eaf3;
   --nav:#0d1630;--nav2:#172344;--primary:#635bff;--purple:#8b5cf6;--pink:#ff4fa3;
@@ -490,6 +489,32 @@ table.pwt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;dis
   .heroActions .btn{padding:8px 9px !important;font-size:11px !important}
 }
 </style>
+<style id="saiHeroAccentMove">
+/* Accent colour now lives inside the hero, next to "Ask AI Tutor" */
+.heroActions{align-items:center}
+.heroActions #saiAccentBox{position:relative;z-index:2;flex-wrap:nowrap !important;gap:8px !important;padding:7px 12px;border-radius:999px;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.22);backdrop-filter:blur(6px)}
+.heroActions .saiAccentLabel{color:#fff !important;opacity:.95}
+.heroActions .saiAccentMore{background:rgba(255,255,255,.9);color:#222}
+.heroActions .saiAccentDot.active{outline-color:#fff !important}
+/* Account chip: only on the home page */
+body.notHome #accountOpen{visibility:hidden;pointer-events:none}
+@media(max-width:600px){.heroActions #saiAccentBox{padding:6px 9px}}
+/* No fixed dark sidebar anymore: hamburger menu on every screen size */
+.side{display:none !important}
+.menuBtn{display:block !important;left:15px !important;top:13px !important}
+.main{margin-left:0 !important}
+.app .main{padding-top:68px}
+/* Accent colour: compact so it sits on the same row, right of "Ask AI Tutor" */
+@media(max-width:900px){
+  .heroActions{flex-wrap:wrap}
+  .heroActions #saiAccentBox{padding:6px 9px;gap:6px !important}
+  .heroActions #saiAccentBox::before{content:"🎨";font-size:13px}
+  .heroActions .saiAccentLabel{display:none !important}
+  .heroActions .saiAccentDots{gap:5px !important}
+  .heroActions .saiAccentDot{width:19px !important;height:19px !important}
+  .heroActions .saiAccentMore{width:23px !important;height:23px !important;font-size:13px !important}
+}
+</style>
 </head>
 
 <body>
@@ -713,17 +738,6 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 <main class="main">
 <div class="studyTopbar">
   <div class="studyTopTools">
-    <div id="saiAccentBox" aria-label="Dashboard accent colour">
-      <span class="saiAccentLabel">🎨 Accent colour</span>
-      <div class="saiAccentDots" id="saiAccentDots">
-        <button type="button" class="saiAccentDot" data-accent="purple" aria-label="Purple accent" title="Purple" style="background:linear-gradient(135deg,#635bff,#8b5cf6)"></button>
-        <button type="button" class="saiAccentDot" data-accent="blue" aria-label="Blue accent" title="Blue" style="background:linear-gradient(135deg,#2563eb,#38bdf8)"></button>
-        <button type="button" class="saiAccentDot" data-accent="green" aria-label="Green accent" title="Green" style="background:linear-gradient(135deg,#16a34a,#22c55e)"></button>
-        <button type="button" class="saiAccentDot" data-accent="orange" aria-label="Orange accent" title="Orange" style="background:linear-gradient(135deg,#ea580c,#f59e0b)"></button>
-        <button type="button" class="saiAccentDot" data-accent="pink" aria-label="Pink accent" title="Pink" style="background:linear-gradient(135deg,#db2777,#fb7185)"></button>
-        <button type="button" class="saiAccentMore" id="saiAccentMore" aria-label="Custom accent colour" title="Custom colour">＋</button>
-      </div>
-    </div>
   </div>
   <button class="accountChip" id="accountOpen" type="button" aria-haspopup="dialog" aria-controls="accountOverlay">
     <span class="accountAvatar" id="accountAvatar">S</span>
@@ -742,6 +756,17 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
     <button class="btn" onclick="location.hash='classes'">Choose Class</button>
     <button class="btn alt" onclick="location.hash='ncert'">Open NCERT</button>
     <button class="btn alt" onclick="location.hash='tutor'">Ask AI Tutor</button>
+    <div id="saiAccentBox" aria-label="Dashboard accent colour">
+      <span class="saiAccentLabel">🎨 Accent colour</span>
+      <div class="saiAccentDots" id="saiAccentDots">
+        <button type="button" class="saiAccentDot" data-accent="purple" aria-label="Purple accent" title="Purple" style="background:linear-gradient(135deg,#635bff,#8b5cf6)"></button>
+        <button type="button" class="saiAccentDot" data-accent="blue" aria-label="Blue accent" title="Blue" style="background:linear-gradient(135deg,#2563eb,#38bdf8)"></button>
+        <button type="button" class="saiAccentDot" data-accent="green" aria-label="Green accent" title="Green" style="background:linear-gradient(135deg,#16a34a,#22c55e)"></button>
+        <button type="button" class="saiAccentDot" data-accent="orange" aria-label="Orange accent" title="Orange" style="background:linear-gradient(135deg,#ea580c,#f59e0b)"></button>
+        <button type="button" class="saiAccentDot" data-accent="pink" aria-label="Pink accent" title="Pink" style="background:linear-gradient(135deg,#db2777,#fb7185)"></button>
+        <button type="button" class="saiAccentMore" id="saiAccentMore" aria-label="Custom accent colour" title="Custom colour">＋</button>
+      </div>
+    </div>
   </div>
 </div>
 <div id="quickStart" class="card" style="margin-bottom:15px">
@@ -1759,7 +1784,7 @@ body.dark .saiTools button,body.dark .saiBtn,body.dark .revChip,body.dark .saiBa
 </style>
 
 <button id="saiSearchBtn" type="button" aria-label="Search chapters and topics" title="Search (Ctrl+K ya /)">🔍</button>
-<div class="saiSearchFloatLabel" aria-hidden="true">Kuch dhoondhna hai? 🔍 Yahin search karo</div>
+<div class="saiSearchFloatLabel" aria-hidden="true">Search</div>
 <dialog id="saiSearch" aria-label="Search">
  <div class="sHead"><input id="saiSearchIn" type="search" placeholder="Chapter ya topic dhoondo, jaise &quot;photosynthesis&quot;" autocomplete="off"><button class="saiBtn" id="saiSearchX" type="button">Band karo</button></div>
  <div class="sRes" id="saiSearchRes"><p class="muted">Kam se kam 2 akshar likho.</p></div>
@@ -2312,6 +2337,17 @@ qs("signupPassword")?.addEventListener("input",e=>strength(e.target.value));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
 if(sb)sb.auth.onAuthStateChange(()=>refreshAuthUI());
 refreshAuthUI();
+})();
+</script>
+<script>
+/* Show the account chip only on the home page */
+(function(){
+  function sync(){
+    var a=document.querySelector('.section.active');
+    document.body.classList.toggle('notHome',!!a && a.id!=='home');
+  }
+  addEventListener('hashchange',function(){setTimeout(sync,0)});
+  sync();
 })();
 </script>
 </body>
