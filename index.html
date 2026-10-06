@@ -354,6 +354,141 @@ table.pwt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;dis
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="StudyAI"><meta name="apple-mobile-web-app-status-bar-style" content="default">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style id="studyaiAccountTransferCss">
+/* ===== StudyAI account + smart search polish ===== */
+:root{
+  --accent-soft:rgba(99,91,255,.12);
+  --accent-border:rgba(99,91,255,.28);
+}
+.studyTopbar{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  margin:-16px 0 8px;position:relative;z-index:30;
+  min-height:54px;padding-right:62px;
+}
+.studyTopTools{display:flex;align-items:center;min-width:0}
+.accountChip{
+  display:inline-flex;align-items:center;gap:10px;padding:8px 11px 8px 8px;
+  min-width:180px;border:1px solid color-mix(in srgb,var(--primary) 24%,var(--line));
+  background:color-mix(in srgb,var(--panel) 88%,var(--primary) 12%);
+  color:var(--text);border-radius:16px;cursor:pointer;text-align:left;
+  box-shadow:0 10px 28px rgba(40,50,100,.10);backdrop-filter:blur(12px);
+}
+.accountChip:hover{transform:translateY(-1px);box-shadow:0 14px 32px rgba(40,50,100,.15);border-color:var(--primary)}
+.accountAvatar{
+  width:38px;height:38px;flex:0 0 38px;display:grid;place-items:center;border-radius:13px;
+  color:#fff;font-weight:900;font-size:15px;
+  background:conic-gradient(from 210deg,var(--pink),var(--purple),var(--blue),var(--cyan),var(--pink));
+  box-shadow:0 5px 16px rgba(75,70,190,.25),inset 0 0 0 2px rgba(255,255,255,.45)
+}
+.accountChipText{display:flex;flex-direction:column;min-width:0}.accountChipText b{font-size:13px;line-height:1.15;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.accountChipText small{font-size:10px;color:var(--muted);margin-top:3px;white-space:nowrap}.accountChevron{margin-left:auto;color:var(--muted);font-size:18px}
+.smartSearchRow{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:10px;align-items:center;margin:0 0 20px}
+.smartSearchBox{
+  min-height:52px;display:flex;align-items:center;gap:10px;padding:7px 8px 7px 15px;
+  background:rgba(255,255,255,.86);border:1px solid var(--line);border-radius:17px;
+  box-shadow:0 9px 25px rgba(28,37,80,.08);transition:.2s;backdrop-filter:blur(10px)
+}
+.smartSearchBox:focus-within{border-color:var(--primary);box-shadow:0 0 0 4px color-mix(in srgb,var(--primary) 10%,transparent),0 12px 30px rgba(28,37,80,.12)}
+.smartSearchIcon{width:34px;height:34px;border-radius:11px;display:grid;place-items:center;background:var(--accent-soft);color:var(--primary);font-size:17px;flex:0 0 34px}
+.smartSearchBox input{border:0!important;box-shadow:none!important;background:transparent!important;padding:5px 4px!important;min-width:0;flex:1;font-size:14px}
+.smartSearchBox button{border:0;border-radius:12px;padding:10px 14px;background:var(--primary);color:#fff;font-weight:850;cursor:pointer;box-shadow:0 7px 16px color-mix(in srgb,var(--primary) 28%,transparent)}
+.smartSearchBox button:hover{filter:brightness(1.06);transform:translateY(-1px)}
+.searchSparkCard{
+  min-height:52px;display:flex;align-items:center;gap:9px;padding:8px 12px;border:1px solid color-mix(in srgb,var(--primary) 20%,var(--line));
+  border-radius:17px;background:linear-gradient(135deg,color-mix(in srgb,var(--primary) 9%,var(--panel)),color-mix(in srgb,var(--pink) 7%,var(--panel)));
+  box-shadow:0 9px 25px rgba(28,37,80,.07);cursor:pointer;white-space:nowrap
+}
+.searchSparkOrb{width:28px;height:28px;border-radius:10px;display:grid;place-items:center;color:#fff;background:conic-gradient(from 180deg,var(--pink),var(--purple),var(--blue),var(--cyan),var(--pink));box-shadow:0 5px 15px rgba(71,72,180,.22)}
+.searchSparkCard b{font-size:12px}.searchSparkCard small{display:block;color:var(--muted);font-size:10px;margin-top:2px}
+
+/* Account modal */
+.accountOverlay{position:fixed;inset:0;z-index:130;background:rgba(7,12,30,.56);backdrop-filter:blur(10px);display:none;align-items:center;justify-content:center;padding:18px}.accountOverlay.show{display:flex}
+.accountModal{width:min(860px,100%);max-height:min(92vh,760px);overflow:auto;background:var(--panel);border:1px solid var(--line);border-radius:26px;box-shadow:0 28px 90px rgba(5,10,30,.35);display:grid;grid-template-columns:1.02fr 1fr;overflow:hidden}
+.accountHero{position:relative;padding:28px;color:#fff;background:linear-gradient(140deg,#171f4b 0%,color-mix(in srgb,var(--primary) 75%,#101733) 48%,color-mix(in srgb,var(--pink) 62%,#12172f) 100%);overflow:hidden}
+.accountHero:before{content:"";position:absolute;width:230px;height:230px;right:-75px;top:-85px;border-radius:50%;background:rgba(255,255,255,.10)}
+.accountHero:after{content:"";position:absolute;width:190px;height:190px;left:-90px;bottom:-90px;border-radius:50%;background:rgba(34,211,238,.10)}
+.accountHero>*{position:relative;z-index:1}.accountHero h2{margin:14px 0 7px;font-size:28px}.accountHero p{margin:0;color:#e9ebff;line-height:1.6;font-size:13px}
+.accountBrandBadge{display:inline-flex;align-items:center;gap:8px;padding:7px 10px;border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.10);border-radius:999px;font-size:11px;font-weight:900}
+.accountBenefitGrid{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:22px}.accountBenefit{padding:11px;border-radius:14px;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.11)}.accountBenefit b{font-size:12px}.accountBenefit small{display:block;margin-top:4px;color:#dce0ff;line-height:1.35;font-size:10px}
+.accountSteps{display:flex;gap:8px;margin-top:18px;flex-wrap:wrap}.accountStep{padding:7px 9px;border-radius:999px;background:rgba(255,255,255,.09);color:#f7f8ff;font-size:10px;font-weight:800}.accountStep span{display:inline-grid;place-items:center;width:18px;height:18px;margin-right:4px;border-radius:50%;background:rgba(255,255,255,.14)}
+.accountFormPane{padding:24px}.accountClose{float:right;border:0;background:transparent;color:var(--muted);font-size:25px;cursor:pointer}.accountFormPane h3{margin:9px 0 5px;font-size:24px}.accountSub{color:var(--muted);font-size:12px;margin-bottom:16px}
+.accountTabs{display:grid;grid-template-columns:1fr 1fr;gap:7px;padding:5px;background:var(--bg);border-radius:13px;margin-bottom:16px}.accountTab{border:0;background:transparent;color:var(--muted);padding:10px;border-radius:9px;cursor:pointer;font-weight:850}.accountTab.active{background:var(--panel);color:var(--primary);box-shadow:0 4px 12px rgba(20,30,70,.08)}
+.accountField{margin:10px 0}.accountField label{display:block;font-size:11px;font-weight:800;margin-bottom:5px}.accountField input{width:100%}.passwordWrap{position:relative}.passwordWrap input{padding-right:48px}.passwordToggle{position:absolute;right:5px;top:5px;width:36px;height:36px;border:0;background:transparent;color:var(--muted);border-radius:9px;cursor:pointer}.passwordToggle:hover{background:var(--bg)}
+.accountStrength{height:5px;background:var(--line);border-radius:99px;overflow:hidden;margin-top:7px}.accountStrength i{display:block;height:100%;width:0;border-radius:99px;background:linear-gradient(90deg,#ff6b6b,#f59e0b,#22c55e);transition:.25s}.accountHint{font-size:10px;color:var(--muted);margin-top:5px}
+.accountMainBtn{width:100%;margin-top:9px;padding:13px;border-radius:13px}.googleBtn{width:100%;display:flex;align-items:center;justify-content:center;gap:10px;padding:12px;border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:13px;cursor:pointer;font-weight:850}.googleBtn:hover{background:var(--bg);border-color:#c9cfe0}.googleMark{width:22px;height:22px;border-radius:50%;display:grid;place-items:center;font-weight:950;color:#4285f4;background:#fff;border:1px solid #e3e6ed}.authDivider{display:flex;align-items:center;gap:9px;color:var(--muted);font-size:10px;margin:13px 0}.authDivider:before,.authDivider:after{content:"";height:1px;background:var(--line);flex:1}
+.accountLinkRow{display:flex;justify-content:space-between;gap:8px;margin-top:10px}.textBtn{border:0;background:transparent;color:var(--primary);font-size:11px;font-weight:850;cursor:pointer;padding:3px 0}.accountMessage{padding:10px 12px;border-radius:11px;background:var(--accent-soft);border:1px solid var(--accent-border);color:var(--text);font-size:11px;line-height:1.45;margin-top:10px;display:none}.accountMessage.show{display:block}
+.accountLogged{padding:12px;border:1px solid var(--line);border-radius:15px;background:var(--bg);margin-top:10px}.accountLogged b{display:block}.accountLogged small{display:block;color:var(--muted);margin-top:4px}.accountLogged button{margin-top:10px;width:100%}
+
+</style>
+<style id="saiCompactTopFix">
+/* ===== Compact dashboard header: no dead space ===== */
+.studyTopbar{
+  margin:-20px 0 6px !important;
+  min-height:44px !important;
+  height:44px !important;
+  padding:0 58px 0 0 !important;
+  gap:10px !important;
+}
+.studyTopTools{min-width:0 !important;flex:1 1 auto !important}
+#saiAccentBox{gap:7px !important;flex-wrap:nowrap !important}
+.saiAccentLabel{font-size:11px !important}
+.saiAccentDots{gap:5px !important}
+.saiAccentDot{width:22px !important;height:22px !important}
+.saiAccentMore{width:27px !important;height:27px !important;border-radius:9px !important}
+.accountChip{min-width:168px !important;padding:6px 9px 6px 6px !important;gap:8px !important;border-radius:14px !important}
+.accountAvatar{width:32px !important;height:32px !important;flex-basis:32px !important;border-radius:11px !important}
+.accountChipText b{font-size:12px !important}
+.accountChipText small{font-size:9.5px !important;margin-top:2px !important}
+.accountChevron{font-size:16px !important}
+.heroHome{margin-top:0 !important;padding:25px 28px !important}
+.heroHome h1{font-size:32px !important}
+
+/* Search remains the original fixed search icon; only its helper bubble is shown below it. */
+#saiSearchBtn{top:10px !important;right:14px !important;width:38px !important;height:38px !important}
+.saiSearchFloatLabel{top:49px !important;right:58px !important;font-size:11px !important;padding:7px 10px !important}
+
+@media(max-width:900px){
+  .main{padding:8px 12px 20px !important}
+  .studyTopbar{
+    position:relative !important;
+    margin:0 0 6px !important;
+    height:44px !important;
+    min-height:44px !important;
+    padding:0 50px 0 54px !important;
+  }
+  .heroHome{margin-top:0 !important;padding:23px 22px !important}
+  .heroHome h1{font-size:30px !important}
+  .heroHome p{margin:6px 0 0 !important}
+  .heroActions{margin-top:13px !important}
+}
+@media(max-width:600px){
+  .main{padding:7px 10px 18px !important}
+  .studyTopbar{gap:6px !important;padding-left:50px !important;padding-right:48px !important}
+  #saiAccentBox{gap:5px !important}
+  .saiAccentLabel{font-size:10px !important}
+  .saiAccentDots{gap:4px !important}
+  .saiAccentDot{width:20px !important;height:20px !important}
+  .saiAccentMore{width:24px !important;height:24px !important;font-size:14px !important}
+  .accountChip{min-width:0 !important;max-width:190px !important;padding:5px 7px 5px 5px !important;gap:6px !important}
+  .accountAvatar{width:30px !important;height:30px !important;flex-basis:30px !important}
+  .accountChipText b{font-size:10.5px !important}
+  .accountChipText small{font-size:8.5px !important}
+  .heroHome{padding:20px 18px !important;border-radius:20px !important}
+  .heroHome h1{font-size:27px !important;letter-spacing:-.8px !important}
+  .heroHome p{font-size:13px !important;line-height:1.45 !important}
+  .heroActions{gap:7px !important;margin-top:11px !important}
+  .heroActions .btn{padding:9px 11px !important;font-size:12px !important}
+  #saiSearchBtn{top:8px !important;right:8px !important;width:36px !important;height:36px !important}
+  .saiSearchFloatLabel{top:45px !important;right:48px !important;max-width:170px !important;font-size:10px !important}
+}
+@media(max-width:430px){
+  .studyTopbar{padding-left:48px !important;padding-right:43px !important}
+  .saiAccentLabel{display:none !important}
+  .accountChipText small{display:none !important}
+  .accountChip{max-width:145px !important}
+  .heroActions .btn{padding:8px 9px !important;font-size:11px !important}
+}
+</style>
 </head>
 
 <body>
@@ -575,6 +710,30 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 <a href="#tutor"><span class="navIcon">✨</span><span>AI Tutor</span></a><a href="#settings"><span class="navIcon">⚙️</span><span>Settings</span></a>
 </nav></aside>
 <main class="main">
+<div class="studyTopbar">
+  <div class="studyTopTools">
+    <div id="saiAccentBox" aria-label="Dashboard accent colour">
+      <span class="saiAccentLabel">🎨 Accent colour</span>
+      <div class="saiAccentDots" id="saiAccentDots">
+        <button type="button" class="saiAccentDot" data-accent="purple" aria-label="Purple accent" title="Purple" style="background:linear-gradient(135deg,#635bff,#8b5cf6)"></button>
+        <button type="button" class="saiAccentDot" data-accent="blue" aria-label="Blue accent" title="Blue" style="background:linear-gradient(135deg,#2563eb,#38bdf8)"></button>
+        <button type="button" class="saiAccentDot" data-accent="green" aria-label="Green accent" title="Green" style="background:linear-gradient(135deg,#16a34a,#22c55e)"></button>
+        <button type="button" class="saiAccentDot" data-accent="orange" aria-label="Orange accent" title="Orange" style="background:linear-gradient(135deg,#ea580c,#f59e0b)"></button>
+        <button type="button" class="saiAccentDot" data-accent="pink" aria-label="Pink accent" title="Pink" style="background:linear-gradient(135deg,#db2777,#fb7185)"></button>
+        <button type="button" class="saiAccentMore" id="saiAccentMore" aria-label="Custom accent colour" title="Custom colour">＋</button>
+      </div>
+    </div>
+  </div>
+  <button class="accountChip" id="accountOpen" type="button" aria-haspopup="dialog" aria-controls="accountOverlay">
+    <span class="accountAvatar" id="accountAvatar">S</span>
+    <span class="accountChipText"><b id="accountName">My StudyAI Account</b><small id="accountHint">Sign in to save your progress</small></span>
+    <span class="accountChevron">⌄</span>
+  </button>
+</div>
+<div class="saiAccentCustom" id="saiAccentCustom" role="dialog" aria-label="Custom accent colour">
+  <span class="saiAccentLabel">Custom</span><input type="color" id="saiAccentColor" value="#635bff" aria-label="Pick accent colour"><button type="button" class="saiAccentBtn" id="saiAccentClose">Done</button>
+</div>
+
 <section id="home" class="section active">
 <div class="heroHome" role="button" tabindex="0" aria-label="StudyAI animated welcome panel">
   <div class="top" style="margin-bottom:0"><div><h1>Study smarter with StudyAI ✨</h1><p>Your Classes 6–12 study companion — notes, NCERT resources, practice papers, quizzes and an AI tutor.</p></div><span class="pill" id="classPill">Class 10</span></div>
@@ -699,6 +858,52 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 </section>
 
 <div style="margin-top:24px;text-align:center;color:#8a93a8;font-size:12px">StudyAI • Classes 6–12 • Learn, practise, improve</div></main></div>
+<div class="accountOverlay" id="accountOverlay" role="dialog" aria-modal="true" aria-labelledby="accountTitle">
+  <div class="accountModal">
+    <section class="accountHero">
+      <span class="accountBrandBadge">✨ StudyAI Account</span>
+      <h2>Apni padhai ko save rakho.</h2>
+      <p>Ek account se tumhari learning journey tumhare naam se organise rahegi — class, goals aur study progress ko ek jagah rakho.</p>
+      <div class="accountBenefitGrid">
+        <div class="accountBenefit"><b>📊 Progress</b><small>Apni learning progress track karo.</small></div>
+        <div class="accountBenefit"><b>🧠 Practice</b><small>Quiz aur flashcard activity yaad rahe.</small></div>
+        <div class="accountBenefit"><b>🎯 Goals</b><small>Study goals aur planner ko manage karo.</small></div>
+        <div class="accountBenefit"><b>✨ AI Tutor</b><small>Apni StudyAI setup ke saath continue karo.</small></div>
+      </div>
+      <div class="accountSteps">
+        <div class="accountStep"><span>1</span>Account</div><div class="accountStep"><span>2</span>Set class</div><div class="accountStep"><span>3</span>Start learning</div>
+      </div>
+    </section>
+    <section class="accountFormPane">
+      <button class="accountClose" id="accountClose" type="button" aria-label="Close account">×</button>
+      <h3 id="accountTitle">Welcome back 👋</h3>
+      <div class="accountSub" id="accountSub">Sign in and continue where you left off.</div>
+      <div class="accountTabs"><button class="accountTab active" id="tabLogin" type="button">Log in</button><button class="accountTab" id="tabSignup" type="button">Create account</button></div>
+
+      <div id="loginPane">
+        <button class="googleBtn" id="googleLogin" type="button"><span class="googleMark">G</span> Continue with Google</button>
+        <div class="authDivider">or use email</div>
+        <div class="accountField"><label for="loginEmail">Email</label><input id="loginEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="accountField"><label for="loginPassword">Password</label><div class="passwordWrap"><input id="loginPassword" type="password" autocomplete="current-password" placeholder="Your password"><button class="passwordToggle" type="button" data-target="loginPassword">◉</button></div></div>
+        <button class="btn accountMainBtn" id="loginBtn" type="button">Log in to StudyAI</button>
+        <div class="accountLinkRow"><button class="textBtn" id="forgotBtn" type="button">Forgot password?</button><button class="textBtn" id="switchSignup" type="button">Create a new account</button></div>
+      </div>
+
+      <div id="signupPane" style="display:none">
+        <button class="googleBtn" id="googleSignup" type="button"><span class="googleMark">G</span> Sign up with Google</button>
+        <div class="authDivider">or create with email</div>
+        <div class="accountField"><label for="signupName">Your name</label><input id="signupName" type="text" autocomplete="name" placeholder="What should StudyAI call you?"></div>
+        <div class="accountField"><label for="signupEmail">Email</label><input id="signupEmail" type="email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="accountField"><label for="signupPassword">Password</label><div class="passwordWrap"><input id="signupPassword" type="password" autocomplete="new-password" placeholder="Create a strong password"><button class="passwordToggle" type="button" data-target="signupPassword">◉</button></div><div class="accountStrength"><i id="passwordStrength"></i></div><div class="accountHint">Use a password you do not reuse elsewhere.</div></div>
+        <button class="btn accountMainBtn" id="signupBtn" type="button">Create my StudyAI account ✨</button>
+        <div class="accountLinkRow"><span class="accountHint">Already registered?</span><button class="textBtn" id="switchLogin" type="button">Log in instead</button></div>
+      </div>
+
+      <div class="accountMessage" id="accountMessage"></div>
+      <div class="accountLogged" id="accountLogged" style="display:none"><b id="loggedName">Signed in</b><small id="loggedEmail"></small><button class="btn alt" id="logoutBtn" type="button">Log out</button></div>
+    </section>
+  </div>
+</div>
 <button class="floatTutor" onclick="toggleFloatTutor()" aria-label="Open StudyAI Tutor"><span class="fLabel">Doubt hai? Puchho 💬</span><span class="aiOrb"><span class="aiLetters">✨</span><i></i><em></em></span></button>
 <div class="tutorPop" id="tutorPop">
  <div class="tutorHead"><span>🎓 StudyAI Tutor<small class="hSub">🟢 Online • Har doubt ka jawab</small></span><div class="hBtns"><button id="tutorBig" onclick="toggleBig()" title="Bada karo" aria-label="Bada karo">⤢</button><button onclick="toggleFloatTutor()" aria-label="Band karo">×</button></div></div>
@@ -1512,8 +1717,26 @@ fillC();chips();
 .revChip{display:inline-block;margin:3px 4px 3px 0;padding:5px 10px;border-radius:99px;background:#eef1ff;border:1px solid #d9dcff;font-size:13.5px;font-weight:700}
 .revCh{padding:12px 14px;border:1px solid var(--line);border-radius:14px;margin:10px 0;background:var(--panel)}
 .revCh h4{margin:0 0 6px}
+/* Dashboard accent colour */
+#saiAccentBox{display:flex;align-items:center;gap:9px;justify-content:flex-start;flex-wrap:wrap;margin:0}
+.saiAccentLabel{font-size:12px;font-weight:850;color:var(--muted);white-space:nowrap}
+.saiAccentBtn{border:1px solid var(--line);background:var(--panel);color:var(--text);border-radius:12px;padding:7px 10px;font-weight:800;cursor:pointer;box-shadow:0 6px 16px rgba(20,30,60,.07)}
+.saiAccentBtn:hover{transform:translateY(-1px);border-color:var(--primary)}
+.saiAccentDots{display:flex;gap:7px;align-items:center}
+.saiAccentDot{width:25px;height:25px;padding:0;border-radius:50%;border:2px solid #fff;outline:2px solid transparent;cursor:pointer;box-shadow:0 2px 8px rgba(20,30,60,.15)}
+.saiAccentDot.active{outline-color:var(--primary);transform:scale(1.08)}
+.saiAccentMore{width:30px;height:30px;padding:0;border-radius:10px;border:1px solid var(--line);background:var(--panel);cursor:pointer;color:var(--text);font-weight:900}
+.saiAccentCustom{position:fixed;z-index:120;display:none;gap:8px;align-items:center;padding:9px 10px;background:var(--panel);border:1px solid var(--line);border-radius:12px;box-shadow:0 18px 42px rgba(20,30,60,.2)}
+.saiAccentCustom.show{display:flex}
+.saiAccentCustom input{width:42px;height:34px;padding:2px;border-radius:8px;cursor:pointer}
+@media(max-width:900px){.studyTopbar{margin:-4px 0 8px;padding-right:56px;min-height:52px}}
+@media(max-width:600px){#saiAccentBox{justify-content:flex-start;margin:0}.studyTopbar{gap:7px}.saiAccentDot{width:24px;height:24px}.saiAccentLabel{font-size:11px}.accountChip{min-width:0;padding:7px 9px 7px 7px;gap:7px}.accountAvatar{width:34px;height:34px;flex-basis:34px}.accountChipText b{font-size:11.5px}.accountChipText small{font-size:9px}}
 #saiSearchBtn{position:fixed;top:17px;right:20px;z-index:74;width:42px;height:42px;border:1px solid var(--line);border-radius:12px;background:var(--panel);color:var(--text);font-size:19px;cursor:pointer;box-shadow:0 8px 22px rgba(20,30,60,.08)}
-@media(max-width:900px){#saiSearchBtn{top:13px;right:14px}}
+.saiSearchFloatLabel{position:fixed;top:65px;right:68px;z-index:73;white-space:nowrap;background:var(--panel);color:var(--primary);font-weight:850;font-size:12px;padding:8px 12px;border-radius:999px;box-shadow:0 8px 22px rgba(70,60,190,.16);border:1px solid color-mix(in srgb,var(--primary) 16%,var(--line));pointer-events:none;animation:saiSearchHint 3.8s ease-in-out infinite}
+.saiSearchFloatLabel:after{content:"";position:absolute;right:-6px;top:50%;width:10px;height:10px;background:var(--panel);border-top:1px solid color-mix(in srgb,var(--primary) 16%,var(--line));border-right:1px solid color-mix(in srgb,var(--primary) 16%,var(--line));transform:translateY(-50%) rotate(45deg)}
+@keyframes saiSearchHint{0%,100%{transform:translateY(0);opacity:.94}50%{transform:translateY(-3px);opacity:1}}
+@media(max-width:900px){#saiSearchBtn{top:13px;right:14px}.saiSearchFloatLabel{top:60px;right:56px;font-size:11px;padding:7px 10px}}
+@media(max-width:520px){.saiSearchFloatLabel{right:53px;max-width:175px;white-space:normal;text-align:center;line-height:1.25}}
 #saiSearch{border:0;border-radius:18px;padding:0;width:min(640px,94vw);max-height:84vh;box-shadow:0 30px 80px rgba(0,0,0,.35);background:var(--panel);color:var(--text)}
 #saiSearch::backdrop{background:rgba(3,7,18,.5)}
 #saiSearch .sHead{display:flex;gap:8px;padding:14px;border-bottom:1px solid var(--line)}
@@ -1535,6 +1758,7 @@ body.dark .saiTools button,body.dark .saiBtn,body.dark .revChip,body.dark .saiBa
 </style>
 
 <button id="saiSearchBtn" type="button" aria-label="Search chapters and topics" title="Search (Ctrl+K ya /)">🔍</button>
+<div class="saiSearchFloatLabel" aria-hidden="true">Kuch dhoondhna hai? 🔍 Yahin search karo</div>
 <dialog id="saiSearch" aria-label="Search">
  <div class="sHead"><input id="saiSearchIn" type="search" placeholder="Chapter ya topic dhoondo, jaise &quot;photosynthesis&quot;" autocomplete="off"><button class="saiBtn" id="saiSearchX" type="button">Band karo</button></div>
  <div class="sRes" id="saiSearchRes"><p class="muted">Kam se kam 2 akshar likho.</p></div>
@@ -1904,6 +2128,52 @@ function chatBar(){
 }
 function dl(name,text,type){const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([text],{type}));a.download=name;document.body.append(a);a.click();setTimeout(()=>{URL.revokeObjectURL(a.href);a.remove()},500)}
 
+/* ---------- Dashboard accent colour ---------- */
+const ACCENTS={
+  purple:{p:'#635bff',u:'#8b5cf6'},
+  blue:{p:'#2563eb',u:'#4f7cff'},
+  green:{p:'#16a34a',u:'#22c55e'},
+  orange:{p:'#ea580c',u:'#f59e0b'},
+  pink:{p:'#db2777',u:'#ec4899'}
+};
+function setAccent(a,save=true){
+  const key=ACCENTS[a]?a:'purple';
+  const x=ACCENTS[key];
+  document.documentElement.style.setProperty('--primary',x.p);
+  document.documentElement.style.setProperty('--purple',x.u);
+  document.documentElement.style.setProperty('--accent',x.p);
+  const dots=document.querySelectorAll('.saiAccentDot');
+  dots.forEach(d=>d.classList.toggle('active',d.dataset.accent===key));
+  const c=$('saiAccentColor');if(c&&/^#[0-9a-f]{6}$/i.test(key))c.value=key;
+  const custom=$('saiAccentCustom');if(custom)custom.dataset.base=key;
+  const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.setAttribute('content',x.p);
+  if(save)try{localStorage.setItem('studyai_accent',key)}catch(e){}
+}
+function initAccent(){
+  const box=$('saiAccentBox');if(!box)return;
+  const saved=(()=>{try{return localStorage.getItem('studyai_accent')||'purple'}catch(e){return'purple'}})();
+  if(/^#[0-9a-f]{6}$/i.test(saved)){
+    document.documentElement.style.setProperty('--primary',saved);
+    document.documentElement.style.setProperty('--purple',saved);
+    document.documentElement.style.setProperty('--accent',saved);
+    const c=$('saiAccentColor');if(c)c.value=saved;
+  }else setAccent(saved,false);
+  box.querySelectorAll('.saiAccentDot').forEach(b=>b.addEventListener('click',()=>{setAccent(b.dataset.accent,true);say('Accent colour change ho gaya 🎨')}));
+  const more=$('saiAccentMore'),pop=$('saiAccentCustom'),picker=$('saiAccentColor'),close=$('saiAccentClose');
+  const place=()=>{if(!more||!pop)return;const r=more.getBoundingClientRect();pop.style.top=(r.bottom+8)+'px';pop.style.left=Math.max(12,r.left-90)+'px'};
+  more&&more.addEventListener('click',()=>{place();pop.classList.toggle('show')});
+  close&&close.addEventListener('click',()=>pop.classList.remove('show'));
+  picker&&picker.addEventListener('input',()=>{
+    const hex=picker.value;document.documentElement.style.setProperty('--primary',hex);document.documentElement.style.setProperty('--accent',hex);
+    document.documentElement.style.setProperty('--purple',hex);
+    try{localStorage.setItem('studyai_accent',hex)}catch(e){}
+    document.querySelectorAll('.saiAccentDot').forEach(d=>d.classList.remove('active'));
+    const meta=document.querySelector('meta[name="theme-color"]');if(meta)meta.setAttribute('content',hex);
+  });
+  document.addEventListener('click',e=>{if(pop&&pop.classList.contains('show')&&!pop.contains(e.target)&&e.target!==more)pop.classList.remove('show')});
+  addEventListener('resize',()=>{if(pop&&pop.classList.contains('show'))place()});
+}
+
 /* ---------- Settings extras: font, install, backup ---------- */
 let deferred=null;
 function settingsExtras(){
@@ -1946,11 +2216,101 @@ window.saiDbg={M:()=>M,submit:a=>submitMock(a)};
 function boot(){
   addNav();homeTiles();settingsExtras();initSearch();chatPersist('msgs','chat_main');chatPersist('floatMsgs','chat_float');chatBar();
   wrapGrade('gradeChapterQuiz',false);wrapGrade('gradeGenericQuiz',true);wrapReset('startChapterQuiz');wrapReset('makeGenericQuiz');
-  setFont(LS.g('font',1));pwa();paintHome();
+  setFont(LS.g('font',1));pwa();initAccent();paintHome();
   const nb=$('noteBox');if(nb)new MutationObserver(decorateNotes).observe(nb,{childList:true});decorateNotes();
   addEventListener('hashchange',onRoute);onRoute();
 }
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(boot,0));else setTimeout(boot,0);
+})();
+</script>
+<script id="studyaiCleanAccount">
+(function(){
+'use strict';
+const SUPABASE_URL = window.STUDYAI_SUPABASE_URL || "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
+const SUPABASE_ANON_KEY = window.STUDYAI_SUPABASE_ANON_KEY || "PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE";
+const hasSupabase = !!(window.supabase && SUPABASE_URL.startsWith("http") && !SUPABASE_URL.includes("PASTE_YOUR") && !SUPABASE_ANON_KEY.includes("PASTE_YOUR"));
+const sb = hasSupabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+const qs=id=>document.getElementById(id);
+const setMessage=(text,show=true)=>{const m=qs("accountMessage");if(!m)return;m.textContent=text;m.classList.toggle("show",show)};
+const openModal=()=>{qs("accountOverlay")?.classList.add("show");document.body.style.overflow="hidden";refreshAuthUI()};
+const closeModal=()=>{qs("accountOverlay")?.classList.remove("show");document.body.style.overflow=""};
+const setTab=mode=>{
+  const login=mode!=="signup";
+  if(qs("loginPane"))qs("loginPane").style.display=login?"block":"none";
+  if(qs("signupPane"))qs("signupPane").style.display=login?"none":"block";
+  qs("tabLogin")?.classList.toggle("active",login);qs("tabSignup")?.classList.toggle("active",!login);
+  if(qs("accountTitle"))qs("accountTitle").textContent=login?"Welcome back 👋":"Let’s set up your StudyAI ✨";
+  if(qs("accountSub"))qs("accountSub").textContent=login?"Sign in and continue where you left off.":"One account. One study journey. All your progress in one place.";
+  setMessage("",false);
+};
+const strength=v=>{const el=qs("passwordStrength");if(!el)return;let score=0;if(v.length>=8)score++;if(/[A-Z]/.test(v))score++;if(/[0-9]/.test(v))score++;if(/[^A-Za-z0-9]/.test(v))score++;el.style.width=(score*25)+"%"};
+const togglePassword=btn=>{const input=qs(btn.dataset.target);if(input)input.type=input.type==="password"?"text":"password"};
+const initials=name=>(String(name||"S").trim().split(/\s+/).slice(0,2).map(x=>x[0]).join("")||"S").toUpperCase();
+const getUser=async()=>{if(!sb)return null;const {data}=await sb.auth.getUser();return data?.user||null};
+async function refreshAuthUI(){
+  const user=await getUser(), logged=!!user;
+  const name=user?.user_metadata?.full_name||user?.user_metadata?.name||(user?.email?user.email.split("@")[0]:"")||"StudyAI Student";
+  if(qs("accountName"))qs("accountName").textContent=logged?name:"My StudyAI Account";
+  if(qs("accountHint"))qs("accountHint").textContent=logged?(user.email||"Signed in"):"Sign in to save your progress";
+  if(qs("accountAvatar"))qs("accountAvatar").textContent=initials(logged?name:"StudyAI");
+  if(qs("accountLogged"))qs("accountLogged").style.display=logged?"block":"none";
+  if(logged){qs("loggedName").textContent=name;qs("loggedEmail").textContent=user.email||"";setMessage("You are signed in. Your StudyAI session is active on this device.",true)}
+  else if(!hasSupabase && qs("accountOverlay")?.classList.contains("show"))setMessage("Account service is not connected yet. Add your Supabase project URL and publishable/anon key in this file to enable real login.",true);
+}
+const ensureReady=async()=>{if(!hasSupabase){setMessage("Account service setup needed: add your Supabase project URL and publishable/anon key before using email or Google login.",true);return false}return true};
+async function login(){
+  if(!await ensureReady())return;
+  const email=qs("loginEmail")?.value.trim(),password=qs("loginPassword")?.value;
+  if(!email||!password){setMessage("Email aur password dono bharna hai.",true);return}
+  const btn=qs("loginBtn");btn.disabled=true;btn.textContent="Signing in…";
+  const {error}=await sb.auth.signInWithPassword({email,password});
+  btn.disabled=false;btn.textContent="Log in to StudyAI";
+  if(error){setMessage(error.message,true);return}
+  setMessage("Login successful ✓",true);refreshAuthUI();setTimeout(closeModal,650);
+}
+async function signup(){
+  if(!await ensureReady())return;
+  const name=qs("signupName")?.value.trim(),email=qs("signupEmail")?.value.trim(),password=qs("signupPassword")?.value;
+  if(!name||!email||password.length<8){setMessage("Name, valid email aur at least 8-character password chahiye.",true);return}
+  const btn=qs("signupBtn");btn.disabled=true;btn.textContent="Creating your account…";
+  const redirect=window.location.origin+window.location.pathname;
+  const {data,error}=await sb.auth.signUp({email,password,options:{data:{full_name:name,name},emailRedirectTo:redirect}});
+  btn.disabled=false;btn.textContent="Create my StudyAI account ✨";
+  if(error){setMessage(error.message,true);return}
+  localStorage.setItem("studyai_profile_name",name);
+  if(data?.session){setMessage("Account created ✓ Welcome to StudyAI!",true);refreshAuthUI();setTimeout(closeModal,900)}
+  else setMessage("Account created ✓ Check your email to verify it, then log in.",true);
+}
+async function google(){
+  if(!await ensureReady())return;
+  const redirect=window.location.origin+window.location.pathname;
+  const {error}=await sb.auth.signInWithOAuth({provider:"google",options:{redirectTo:redirect,queryParams:{prompt:"select_account"}}});
+  if(error)setMessage(error.message,true);
+}
+async function forgot(){
+  if(!await ensureReady())return;
+  const email=qs("loginEmail")?.value.trim();
+  if(!email){setMessage("Pehle apna email enter karo.",true);return}
+  const redirect=window.location.origin+window.location.pathname+"#settings";
+  const {error}=await sb.auth.resetPasswordForEmail(email,{redirectTo:redirect});
+  setMessage(error?error.message:"Password reset link email par bhej diya gaya hai.",true);
+}
+async function logout(){if(sb)await sb.auth.signOut();setTab("login");refreshAuthUI();setMessage("Logged out successfully.",true)}
+qs("accountOpen")?.addEventListener("click",openModal);
+qs("accountClose")?.addEventListener("click",closeModal);
+qs("accountOverlay")?.addEventListener("click",e=>{if(e.target===qs("accountOverlay"))closeModal()});
+qs("tabLogin")?.addEventListener("click",()=>setTab("login"));
+qs("tabSignup")?.addEventListener("click",()=>setTab("signup"));
+qs("switchSignup")?.addEventListener("click",()=>setTab("signup"));
+qs("switchLogin")?.addEventListener("click",()=>setTab("login"));
+qs("loginBtn")?.addEventListener("click",login);qs("signupBtn")?.addEventListener("click",signup);
+qs("googleLogin")?.addEventListener("click",google);qs("googleSignup")?.addEventListener("click",google);
+qs("forgotBtn")?.addEventListener("click",forgot);qs("logoutBtn")?.addEventListener("click",logout);
+document.querySelectorAll(".passwordToggle").forEach(b=>b.addEventListener("click",()=>togglePassword(b)));
+qs("signupPassword")?.addEventListener("input",e=>strength(e.target.value));
+document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
+if(sb)sb.auth.onAuthStateChange(()=>refreshAuthUI());
+refreshAuthUI();
 })();
 </script>
 </body>
