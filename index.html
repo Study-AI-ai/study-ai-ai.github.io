@@ -576,7 +576,10 @@ body.splash-open{overflow:hidden}
 <script>
 /* StudyAI AI helper v3 — /api/job async polling (no 55-sec blocking).
    Backend: POST /api/job → {id, status}; GET /api/job/:id → {status, reply} */
-const AI_BASE="https://studyai-backend-bqs8.onrender.com";
+/* Fast backend: Cloudflare Worker URL yahan paste karo (worker.js deploy karne ke baad).
+   Jab tak paste nahi karte, purana Render backend use hota rahega. */
+const AI_WORKER="PASTE_WORKER_URL_HERE";   // e.g. https://studyai-ai.YOURNAME.workers.dev
+const AI_BASE=AI_WORKER.startsWith("http")?AI_WORKER.replace(/\/$/,""):"https://studyai-backend-bqs8.onrender.com";
 try{localStorage.removeItem("endpoint")}catch(e){}
 
 /* Server ko page-load par hi jaga do (Render free tier cold-start fix) */
@@ -2252,8 +2255,8 @@ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',
 <script id="studyaiCleanAccount">
 (function(){
 'use strict';
-const SUPABASE_URL = window.STUDYAI_SUPABASE_URL || "PASTE_YOUR_SUPABASE_PROJECT_URL_HERE";
-const SUPABASE_ANON_KEY = window.STUDYAI_SUPABASE_ANON_KEY || "PASTE_YOUR_SUPABASE_PUBLISHABLE_OR_ANON_KEY_HERE";
+const SUPABASE_URL = window.STUDYAI_SUPABASE_URL || "https://xrziavazhzbiejdzioiz.supabase.co";
+const SUPABASE_ANON_KEY = window.STUDYAI_SUPABASE_ANON_KEY || "sb_publishable_FBBST75QSQBYnkk1X2wn-Q_7hlJawpi";
 const hasSupabase = !!(window.supabase && SUPABASE_URL.startsWith("http") && !SUPABASE_URL.includes("PASTE_YOUR") && !SUPABASE_ANON_KEY.includes("PASTE_YOUR"));
 const sb = hasSupabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
 const qs=id=>document.getElementById(id);
