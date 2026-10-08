@@ -515,6 +515,7 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
   .heroActions .saiAccentMore{width:23px !important;height:23px !important;font-size:13px !important}
 }
 </style>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 width=%22512%22 height=%22512%22%3E %3Cdefs%3E %3ClinearGradient id=%22bg%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%235B5BFF%22/%3E %3Cstop offset=%220.55%22 stop-color=%22%23B04FD8%22/%3E %3Cstop offset=%221%22 stop-color=%22%23FF4FA3%22/%3E %3C/linearGradient%3E %3ClinearGradient id=%22shine%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%23fff%22 stop-opacity=%22.28%22/%3E %3Cstop offset=%221%22 stop-color=%22%23fff%22 stop-opacity=%220%22/%3E %3C/linearGradient%3E %3CclipPath id=%22c%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22116%22/%3E%3C/clipPath%3E %3C/defs%3E %3Crect width=%22512%22 height=%22512%22 rx=%22116%22 fill=%22url%28%23bg%29%22/%3E %3Crect width=%22512%22 height=%22256%22 fill=%22url%28%23shine%29%22 clip-path=%22url%28%23c%29%22/%3E %3Cpath d=%22M338 168C300 118 188 118 180 190C172 256 332 246 334 322C336 396 214 404 166 350%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%2246%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E %3Cpath d=%22M396 78C401 118 410 128 450 133C410 138 401 148 396 188C391 148 382 138 342 133C382 128 391 118 396 78Z%22 fill=%22%23FFD95A%22/%3E %3Cpath d=%22M112 392C114 410 120 416 138 418C120 420 114 426 112 444C110 426 104 420 86 418C104 416 110 410 112 392Z%22 fill=%22%23fff%22 opacity=%22.85%22/%3E %3C/svg%3E ">
 </head>
 
 <body>
@@ -593,7 +594,8 @@ async function aiAsk(o){
     message:String(o.message||"").slice(0,8000),
     class:String(o.cls||localStorage.getItem("class")||"10"),
     screenContext:String(o.ctx||"").slice(0,300),
-    systemPrompt:String(o.system||"").slice(0,3000)
+    systemPrompt:String(o.system||"").slice(0,3000),
+    maxTokens:o.maxTokens||undefined
   };
   const totalMs=o.timeout||120000;  // 2 min max wait
   const deadline=Date.now()+totalMs;
@@ -853,8 +855,8 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 </section>
 
 <section id="papers" class="section">
-<div class="top"><div><h1>Chapter Question Papers</h1><p class="muted">Practice papers generated from the selected class and subject. Your notes can later be used to create exact chapter-wise sets.</p></div></div>
-<div class="bar"><select id="paperClass"></select><select id="paperSubject"></select><button class="btn" onclick="makePaper()">Generate Paper</button></div>
+<div class="top"><div><h1>Chapter Question Papers</h1><p class="muted">Class, subject aur chapter chuno. AI poora CBSE format paper banayega: 38 questions with answers.</p></div></div>
+<div class="bar"><select id="paperClass"></select><select id="paperSubject"></select><select id="paperChapter" onchange="document.getElementById('paperCustom').style.display=this.value==='__custom'?'block':'none'"></select><input id="paperCustom" placeholder="Chapter ka naam likho" style="display:none;padding:12px;border-radius:12px;border:1px solid var(--line)"><button class="btn" id="paperBtn" onclick="makePaper()">Generate Paper</button></div>
 <div id="paperBox"></div>
 </section>
 <section id="tutor" class="section"><div class="top"><div><h1>AI Tutor 🤖</h1><p class="muted">Apna doubt likho, StudyAI step-by-step samjhayega.</p></div></div><div class="card chat"><div class="msgs" id="msgs"><div class="msg bot">Hi! I’m StudyAI. Ask me any school question and I will explain it step by step.</div></div><div class="chatbar"><textarea id="chatText" rows="2" enterkeyhint="send" placeholder="e.g. Explain quadratic equations step by step"></textarea><button class="btn" onclick="send()">Send</button></div></div></section>
@@ -1215,18 +1217,79 @@ function renderNCERT(){
 }
 function updatePaperSubjects(){
  let c=document.getElementById("paperClass").value;
- document.getElementById("paperSubject").innerHTML=(ncertMap[c]||[]).map(s=>`<option>${s}</option>`).join("");
+ document.getElementById("paperSubject").innerHTML=(ncertMap[c]||[]).map(s=>`<option>${s}</option>`).join("");updatePaperChapters();
 }
-function makePaper(){
- let c=document.getElementById("paperClass").value,s=document.getElementById("paperSubject").value;
- let qs=[
-  `Define the main idea of ${s} and give one example.`,
-  `Write two important concepts from the current chapter of ${s}.`,
-  `Solve/explain one application-based question related to ${s}.`,
-  `Write a short 3-mark answer on an important topic from ${s}.`,
-  `Give one common mistake students make in ${s} and how to avoid it.`
+const PAPER_CH_RAW={
+6:{"Mathematics":"Patterns in Mathematics|Lines and Angles|Number Play|Data Handling and Presentation|Prime Time|Perimeter and Area|Fractions|Playing with Constructions|Symmetry|The Other Side of Zero",
+"Science":"The Wonderful World of Science|Diversity in the Living World|Mindful Eating: A Path to a Healthy Body|Exploring Magnets|Measurement of Length and Motion|Materials Around Us|Temperature and its Measurement|A Journey through States of Water|Methods of Separation in Everyday Life|Living Creatures: Exploring their Characteristics|Nature's Treasures|Beyond Earth",
+"Social Science":"Locating Places on the Earth|Oceans and Continents|Landforms and Life|Timeline and Sources of History|India, That Is Bharat|The Beginnings of Indian Civilisation|India's Cultural Roots|Unity in Diversity|Family and Community|Grassroots Democracy (Part 1)|Grassroots Democracy (Part 2)|Grassroots Democracy (Part 3)|The Value of Work|Economic Activities Around Us"},
+7:{"Mathematics":"Large Numbers Around Us|Arithmetic Expressions|A Peek Beyond the Point|Expressions using Letter-Numbers|Parallel and Intersecting Lines|Number Play|A Tale of Three Intersecting Lines|Working with Fractions",
+"Science":"The Ever-Evolving World of Science|Exploring Substances: Acidic, Basic, and Neutral|Electricity: Circuits and Their Components|The World of Metals and Non-metals|Changes Around Us: Physical and Chemical|Adolescence: A Stage of Growth and Change|Heat Transfer in Nature|Measurement of Time and Motion|Life Processes in Animals|Life Processes in Plants|Light: Shadows and Reflections|Earth, Moon, and the Sun"},
+8:{"Mathematics":"A Square and A Cube|Power Play|A Story of Numbers|Quadrilaterals|Number Play|We Distribute, Yet Things Multiply|Proportional Reasoning-1",
+"Science":"Exploring the Investigative World of Science|The Invisible Living World: Beyond Our Naked Eye|Health: The Ultimate Treasure|Electricity: Magnetic and Heating Effects|Exploring Forces|Pressure, Winds, Storms, and Cyclones|Particulate Nature of Matter|Nature of Matter: Elements, Compounds, and Mixtures|The Amazing World of Solutes, Solvents, and Solutions|Light: Mirrors and Lenses|Keeping Time with the Skies|How Nature Works in Harmony|Our Home: Earth, a Unique Life Sustaining Planet"},
+9:{"Mathematics":"Number Systems|Polynomials|Coordinate Geometry|Linear Equations in Two Variables|Introduction to Euclid's Geometry|Lines and Angles|Triangles|Quadrilaterals|Circles|Heron's Formula|Surface Areas and Volumes|Statistics",
+"Science":"Matter in Our Surroundings|Is Matter Around Us Pure?|Atoms and Molecules|Structure of the Atom|The Fundamental Unit of Life|Tissues|Motion|Force and Laws of Motion|Gravitation|Work and Energy|Sound|Why Do We Fall Ill?|Natural Resources|Improvement in Food Resources",
+"Social Science":"History: The French Revolution|History: Socialism in Europe and the Russian Revolution|History: Nazism and the Rise of Hitler|History: Forest Society and Colonialism|History: Pastoralists in the Modern World|Geography: India - Size and Location|Geography: Physical Features of India|Geography: Drainage|Geography: Climate|Geography: Natural Vegetation and Wildlife|Geography: Population|Civics: What is Democracy? Why Democracy?|Civics: Constitutional Design|Civics: Electoral Politics|Civics: Working of Institutions|Civics: Democratic Rights|Economics: The Story of Village Palampur|Economics: People as Resource|Economics: Poverty as a Challenge|Economics: Food Security in India"},
+10:{"Mathematics":"Real Numbers|Polynomials|Pair of Linear Equations in Two Variables|Quadratic Equations|Arithmetic Progressions|Triangles|Coordinate Geometry|Introduction to Trigonometry|Some Applications of Trigonometry|Circles|Areas Related to Circles|Surface Areas and Volumes|Statistics|Probability",
+"Science":"Chemical Reactions and Equations|Acids, Bases and Salts|Metals and Non-metals|Carbon and its Compounds|Life Processes|Control and Coordination|How do Organisms Reproduce?|Heredity|Light - Reflection and Refraction|The Human Eye and the Colourful World|Electricity|Magnetic Effects of Electric Current|Our Environment",
+"Social Science":"History: The Rise of Nationalism in Europe|History: Nationalism in India|History: The Making of a Global World|History: The Age of Industrialisation|History: Print Culture and the Modern World|Geography: Resources and Development|Geography: Forest and Wildlife Resources|Geography: Water Resources|Geography: Agriculture|Geography: Minerals and Energy Resources|Geography: Manufacturing Industries|Geography: Lifelines of National Economy|Civics: Power Sharing|Civics: Federalism|Civics: Gender, Religion and Caste|Civics: Political Parties|Civics: Outcomes of Democracy|Economics: Development|Economics: Sectors of the Indian Economy|Economics: Money and Credit|Economics: Globalisation and the Indian Economy|Economics: Consumer Rights"},
+11:{"Physics":"Units and Measurements|Motion in a Straight Line|Motion in a Plane|Laws of Motion|Work, Energy and Power|System of Particles and Rotational Motion|Gravitation|Mechanical Properties of Solids|Mechanical Properties of Fluids|Thermal Properties of Matter|Thermodynamics|Kinetic Theory|Oscillations|Waves",
+"Chemistry":"Some Basic Concepts of Chemistry|Structure of Atom|Classification of Elements and Periodicity in Properties|Chemical Bonding and Molecular Structure|Thermodynamics|Equilibrium|Redox Reactions|Organic Chemistry: Some Basic Principles and Techniques|Hydrocarbons",
+"Mathematics":"Sets|Relations and Functions|Trigonometric Functions|Complex Numbers and Quadratic Equations|Linear Inequalities|Permutations and Combinations|Binomial Theorem|Sequences and Series|Straight Lines|Conic Sections|Introduction to Three Dimensional Geometry|Limits and Derivatives|Statistics|Probability",
+"Biology":"The Living World|Biological Classification|Plant Kingdom|Animal Kingdom|Morphology of Flowering Plants|Anatomy of Flowering Plants|Structural Organisation in Animals|Cell: The Unit of Life|Biomolecules|Cell Cycle and Cell Division|Photosynthesis in Higher Plants|Respiration in Plants|Plant Growth and Development|Breathing and Exchange of Gases|Body Fluids and Circulation|Excretory Products and their Elimination|Locomotion and Movement|Neural Control and Coordination|Chemical Coordination and Integration",
+"Computer Science":"Computer System|Encoding Schemes and Number System|Emerging Trends|Introduction to Problem Solving|Getting Started with Python|Conditional Statements and Iterative Constructs|Functions|Strings|Lists|Tuples and Dictionaries|Societal Impact",
+"Economics":"Statistics: Introduction|Statistics: Collection of Data|Statistics: Organisation of Data|Statistics: Presentation of Data|Statistics: Measures of Central Tendency|Statistics: Measures of Dispersion|Statistics: Correlation|Statistics: Index Numbers|Indian Economy on the Eve of Independence|Indian Economy 1950-1990|Liberalisation, Privatisation and Globalisation|Poverty|Human Capital Formation in India|Rural Development|Employment|Infrastructure|Environment and Sustainable Development|Comparative Development Experiences of India and its Neighbours",
+"Accountancy":"Introduction to Accounting|Theory Base of Accounting|Recording of Transactions - I|Recording of Transactions - II|Bank Reconciliation Statement|Trial Balance and Rectification of Errors|Depreciation, Provisions and Reserves|Bills of Exchange|Financial Statements - I|Financial Statements - II|Accounts from Incomplete Records|Applications of Computers in Accounting|Computerised Accounting System",
+"Business Studies":"Business, Trade and Commerce|Forms of Business Organisation|Private, Public and Global Enterprises|Business Services|Emerging Modes of Business|Social Responsibilities of Business and Business Ethics|Formation of a Company|Sources of Business Finance|Small Business|Internal Trade|International Business"},
+12:{"Physics":"Electric Charges and Fields|Electrostatic Potential and Capacitance|Current Electricity|Moving Charges and Magnetism|Magnetism and Matter|Electromagnetic Induction|Alternating Current|Electromagnetic Waves|Ray Optics and Optical Instruments|Wave Optics|Dual Nature of Radiation and Matter|Atoms|Nuclei|Semiconductor Electronics",
+"Chemistry":"Solutions|Electrochemistry|Chemical Kinetics|The d- and f-Block Elements|Coordination Compounds|Haloalkanes and Haloarenes|Alcohols, Phenols and Ethers|Aldehydes, Ketones and Carboxylic Acids|Amines|Biomolecules",
+"Mathematics":"Relations and Functions|Inverse Trigonometric Functions|Matrices|Determinants|Continuity and Differentiability|Application of Derivatives|Integrals|Application of Integrals|Differential Equations|Vector Algebra|Three Dimensional Geometry|Linear Programming|Probability",
+"Biology":"Sexual Reproduction in Flowering Plants|Human Reproduction|Reproductive Health|Principles of Inheritance and Variation|Molecular Basis of Inheritance|Evolution|Human Health and Disease|Microbes in Human Welfare|Biotechnology: Principles and Processes|Biotechnology and its Applications|Organisms and Populations|Ecosystem|Biodiversity and Conservation",
+"Computer Science":"Exception Handling in Python|File Handling in Python|Stack|Queue|Sorting|Searching|Understanding Data|Database Concepts|Structured Query Language (SQL)|Computer Networks|Data Communication|Security Aspects|Societal Impact",
+"Economics":"Introduction to Macroeconomics|National Income Accounting|Money and Banking|Determination of Income and Employment|Government Budget and the Economy|Open Economy Macroeconomics|Development Experience (1947-90) and Economic Reforms Since 1991|Current Challenges Facing Indian Economy|Development Experience of India: A Comparison with Neighbours",
+"Accountancy":"Accounting for Partnership Firms: Fundamentals|Goodwill|Change in Profit Sharing Ratio|Admission of a Partner|Retirement/Death of a Partner|Dissolution of a Partnership Firm|Accounting for Share Capital|Issue and Redemption of Debentures|Financial Statements of a Company|Analysis of Financial Statements|Accounting Ratios|Cash Flow Statement",
+"Business Studies":"Nature and Significance of Management|Principles of Management|Business Environment|Planning|Organising|Staffing|Directing|Controlling|Financial Management|Financial Markets|Marketing Management|Consumer Protection"}
+};
+const PAPER_RULE=`You are an expert CBSE board paper setter. Output ONLY clean HTML (no markdown, no code fences, no <script>). Follow the latest CBSE pattern and NCERT syllabus strictly. Use ONLY the given chapter(s). No repeated or trivial questions; every answer must be correct. Write questions in English (Hindi subject: Hindi, Sanskrit subject: Sanskrit).
+Format: each question = <div class="q"><b>Q{number}.</b> question text <span class="mk">[{marks}]</span> ...</div>. For MCQs put the 4 options as <ol type="a"><li>..</li></ol>. Right after every question add <details><summary>Answer</summary>correct answer with short working/explanation</details>. Number questions exactly as asked. Do not add any intro or closing text.`;
+function paperList(c,s){const r=(PAPER_CH_RAW[c]||{})[s];return r?r.split("|"):[]}
+function updatePaperChapters(){
+ const sel=document.getElementById("paperChapter");if(!sel)return;
+ const c=document.getElementById("paperClass").value,s=document.getElementById("paperSubject").value;
+ const list=paperList(c,s),esc=x=>x.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+ sel.innerHTML='<option value="__all">📚 Full Syllabus (sab chapters)</option>'+list.map((x,i)=>`<option value="${i}">Ch ${i+1}. ${esc(x)}</option>`).join("")+'<option value="__custom">✍️ Apna chapter likho</option>';
+ document.getElementById("paperCustom").style.display="none";
+}
+function paperChapterName(){
+ const c=document.getElementById("paperClass").value,s=document.getElementById("paperSubject").value,v=document.getElementById("paperChapter").value;
+ if(v==="__all")return "Full Syllabus (all chapters of the subject)";
+ if(v==="__custom")return (document.getElementById("paperCustom").value||"").trim();
+ return paperList(c,s)[+v]||"";
+}
+function cleanPaperHTML(r){
+ return String(r||"").replace(/```html|```/g,"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/ on\w+="[^"]*"/gi,"").replace(/\*\*(.+?)\*\*/g,"<b>$1</b>").trim();
+}
+async function makePaper(){
+ const c=document.getElementById("paperClass").value,s=document.getElementById("paperSubject").value,box=document.getElementById("paperBox");
+ const chap=paperChapterName();
+ if(!chap){box.innerHTML='<div class="card notice">Pehle chapter ka naam likho.</div>';return}
+ const btn=document.getElementById("paperBtn");btn.disabled=true;btn.textContent="⏳ Paper ban raha hai…";
+ box.innerHTML='<div class="card"><h3>⏳ Paper ban raha hai… 30-60 second lag sakte hain</h3><div id="paperStatus"></div></div>';
+ const base=`Class ${c}, ${s}, chapter: "${chap}". `;
+ const parts=[
+  base+`Write Section A: Q1 to Q18 are MCQs (1 mark each, 4 options). Q19 and Q20 are Assertion-Reason questions (1 mark each) with the 4 standard CBSE options. Start with <h3>Section A: MCQ and Assertion-Reason (1 mark each)</h3>.`,
+  base+`Write Section B: Q21 to Q25, short answer questions of 2 marks each. Then Section C: Q26 to Q30, short answer questions of 3 marks each. Use <h3>Section B: Short Answer (2 marks each)</h3> and <h3>Section C: Short Answer (3 marks each)</h3> headings.`,
+  base+`Write Section D: Q31 to Q34, long answer questions of 5 marks each, each with an internal choice (OR). Then Section E: Q35 to Q38, case-based / source-based questions of 4 marks each; each has a short case passage followed by 3 sub-questions (1+1+2 marks). Use <h3>Section D: Long Answer (5 marks each)</h3> and <h3>Section E: Case-Based (4 marks each)</h3> headings.`
  ];
- document.getElementById("paperBox").innerHTML=`<div class="card"><h2>Class ${c} — ${s} Practice Paper</h2><p class="muted">Chapter-specific questions will be populated from your supplied notes/content. This starter paper keeps the structure ready.</p>${qs.map((q,i)=>`<div class="q"><b>Q${i+1}.</b> ${q}<p class="muted">Answer space / solution will appear here.</p></div>`).join("")}<button class="btn" onclick="window.print()">Print / Save PDF</button></div>`;
+ const st=()=>{const e=document.getElementById("paperStatus");if(e)e.innerHTML='<div class="notice">Server jaag raha hai, pehli baar 30-60 second lag sakte hain. Page band mat karo…</div>'};
+ const res=await Promise.allSettled(parts.map((p,i)=>aiAsk({message:p,cls:c,ctx:s+" | "+chap,system:PAPER_RULE,maxTokens:3800,timeout:110000,onSlow:i===0?st:null})));
+ const failed=res.filter(r=>r.status!=="fulfilled").length;
+ const body=res.map((r,i)=>r.status==="fulfilled"?cleanPaperHTML(r.value):`<div class="notice">Part ${i+1} nahi ban paya. ${aiErr(r.reason)}</div>`).join("");
+ box.innerHTML=`<div class="card paperSheet"><div style="text-align:center"><h2>CBSE Practice Paper</h2><p><b>Class ${c} — ${s}</b></p><p>Chapter: <b>${chap.replace(/</g,"&lt;")}</b></p><p class="muted">Time: 3 Hours &nbsp;|&nbsp; Maximum Marks: 81 &nbsp;|&nbsp; 38 questions, all compulsory</p></div>
+ <p class="muted"><b>Pattern:</b> Q1-18 MCQ (1) • Q19-20 Assertion-Reason (1) • Q21-25 (2 marks) • Q26-30 (3 marks) • Q31-34 (5 marks) • Q35-38 Case-based (4 marks)</p>
+ ${body}
+ <div class="resourceRow"><button class="btn" onclick="document.querySelectorAll('#paperBox details').forEach(d=>d.open=true)">Show all answers</button><button class="btn alt" onclick="document.querySelectorAll('#paperBox details').forEach(d=>d.open=false)">Hide answers</button><button class="btn alt" onclick="window.print()">Print / PDF</button><button class="btn alt" onclick="makePaper()">🔄 Naya paper</button></div></div>`;
+ btn.disabled=false;btn.textContent="Generate Paper";
 }
 function toast(msg){
   const t=document.getElementById("toast");
@@ -1321,7 +1384,7 @@ async function send(){
  document.getElementById("msgs").scrollTop=document.getElementById("msgs").scrollHeight;
 }
 
-document.getElementById("paperClass").onchange=updatePaperSubjects;
+document.getElementById("paperClass").onchange=updatePaperSubjects;document.getElementById("paperSubject").onchange=updatePaperChapters;
 fillExtraSelects();
 document.getElementById("ncertClass").onchange=renderNCERT;
 </script>
