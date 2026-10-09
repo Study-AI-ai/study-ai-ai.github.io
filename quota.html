@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="hi"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>StudyAI AI Usage Monitor</title>
+<style>
+*{box-sizing:border-box}body{margin:0;background:#0b1220;color:#edf3ff;font:16px system-ui,Arial,sans-serif}main{max-width:1000px;margin:auto;padding:24px 16px}h1{font-size:clamp(24px,4vw,36px);margin:0 0 8px}.muted{color:#a8b5ce;font-size:13px;line-height:1.6}.panel{background:#121e32;border:1px solid #2a3e60;border-radius:14px;padding:16px;margin:14px 0}.form{display:grid;grid-template-columns:2fr 2fr auto;gap:10px;align-items:end}.field label{display:block;font-size:12px;color:#b3c2db;margin-bottom:6px}.field input{width:100%;background:#08111f;color:#fff;border:1px solid #405778;border-radius:9px;padding:12px;font-size:15px}.btn{background:#8db5ff;color:#091526;border:0;border-radius:9px;padding:12px 18px;font-weight:800;cursor:pointer}.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px}.stat{background:#0b1526;border:1px solid #293d5c;border-radius:12px;padding:14px}.label{color:#9cb0cf;font-size:12px}.value{font-size:25px;font-weight:800;overflow-wrap:anywhere;margin:8px 0}.small{color:#98aac7;font-size:12px;line-height:1.45}.kv{display:grid;grid-template-columns:1fr auto;gap:10px;padding:10px 0;border-bottom:1px solid #263854;font-size:14px}.kv:last-child{border:0}.kv span:first-child{color:#a9bad5}.kv span:last-child{text-align:right;overflow-wrap:anywhere}.status{padding:10px 12px;border-radius:9px;background:#1d304d;color:#dbe8ff;margin-top:12px;white-space:pre-wrap}.error{background:#48232b;color:#ffcbd2}.warning{background:#4b3a1c;color:#ffedb5}@media(max-width:700px){.form{grid-template-columns:1fr}.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}@media(max-width:390px){.stats{grid-template-columns:1fr}}
+</style></head><body><main>
+<h1>StudyAI AI Usage Monitor</h1><p class="muted">Private dashboard · har 30 second refresh · apni API key yahan kabhi na daalein.</p>
+<section class="panel"><h2>Backend se connect karo</h2><div class="form">
+<div class="field"><label for="base">Backend URL</label><input id="base" type="url" value="https://studyai-backend-bqs8.onrender.com"></div>
+<div class="field"><label for="token">Private dashboard token</label><input id="token" type="password" placeholder="Render Environment wala ADMIN_DASHBOARD_TOKEN" autocomplete="current-password"></div>
+<button class="btn" id="connect">Connect</button></div>
+<div id="status" class="status">Abhi connect nahi hua. Render mein ADMIN_DASHBOARD_TOKEN set karne ke baad connect karein.</div></section>
+<section id="dash" hidden>
+<div class="panel"><h2>Aaj ka quota overview</h2><div class="stats">
+<div class="stat"><div class="label">Gemini requests used</div><div id="gused" class="value">—</div><div id="gusedsub" class="small">—</div></div>
+<div class="stat"><div class="label">Gemini estimated remaining</div><div id="gleft" class="value">—</div><div id="gleftsub" class="small">—</div></div>
+<div class="stat"><div class="label">Groq requests today</div><div id="qused" class="value">—</div><div class="small">Backend ke attempts</div></div>
+<div class="stat"><div class="label">Groq provider-reported remaining</div><div id="qleft" class="value">—</div><div id="qleftsub" class="small">—</div></div>
+</div><div id="warn" class="status warning" hidden></div></div>
+<div class="panel"><h2>Gemini details</h2>
+<div class="kv"><span>Configured models</span><span id="gmodels">—</span></div>
+<div class="kv"><span>Requests in last minute</span><span id="grpm">—</span></div>
+<div class="kv"><span>Requests today / daily limit</span><span id="gpair">—</span></div>
+<div class="kv"><span>Tokens reported today</span><span id="gtokens">—</span></div>
+<div class="kv"><span>Successful / failed calls</span><span id="gokfail">—</span></div>
+<div class="kv"><span>Last error</span><span id="gerror">None</span></div>
+<p class="muted">Gemini remaining ek estimate hai: Render ke GEMINI_RPD_LIMIT mein active model ki AI Studio daily limit set honi chahiye. Agar multiple Gemini models fallback mein hain, estimate exact single-model balance nahi hoga.</p></div>
+<div class="panel"><h2>Groq details</h2>
+<div class="kv"><span>Model</span><span id="qmodel">—</span></div>
+<div class="kv"><span>Requests in last minute</span><span id="qrpm">—</span></div>
+<div class="kv"><span>Remaining requests / limit from last Groq response</span><span id="qreq">—</span></div>
+<div class="kv"><span>Remaining tokens / limit from last Groq response</span><span id="qtok">—</span></div>
+<div class="kv"><span>Successful / failed calls</span><span id="qokfail">—</span></div>
+<div class="kv"><span>Last error</span><span id="qerror">None</span></div>
+<div class="kv"><span>Last successful AI</span><span id="lastok">—</span></div>
+<div class="kv"><span>Last activity</span><span id="activity">—</span></div>
+<p class="muted">Groq ki remaining limit latest actual Groq response se aati hai; dashboard refresh khud Groq ko nayi request nahi bhejta.</p></div>
+<div class="panel"><h2>Zaroori note</h2><p class="muted">Usage counters Render server restart/redeploy hone par reset ho sakte hain. Gemini ke liye exact remaining quota API response mein available nahi hota, isliye daily limit set karne par estimate dikhega. Data quota monitoring hai, provider quota ki guarantee nahi.</p><p id="updated" class="muted"></p></div>
+</section>
+</main>
+<script>
+(function(){
+const $=id=>document.getElementById(id);let activeToken="",timer=null;
+const fmt=x=>x==null?"—":Number(x).toLocaleString("en-IN");
+const dt=x=>x?new Date(x).toLocaleString("en-IN"):"—";
+function put(id,x){$(id).textContent=x==null||x===""?"—":String(x)}
+function message(x,kind){$("status").textContent=x;$("status").className="status"+(kind?" "+kind:"")}
+async function refresh(){
+const base=$("base").value.trim().replace(/\/+$/,"");if(!base||!activeToken)return;
+try{
+const r=await fetch(base+"/api/admin/usage",{headers:{Authorization:"Bearer "+activeToken,Accept:"application/json"},cache:"no-store"});
+const d=await r.json().catch(()=>({}));
+if(!r.ok)throw new Error(d.error||("HTTP "+r.status));
+const g=d.providers.gemini,q=d.providers.groq,c=d.config;
+$("dash").hidden=false;message("Connected · last update "+dt(d.asOf));
+put("gused",fmt(g.requestsToday));put("gusedsub",fmt(g.successesToday)+" successful · "+fmt(g.failuresToday)+" failed");
+put("gleft",c.geminiRemainingEstimated==null?"Set limit":fmt(c.geminiRemainingEstimated));put("gleftsub",c.geminiRemainingPct==null?"Render mein GEMINI_RPD_LIMIT set karein":fmt(c.geminiRemainingPct)+"% of configured quota left");
+put("qused",fmt(q.requestsToday));put("qleft",q.groqQuota&&q.groqQuota.remainingRequests!=null?fmt(q.groqQuota.remainingRequests):"No data yet");
+put("qleftsub",q.groqQuota&&q.groqQuota.limitRequests!=null?"of "+fmt(q.groqQuota.limitRequests)+" requests":"Groq call hone par show hoga");
+put("gmodels",(c.geminiModels||[]).join(" → "));put("grpm",fmt(g.requestsLastMinute));put("gpair",fmt(g.requestsToday)+" / "+(c.geminiDailyLimit?fmt(c.geminiDailyLimit):"not set"));put("gtokens",fmt(g.totalTokensToday));put("gokfail",fmt(g.successesToday)+" / "+fmt(g.failuresToday));put("gerror",g.lastError?(g.lastStatus+": "+g.lastError):"None");
+put("qmodel",c.groqModel);put("qrpm",fmt(q.requestsLastMinute));put("qreq",q.groqQuota&&q.groqQuota.remainingRequests!=null?fmt(q.groqQuota.remainingRequests)+" / "+fmt(q.groqQuota.limitRequests):"No data yet");put("qtok",q.groqQuota&&q.groqQuota.remainingTokens!=null?fmt(q.groqQuota.remainingTokens)+" / "+fmt(q.groqQuota.limitTokens):"No data yet");put("qokfail",fmt(q.successesToday)+" / "+fmt(q.failuresToday));put("qerror",q.lastError?(q.lastStatus+": "+q.lastError):"None");put("lastok",d.lastSuccessfulProvider||"No success yet");put("activity",dt(d.lastActivityAt));put("updated","Updated: "+dt(d.asOf)+" · quota day: "+d.dayKey);
+const warnings=[];if(c.geminiDailyLimit&&c.geminiRemainingPct<=20)warnings.push("Gemini configured daily quota 20% ya usse kam bacha hai.");if(g.lastStatus===429)warnings.push("Gemini par rate-limit (429) error aaya.");if(q.lastStatus===429)warnings.push("Groq par rate-limit (429) error aaya.");$("warn").hidden=!warnings.length;$("warn").textContent=warnings.join(" ");
+}catch(e){$("dash").hidden=true;message("Connect nahi hua: "+e.message+". Backend URL/token aur Render deploy check karein.","error")}
+}
+$("connect").addEventListener("click",function(){activeToken=$("token").value.trim();if(!activeToken){message("Render ka ADMIN_DASHBOARD_TOKEN enter karein.","warning");return}if(timer)clearInterval(timer);refresh();timer=setInterval(refresh,30000)});
+$("token").addEventListener("keydown",e=>{if(e.key==="Enter")$("connect").click()});
+window.addEventListener("beforeunload",()=>{if(timer)clearInterval(timer);activeToken=""});
+})();
+</script></body></html>
