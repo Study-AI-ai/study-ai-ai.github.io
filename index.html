@@ -126,7 +126,6 @@ body.dark .quiz-explain{background:#202a3d}
 .ncertHero h1{margin:0 0 8px;font-size:30px}.ncertHero p{color:#e4e7ff;max-width:760px;line-height:1.55}
 .ncertGrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:15px}
 .ncertCard{position:relative;overflow:hidden}
-.ncertChapterList{margin:10px 0;padding:10px;border:1px solid var(--line);border-radius:12px}.ncertChapterList summary{cursor:pointer;font-weight:700}.ncertChapterList ol{padding-left:22px;line-height:1.65}.ncertCard h3{margin-bottom:6px}
 .ncertCard .tag{display:inline-block;background:#eeecff;color:#5148d7;padding:5px 9px;border-radius:99px;font-size:12px;font-weight:850}
 .resourceRow{display:flex;gap:9px;flex-wrap:wrap;margin-top:13px}
 .heroHome{
@@ -1227,32 +1226,13 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 
 <script>
 const ncertMap={
-1:["English","Hindi","Mathematics","Urdu"],
-2:["English","Hindi","Mathematics","Urdu"],
-3:["English","Hindi","Mathematics","Environmental Studies","Urdu"],
-4:["English","Hindi","Mathematics","Environmental Studies","Urdu"],
-5:["English","Hindi","Mathematics","Environmental Studies","Urdu"],
-6:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Urdu","Computer/Vocational"],
-7:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Urdu","Computer"],
-8:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Urdu","Computer"],
-9:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Urdu","Information Technology"],
-10:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Urdu","Information Technology"],
-11:["Physics","Chemistry","Mathematics","Biology","English","Hindi","Computer Science","Economics","Accountancy","Business Studies","Sociology","Psychology","Political Science","History","Geography","Fine Arts","Physical Education"],
-12:["Physics","Chemistry","Mathematics","Biology","English","Hindi","Computer Science","Economics","Accountancy","Business Studies","Sociology","Psychology","Political Science","History","Geography","Fine Arts","Physical Education"]
-};
-const NCERT_BOOK_TITLES={
-1:{English:"Mridang",Hindi:"Sarangi",Mathematics:"Joyful Mathematics",Urdu:"Shehnai"},
-2:{English:"Santoor",Hindi:"Sarangi",Mathematics:"Joyful Mathematics",Urdu:"Urdu textbook"},
-3:{English:"Santoor",Hindi:"Veena",Mathematics:"Math Mela","Environmental Studies":"Our Wondrous World",Urdu:"Urdu textbook"},
-4:{English:"Santoor",Hindi:"Veena",Mathematics:"Math Mela","Environmental Studies":"Our Wondrous World",Urdu:"Urdu textbook"},
-5:{English:"Santoor",Hindi:"Veena",Mathematics:"Math Mela","Environmental Studies":"Our Wondrous World",Urdu:"Urdu textbook"},
-6:{Mathematics:"Ganita Prakash",Science:"Curiosity",English:"Poorvi",Hindi:"Malhar",Sanskrit:"Deepakam","Social Science":"Exploring Society: India and Beyond",Urdu:"Sitar"},
-7:{Mathematics:"NCERT Mathematics (check official portal)",Science:"NCERT Science (check official portal)",English:"NCERT English (check official portal)",Hindi:"NCERT Hindi (check official portal)","Social Science":"NCERT Social Science (check official portal)"},
-8:{Mathematics:"NCERT Mathematics (check official portal)",Science:"NCERT Science (check official portal)",English:"NCERT English (check official portal)",Hindi:"NCERT Hindi (check official portal)","Social Science":"NCERT Social Science (check official portal)"},
-9:{Mathematics:"NCERT Mathematics (official portal)",Science:"NCERT Science (official portal)",English:"NCERT English (official portal)",Hindi:"NCERT Hindi (official portal)","Social Science":"NCERT Social Science (official portal)"},
-10:{Mathematics:"NCERT Mathematics",Science:"NCERT Science",English:"NCERT English",Hindi:"NCERT Hindi","Social Science":"NCERT Social Science"},
-11:{Physics:"Physics Part I & II",Chemistry:"Chemistry Part I & II",Mathematics:"Mathematics",Biology:"Biology",English:"Hornbill & Snapshots",Hindi:"Aroh & Vitan","Computer Science":"Computer Science",Economics:"Statistics for Economics & Indian Economic Development",Accountancy:"Accountancy Part I & II","Business Studies":"Business Studies"},
-12:{Physics:"Physics Part I & II",Chemistry:"Chemistry Part I & II",Mathematics:"Mathematics",Biology:"Biology",English:"Flamingo & Vistas",Hindi:"Aroh & Vitan","Computer Science":"Computer Science",Economics:"Introductory Macroeconomics & Indian Economic Development",Accountancy:"Accountancy Part I & II","Business Studies":"Business Studies"}
+6:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer/Vocational"],
+7:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer"],
+8:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer"],
+9:["Mathematics","Science","English","Hindi","Social Science","Information Technology"],
+10:["Mathematics","Science","English","Hindi","Social Science","Information Technology"],
+11:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"],
+12:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"]
 };
 function fillExtraSelects(){
  const o=Object.keys(ncertMap).map(c=>`<option>${c}</option>`).join("");
@@ -1261,23 +1241,16 @@ function fillExtraSelects(){
  updatePaperSubjects();renderNCERT();
 }
 function renderNCERT(){
- const c=document.getElementById("ncertClass").value;
- const q=(document.getElementById("ncertSearch").value||"").toLowerCase();
- const subjects=ncertMap[c]||[];
- const cards=subjects.filter(subject=>{
-   const title=(NCERT_BOOK_TITLES[c]||{})[subject]||"";
-   const chapters=((PAPER_CH_RAW[c]||{})[subject]||"").split("|").filter(Boolean);
-   return (subject+" "+title+" "+chapters.join(" ")).toLowerCase().includes(q);
- });
- document.getElementById("ncertCards").innerHTML=cards.map(subject=>{
-   const title=(NCERT_BOOK_TITLES[c]||{})[subject]||("NCERT "+subject+" textbook");
-   const chapters=((PAPER_CH_RAW[c]||{})[subject]||"").split("|").filter(Boolean);
-   const chapterMarkup=chapters.length
-     ? '<details class="ncertChapterList"><summary>View '+chapters.length+' chapters</summary><ol>'+chapters.map(ch=>'<li>'+ch+'</li>').join('')+'</ol></details>'
-     : '<p class="muted">Chapter titles for this class/subject are available through the official NCERT portal. Open the portal and choose the exact edition/language.</p>';
-   const safeSubject=subject.replace(/\\/g,"\\\\").replace(/'/g,"\\'");
-   return '<div class="card ncertCard"><span class="tag">Class '+c+'</span><h3>'+subject+'</h3><p><b>'+title+'</b></p>'+chapterMarkup+'<p class="muted">Use the official NCERT portal to confirm the current edition and chapter order.</p><div class="resourceRow"><a class="btn" href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener">Open NCERT book</a><button class="btn alt" onclick="openSubject(\''+safeSubject+'\')">StudyAI notes</button></div></div>';
- }).join("") || '<div class="card">No matching subjects. Try another search.</div>';
+ let c=document.getElementById("ncertClass").value,q=(document.getElementById("ncertSearch").value||"").toLowerCase();
+ document.getElementById("ncertCards").innerHTML=ncertMap[c].filter(s=>s.toLowerCase().includes(q)).map(s=>`
+ <div class="card ncertCard">
+  <span class="tag">Class ${c}</span><h3>${s}</h3>
+  <p class="muted">Official textbook + StudyAI short notes + solutions + practice</p>
+  <div class="resourceRow">
+   <a class="btn" href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener">NCERT Book</a>
+   <button class="btn alt" onclick="openSubject('${s.replace(/'/g,"\\'")}')">Short Notes</button>
+  </div>
+ </div>`).join("");
 }
 function updatePaperSubjects(){
  let c=document.getElementById("paperClass").value;
@@ -1314,25 +1287,6 @@ const PAPER_CH_RAW={
 "Accountancy":"Accounting for Partnership Firms: Fundamentals|Goodwill|Change in Profit Sharing Ratio|Admission of a Partner|Retirement/Death of a Partner|Dissolution of a Partnership Firm|Accounting for Share Capital|Issue and Redemption of Debentures|Financial Statements of a Company|Analysis of Financial Statements|Accounting Ratios|Cash Flow Statement",
 "Business Studies":"Nature and Significance of Management|Principles of Management|Business Environment|Planning|Organising|Staffing|Directing|Controlling|Financial Management|Financial Markets|Marketing Management|Consumer Protection"}
 };
-
-// Keep Classes 6–8 chapter lists in sync with StudyAI Notes data.
-// Chapter names are taken from PAPER_CH_RAW; missing notes are clearly marked
-// instead of presenting invented chapter summaries as verified content.
-[6,7,8].forEach(function(cls){
-  const subjects = PAPER_CH_RAW[cls] || {};
-  Object.entries(subjects).forEach(function(entry){
-    const subject = entry[0];
-    const chapters = String(entry[1] || "").split("|").filter(Boolean);
-    REAL_NOTES_DATA[String(cls)] = REAL_NOTES_DATA[String(cls)] || {};
-    REAL_NOTES_DATA[String(cls)][subject] = REAL_NOTES_DATA[String(cls)][subject] || {};
-    chapters.forEach(function(chapter){
-      if (!REAL_NOTES_DATA[String(cls)][subject][chapter]) {
-        REAL_NOTES_DATA[String(cls)][subject][chapter] =
-          '<div class="notice"><b>Study notes are being prepared.</b> This chapter is listed in the current chapter selector. Ask the AI Tutor for an explanation or question practice while notes are prepared.</div>';
-      }
-    });
-  });
-});
 const PAPER_RULE=`You are an expert CBSE board paper setter. Output ONLY clean HTML (no markdown, no code fences, no <script>). Follow the latest CBSE pattern and NCERT syllabus strictly. Use ONLY the given chapter(s). No repeated or trivial questions; every answer must be correct. Write questions in English (Hindi subject: Hindi, Sanskrit subject: Sanskrit).
 Format: each question = <div class="q"><b>Q{number}.</b> question text <span class="mk">[{marks}]</span> ...</div>. For MCQs put the 4 options as <ol type="a"><li>..</li></ol>. Right after every question add <details><summary>Answer</summary>correct answer with short working/explanation</details>. Number questions exactly as asked. Do not add any intro or closing text.`;
 function paperList(c,s){const r=(PAPER_CH_RAW[c]||{})[s];return r?r.split("|"):[]}
