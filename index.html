@@ -1287,25 +1287,6 @@ const PAPER_CH_RAW={
 "Accountancy":"Accounting for Partnership Firms: Fundamentals|Goodwill|Change in Profit Sharing Ratio|Admission of a Partner|Retirement/Death of a Partner|Dissolution of a Partnership Firm|Accounting for Share Capital|Issue and Redemption of Debentures|Financial Statements of a Company|Analysis of Financial Statements|Accounting Ratios|Cash Flow Statement",
 "Business Studies":"Nature and Significance of Management|Principles of Management|Business Environment|Planning|Organising|Staffing|Directing|Controlling|Financial Management|Financial Markets|Marketing Management|Consumer Protection"}
 };
-
-// Keep Classes 6–8 chapter lists in sync with StudyAI Notes data.
-// Chapter names are taken from PAPER_CH_RAW; missing notes are clearly marked
-// instead of presenting invented chapter summaries as verified content.
-[6,7,8].forEach(function(cls){
-  const subjects = PAPER_CH_RAW[cls] || {};
-  Object.entries(subjects).forEach(function(entry){
-    const subject = entry[0];
-    const chapters = String(entry[1] || "").split("|").filter(Boolean);
-    REAL_NOTES_DATA[String(cls)] = REAL_NOTES_DATA[String(cls)] || {};
-    REAL_NOTES_DATA[String(cls)][subject] = REAL_NOTES_DATA[String(cls)][subject] || {};
-    chapters.forEach(function(chapter){
-      if (!REAL_NOTES_DATA[String(cls)][subject][chapter]) {
-        REAL_NOTES_DATA[String(cls)][subject][chapter] =
-          '<div class="notice"><b>Study notes are being prepared.</b> This chapter is listed in the current chapter selector. Ask the AI Tutor for an explanation or question practice while notes are prepared.</div>';
-      }
-    });
-  });
-});
 const PAPER_RULE=`You are an expert CBSE board paper setter. Output ONLY clean HTML (no markdown, no code fences, no <script>). Follow the latest CBSE pattern and NCERT syllabus strictly. Use ONLY the given chapter(s). No repeated or trivial questions; every answer must be correct. Write questions in English (Hindi subject: Hindi, Sanskrit subject: Sanskrit).
 Format: each question = <div class="q"><b>Q{number}.</b> question text <span class="mk">[{marks}]</span> ...</div>. For MCQs put the 4 options as <ol type="a"><li>..</li></ol>. Right after every question add <details><summary>Answer</summary>correct answer with short working/explanation</details>. Number questions exactly as asked. Do not add any intro or closing text.`;
 function paperList(c,s){const r=(PAPER_CH_RAW[c]||{})[s];return r?r.split("|"):[]}
