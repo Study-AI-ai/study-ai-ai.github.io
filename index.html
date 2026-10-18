@@ -1637,34 +1637,43 @@ function renderNotes(){
   const noteSubject=document.getElementById("noteSubject");
   const noteChapter=document.getElementById("noteChapter");
   const noteBox=document.getElementById("noteBox");
-  const c=noteClass.value;
+  const c=String(noteClass.value);
   const wantedSubject=noteSubject.value;
-  const subjectNames=Object.keys(REAL_NOTES_DATA[c]||{});
+  const savedSubjects=Object.keys(REAL_NOTES_DATA[c]||{});
+  const catalogSubjects=Object.keys((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{});
+  const subjectNames=[...new Set([...catalogSubjects,...savedSubjects])];
   noteSubject.innerHTML=subjectNames.map(s=>`<option>${s}</option>`).join("");
   noteSubject.value=subjectNames.includes(wantedSubject) ? wantedSubject : (subjectNames[0]||"");
   const subject=noteSubject.value;
-  const chapters=REAL_NOTES_DATA[c]?.[subject] || {};
-  if(!chapters || Object.keys(chapters).length===0){
-    if(noteChapter) noteChapter.innerHTML="";
-    noteBox.innerHTML=`<div class="card"><h2>Notes coming for ${subject}</h2><p class="muted">Select another subject or add your own notes later.</p></div>`;
+  const savedChapters=REAL_NOTES_DATA[c]?.[subject]||{};
+  const catalogChapters=((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{})[subject]||[];
+  const chapterNames=[...new Set([...catalogChapters,...Object.keys(savedChapters)])];
+  if(!chapterNames.length){
+    if(noteChapter)noteChapter.innerHTML="";
+    noteBox.innerHTML=`<div class="card"><h2>Notes coming for ${subject||"this subject"}</h2><p class="muted">Is subject ke chapters abhi catalogue mein nahi hain.</p></div>`;
     return;
   }
   if(noteChapter){
     const wantedChapter=noteChapter.value;
-    const chapterNames=Object.keys(chapters);
     noteChapter.innerHTML=chapterNames.map(ch=>`<option>${ch}</option>`).join("");
     noteChapter.value=chapterNames.includes(wantedChapter) ? wantedChapter : chapterNames[0];
   }
-  const chosen=noteChapter ? noteChapter.value : Object.keys(chapters)[0];
-  const raw=chapters[chosen] || Object.values(chapters)[0];
+  const chosen=noteChapter ? noteChapter.value : chapterNames[0];
+  const raw=savedChapters[chosen] || PLACEHOLDER_NOTE;
   const key="notes:"+c+"|"+subject+"|"+chosen;
   let cached=null;try{cached=localStorage.getItem(key)}catch(e){}
-  const isPlace=/Notes aa rahe hain/.test(raw);
+  const isPlace=/Notes aa rahe hain|Chapter added to StudyAI|Notes coming/i.test(raw);
   const data=cached||(isPlace?"":raw);
-  const btn=cached?`<button class="genBtn ghost" onclick="genAINotes()">🔄 Dobara banao</button>`:((isPlace||raw.length<1500)?`<button class="genBtn" onclick="genAINotes()">✨ ${isPlace?"Notes banao":"2-page detailed notes banao"}</button>`:"");
+  // Class 10 always exposes an AI-notes action, even when short starter notes already exist.
+  const btn=cached
+    ? `<button class="genBtn ghost" onclick="genAINotes()">🔄 ${c==="10"?"AI notes dobara banao":"Dobara banao"}</button>`
+    : (c==="10"
+      ? `<button class="genBtn" onclick="genAINotes()">✨ AI-generated notes banao</button>`
+      : ((isPlace||raw.length<1500)?`<button class="genBtn" onclick="genAINotes()">✨ ${isPlace?"AI notes banao":"2-page detailed notes banao"}</button>`:""));
   noteBox.innerHTML=`<div class="lesson card">
     <span class="pill">Class ${c} • ${subject}</span>
     <h2>${chosen}</h2>
+    <p class="muted">${c==="10"?"AI se chapter-wise detailed notes generate karo. Generated notes isi browser mein save ho jayenge.":"Chapter-wise study notes"}</p>
     <div id="genStatus"></div>${btn}
     ${data}
     ${cached?"":`<div class="notice"><b>Exam tip:</b> Pehle definition samjho, phir examples aur questions practise karo.</div>`}
