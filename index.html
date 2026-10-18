@@ -707,6 +707,79 @@ const PACK={"notes": {"6": {"Mathematics": {"Knowing Our Numbers": "<p>Bade numb
 const N=REAL_NOTES_DATA;
 Object.entries(PACK.notes).forEach(([c,subs])=>{N[c]=N[c]||{};Object.entries(subs).forEach(([s,chs])=>{N[c][s]=Object.assign(N[c][s]||{},chs)})});
 Object.entries(PACK.sanskrit).forEach(([c,chs])=>{N[c]=N[c]||{};N[c]['Sanskrit']=chs});
+/* Complete chapter catalogue: preserves existing notes and adds missing chapter entries.
+   Chapter lists are a navigation index; entries without authored notes are clearly marked. */
+const STUDYAI_CHAPTER_CATALOG={
+"6":{
+"Mathematics":["Patterns in Mathematics","Lines and Angles","Number Play","Data Handling and Presentation","Prime Time","Perimeter and Area","Fractions","Playing with Constructions","Symmetry","The Other Side of Zero"],
+"Science":["The Wonderful World of Science","Diversity in the Living World","Mindful Eating: A Healthy Body","Exploring Magnets","Measurement of Length and Motion","Materials Around Us","Temperature and its Measurement","A Journey through States of Water","Methods of Separation in Everyday Life","Living Creatures: Exploring their Characteristics","Nature’s Treasures","Beyond Earth"],
+"English":["A Bottle of Dew","The Raven and the Fox","Rama to the Rescue","The Unlikely Best Friends","A Friend’s Prayer","The Chair","Neem Baba","What a Bird Thought","Spices that Heal Us","Change of Heart","The Winner","Yoga — A Way of Life","Hamara Bharat — Incredible India!","The Kites","Ila Sachani: Embroidering Dreams","National War Memorial"],
+"English — Grammar & Writing":["Parts of Speech: Nouns, Pronouns, Verbs, Adjectives, Adverbs","Articles and Determiners","Singular and Plural Nouns","Gender and Pronouns","Subject–Verb Agreement","Simple Present Tense","Present Continuous Tense","Simple Past Tense","Simple Future Tense","Adjectives and Degrees of Comparison","Adverbs","Prepositions","Conjunctions","Sentence Types and Word Order","Punctuation and Capital Letters","Vocabulary: Synonyms and Antonyms","Prefixes and Suffixes","Word Families and Compound Words","Reading Comprehension: Factual Passage","Reading Comprehension: Literary Passage","Paragraph Writing","Informal Letter and Email","Story Writing","Picture Composition","Diary Entry","Dialogue Writing","Speaking and Listening Activities"],
+"Hindi": ["मातृभूमि","गोल","पहली बूँद","हार की जीत","रहीम के दोहे","मेरी माँ","जलाते चलो","सत्रिया और बिहू नृत्य","मैया मैं नहिं माखन खायो","परीक्षा"],
+"Hindi — व्याकरण एवं लेखन":["वर्ण और वर्णमाला","स्वर और व्यंजन","मात्राएँ और शब्द-निर्माण","संज्ञा","सर्वनाम","विशेषण","क्रिया","लिंग","वचन","काल का परिचय","पर्यायवाची शब्द","विलोम शब्द","अनेक शब्दों के लिए एक शब्द","मुहावरे और लोकोक्तियाँ","विराम-चिह्न","वाक्य और वाक्य-भेद","शुद्ध वर्तनी","अपठित गद्यांश","अनुच्छेद लेखन","पत्र लेखन","चित्र-वर्णन","कहानी लेखन","संवाद लेखन"],
+"Social Science":["Locating Places on the Earth","Oceans and Continents","Landforms and Life","Timeline and Sources of History","India, That Is Bharat","The Beginnings of Indian Civilisation","India’s Cultural Roots","Unity in Diversity, or ‘Many in the One’","Family and Community","Grassroots Democracy — Part 1: Governance","Grassroots Democracy — Part 2: Local Government in Rural Areas","Grassroots Democracy — Part 3: Local Government in Urban Areas","The Value of Work","Economic Activities Around Us"],
+"Sanskrit":["संस्कृत-वर्णमाला","वर्ण-विचार","शब्द-परिचय","धातु-परिचय","सर्वनाम-परिचय","लट् लकारः","लङ् लकारः","वचनानि","लिङ्गानि","कारक-परिचयः","सुभाषितानि","चित्रवर्णनम्","सरल-वाक्य-रचना","पठन-अवबोधन","संवाद-अभ्यास"],
+"Skill Education — Kaushal Bodh":["Project 1: School Kitchen Garden","Project 2: Biodiversity Register","Project 3: Maker Skills","Project 4: Animation and Games","Project 5: School Museum","Project 6: Cooking without Fire","Project planning and reflection","Teamwork and communication","Safety, tools and materials"],
+"Computational Thinking & AI (school implementation)":["Patterns and Logical Reasoning","Step-by-Step Instructions and Algorithms","Breaking Problems into Smaller Steps","Data: Collecting, Sorting and Representing","Digital Systems and How Computers Work","Introduction to Artificial Intelligence","AI Around Us","Data, Examples and Patterns","Responsible and Safe Use of AI","Unplugged Coding Activities","Testing and Debugging","Mini Project and Reflection"],
+"Art Education — Kriti / कृति":["Lines, Shapes and Patterns","Colour and Texture","Drawing from Observation","Nature and Environment Art","Indian Art and Cultural Forms","Paper, Clay and Recycled Materials","2D and 3D Art","Folk Art Exploration","Visual Storytelling","Portfolio and Reflection"],
+"Physical Education & Well-being — Khel Yatra":["Movement Skills and Coordination","Fundamental Games and Sports","Fitness, Strength and Flexibility","Yoga, Breathing and Relaxation","Healthy Habits and Personal Hygiene","Nutrition, Rest and Hydration","Teamwork, Fair Play and Respect","Safety and Injury Prevention","Traditional Indian Games","Self-awareness and Well-being"],
+"Computer & Digital Literacy (school-dependent)":["Computer Parts and Their Uses","Keyboard, Mouse and Touch Input","Files, Folders and Storage","Using a Word Processor","Creating Presentations","Basic Spreadsheets and Tables","Internet and Search Skills","Online Safety and Privacy","Digital Citizenship and Cyberbullying","Algorithms and Block-Based Coding","Introductory Programming Activities","Digital Project"],
+"Third Language / Additional Language (school-selected)":["Alphabet and Script","Pronunciation and Reading","Everyday Vocabulary","Greetings and Introductions","Basic Grammar","Sentence Formation","Reading Comprehension","Poetry and Short Texts","Paragraph Writing","Speaking and Listening"]},
+"7":{
+"Mathematics":["Integers","Fractions and Decimals","Data Handling","Simple Equations","Lines and Angles","The Triangle and its Properties","Comparing Quantities","Rational Numbers","Perimeter and Area","Algebraic Expressions","Exponents and Powers","Symmetry","Visualising Solid Shapes"],
+"Science":["The Wonderful World of Science","Exploring Substances: Acidic, Basic and Neutral","Electricity: Circuits and their Components","Metals and Non-metals","Physical and Chemical Changes","Temperature and Heat","Changes Around Us: Physical and Chemical","Nutrition in Plants","Nutrition in Animals","Respiration in Organisms","Transportation in Animals and Plants","Reproduction in Plants","Motion and Time","Electric Current and its Effects","Light","Water: A Precious Resource","Forests: Our Lifeline","Wastewater Story"],
+"English":["Learning Together","Wit and Wisdom","Dreams and Discoveries","Travel and Adventure","Bravehearts","Science and Curiosity","Healthy Living","Harmony","Grammar and Vocabulary","Reading Comprehension","Writing Skills"],
+"Hindi":["हम पंछी उन्मुक्त गगन के","दादी माँ","हिमालय की बेटियाँ","कठपुतली","मिठाईवाला","रक्त और हमारा शरीर","पापा खो गए","शाम एक किसान","चिड़िया की बच्ची","अपूर्व अनुभव","रहीम के दोहे","कंचा","एक तिनका","खानपान की बदलती तस्वीर","नीलकंठ","भोर और बरखा","वीर कुँवर सिंह","संघर्ष के कारण मैं तुनुकमिजाज हो गया","आश्रम का अनुमानित व्यय","विप्लव गायन"],
+"Social Science":["Environment","Inside Our Earth","Our Changing Earth","Air","Water","Natural Vegetation and Wildlife","Human Environment: Settlement, Transport and Communication","Human-Environment Interactions","Life in the Deserts","Tracing Changes Through a Thousand Years","New Kings and Kingdoms","The Delhi Sultans","The Mughal Empire","Rulers and Buildings","Towns, Traders and Craftspersons","Tribes, Nomads and Settled Communities","Devotional Paths to the Divine","The Making of Regional Cultures","Eighteenth-Century Political Formations","On Equality","Role of the Government in Health","How the State Government Works","Growing up as Boys and Girls","Women Change the World","Understanding Media","Markets Around Us","A Shirt in the Market","Struggles for Equality"],
+"Computer":["Computer System","Managing Files and Folders","Word Processing","Spreadsheets","Presentation Tools","Internet and Email","Cyber Safety","Introduction to Programming","Algorithms and Flowcharts"],
+"Sanskrit":["सुभाषितानि","दुर्बुद्धिः विनश्यति","स्वावलम्बनम्","हास्यबालकविसम्मेलनम्","पण्डिता रमाबाई","सदाचारः","सङ्कल्पः सिद्धिदायकः","त्रिवर्णः ध्वजः","अहमपि विद्यालयं गमिष्यामि","विश्वबन्धुत्वम्"]},
+"8":{
+"Mathematics":["Rational Numbers","Linear Equations in One Variable","Understanding Quadrilaterals","Data Handling","Squares and Square Roots","Cubes and Cube Roots","Comparing Quantities","Algebraic Expressions and Identities","Mensuration","Exponents and Powers","Direct and Inverse Proportions","Factorisation","Introduction to Graphs","Playing with Numbers"],
+"Science":["Exploring the Investigative World of Science","The Invisible Living World: Beyond Our Naked Eye","Health: The Ultimate Treasure","Electricity: Magnetic and Heating Effects","Exploring Forces","Pressure, Winds, Storms, and Cyclones","Particulate Nature of Matter","Elements, Compounds, and Mixtures","The Amazing World of Solutes, Solvents, and Solutions","Light: Mirrors and Lenses","Keeping Time with the Skies","How Nature Works in Harmony","Our Home: Earth, a Unique Life-Sustaining Planet","Electromagnets and their Applications","Sound","Chemical Effects of Electric Current","Some Natural Phenomena","Light","Stars and the Solar System","Pollution of Air and Water"],
+"English":["The Best Christmas Present in the World","The Tsunami","Glimpses of the Past","Bepin Choudhury’s Lapse of Memory","The Summit Within","This is Jody’s Fawn","A Visit to Cambridge","A Short Monsoon Diary","The Great Stone Face","The Ant and the Cricket","Geography Lesson","Macavity: The Mystery Cat","The Last Bargain","The School Boy","The Open Window","Jalebis","The Comet — I","The Comet — II","Ancient Education System of India","Grammar and Vocabulary","Reading Comprehension","Writing Skills"],
+"Hindi":["ध्वनि","लाख की चूड़ियाँ","बस की यात्रा","दीवानों की हस्ती","चिट्ठियों की अनूठी दुनिया","भगवान के डाकिए","क्या निराश हुआ जाए","यह सबसे कठिन समय नहीं","कबीर की साखियाँ","कामचोर","जब सिनेमा ने बोलना सीखा","सुदामा चरित","जहाँ पहिया है","अकबरी लोटा","सूरदास के पद","पानी की कहानी","बाज और साँप","टोपी"],
+"Social Science":["How, When and Where","From Trade to Territory","Ruling the Countryside","Tribals, Dikus and the Vision of a Golden Age","When People Rebel","Civilising the ‘Native’, Educating the Nation","Women, Caste and Reform","The Making of the National Movement","India After Independence","Resources","Land, Soil, Water, Natural Vegetation and Wildlife Resources","Mineral and Power Resources","Agriculture","Industries","Human Resources","The Indian Constitution","Understanding Secularism","Why Do We Need a Parliament?","Understanding Laws","Judiciary","Understanding Our Criminal Justice System","Marginalisation","Confronting Marginalisation","Public Facilities","Law and Social Justice"],
+"Computer":["Computer Networks","Internet Services","Cyber Safety and Digital Footprints","Word Processing and Mail Merge","Spreadsheets and Charts","Presentation Design","Programming Concepts","Python Basics","HTML and Web Pages"]},
+"9":{
+"Mathematics":["Number Systems","Polynomials","Coordinate Geometry","Linear Equations in Two Variables","Introduction to Euclid’s Geometry","Lines and Angles","Triangles","Quadrilaterals","Circles","Heron’s Formula","Surface Areas and Volumes","Statistics","Probability"],
+"Science":["Exploration: Entering the World of Secondary Science","Cell: The Building Block of Life","Tissues in Action","Describing Motion Around Us","Exploring Mixtures and their Separation","How Forces Affect Motion","Work, Energy, and Simple Machines","Journey Inside the Atom","Atomic Foundations of Matter","Sound Waves: Characteristics and Applications","Reproduction: How Life Continues","Patterns in Life: Diversity and Classification","Earth as a System: Energy, Matter, and Life"],
+"English":["The Fun They Had","The Sound of Music","The Little Girl","A Truly Beautiful Mind","The Snake and the Mirror","My Childhood","Reach for the Top","Kathmandu","If I Were You","The Road Not Taken","Wind","Rain on the Roof","The Lake Isle of Innisfree","A Legend of the Northland","No Men Are Foreign","The Duck and the Kangaroo","On Killing a Tree","The Snake Trying","A House Is Not a Home","The Accidental Tourist","The Beggar","Grammar","Writing Skills"],
+"Hindi":["दुःख का अधिकार","एवरेस्ट: मेरी शिखर यात्रा","तुम कब जाओगे, अतिथि","वैज्ञानिक चेतना के वाहक चंद्रशेखर वेंकट रामन","शुक्रतारे के समान","कीचड़ का काव्य","धर्म की आड़","शुक्रतारे के समान","रैदास के पद","रहीम के दोहे","आदमीनामा","एक फूल की चाह","गीत-अगीत","अग्निपथ","नए इलाके में","खुशबू रचते हैं हाथ","व्याकरण और लेखन"],
+"Social Science":["The French Revolution","Socialism in Europe and the Russian Revolution","Nazism and the Rise of Hitler","Forest Society and Colonialism","Pastoralists in the Modern World","India — Size and Location","Physical Features of India","Drainage","Climate","Natural Vegetation and Wildlife","Population","What is Democracy? Why Democracy?","Constitutional Design","Electoral Politics","Working of Institutions","Democratic Rights","The Story of Village Palampur","People as Resource","Poverty as a Challenge","Food Security in India"],
+"Computer":["Computer Systems","Operating System and File Management","Office Tools","Internet and Cyber Safety","Introduction to Algorithms","Python Programming Basics","Data Handling","HTML and Web Design"],
+"Information Technology":["Communication Skills-I","Self-Management Skills-I","ICT Skills-I","Entrepreneurial Skills-I","Green Skills-I","Digital Documentation","Electronic Spreadsheet","Digital Presentation","Database Management System","Web Applications and Security"]},
+"10":{
+"Mathematics":["Real Numbers","Polynomials","Pair of Linear Equations in Two Variables","Quadratic Equations","Arithmetic Progressions","Triangles","Coordinate Geometry","Introduction to Trigonometry","Some Applications of Trigonometry","Circles","Areas Related to Circles","Surface Areas and Volumes","Statistics","Probability"],
+"Science":["Chemical Reactions and Equations","Acids, Bases and Salts","Metals and Non-metals","Carbon and its Compounds","Life Processes","Control and Coordination","How do Organisms Reproduce?","Heredity","Light — Reflection and Refraction","The Human Eye and the Colourful World","Electricity","Magnetic Effects of Electric Current","Our Environment"],
+"English":["A Letter to God","Nelson Mandela: Long Walk to Freedom","Two Stories about Flying","From the Diary of Anne Frank","Glimpses of India","Mijbil the Otter","Madam Rides the Bus","The Sermon at Benares","The Proposal","Dust of Snow","Fire and Ice","A Tiger in the Zoo","How to Tell Wild Animals","The Ball Poem","Amanda!","The Trees","Fog","The Tale of Custard the Dragon","For Anne Gregory","A Triumph of Surgery","The Thief’s Story","The Midnight Visitor","A Question of Trust","Footprints Without Feet","The Making of a Scientist","The Necklace","Bholi","The Book That Saved the Earth","Grammar and Writing"],
+"Hindi":["सूरदास","तुलसीदास","देव","जयशंकर प्रसाद","सूर्यकांत त्रिपाठी निराला","नागार्जुन","गिरिजाकुमार माथुर","ऋतुराज","मंगलेश डबराल","नेताजी का चश्मा","बालगोबिन भगत","लखनवी अंदाज़","मानवीय करुणा की दिव्य चमक","एक कहानी यह भी","स्त्री शिक्षा के विरोधी कुतर्कों का खंडन","नौबतखाने में इबादत","संस्कृति","माता का आँचल","जॉर्ज पंचम की नाक","साना-साना हाथ जोड़ि","एही ठैयाँ झुलनी हेरानी हो रामा","मैं क्यों लिखता हूँ","व्याकरण और लेखन"],
+"Social Science":["The Rise of Nationalism in Europe","Nationalism in India","The Making of a Global World","The Age of Industrialisation","Print Culture and the Modern World","Resources and Development","Forest and Wildlife Resources","Water Resources","Agriculture","Minerals and Energy Resources","Manufacturing Industries","Lifelines of National Economy","Power Sharing","Federalism","Gender, Religion and Caste","Political Parties","Outcomes of Democracy","Development","Sectors of the Indian Economy","Money and Credit","Globalisation and the Indian Economy","Consumer Rights"],
+"Computer":["Digital Documentation","Electronic Spreadsheet","Database Management System","Web Applications and Security","Python Programming","Data Handling","Cyber Safety"],
+"Information Technology":["Communication Skills-II","Self-Management Skills-II","ICT Skills-II","Entrepreneurial Skills-II","Green Skills-II","Digital Documentation (Advanced)","Electronic Spreadsheet (Advanced)","Database Management System","Web Applications and Security"]},
+"11":{
+"Physics":["Units and Measurements","Motion in a Straight Line","Motion in a Plane","Laws of Motion","Work, Energy and Power","System of Particles and Rotational Motion","Gravitation","Mechanical Properties of Solids","Mechanical Properties of Fluids","Thermal Properties of Matter","Thermodynamics","Kinetic Theory","Oscillations","Waves"],
+"Chemistry":["Some Basic Concepts of Chemistry","Structure of Atom","Classification of Elements and Periodicity in Properties","Chemical Bonding and Molecular Structure","Chemical Thermodynamics","Equilibrium","Redox Reactions","Organic Chemistry: Some Basic Principles and Techniques","Hydrocarbons"],
+"Mathematics":["Sets","Relations and Functions","Trigonometric Functions","Principle of Mathematical Induction","Complex Numbers and Quadratic Equations","Linear Inequalities","Permutations and Combinations","Binomial Theorem","Sequences and Series","Straight Lines","Conic Sections","Introduction to Three Dimensional Geometry","Limits and Derivatives","Mathematical Reasoning","Statistics","Probability"],
+"Biology":["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Structural Organisation in Animals","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Breathing and Exchange of Gases","Body Fluids and Circulation","Excretory Products and their Elimination","Locomotion and Movement","Neural Control and Coordination","Chemical Coordination and Integration"],
+"English":["The Portrait of a Lady","We’re Not Afraid to Die… if We Can All Be Together","Discovering Tut: The Saga Continues","Landscape of the Soul","The Ailing Planet","The Browning Version","The Adventure","Silk Road","A Photograph","The Laburnum Top","The Voice of the Rain","Childhood","Father to Son","The Summer of the Beautiful White Horse","The Address","Ranga’s Marriage","Albert Einstein at School","Mother’s Day","The Ghat of the Only World","Birth","The Tale of Melon City","Reading and Writing Skills"],
+"Computer Science":["Computer System Overview","Encoding Schemes and Number System","Boolean Logic","Computational Thinking and Problem Solving","Getting Started with Python","Flow of Control","Functions","Strings","Lists","Tuples and Dictionaries","Introduction to Python Modules"],
+"Economics":["Introduction to Microeconomics","Consumer’s Equilibrium and Demand","Producer Behaviour and Supply","Forms of Market and Price Determination","Introduction to Statistics","Collection of Data","Organisation of Data","Presentation of Data","Measures of Central Tendency","Measures of Dispersion","Correlation","Index Numbers"],
+"Accountancy":["Introduction to Accounting","Theory Base of Accounting","Recording of Transactions — I","Recording of Transactions — II","Bank Reconciliation Statement","Trial Balance and Rectification of Errors","Depreciation, Provisions and Reserves","Bill of Exchange","Financial Statements — I","Financial Statements — II","Accounts from Incomplete Records","Applications of Computers in Accounting","Computerised Accounting System"],
+"Business Studies":["Nature and Purpose of Business","Forms of Business Organisation","Private, Public and Global Enterprises","Business Services","Emerging Modes of Business","Social Responsibilities of Business and Business Ethics","Formation of a Company","Sources of Business Finance","Small Business","Internal Trade","International Business"]},
+"12":{
+"Physics":["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics"],
+"Chemistry":["Solutions","Electrochemistry","Chemical Kinetics","The d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules"],
+"Mathematics":["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three Dimensional Geometry","Linear Programming","Probability"],
+"Biology":["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Principles of Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology: Principles and Processes","Biotechnology and its Applications","Organisms and Populations","Ecosystem","Biodiversity and Conservation"],
+"English":["The Last Lesson","Lost Spring","Deep Water","The Rattrap","Indigo","Poets and Pancakes","The Interview","Going Places","My Mother at Sixty-Six","Keeping Quiet","A Thing of Beauty","A Roadside Stand","Aunt Jennifer’s Tigers","The Third Level","The Tiger King","Journey to the End of the Earth","The Enemy","On the Face of It","Memories of Childhood","Reading and Writing Skills"],
+"Computer Science":["Python Revision Tour","Functions","Exception Handling","File Handling","Data Structures","Stack","Queue","Searching and Sorting","Understanding Data","Database Concepts","Structured Query Language","Computer Networks"],
+"Economics":["National Income and Related Aggregates","Money and Banking","Determination of Income and Employment","Government Budget and the Economy","Balance of Payments","Development Experience (1947–90) and Economic Reforms since 1991","Current Challenges Facing the Indian Economy","Development Experience of India: A Comparison with Neighbours"],
+"Accountancy":["Accounting for Not-for-Profit Organisation","Accounting for Partnership Firms — Fundamentals","Goodwill: Nature and Valuation","Change in Profit-Sharing Ratio among Existing Partners","Admission of a Partner","Retirement and Death of a Partner","Dissolution of Partnership Firm","Accounting for Share Capital","Issue and Redemption of Debentures","Financial Statements of a Company","Analysis of Financial Statements","Accounting Ratios","Cash Flow Statement","Computerised Accounting System"],
+"Business Studies":["Nature and Significance of Management","Principles of Management","Business Environment","Planning","Organising","Staffing","Directing","Controlling","Financial Management","Financial Markets","Marketing Management","Consumer Protection"]}
+};
+const PLACEHOLDER_NOTE='<div class="notice"><b>Chapter added to StudyAI.</b> This chapter is listed in the catalogue, but its original StudyAI notes are not written yet. Use the official NCERT textbook link in the NCERT Library, or ask the AI Tutor for an explanation.</div>';
+Object.entries(STUDYAI_CHAPTER_CATALOG).forEach(([c,subjects])=>{N[c]=N[c]||{};Object.entries(subjects).forEach(([subject,chapters])=>{N[c][subject]=N[c][subject]||{};chapters.forEach(ch=>{if(!Object.prototype.hasOwnProperty.call(N[c][subject],ch))N[c][subject][ch]=PLACEHOLDER_NOTE;});});});
+
 /* auto-generate MCQ quizzes from the "Term: meaning" lines of notes, for chapters without a hand-made quiz */
 const hashS=s=>{let h=2166136261;for(let i=0;i<s.length;i++){h^=s.charCodeAt(i);h=Math.imul(h,16777619)}return h>>>0};
 const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296};
@@ -748,6 +821,8 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
     CH_QUIZZES[c]=CH_QUIZZES[c]||{};CH_QUIZZES[c][s]=CH_QUIZZES[c][s]||{};CH_QUIZZES[c][s][ch]=sets;
   });
 }));
+window.STUDYAI_CHAPTER_CATALOG = STUDYAI_CHAPTER_CATALOG;
+window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
 })();
 </script>
 <script>
@@ -873,7 +948,7 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 
 <section id="classes" class="section"><div class="top"><div><h1>Classes 6–12</h1><p class="muted">Choose your class.</p></div></div><div class="cards" id="classCards"></div></section>
 
-<section id="subjects" class="section"><div class="top"><div><h1>Subjects</h1><p class="muted">Choose class and subject.</p></div></div><div class="bar"><select id="subClass"></select><input id="subSearch" placeholder="Search subject" oninput="renderSubjects()"></div><div class="cards" id="subjectCards"></div></section>
+<section id="subjects" class="section"><div class="top"><div><h1>Subjects</h1><p class="muted">Choose class and subject. Class 10 now has 25 study tracks, including separate English/Hindi book branches.</p></div></div><div class="notice" style="margin-bottom:14px">Class 10 mein Hindi Course A aur Hindi Course B alternatives hain. Optional / skill subjects school ke offering par depend karte hain. Board exam se pehle apne current CBSE syllabus se chapter list match kar lena.</div><div class="bar"><select id="subClass"></select><input id="subSearch" placeholder="Search subject" oninput="renderSubjects()"></div><div class="cards" id="subjectCards"></div></section>
 
 <section id="notes" class="section"><div class="top"><div><h1>Study Notes</h1><p class="muted">Full chapter notes with exam tips.</p></div></div><div class="bar"><select id="noteClass"></select><select id="noteSubject"></select><select id="noteChapter"></select></div><div id="noteBox"></div></section>
 
@@ -987,6 +1062,384 @@ Object.entries(N).forEach(([c,subs])=>Object.entries(subs).forEach(([s,chs])=>{
 <div class="toast" id="toast"></div>
 <script>
 const S={6:["Mathematics","Science","English","Hindi","Social Science","Computer","Sanskrit"],7:["Mathematics","Science","English","Hindi","Social Science","Computer","Sanskrit"],8:["Mathematics","Science","English","Hindi","Social Science","Computer","Sanskrit"],9:["Mathematics","Science","English","Hindi","Social Science","Computer","Sanskrit","Information Technology"],10:["Mathematics","Science","English","Hindi","Social Science","Computer","Sanskrit","Information Technology"],11:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"],12:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"]};
+
+// Class 6 update v1 (2026-27 catalogue): current NCERT books plus school-dependent skill/additional tracks.
+// Class 7–8 update v1 (2026-27 catalogue): updated core books + school-dependent optional tracks.
+// Class 10 update v2 (2026-27 catalogue): keep one chapter catalogue shared by Notes, Quizzes, Papers,
+// NCERT Library, Flashcards, Revision, Progress, Planner, PYQ and Mock Tests.
+const CLASS10_TRACKS = {"Mathematics":["Real Numbers","Polynomials","Pair of Linear Equations in Two Variables","Quadratic Equations","Arithmetic Progressions","Triangles","Coordinate Geometry","Introduction to Trigonometry","Some Applications of Trigonometry","Circles","Areas Related to Circles","Surface Areas and Volumes","Statistics","Probability"],"Science":["Chemical Reactions and Equations","Acids, Bases and Salts","Metals and Non-metals","Carbon and its Compounds","Life Processes","Control and Coordination","How do Organisms Reproduce?","Heredity","Light — Reflection and Refraction","The Human Eye and the Colourful World","Electricity","Magnetic Effects of Electric Current","Our Environment"],"Social Science":["[History] The Rise of Nationalism in Europe","[History] Nationalism in India","[History] The Making of a Global World","[History] The Age of Industrialisation","[History] Print Culture and the Modern World","[Geography] Resources and Development","[Geography] Forest and Wildlife Resources","[Geography] Water Resources","[Geography] Agriculture","[Geography] Minerals and Energy Resources","[Geography] Manufacturing Industries","[Geography] Lifelines of National Economy","[Political Science] Power Sharing","[Political Science] Federalism","[Political Science] Gender, Religion and Caste","[Political Science] Political Parties","[Political Science] Outcomes of Democracy","[Economics] Development","[Economics] Sectors of the Indian Economy","[Economics] Money and Credit","[Economics] Globalisation and the Indian Economy","[Economics] Consumer Rights / project work"],"English — Grammar & Writing":["Reading Comprehension","Tenses","Modals","Subject-Verb Concord","Reported Speech — Commands and Requests","Reported Speech — Statements","Reported Speech — Questions","Determiners","Use of Passive Voice","Clauses — Noun Clauses","Clauses — Adverb Clauses","Clauses — Relative Clauses","Prepositions","Gap Filling / Cloze Passage","Editing and Omission","Sentence Transformation","Formal Letter (Complaint / Enquiry / Order)","Analytical Paragraph (Chart / Graph / Data)","Writing Formats Overview","Grammar Overview","Words and Expressions II — Unit 1","Words and Expressions II — Unit 2","Words and Expressions II — Unit 3","Words and Expressions II — Unit 4","Words and Expressions II — Unit 7","Words and Expressions II — Unit 8","Words and Expressions II — Unit 9","Words and Expressions II — Unit 10","Words and Expressions II — Unit 11"],"English — First Flight":["A Letter to God","Nelson Mandela — Long Walk to Freedom","Two Stories about Flying — His First Flight","Two Stories about Flying — The Black Aeroplane","From the Diary of Anne Frank","Glimpses of India — A Baker from Goa","Glimpses of India — Coorg","Glimpses of India — Tea from Assam","Mijbil the Otter","Madam Rides the Bus","The Sermon at Benares","The Proposal","Dust of Snow","Fire and Ice","A Tiger in the Zoo","How to Tell Wild Animals","The Ball Poem","Amanda!","The Trees","Fog","The Tale of Custard the Dragon","For Anne Gregory"],"English — Footprints Without Feet":["A Triumph of Surgery","The Thief's Story","The Midnight Visitor","A Question of Trust","Footprints Without Feet","The Making of a Scientist","The Necklace","Bholi","The Book That Saved the Earth"],"Hindi Course A — Grammar & Writing":["अपठित गद्यांश","अपठित काव्यांश","रचना के आधार पर वाक्य-भेद","वाच्य","पद-परिचय","अलंकार — उपमा, रूपक, उत्प्रेक्षा, अतिशयोक्ति, मानवीकरण","अनुच्छेद लेखन","औपचारिक / अनौपचारिक पत्र","ई-मेल लेखन","लघुकथा लेखन","संवाद लेखन","सूचना लेखन","विज्ञापन लेखन"],"Hindi Course A — Kshitij Bhag 2":["सूरदास — पद","तुलसीदास — राम-लक्ष्मण-परशुराम संवाद","जयशंकर प्रसाद — आत्मकथ्य","सूर्यकांत त्रिपाठी निराला — उत्साह और अट नहीं रही है","नागार्जुन — यह दंतुरित मुस्कान और फसल","मंगलेश डबराल — संगतकार","नेताजी का चश्मा","बालगोबिन भगत","लखनवी अंदाज़","एक कहानी यह भी","नौबतखाने में इबादत","संस्कृति"],"Hindi Course A — Kritika Bhag 2":["माता का आँचल","साना-साना हाथ जोड़ि","जॉर्ज पंचम की नाक — पाठ्यपुस्तक संदर्भ","एही ठैयाँ झुलनी हेरानी हो रामा — पाठ्यपुस्तक संदर्भ","मैं क्यों लिखता हूँ — पाठ्यपुस्तक संदर्भ"],"Hindi Course B — Grammar & Writing":["अपठित गद्यांश","पदबंध","रचना के आधार पर वाक्य-रूपांतरण","समास","मुहावरे","अनुच्छेद लेखन","अनौपचारिक पत्र","चित्र / दृश्य आधारित लेखन","संवाद लेखन"],"Hindi Course B — Sparsh Bhag 2":["कबीर — साखी","मीरा — पद","मनुष्यता","पर्वत प्रदेश में पावस","तोप","कर चले हम फ़िदा","आत्मत्राण","बड़े भाई साहब","डायरी का एक पन्ना","तताँरा-वामीरो कथा","अब कहाँ दूसरे के दुख से दुखी होने वाले","पतझर में टूटी पत्तियाँ","कारतूस"],"Hindi Course B — Sanchayan Bhag 2":["हरिहर काका","सपनों के-से दिन","टोपी शुक्ला"],"Sanskrit":["शुचिपर्यावरणम्","बुद्धिर्बलवती सदा","व्यायामः सर्वदा पथ्यः","शिशुलालनम्","जननी तुल्यवत्सला","सुभाषितानि","सौहार्दं प्रकृतेः शोभा","विचित्रः साक्षी","सूक्तयः","भूकम्पविभीषिका","प्रत्यभिज्ञानम्","अन्योक्तयः","संधि और व्याकरण","पत्र / चित्र-वर्णन"],"French":["Compréhension écrite","Grammaire","Vocabulaire","Expression écrite","Culture et civilisation","Communication orale"],"Punjabi":["ਪਾਠ-ਬੋਧ","ਕਵਿਤਾ","ਵਾਰਤਕ","ਵਿਆਕਰਨ","ਲੇਖ-ਰਚਨਾ","ਪੱਤਰ-ਲੇਖਨ","ਸੰਵਾਦ-ਲੇਖਨ"],"Urdu":["تفہیمِ عبارت","نثر","نظم","غزل","قواعد","تحریری اظہار","خط نویسی"],"Information Technology":["Employability Skills-II","Communication Skills-II","Self-Management Skills-II","ICT Skills-II","Entrepreneurial Skills-II","Green Skills-II","Digital Documentation (Advanced)","Electronic Spreadsheet (Advanced)","Database Management System","Web Applications and Security"],"Computer Applications":["Computer and Communication Networks","Internet Services","Web Services and Security","HTML Basics","CSS Basics","JavaScript Basics","Cyber Safety","Practical / project work"],"Artificial Intelligence":["Employability Skills-II","Introduction to Artificial Intelligence","AI Project Cycle","Data Literacy","Machine Learning Basics","Natural Language Processing","Computer Vision","AI Ethics and Responsible AI","Evaluation and Project Work"],"Home Science":["Work, Livelihood and Career","Nutrition, Food Science and Technology","Human Development","Fabric and Apparel","Resource Management","Communication and Extension"],"Elements of Business":["Business Activities","Forms of Business Organisation","Entrepreneurship","Business Services","Marketing Basics","Consumer Awareness","Practical / project work"],"Elements of Book Keeping & Accountancy":["Basic Accounting Terms","Accounting Equation","Journal","Ledger","Cash Book","Trial Balance","Bank Reconciliation","Depreciation","Financial Statements"],"Painting":["Elements of Art","Principles of Art","Still Life","Nature Study","Composition","Indian Art and Artists","Practical Portfolio"],"Retail":["Employability Skills-II","Retailing Basics","Customer Service","Stock and Inventory","Visual Merchandising","Workplace Communication","Practical Activities"],"Introduction to Financial Markets":["Financial Markets Overview","Banking and Financial Services","Securities Market Basics","Investment and Risk","Financial Literacy","Consumer Protection and Practical Work"]};
+const CLASS10_OLD_NOTES = REAL_NOTES_DATA["10"] || {};
+const CLASS10_OLD_QUIZZES = CH_QUIZZES["10"] || {};
+STUDYAI_CHAPTER_CATALOG["10"] = CLASS10_TRACKS;
+S["10"] = Object.keys(CLASS10_TRACKS);
+
+function class10TextKey(s){ return String(s||"").toLowerCase().normalize("NFKD").replace(/[–—−]/g,"-").replace(/[^\p{L}\p{N}]+/gu," ").trim(); }
+function class10BuildNotes(track, chapters){
+  const source = track === "Mathematics" ? (CLASS10_OLD_NOTES.Mathematics||{}) :
+    track === "Science" ? (CLASS10_OLD_NOTES.Science||{}) :
+    track === "Social Science" ? (CLASS10_OLD_NOTES["Social Science"]||{}) :
+    track === "Information Technology" ? (CLASS10_OLD_NOTES["Information Technology"]||{}) :
+    track.startsWith("English —") ? (CLASS10_OLD_NOTES.English||{}) :
+    track.startsWith("Hindi Course") ? (CLASS10_OLD_NOTES.Hindi||{}) :
+    track === "Sanskrit" ? (CLASS10_OLD_NOTES.Sanskrit||{}) : {};
+  const out = {};
+  for (const chapter of chapters){
+    let raw = source[chapter];
+    if(!raw){
+      const stripped = chapter.replace(/^\[[^\]]+\]\s*/,"");
+      raw = source[stripped];
+      if(!raw){
+        const chKey = class10TextKey(stripped);
+        const keys = Object.keys(source);
+        let match = keys.find(k => class10TextKey(k) === chKey);
+        // Preserve pre-existing language notes only when the old title is a clear alias.
+        if(!match && track === "English — First Flight") {
+          const aliases = {
+            "nelson mandela - long walk to freedom":["Nelson Mandela: Long Walk to Freedom","Nelson Mandela - Long Walk to Freedom"],
+            "two stories about flying - his first flight":["Two Stories about Flying","His First Flight"],
+            "two stories about flying - the black aeroplane":["The Black Aeroplane"],
+            "glimpses of india - a baker from goa":["Glimpses of India"],
+            "glimpses of india - coorg":["Glimpses of India"],
+            "glimpses of india - tea from assam":["Glimpses of India"]
+          };
+          const a = aliases[chKey] || [];
+          match = a.find(k => Object.prototype.hasOwnProperty.call(source,k));
+        }
+        if(!match && track === "English — Footprints Without Feet") {
+          match = keys.find(k => class10TextKey(k) === chKey || (chKey && chKey.includes(class10TextKey(k))));
+        }
+        if(!match && track.startsWith("Hindi Course A — Kshitij")) {
+          const a = {
+            "surdaas pad": ["सूरदास"], "tulsidas ram lakshman parshuram samvad":["तुलसीदास"],
+            "jaishankar prasad aatmakathya":["जयशंकर प्रसाद"],
+            "suryakant tripathi nirala utsah aur at nahi rahi hai":["सूर्यकांत त्रिपाठी निराला"],
+            "nagarjun yah danturit muskan aur fasal":["नागार्जुन"],
+            "manglesh dabral sangatkar":["मंगलेश डबराल"], "netaji ka chashma":["नेताजी का चश्मा"],
+            "bal gobin bhagat":["बालगोबिन भगत"], "lucknowi andaz":["लखनवी अंदाज़"],
+            "ek kahani yah bhi":["एक कहानी यह भी"], "naubatkhane mein ibadat":["नौबतखाने में इबादत"], "sanskriti":["संस्कृति"]
+          };
+          const akey = Object.keys(a).find(k => chKey.startsWith(k) || k.startsWith(chKey));
+          if(akey) match = a[akey].find(k => Object.prototype.hasOwnProperty.call(source,k));
+        }
+        if(!match && track.startsWith("Hindi Course A — Kritika")) {
+          match = keys.find(k => class10TextKey(k) === chKey || (class10TextKey(k) && chKey.startsWith(class10TextKey(k))));
+        }
+        if(!match && track.startsWith("Hindi Course B — Sparsh")) {
+          const a = {"kabir sakhi":["कबीर की साखी","कबीर की साखियाँ","कबीर"],"meera pad":["मीरा — पद","मीरा"],"bade bhai sahib":["बड़े भाई साहब"],"diary ka ek panna":["डायरी का एक पन्ना"],"tatara wamiro katha":["तताँरा-वामीरो कथा"],"ab kahan dusre ke dukh se dukhi hone wale":["अब कहाँ दूसरे के दुख से दुखी होने वाले"],"patjhar mein tuti pattiyan":["पतझर में टूटी पत्तियाँ"],"kartoos":["कारतूस"]};
+          const akey = Object.keys(a).find(k => chKey.startsWith(k) || k.startsWith(chKey));
+          if(akey) match = a[akey].find(k => Object.prototype.hasOwnProperty.call(source,k));
+        }
+        if(match) raw = source[match];
+      }
+    }
+    // Avoid reusing broad, unrelated English chapter summaries for specific subchapters.
+    if(track === "English — First Flight" && /Glimpses of India —|Two Stories about Flying —/.test(chapter) && source[chapter] == null){ raw = null; }
+    out[chapter] = raw || PLACEHOLDER_NOTE;
+  }
+  // Keep useful authored overviews without pretending they are individual chapter notes.
+  if(track === "English — Grammar & Writing"){
+    if(source.Grammar) out["Grammar Overview"] = source.Grammar;
+    if(source.Reading) out["Reading Comprehension"] = source.Reading;
+    if(source.Writing) out["Writing Formats Overview"] = source.Writing;
+  }
+  return out;
+}
+const CLASS10_NEW_NOTES = {};
+Object.entries(CLASS10_TRACKS).forEach(([track, chapters])=>{
+  CLASS10_NEW_NOTES[track] = class10BuildNotes(track, chapters);
+});
+REAL_NOTES_DATA["10"] = CLASS10_NEW_NOTES;
+
+// Class 7 & 8 update v1 (2026-27): replace legacy chapter lists with current textbook catalogues.
+// This single catalogue feeds Notes, Quiz selectors, Papers, NCERT Library, Revision, Flashcards,
+// Mock Tests, Previous Year Papers and other catalogue-based learning tools. School-dependent
+// electives are kept separate and are not represented as compulsory for every school.
+const CLASS7_TRACKS = {
+  "Mathematics": [
+    "Large Numbers Around Us", "Arithmetic Expressions", "A Peek Beyond the Point",
+    "Expressions using Letter-Numbers", "Parallel and Intersecting Lines", "Number Play",
+    "A Tale of Three Intersecting Lines", "Working with Fractions", "Geometric Twins",
+    "Operations with Integers", "Finding Common Ground", "Another Peek Beyond the Point",
+    "Connecting the Dots…", "Constructions and Tilings", "Finding the Unknown"
+  ],
+  "Science": [
+    "The Ever-Evolving World of Science", "Exploring Substances: Acidic, Basic, and Neutral",
+    "Electricity: Circuits and their Components", "The World of Metals and Non-metals",
+    "Changes Around Us: Physical and Chemical", "Adolescence: A Stage of Growth and Change",
+    "Heat Transfer in Nature", "Measurement of Time and Motion", "Life Processes in Animals",
+    "Life Processes in Plants", "Light: Shadows and Reflections", "Earth, Moon, and the Sun"
+  ],
+  "English — Poorvi": [
+    "The Day the River Spoke", "Try Again", "Three Days to See",
+    "Animals, Birds, and Dr. Dolittle", "A Funny Man"
+  ],
+  "English — Grammar & Writing": [
+    "Reading Comprehension", "Parts of Speech: Nouns, Pronouns, Verbs, Adjectives and Adverbs",
+    "Articles and Determiners", "Tenses: Present, Past and Future", "Subject–Verb Agreement",
+    "Modals", "Prepositions", "Conjunctions and Connectors", "Sentence Types and Word Order",
+    "Punctuation and Capitalisation", "Direct and Indirect Speech — Introduction",
+    "Active and Passive Voice — Introduction", "Clauses and Phrases — Introduction",
+    "Vocabulary: Synonyms, Antonyms and Context Clues", "Prefixes, Suffixes and Word Formation",
+    "Editing and Proofreading", "Paragraph Writing", "Informal Letter and Email",
+    "Story Writing", "Diary Entry", "Notice and Message Writing", "Dialogue Writing",
+    "Summary Writing", "Speaking and Listening Activities"
+  ],
+  "Hindi — Malhar": [
+    "माँ, कह एक कहानी", "तीन बुद्धिमान", "फूल और काँटा", "पानी रे पानी",
+    "नहीं होना बीमार", "गिरिधर कविराय की कुंडलिया", "वर्षा-बहार",
+    "बिरजू महाराज से साक्षात्कार", "चिड़िया", "मीरा के पद"
+  ],
+  "Hindi — व्याकरण एवं लेखन": [
+    "वर्ण और वर्णमाला", "संज्ञा", "सर्वनाम", "विशेषण", "क्रिया और काल",
+    "लिंग, वचन और कारक", "अव्यय", "पर्यायवाची और विलोम शब्द", "अनेकार्थी शब्द और अनेक शब्दों के लिए एक शब्द",
+    "मुहावरे और लोकोक्तियाँ", "उपसर्ग और प्रत्यय", "विराम-चिह्न", "वाक्य-रचना और वाक्य-शुद्धि",
+    "अपठित गद्यांश", "अपठित काव्यांश", "अनुच्छेद लेखन", "पत्र लेखन", "संवाद लेखन",
+    "कहानी लेखन", "चित्र-वर्णन", "डायरी लेखन", "संपादन और वर्तनी-शुद्धि"
+  ],
+  "Social Science": [
+    "Geographical Diversity of India", "Understanding the Weather", "Climates of India",
+    "New Beginnings: Cities and States", "The Rise of Empires", "The Age of Reorganisation",
+    "The Gupta Era: An Age of Tireless Creativity", "How the Land Becomes Sacred",
+    "From the Rulers to the Ruled: Types of Governments", "The Constitution of India – An Introduction",
+    "From Barter to Money", "Understanding Markets", "The Story of Indian Farming",
+    "India and Her Neighbours", "Empires and Kingdoms: 6th to 10th Centuries",
+    "Turning Tides: 11th and 12th Centuries", "India, a Home to Many",
+    "The State, the Government, and You", "Infrastructure: Engine of India’s Development",
+    "Banks and the Magic of Finance"
+  ],
+  "Sanskrit — Deepakam": [
+    "वन्दे भारतमातरम्", "नित्यं पिबामः सुभाषितरसम्", "मित्राय नमः",
+    "न लभ्यते चेत् आम्लं द्राक्षाफलम्", "सेवा हि परमो धर्मः", "क्रीडाम वयं श्लोकान्याक्षरीम्",
+    "ईशावास्यम् इदं सर्वम्", "हितं मनोहारि च दुर्लभं वचः", "अन्नाद् भवन्ति भूतानि",
+    "दशमः कः ?", "द्वीपेषु रम्यः द्वीपोऽण्डमानः", "वीराङ्गना पन्नाधाया",
+    "वर्णमात्रा-परिचयः", "शब्दरूपाणि", "धातुरूपाणि"
+  ],
+  "Art Education — Kriti / कृति (school-dependent)": [
+    "Understanding Emotions", "Say More without Speech — Mime", "Let's Design — Stage Technicals 2",
+    "Story of India's Storytelling Tradition", "Making Music", "Music, Emotions and Creativity",
+    "Ragas and Talas", "The Music of the People", "Performance", "Dance and Sculpture",
+    "Dance Vocabulary and Techniques", "Dance, You and Creativity", "Personalities", "Natya",
+    "Objects in Icons and Symbols", "Nature's Palette", "How You Feel", "Textiles and Traditions",
+    "The Art of Calligraphy", "Integration of All Art Forms — Sculptures Come Alive!"
+  ],
+  "Physical Education & Well-being — Khel Yatra (school-dependent)": [
+    "Unit 1: Foundational Basis of Physical Education and Well-being", "Unit 2: Physical and Motor Fitness",
+    "Unit 3: Fundamental Skills of Sports — Badminton", "Unit 4: Fundamental Skills of Sports — Football",
+    "Unit 5: Fundamental Skills of Sports — Kabaddi", "Unit 6: Yoga"
+  ],
+  "Skill Education — Kaushal Bodh (school-dependent)": [
+    "Project 1: Plant Nursery", "Project 2: School Habitat Garden", "Project 3: Tie and Dye",
+    "Project 4: AI Assistant", "Project 5: Storytime with Puppets", "Project 6: Family Health Handbook",
+    "Planning for Kaushal Mela"
+  ],
+  "Computer & Digital Literacy (school-dependent)": [
+    "Computer Hardware and Software", "Files, Folders and Storage", "Word Processing",
+    "Presentations and Spreadsheets", "Internet Search and Source Checking", "Cyber Safety, Privacy and Digital Citizenship",
+    "Algorithms and Flowcharts", "Block-Based Coding", "Basic Programming Activities", "Digital Project"
+  ],
+  "Computational Thinking & AI (school-dependent)": [
+    "Patterns and Logical Reasoning", "Step-by-Step Instructions and Algorithms",
+    "Breaking Problems into Smaller Steps", "Collecting, Sorting and Representing Data",
+    "Digital Systems and How Computers Work", "Artificial Intelligence Around Us",
+    "Data, Examples and Patterns", "Responsible and Safe Use of AI", "Unplugged Coding Activities",
+    "Testing and Debugging", "Mini Project and Reflection"
+  ],
+  "Third Language / Additional Language (school-selected)": [
+    "Alphabet and Script", "Pronunciation and Reading", "Everyday Vocabulary", "Greetings and Introductions",
+    "Basic Grammar", "Sentence Formation", "Reading Comprehension", "Poetry and Short Texts",
+    "Paragraph Writing", "Speaking and Listening"
+  ]
+};
+const CLASS8_TRACKS = {
+  "Mathematics — Ganita Prakash Part-I": [
+    "A Square and A Cube", "Power Play", "A Story of Numbers", "Quadrilaterals", "Number Play",
+    "We Distribute, Yet Things Multiply", "Proportional Reasoning–1"
+  ],
+  "Mathematics — Ganita Prakash Part-II": [
+    "Fractions in Disguise", "The Baudhayana-Pythagoras Theorem", "Proportional Reasoning–2",
+    "Exploring Some Geometric Themes", "Tales by Dots and Lines", "Algebra Play", "Area"
+  ],
+  "Science": [
+    "Exploring the Investigative World of Science", "The Invisible Living World: Beyond Our Naked Eye",
+    "Health: The Ultimate Treasure", "Electricity: Magnetic and Heating Effects", "Exploring Forces",
+    "Pressure, Winds, Storms, and Cyclones", "Particulate Nature of Matter",
+    "Nature of Matter: Elements, Compounds, and Mixtures",
+    "The Amazing World of Solutes, Solvents, and Solutions", "Light: Mirrors and Lenses",
+    "Keeping Time with the Skies", "How Nature Works in Harmony",
+    "Our Home: Earth, a Unique Life Sustaining Planet"
+  ],
+  "English — Poorvi": [
+    "The Wit that Won Hearts", "A Concrete Example", "Wisdom Paves the Way",
+    "A Tale of Valour: Major Somnath Sharma and the Battle of Badgam", "Somebody’s Mother"
+  ],
+  "English — Grammar & Writing": [
+    "Reading Comprehension and Inference", "Nouns, Pronouns, Articles and Determiners", "Tenses and Verb Forms",
+    "Subject–Verb Agreement", "Modals", "Reported Speech", "Active and Passive Voice",
+    "Phrases and Clauses", "Prepositions and Connectors", "Conjunctions and Sentence Combining",
+    "Punctuation and Sentence Structure", "Editing, Omission and Proofreading", "Word Formation and Vocabulary",
+    "Paragraph Writing", "Story Writing", "Diary Entry", "Formal and Informal Letters",
+    "Email Writing", "Notice and Message Writing", "Speech and Debate Writing", "Article and Report Writing",
+    "Summary Writing", "Speaking, Listening and Presentation Skills"
+  ],
+  "Hindi — Malhar": [
+    "स्वदेश", "दो गौरैया", "एक आशीर्वाद", "हरिद्वार", "कबीर के दोहे", "एक टोकरी भर मिट्टी",
+    "मत बाँधो", "नए मेहमान", "आदमी का अनुपात", "तरुण के स्वप्न"
+  ],
+  "Hindi — व्याकरण एवं लेखन": [
+    "वर्ण-विचार", "संज्ञा, सर्वनाम और विशेषण", "क्रिया, काल और वाच्य का परिचय", "लिंग, वचन, पुरुष और कारक",
+    "अव्यय", "पर्यायवाची, विलोम और अनेकार्थी शब्द", "अनेक शब्दों के लिए एक शब्द", "मुहावरे और लोकोक्तियाँ",
+    "उपसर्ग और प्रत्यय", "संधि", "समास", "विराम-चिह्न", "वाक्य-रचना और वाक्य-शुद्धि", "अपठित गद्यांश",
+    "अपठित काव्यांश", "अनुच्छेद लेखन", "औपचारिक और अनौपचारिक पत्र", "संवाद लेखन", "कहानी और चित्र-वर्णन",
+    "सूचना और विज्ञापन लेखन", "रिपोर्ट और भाषण लेखन", "संपादन और वर्तनी-शुद्धि"
+  ],
+  "Social Science": [
+    "Natural Resources and Their Use", "Reshaping India’s Political Map", "The Rise of the Marathas",
+    "The Colonial Era in India", "Universal Franchise and India’s Electoral System",
+    "The Parliamentary System: Legislature and Executive", "Factors of Production", "World Geography: Some Glimpses",
+    "India’s Long Road to Independence", "A Journey Through Indian Architecture",
+    "The Role of the Judiciary in Our Society", "Citizenship: Rights and Duties", "Dynamics of Population",
+    "India’s Urban Landscape", "Cultural Currents: 13th to 17th Centuries"
+  ],
+  "Sanskrit — Deepakam": [
+    "संगच्छध्वं संवदध्वम्", "अल्पानामपि वस्तूनां संहतिः कार्यसाधिका", "सुभाषितरसं पीत्वा जीवनं सफलं कुरु",
+    "प्रणम्यो देशभक्तोऽयं गोपबन्धुर्महामनाः", "गीता सुगीता कर्तव्या", "डिजिभारतम् – युगपरिवर्तनम्",
+    "मञ्जुलमञ्जूषा सुन्दरसुरभाषा", "पश्यत कोणमैशान्यं भारतस्य मनोहरम्", "कोऽरुक् ? कोऽरुक् ? कोऽरुक् ?",
+    "सन्निमित्ते वरं त्यागः (क-भागः)", "सन्निमित्ते वरं त्यागः (ख-भागः)",
+    "सम्यग्वर्णप्रयोगेण ब्रह्मलोके महीयते", "वर्णोच्चारण-शिक्षा १", "व्याकरणम्", "शब्दरूपाणि", "धातुरूपाणि"
+  ],
+  "Art Education — Kriti / कृति (school-dependent)": [
+    "THEATRE: Bringing Words Alive — Play Reading", "THEATRE: One Stage, Many Scripts",
+    "THEATRE: From Page to Stage", "THEATRE: Applause and Advice", "MUSIC: Discovering the Elements of Music",
+    "MUSIC: Musical Instruments", "MUSIC: Indian Classical Music", "MUSIC: Inspiration and Imagination",
+    "MUSIC: My World of Music", "DANCE AND MOVEMENT: Inner Dynamics of Dance",
+    "DANCE AND MOVEMENT: Pan Indian Dance Forms", "DANCE AND MOVEMENT: Dance for Well-being",
+    "DANCE AND MOVEMENT: Innovation, Inclusivity and Inspiring Change",
+    "DANCE AND MOVEMENT: A Presentation of Dance and Choreography",
+    "VISUAL ARTS: Elements and Principles of Visual Art and Design", "VISUAL ARTS: Still Life in Colour",
+    "VISUAL ARTS: People in Places", "VISUAL ARTS: Arts of the People, With the People, For the People",
+    "VISUAL ARTS: Campaign for Art Awareness"
+  ],
+  "Physical Education & Well-being — Khel Yatra (school-dependent)": [
+    "Unit 1: Foundations of Physical Education and Well-being", "Unit 2: Physical and Motor Fitness",
+    "Unit 3: Fundamental Skills of Sports — Athletics", "Unit 4: Fundamental Skills of Sports — Table Tennis",
+    "Unit 5: Fundamental Skills of Sports — Volleyball", "Unit 6: Yoga"
+  ],
+  "Skill Education — Kaushal Bodh (school-dependent)": [
+    "Project 1: Hydroponics — Growing Plants without Soil", "Project 2: Feeding and Caring for Farm Animals",
+    "Project 3: Working with Wood and Bamboo", "Project 4: Home Automation",
+    "Project 5: Water Audit for Water Management", "Project 6: Creating Advertisements",
+    "Planning for Kaushal Mela", "Annexure"
+  ],
+  "Computer & Digital Literacy (school-dependent)": [
+    "Computer Systems and Digital Files", "Word Processing and Document Design", "Presentations and Spreadsheets",
+    "Internet Research and Source Evaluation", "Cyber Safety, Privacy and Digital Footprints",
+    "Algorithms and Flowcharts", "Block-Based Coding", "Introduction to Text-Based Coding",
+    "Data Representation and Charts", "Digital Project and Reflection"
+  ],
+  "Computational Thinking & AI (school-dependent)": [
+    "Patterns, Logic and Decomposition", "Algorithms and Flowcharts", "Data Collection and Representation",
+    "Coding and Debugging", "AI Around Us", "Examples, Data and Machine Learning — Introduction",
+    "Bias, Fairness and Responsible AI", "Privacy and Safe Technology Use", "AI Mini Project and Reflection"
+  ],
+  "Third Language / Additional Language (school-selected)": [
+    "Alphabet and Script", "Reading and Pronunciation", "Vocabulary and Word Use", "Grammar and Sentence Structure",
+    "Reading Comprehension", "Poetry and Short Texts", "Paragraph and Letter Writing", "Speaking and Listening"
+  ]
+};
+
+function rebuildMiddleSchoolTrackNotes(classNumber, tracks){
+  const out = {};
+  Object.entries(tracks).forEach(([track, chapters])=>{
+    out[track] = {};
+    chapters.forEach(chapter=>out[track][chapter] = PLACEHOLDER_NOTE);
+  });
+  REAL_NOTES_DATA[String(classNumber)] = out;
+  STUDYAI_CHAPTER_CATALOG[String(classNumber)] = tracks;
+  S[String(classNumber)] = Object.keys(tracks);
+  // Clear quizzes tied to older chapter lists; the Quiz tool offers AI-created quizzes for each new chapter.
+  CH_QUIZZES[String(classNumber)] = {};
+}
+rebuildMiddleSchoolTrackNotes(7, CLASS7_TRACKS);
+rebuildMiddleSchoolTrackNotes(8, CLASS8_TRACKS);
+window.STUDYAI_CHAPTER_CATALOG = STUDYAI_CHAPTER_CATALOG;
+window.CLASS7_TRACKS = CLASS7_TRACKS;
+window.CLASS8_TRACKS = CLASS8_TRACKS;
+
+// StudyAI curriculum update: Class 9 current Grade 9 textbook catalogue + 25 senior-secondary subject tracks for Classes 11 and 12 (2026–27).
+const CLASS9_UPDATED_TRACKS = {"Mathematics — Ganita Manjari Part I":["Orienting Yourself: The Use of Coordinates","Introduction to Linear Polynomials","The World of Numbers","Exploring Algebraic Identities","I'm Up and Down, and Round and Round","Measuring Space: Perimeter and Area","The Mathematics of Maybe: Introduction to Probability","Predicting What Comes Next?: Exploring Sequences and Progressions"],"Mathematics — Ganita Manjari Part II (topic list)":["Propositions and Mathematical Reasoning","Data Handling and Statistical Thinking","Algorithms and Flowcharts","Quadrilaterals and Geometric Reasoning","Linear Equations in Two Variables","Surface Area and Volume"],"Science — Exploration":["Exploration: Entering the World of Secondary Science","Cell: The Building Block of Life","Tissues in Action","Describing Motion Around Us","Exploring Mixtures and Their Separation","How Forces Affect Motion","Work, Energy and Simple Machines","Journey Inside the Atom","Atomic Foundations of Matter","Sound Waves: Characteristics and Applications","Reproduction: How Life Continues","Patterns in Life: Diversity and Classification","Earth as a System: Energy, Matter and Life"],"Social Science — Understanding Society: India and Beyond":["Understanding Social Science","Shaping of the Earth's Surface","Atmosphere and Climate","Early Humans and Beginning of Civilisation","State and Society up to 1000 CE","Democracy","Elections","Building Blocks in Economics: The Problem of Choice","The Price Puzzle: What Drives the Market","Oceans and Life","Life on Earth","Resistance and Resilience (1000 CE–1700 CE)","India and the World-I (1900 BCE–1200 CE)","Authority","From Ideas to Startups","Smart Ways to Manage Your Finances"],"English — Kaveri":["How I Taught My Grandmother to Read","The Pot Maker","Winds of Change","Vitamin-M","The World of Limitless Possibilities","Twin Melodies","Carrier of Words","Follow That Dream","Bharat Our Land","Gifts of Grace: Honouring Our Vocations","Canvas of Soil","I Cannot Remember My Mother","Nine Gold Medals","A Friend Found in Music","Words","Believe in Yourself"],"English — Grammar & Writing":["Reading Comprehension and Inference","Vocabulary and Structures in Context","Nouns, Pronouns, Articles and Determiners","Tenses and Verb Forms","Subject–Verb Agreement","Modals","Reported Speech","Active and Passive Voice","Phrases and Clauses","Prepositions and Connectors","Conjunctions and Sentence Combining","Punctuation and Sentence Structure","Editing and Proofreading","Paragraph Writing","Story Writing","Diary Entry","Formal and Informal Letters","Email Writing","Notice and Message Writing","Speech and Debate","Article and Report Writing","Summary Writing","Speaking, Listening and Presentation Skills"],"Hindi — Ganga":["दो बैलों की कथा","क्या लिखूँ","संवादहीन","ऐसी भी बातें होती हैं","आखिरी चट्टान तक","रीढ़ की हड्डी","मैं और मेरा देश","निर्मल जीव सिंह ‘सेवा’ — साथ-साथ पढ़ें","रैदास के पद","राम-लक्ष्मण-परशुराम संवाद","भारति, जय, विजयकरे","झाँसी की रानी","घर की याद","सब याद तुम्हारी आती हैं — साथ-साथ पढ़ें"],"Hindi — व्याकरण एवं लेखन":["अपठित गद्यांश","अपठित काव्यांश","वर्ण-विचार और शब्द-रचना","संज्ञा, सर्वनाम और विशेषण","क्रिया, काल और वाच्य","लिंग, वचन, पुरुष और कारक","अव्यय","उपसर्ग और प्रत्यय","संधि और समास","पर्यायवाची, विलोम और अनेकार्थी शब्द","मुहावरे और लोकोक्तियाँ","वाक्य-रचना और वाक्य-शुद्धि","विराम-चिह्न","अनुच्छेद लेखन","औपचारिक और अनौपचारिक पत्र","संवाद लेखन","कहानी और चित्र-वर्णन","सूचना, विज्ञापन और ईमेल लेखन","संपादन और वर्तनी-शुद्धि"],"Sanskrit — Sharada":["सत्यं शिवं सुन्दरं संस्कृतम्","णमो अरिहन्ताणम्","अन्नाद् आनन्दं प्रति","उपायं चिन्तयेत् प्राज्ञस्तथापायं च चिन्तयेत्","मनःपूतं समाचरेत्","एषा सा कृतकबुद्धिः मानवबुद्धेः सहकरी","न खलु वयस्तेजसो हेतुः","आत्मवत्सर्वभूतेषु यः पश्यति सः पण्डितः","सुखस्य मूलं धर्मः धर्मस्य मूलम् अर्थः","कृतं प्रतिकृतं भूयादेष धर्मः सनातनः","वर्णोच्चारण-शिक्षा","सुभाषित-पठन एवं भावार्थ","गद्य-पठन एवं प्रश्नोत्तर","पद्य-पठन एवं छन्द/भाव","शब्दरूप और धातुरूप","रचनात्मक लेखन एवं अनुवाद"],"Computational Thinking & AI (CBSE module)":["Patterns, Logic and Decomposition","Algorithms and Flowcharts","Data Collection and Representation","Coding and Debugging","AI Around Us","Examples, Data and Machine Learning — Introduction","Bias, Fairness and Responsible AI","Privacy and Safe Technology Use","AI Mini Project and Reflection"],"Vocational Education — Kaushal Vikas":["Project Planning and Design Thinking","Community and Local Skills Survey","Materials, Tools and Workplace Safety","Digital and Communication Skills","Prototype Development","Testing, Feedback and Improvement","Teamwork and Presentation","Project Portfolio and Reflection"],"Interdisciplinary Area — Individuals in Society":["Self, Identity and Well-being","Family, Community and Society","Rights, Responsibilities and Citizenship","Diversity, Inclusion and Respect","Environment and Sustainable Living","Media Literacy and Critical Thinking","Community Inquiry Project"],"Physical Education & Well-being (school curriculum)":["Health, Fitness and Well-being","Movement Skills and Physical Fitness","Sports Skills and Rules","Yoga and Stress Management","Nutrition, Sleep and Healthy Habits","Inclusion, Teamwork and Fair Play","Safety and First Aid","Physical Activity Portfolio"],"Art Education (school curriculum)":["Elements and Principles of Art","Drawing and Observation","Colour, Texture and Composition","Indian Art and Cultural Forms","Music and Rhythm","Dance and Movement","Theatre and Storytelling","Portfolio and Reflection"],"Computer Applications (school-dependent elective)":["Computer Systems and File Management","Word Processing and Documents","Spreadsheets and Data Charts","Presentations and Visual Design","Internet Research and Source Evaluation","Cyber Safety and Digital Footprints","Algorithms and Flowcharts","Introductory Programming","HTML and Web Design","Digital Project"],"Information Technology (school-dependent elective)":["Communication Skills","Self-Management Skills","ICT Skills","Entrepreneurial Skills","Green Skills","Digital Documentation","Electronic Spreadsheet","Digital Presentation","Database Management System","Web Applications and Security"],"Home Science (school-dependent elective)":["Human Development","Food, Nutrition and Health","Textiles and Clothing","Resource Management","Communication and Extension","Practical Work"],"Painting / Fine Arts (school-dependent elective)":["Elements and Principles of Art","Still Life","Nature and Object Study","Composition","Indian Art Appreciation","Practical Portfolio"],"Third Language / Additional Language (school-selected)":["Reading and Pronunciation","Everyday Vocabulary","Grammar and Sentence Structure","Reading Comprehension","Prose and Poetry","Paragraph and Letter Writing","Speaking and Listening","Project and Portfolio"]};
+const CLASS11_UPDATED_TRACKS = {"Physics":["Units and Measurements","Motion in a Straight Line","Motion in a Plane","Laws of Motion","Work, Energy and Power","System of Particles and Rotational Motion","Gravitation","Mechanical Properties of Solids","Mechanical Properties of Fluids","Thermal Properties of Matter","Thermodynamics","Kinetic Theory","Oscillations","Waves"],"Chemistry":["Some Basic Concepts of Chemistry","Structure of Atom","Classification of Elements and Periodicity in Properties","Chemical Bonding and Molecular Structure","Chemical Thermodynamics","Equilibrium","Redox Reactions","Organic Chemistry: Some Basic Principles and Techniques","Hydrocarbons"],"Mathematics":["Sets","Relations and Functions","Trigonometric Functions","Complex Numbers and Quadratic Equations","Linear Inequalities","Permutations and Combinations","Binomial Theorem","Sequences and Series","Straight Lines","Conic Sections","Introduction to Three-Dimensional Geometry","Limits and Derivatives","Statistics","Probability"],"Applied Mathematics":["Numbers, Quantification and Numerical Applications","Algebra","Mathematical Reasoning","Sets and Relations","Functions","Sequences and Series","Permutations and Combinations","Probability","Descriptive Statistics","Correlation and Regression","Financial Mathematics","Coordinate Geometry","Calculus","Linear Programming","Project Work"],"Biology":["The Living World","Biological Classification","Plant Kingdom","Animal Kingdom","Morphology of Flowering Plants","Anatomy of Flowering Plants","Structural Organisation in Animals","Cell: The Unit of Life","Biomolecules","Cell Cycle and Cell Division","Photosynthesis in Higher Plants","Respiration in Plants","Plant Growth and Development","Breathing and Exchange of Gases","Body Fluids and Circulation","Excretory Products and their Elimination","Locomotion and Movement","Neural Control and Coordination","Chemical Coordination and Integration"],"Biotechnology":["Introduction to Biotechnology","Biomolecules","Cell Structure and Function","Bioenergetics","Microbiology","Biochemistry and Enzymes","Plant Physiology","Animal Physiology","Genetics and Molecular Biology","Basic Biotechnological Techniques","Laboratory Skills and Biosafety","Practical and Project Work"],"Computer Science":["Computer System Overview","Encoding Schemes and Number System","Boolean Logic","Computational Thinking and Problem Solving","Getting Started with Python","Flow of Control","Functions","Strings","Lists","Tuples and Dictionaries","Introduction to Python Modules","Practical and Project Work"],"Informatics Practices":["Computer System and Organisation","Introduction to Python","Python Data Types and Operators","Control Statements","Lists and Dictionaries","Data Handling with Pandas — Introduction","Data Visualisation","Database Concepts","SQL Fundamentals","Societal Impacts and Cyber Safety","Practical and Project Work"],"Accountancy":["Introduction to Accounting","Theory Base of Accounting","Recording of Transactions — I","Recording of Transactions — II","Bank Reconciliation Statement","Trial Balance and Rectification of Errors","Depreciation, Provisions and Reserves","Bills of Exchange","Financial Statements — I","Financial Statements — II","Accounts from Incomplete Records","Applications of Computers in Accounting","Computerised Accounting System"],"Business Studies":["Nature and Purpose of Business","Forms of Business Organisation","Private, Public and Global Enterprises","Business Services","Emerging Modes of Business","Social Responsibilities of Business and Business Ethics","Formation of a Company","Sources of Business Finance","Small Business","Internal Trade","International Business"],"Economics":["Introduction to Microeconomics","Consumer’s Equilibrium and Demand","Producer Behaviour and Supply","Forms of Market and Price Determination","Introduction to Statistics","Collection of Data","Organisation of Data","Presentation of Data","Measures of Central Tendency","Measures of Dispersion","Correlation","Index Numbers"],"English Core":["The Portrait of a Lady","We're Not Afraid to Die… if We Can All Be Together","Discovering Tut: The Saga Continues","Landscape of the Soul","The Ailing Planet: The Green Movement's Role","The Browning Version","The Adventure","Silk Road","A Photograph","The Laburnum Top","The Voice of the Rain","Childhood","Father to Son","The Summer of the Beautiful White Horse","The Address","Mother's Day","Birth","The Tale of Melon City","Reading Comprehension","Creative Writing and Note-making"],"Hindi Core":["नमक का दारोगा","मियाँ नसीरुद्दीन","अपू के साथ ढाई साल","विदाई-संभाषण","गलता लोहा","रजनी","जामुन का पेड़","भारत माता","कबीर के पद","मीरा के पद","घर की याद","चंपा काले-काले अच्छर नहीं चीन्हती","ग़ज़ल","हे भूख! मत मचल","आत्मा का ताप","भारतीय गायिकाओं में बेजोड़: लता मंगेशकर","राजस्थान की रजत बूँदें","आलो-आँधारि","अपठित बोध और रचनात्मक लेखन"],"Political Science":["Constitution: Why and How?","Rights in the Indian Constitution","Election and Representation","Executive","Legislature","Judiciary","Federalism","Local Governments","Constitution as a Living Document","The Philosophy of the Constitution","Political Theory: An Introduction","Freedom","Equality","Social Justice","Rights","Citizenship","Nationalism","Secularism","Peace","Development"],"History":["Writing and City Life","An Empire Across Three Continents","Nomadic Empires","The Three Orders","Changing Cultural Traditions","Confrontation of Cultures","Displacing Indigenous Peoples","Paths to Modernisation","Themes, Sources and Historical Interpretation"],"Geography":["Geography as a Discipline","The Origin and Evolution of the Earth","Interior of the Earth","Distribution of Oceans and Continents","Geomorphic Processes","Landforms and their Evolution","Composition and Structure of Atmosphere","Solar Radiation, Heat Balance and Temperature","Atmospheric Circulation and Weather Systems","Water in the Atmosphere","World Climate and Climate Change","Water (Oceans)","Life on the Earth","India — Location","Structure and Physiography of India","Drainage System","Climate of India","Natural Vegetation","Soils","Natural Hazards and Disasters","Practical Work in Geography"],"Psychology":["What is Psychology?","Methods of Enquiry in Psychology","The Bases of Human Behaviour","Human Development","Sensory, Attentional and Perceptual Processes","Learning","Human Memory","Thinking","Motivation and Emotion","Practical Work and Case Studies"],"Sociology":["Sociology and Society","Terms, Concepts and their Use in Sociology","Understanding Social Institutions","Culture and Socialisation","Doing Sociology: Research Methods","Social Structure, Stratification and Social Processes","Social Change and Social Order in Rural and Urban Society","Environment and Society","Introducing Western Sociologists","Indian Sociologists"],"Legal Studies":["Introduction to Political Institutions","Nature and Sources of Law","Historical Evolution of the Indian Legal System","Indian Constitutional Framework","Judiciary and Legal Profession","Legal Services and Access to Justice","Alternative Dispute Resolution","Legal Research and Case Analysis"],"Entrepreneurship":["Entrepreneurial Opportunity","Entrepreneurial Planning","Enterprise Marketing","Enterprise Growth Strategies","Business Arithmetic","Resource Mobilisation","Business Plan and Project Work"],"Home Science":["Introduction to Home Science","Understanding Oneself: Adolescence","Nutrition, Food Science and Technology","Food Safety and Hygiene","Human Development","Family and Community","Textiles and Apparel","Resource Management","Communication and Extension","Practical Work and Project"],"Physical Education":["Changing Trends and Career in Physical Education","Olympic Value Education","Physical Fitness, Wellness and Lifestyle","Physical Education and Sports for CWSN","Yoga","Physical Activity and Leadership Training","Test, Measurement and Evaluation","Fundamentals of Anatomy and Physiology","Kinesiology and Biomechanics","Psychology and Sports","Training and Doping in Sports"],"Fine Arts — Painting":["Prehistoric Rock Paintings","Art of Indus Valley Civilisation","Buddhist, Jain and Hindu Art","Temple Architecture and Sculpture","Bronze Sculpture Tradition","Indo-Islamic Architecture","Miniature Painting Traditions","Pahari School of Painting","Rajasthani School of Painting","Mughal School of Painting","Deccan School of Painting","Practical Work and Portfolio"],"Sanskrit Core":["अपठित-अवबोधनम्","रचनात्मक-कार्यम्","अनुप्रयुक्त-व्याकरणम्","संधि-प्रकरणम्","समास-प्रकरणम्","प्रत्यय-प्रकरणम्","शब्दरूपाणि","धातुरूपाणि","गद्य-पाठाः","पद्य-पाठाः","नाट्य-पाठाः","भावार्थ एवं अन्वय","संस्कृत से हिन्दी/अंग्रेज़ी अनुवाद","संवाद, पत्र और अनुच्छेद लेखन"],"Engineering Graphics":["Introduction to Engineering Graphics","Drawing Instruments and Standards","Geometrical Constructions","Scales and Dimensioning","Orthographic Projection","Projection of Points and Lines","Projection of Planes","Projection of Solids","Sections of Solids","Isometric Projection","Computer-Aided Drafting Basics","Practical Drawing Portfolio"]};
+const CLASS12_UPDATED_TRACKS = {"Physics":["Electric Charges and Fields","Electrostatic Potential and Capacitance","Current Electricity","Moving Charges and Magnetism","Magnetism and Matter","Electromagnetic Induction","Alternating Current","Electromagnetic Waves","Ray Optics and Optical Instruments","Wave Optics","Dual Nature of Radiation and Matter","Atoms","Nuclei","Semiconductor Electronics"],"Chemistry":["Solutions","Electrochemistry","Chemical Kinetics","The d- and f-Block Elements","Coordination Compounds","Haloalkanes and Haloarenes","Alcohols, Phenols and Ethers","Aldehydes, Ketones and Carboxylic Acids","Amines","Biomolecules"],"Mathematics":["Relations and Functions","Inverse Trigonometric Functions","Matrices","Determinants","Continuity and Differentiability","Application of Derivatives","Integrals","Application of Integrals","Differential Equations","Vector Algebra","Three-Dimensional Geometry","Linear Programming","Probability"],"Applied Mathematics":["Numbers, Quantification and Numerical Applications","Algebra","Matrices and Determinants","Calculus","Probability Distributions","Inferential Statistics","Index Numbers and Time-Based Data","Financial Mathematics","Linear Programming","Differential Equations and Applications","Practical Data Analysis","Project Work"],"Biology":["Sexual Reproduction in Flowering Plants","Human Reproduction","Reproductive Health","Principles of Inheritance and Variation","Molecular Basis of Inheritance","Evolution","Human Health and Disease","Microbes in Human Welfare","Biotechnology: Principles and Processes","Biotechnology and its Applications","Organisms and Populations","Ecosystem","Biodiversity and Conservation"],"Biotechnology":["Recombinant DNA Technology","Tools and Techniques in Biotechnology","Genomics and Bioinformatics","Protein Structure and Engineering","Plant Biotechnology","Animal Biotechnology","Medical Biotechnology","Environmental Biotechnology","Bioethics, Biosafety and IPR","Biotechnology in Industry","Practical and Project Work"],"Computer Science":["Python Revision Tour","Functions","Exception Handling","File Handling","Data Structures","Stack","Queue","Searching and Sorting","Understanding Data","Database Concepts","Structured Query Language","Computer Networks","Project Work and Practical Examination"],"Informatics Practices":["Data Handling using Pandas","Data Visualisation","Database Query using SQL","Computer Networks","Societal Impacts","Cyber Safety and Digital Footprints","Data-driven Project","Practical Work"],"Accountancy":["Accounting for Not-for-Profit Organisations","Accounting for Partnership Firms — Fundamentals","Goodwill: Nature and Valuation","Change in Profit-Sharing Ratio","Admission of a Partner","Retirement and Death of a Partner","Dissolution of Partnership Firm","Accounting for Share Capital","Issue and Redemption of Debentures","Financial Statements of a Company","Analysis of Financial Statements","Accounting Ratios","Cash Flow Statement","Computerised Accounting / Project Work"],"Business Studies":["Nature and Significance of Management","Principles of Management","Business Environment","Planning","Organising","Staffing","Directing","Controlling","Financial Management","Financial Markets","Marketing Management","Consumer Protection","Entrepreneurship Development"],"Economics":["National Income and Related Aggregates","Money and Banking","Determination of Income and Employment","Government Budget and the Economy","Balance of Payments","Development Experience (1947–90) and Economic Reforms since 1991","Current Challenges Facing the Indian Economy","Development Experience of India: A Comparison with Neighbours"],"English Core":["The Last Lesson","Lost Spring","Deep Water","The Rattrap","Indigo","Poets and Pancakes","The Interview","Going Places","My Mother at Sixty-Six","Keeping Quiet","A Thing of Beauty","A Roadside Stand","Aunt Jennifer’s Tigers","The Third Level","The Tiger King","Journey to the End of the Earth","The Enemy","On the Face of It","Memories of Childhood","Reading Comprehension and Creative Writing"],"Hindi Core":["आत्मपरिचय","एक गीत","पतंग","कविता के बहाने","बात सीधी थी पर","कैमरे में बंद अपाहिज","सहर्ष स्वीकारा है","उषा","बादल राग","कवितावली","लक्ष्मण-मूर्छा और राम का विलाप","रुबाइयाँ","छोटा मेरा खेत","बगुलों के पंख","भक्तिन","बाज़ार दर्शन","काले मेघा पानी दे","पहलवान की ढोलक","चार्ली चैप्लिन यानी हम सब","नमक","शिरीष के फूल","श्रम-विभाजन और जाति-प्रथा","मेरी कल्पना का आदर्श समाज","अपठित बोध और रचनात्मक लेखन"],"Political Science":["The End of Bipolarity","Contemporary Centres of Power","Contemporary South Asia","International Organisations","Security in the Contemporary World","Environment and Natural Resources","Globalisation","Challenges of Nation-Building","Era of One-Party Dominance","Politics of Planned Development","India's External Relations","Challenges to and Restoration of the Congress System","The Crisis of Democratic Order","Regional Aspirations","Recent Developments in Indian Politics"],"History":["Bricks, Beads and Bones: The Harappan Civilisation","Kings, Farmers and Towns","Kinship, Caste and Class","Thinkers, Beliefs and Buildings","Through the Eyes of Travellers","Bhakti-Sufi Traditions","An Imperial Capital: Vijayanagara","Peasants, Zamindars and the State","Kings and Chronicles: The Mughal Courts","Colonialism and the Countryside","Rebels and the Raj","Mahatma Gandhi and the Nationalist Movement","Framing the Constitution","Map Work and Source-based Interpretation"],"Geography":["Human Geography: Nature and Scope","The World Population: Distribution, Density and Growth","Human Development","Primary Activities","Secondary Activities","Tertiary and Quaternary Activities","Transport and Communication","International Trade","Human Settlements","Population: Distribution, Density, Growth and Composition","Migration: Types, Causes and Consequences","Human Development","Human Settlements","Land Resources and Agriculture","Water Resources","Mineral and Energy Resources","Planning and Sustainable Development in Indian Context","Transport and Communication","International Trade","Geographical Perspective on Selected Issues","Practical Work and Map Skills"],"Psychology":["Variations in Psychological Attributes","Self and Personality","Meeting Life Challenges","Psychological Disorders","Therapeutic Approaches","Attitude and Social Cognition","Social Influence and Group Processes","Psychology and Life","Developing Psychological Skills"],"Sociology":["Introducing Indian Society","The Demographic Structure of Indian Society","Social Institutions: Continuity and Change","Patterns of Social Inequality and Exclusion","The Challenges of Cultural Diversity","Structural Change","Cultural Change","The Story of Indian Democracy","Change and Development in Rural Society","Change and Development in Industrial Society","Globalisation and Social Change","Mass Media and Communications","Social Movements"],"Legal Studies":["Judiciary","Topics in Law","Arbitration, Mediation and Conciliation","Human Rights in India","Legal Profession in India","Legal Services","International Context of Law","Law, Justice and Emerging Technologies","Case Studies and Project Work"],"Entrepreneurship":["Entrepreneurial Opportunity","Entrepreneurial Planning","Enterprise Marketing","Growth Strategies","Business Arithmetic","Resource Mobilisation","Business Plan, Pitching and Project Work"],"Home Science":["Work, Livelihood and Career","Nutrition, Food Science and Technology","Public Nutrition and Health","Food Processing and Technology","Human Development and Family Studies","Fabric and Apparel","Resource Management","Communication and Extension","Consumer Education and Protection","Practical Work and Project"],"Physical Education":["Management of Sporting Events","Children and Women in Sports","Yoga as a Preventive Measure for Lifestyle Disease","Physical Education and Sports for CWSN","Sports and Nutrition","Test and Measurement in Sports","Physiology and Injuries in Sports","Biomechanics and Sports","Psychology and Sports","Training in Sports"],"Fine Arts — Painting":["Rajasthani School of Miniature Painting","Pahari School of Miniature Painting","Mughal School of Miniature Painting","Deccan School of Miniature Painting","Bengal School of Painting","Modern Indian Art","Contemporary Indian Art","Practical Work and Portfolio"],"Sanskrit Core":["अपठित-अवबोधनम्","रचनात्मक-कार्यम्","अनुप्रयुक्त-व्याकरणम्","संधि-प्रकरणम्","समास-प्रकरणम्","प्रत्यय-प्रकरणम्","शब्दरूपाणि","धातुरूपाणि","गद्य-पाठाः","पद्य-पाठाः","नाट्य-पाठाः","भावार्थ एवं अन्वय","संस्कृत से हिन्दी/अंग्रेज़ी अनुवाद","संवाद, पत्र और अनुच्छेद लेखन"],"Engineering Graphics":["Isometric Projection","Orthographic Projection","Projection of Points and Lines","Projection of Planes","Projection of Solids","Sections of Solids","Development of Surfaces","Perspective Projection","Computer-Aided Drafting","Practical Drawing Portfolio"]};
+
+const CLASS9_OLD_NOTES = REAL_NOTES_DATA["9"] || {};
+const CLASS11_OLD_NOTES = REAL_NOTES_DATA["11"] || {};
+const CLASS12_OLD_NOTES = REAL_NOTES_DATA["12"] || {};
+const CLASS11_NOTE_ALIASES = {
+  "English Core": Object.assign({}, CLASS11_OLD_NOTES["English Hornbill"] || {}, CLASS11_OLD_NOTES["English Snapshots"] || {}, CLASS11_OLD_NOTES["English"] || {}),
+  "Hindi Core": CLASS11_OLD_NOTES["Hindi Core"] || CLASS11_OLD_NOTES["Hindi"] || {},
+  "Applied Mathematics": CLASS11_OLD_NOTES["Applied Mathematics"] || {},
+  "Informatics Practices": CLASS11_OLD_NOTES["Informatics Practices"] || {},
+  "Biotechnology": CLASS11_OLD_NOTES["Biotechnology"] || {}
+};
+const CLASS12_NOTE_ALIASES = {
+  "English Core": Object.assign({}, CLASS12_OLD_NOTES["English Core"] || {}, CLASS12_OLD_NOTES["English"] || {}),
+  "Hindi Core": CLASS12_OLD_NOTES["Hindi Core"] || CLASS12_OLD_NOTES["Hindi"] || {},
+  "Applied Mathematics": CLASS12_OLD_NOTES["Applied Mathematics"] || {},
+  "Informatics Practices": CLASS12_OLD_NOTES["Informatics Practices"] || {},
+  "Biotechnology": CLASS12_OLD_NOTES["Biotechnology"] || {}
+};
+function applyStudyAITrackCatalogue(classNumber, tracks, oldNotes, aliases = {}) {
+  const nextNotes = {};
+  Object.entries(tracks).forEach(([subject, chapters]) => {
+    const oldSubjectNotes = oldNotes[subject] || aliases[subject] || {};
+    nextNotes[subject] = {};
+    chapters.forEach(chapter => {
+      const saved = oldSubjectNotes[chapter];
+      nextNotes[subject][chapter] = (typeof saved === "string" && saved.trim()) ? saved : PLACEHOLDER_NOTE;
+    });
+  });
+  REAL_NOTES_DATA[String(classNumber)] = nextNotes;
+  STUDYAI_CHAPTER_CATALOG[String(classNumber)] = tracks;
+  S[String(classNumber)] = Object.keys(tracks);
+  CH_QUIZZES[String(classNumber)] = CH_QUIZZES[String(classNumber)] || {};
+  Object.keys(tracks).forEach(subject => {
+    CH_QUIZZES[String(classNumber)][subject] = CH_QUIZZES[String(classNumber)][subject] || {};
+  });
+}
+applyStudyAITrackCatalogue(9, CLASS9_UPDATED_TRACKS, CLASS9_OLD_NOTES);
+applyStudyAITrackCatalogue(11, CLASS11_UPDATED_TRACKS, CLASS11_OLD_NOTES, CLASS11_NOTE_ALIASES);
+applyStudyAITrackCatalogue(12, CLASS12_UPDATED_TRACKS, CLASS12_OLD_NOTES, CLASS12_NOTE_ALIASES);
+window.STUDYAI_CHAPTER_CATALOG = STUDYAI_CHAPTER_CATALOG;
+window.CLASS9_UPDATED_TRACKS = CLASS9_UPDATED_TRACKS;
+window.CLASS11_UPDATED_TRACKS = CLASS11_UPDATED_TRACKS;
+window.CLASS12_UPDATED_TRACKS = CLASS12_UPDATED_TRACKS;
+
+// Reorganise older Class 10 saved quiz banks under the new English/Hindi book branches.
+// Reorganise older Class 10 saved quiz banks under the new English/Hindi book branches.
+const CLASS10_OLD_ENGLISH_QUIZZES = CLASS10_OLD_QUIZZES.English || {};
+const CLASS10_OLD_HINDI_QUIZZES = CLASS10_OLD_QUIZZES.Hindi || {};
+CH_QUIZZES["10"] = {};
+Object.keys(CLASS10_TRACKS).forEach(track=>CH_QUIZZES["10"][track] = {});
+function class10MoveQuiz(track, chapter, source, candidates){
+  const found = candidates.find(k => source && source[k]);
+  if(found) CH_QUIZZES["10"][track][chapter] = source[found];
+}
+CLASS10_TRACKS["English — First Flight"].forEach(ch=>{
+  const c=class10TextKey(ch); const cand=[ch,
+    ch.replace(/^Nelson Mandela — /,"Nelson Mandela: "),
+    ch.replace(/^Two Stories about Flying — /,"Two Stories about Flying"),
+    ch.replace(/^Glimpses of India — /,"Glimpses of India")];
+  class10MoveQuiz("English — First Flight", ch, CLASS10_OLD_ENGLISH_QUIZZES, cand);
+});
+CLASS10_TRACKS["English — Footprints Without Feet"].forEach(ch=>class10MoveQuiz("English — Footprints Without Feet",ch,CLASS10_OLD_ENGLISH_QUIZZES,[ch]));
+["English — Grammar & Writing"].forEach(track=>{
+  ["Reading Comprehension","Grammar Overview","Writing Formats Overview"].forEach(ch=>class10MoveQuiz(track,ch,CLASS10_OLD_ENGLISH_QUIZZES,[ch,({"Reading Comprehension":"Reading","Grammar Overview":"Grammar","Writing Formats Overview":"Writing"})[ch]]));
+});
+CLASS10_TRACKS["Hindi Course A — Kshitij Bhag 2"].forEach(ch=>class10MoveQuiz("Hindi Course A — Kshitij Bhag 2",ch,CLASS10_OLD_HINDI_QUIZZES,[ch, ch.split(" — ")[0], ch.split(" — ")[0].replace("Course A","" )]));
+CLASS10_TRACKS["Hindi Course A — Kritika Bhag 2"].forEach(ch=>class10MoveQuiz("Hindi Course A — Kritika Bhag 2",ch,CLASS10_OLD_HINDI_QUIZZES,[ch, ch.split(" — ")[0]]));
+CLASS10_TRACKS["Hindi Course B — Sparsh Bhag 2"].forEach(ch=>class10MoveQuiz("Hindi Course B — Sparsh Bhag 2",ch,CLASS10_OLD_HINDI_QUIZZES,[ch, ch.split(" — ")[0]]));
+CLASS10_TRACKS["Hindi Course B — Sanchayan Bhag 2"].forEach(ch=>class10MoveQuiz("Hindi Course B — Sanchayan Bhag 2",ch,CLASS10_OLD_HINDI_QUIZZES,[ch]));
+// Course A and Course B are alternatives; subjects/electives in this list depend on the student's school.
+
 const notes={Mathematics:"Key formulas, examples and chapter-wise revision should be added here. Use the AI Tutor to explain any concept step by step.",Science:"Revise definitions, diagrams, laws, equations and numerical applications. Use practice questions after each topic.",English:"Focus on reading comprehension, grammar, writing formats, literature themes and evidence-based answers.",Hindi:"अध्याय का सार, शब्दार्थ, व्याकरण और लेखन प्रारूप का अभ्यास करें।",Physics:"Learn definitions, units, laws and derivations, then practise numerical problems.",Chemistry:"Revise concepts, equations, reactions, periodic trends and numerical applications.",Biology:"Focus on diagrams, terminology, processes and cause-effect explanations.",Economics:"Understand concepts first, then practise data interpretation and application.",Accountancy:"Learn formats and rules, then solve complete questions with working.","Business Studies":"Use headings, keywords, examples and case-based application.",Computer:"Practise concepts, algorithms/programs and output-based questions."};
 const quiz=[["If 2x+3=11, x is?",["2","3","4","5"],2,"Subtract 3 and divide by 2."],["HCF of 18 and 24 is?",["3","6","9","12"],1,"6 divides both numbers and is the greatest common factor."],["Probability of a head on one fair coin toss?",["0","1/4","1/2","1"],2,"There are two equally likely outcomes."],["Slope of y=3x+2?",["2","3","-3","1/3"],1,"In y=mx+c, m is the slope."],["A triangle with all sides equal is?",["Scalene","Isosceles","Equilateral","Right"],2,"All three sides equal defines an equilateral triangle."]];
 function opts(){return Object.keys(S).map(x=>`<option>${x}</option>`).join("")}
@@ -1035,32 +1488,50 @@ function resetAll(){
 
 function renderQuizSelectors(){
   const c=document.getElementById("quizClass")?.value || localStorage.getItem("class") || "10";
-  const quizSubject=document.getElementById("quizSubject");
-  const quizChapter=document.getElementById("quizChapter");
+  const quizSubject=document.getElementById("quizSubject"), quizChapter=document.getElementById("quizChapter");
   if(!quizSubject||!quizChapter) return;
   const wantedSubject=quizSubject.value;
-  const subjects=(typeof CH_QUIZZES!=="undefined" && CH_QUIZZES[c]) ? Object.keys(CH_QUIZZES[c]) : (S[c]||[]);
-  quizSubject.innerHTML=subjects.map(s=>`<option>${s}</option>`).join("");
-  quizSubject.value=subjects.includes(wantedSubject) ? wantedSubject : (subjects[0]||"");
+  const subjects=Object.keys((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{});
+  const fallback=Object.keys((typeof CH_QUIZZES!=="undefined"&&CH_QUIZZES[c])||{});
+  const list=subjects.length?subjects:(fallback.length?fallback:(S[c]||[]));
+  quizSubject.innerHTML=list.map(x=>`<option>${String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;")}</option>`).join("");
+  quizSubject.value=list.includes(wantedSubject)?wantedSubject:(list[0]||"");
   const subj=quizSubject.value;
-  const chapters=(typeof CH_QUIZZES!=="undefined" && CH_QUIZZES[c]?.[subj]) ? Object.keys(CH_QUIZZES[c][subj]) : [];
-  quizChapter.innerHTML=chapters.map(ch=>`<option>${ch}</option>`).join("");
+  const chapters=((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c]?.[subj])||[]);
+  const existing=Object.keys((typeof CH_QUIZZES!=="undefined"&&CH_QUIZZES[c]?.[subj])||{});
+  const names=[...new Set([...chapters,...existing])], wantedChapter=quizChapter.value;
+  quizChapter.innerHTML=names.map(x=>`<option>${String(x).replace(/&/g,"&amp;").replace(/</g,"&lt;")}</option>`).join("");
+  quizChapter.value=names.includes(wantedChapter)?wantedChapter:(names[0]||"");
   renderQuizPicker();
 }
 function renderQuizPicker(){
-  const box=document.getElementById("quizPicker");
-  const quizBox=document.getElementById("quizBox");
-  if(!box) return;
-  quizBox.innerHTML="";
-  const c=document.getElementById("quizClass")?.value || localStorage.getItem("class") || "10";
-  const subj=document.getElementById("quizSubject")?.value;
-  const chapter=document.getElementById("quizChapter")?.value;
-  const sets=(typeof CH_QUIZZES!=="undefined" && CH_QUIZZES[c]?.[subj]?.[chapter]) || null;
-  if(!sets){
-    box.innerHTML=`<div class="card"><h3>Quick generic quiz</h3><p class="muted">Chapter-wise quizzes for this subject are coming soon — try a quick 5-question generic quiz instead.</p><button class="btn" onclick="makeGenericQuiz()">Start generic quiz</button></div>`;
-    return;
+  const box=document.getElementById("quizPicker"), quizBox=document.getElementById("quizBox");if(!box)return;if(quizBox)quizBox.innerHTML="";
+  const c=document.getElementById("quizClass")?.value||localStorage.getItem("class")||"10", subj=document.getElementById("quizSubject")?.value, chapter=document.getElementById("quizChapter")?.value;
+  const sets=(typeof CH_QUIZZES!=="undefined"&&CH_QUIZZES[c]?.[subj]?.[chapter])||null;
+  if(!sets||!sets.length){
+    box.innerHTML=`<div class="card"><h3>📘 ${String(chapter||"Chapter").replace(/</g,"&lt;")}</h3><p class="muted">Is chapter ka saved quiz abhi nahi hai. AI se is chapter par naya practice quiz banwa sakte ho.</p><button class="btn" id="generateChapterQuizBtn" type="button">✨ Is chapter ka quiz banao</button> <button class="btn alt" onclick="makeGenericQuiz()" type="button">Quick generic quiz</button><div id="quizGenStatus" class="muted" style="margin-top:10px"></div></div>`;
+  }else{
+    box.innerHTML=`<div class="cards">${sets.map((item,i)=>`<div class="card click" onclick="startChapterQuiz(${i})"><div class="icon">${item.type==="mcq"?"✅":"✍️"}</div><h3>${String(item.title||"Practice Quiz").replace(/</g,"&lt;")}</h3><p class="muted">${(item.questions||[]).length} questions</p></div>`).join("")}</div><div class="card"><p class="muted">Aur practice chahiye?</p><button class="btn alt" id="generateChapterQuizBtn" type="button">✨ Naya quiz banao</button><div id="quizGenStatus" class="muted" style="margin-top:10px"></div></div>`;
   }
-  box.innerHTML=`<div class="cards">${sets.map((s,i)=>`<div class="card click" onclick="startChapterQuiz(${i})"><div class="icon">${s.type==="mcq"?"✅":"✍️"}</div><h3>${s.title}</h3><p class="muted">${s.questions.length} questions</p></div>`).join("")}</div>`;
+  const b=document.getElementById("generateChapterQuizBtn");if(b)b.onclick=generateChapterQuiz;
+}
+async function generateChapterQuiz(){
+  const c=document.getElementById("quizClass")?.value||"10",s=document.getElementById("quizSubject")?.value,ch=document.getElementById("quizChapter")?.value;
+  const btn=document.getElementById("generateChapterQuizBtn"),status=document.getElementById("quizGenStatus");
+  if(!s||!ch){if(status)status.textContent="Pehle subject aur chapter chuno.";return;}
+  if(btn){btn.disabled=true;btn.textContent="⏳ Quiz ban raha hai…";}if(status)status.textContent="AI chapter ke topic par MCQ aur answer key bana raha hai…";
+  try{
+    const prompt=`Class ${c}, subject ${s}, chapter ${ch} ke liye 8 accurate school-level multiple-choice questions banao. Sirf valid JSON return karo, markdown nahi, is schema mein: {"title":"AI Chapter Quiz","type":"mcq","questions":[{"q":"question","options":["A","B","C","D"],"answer":0,"explain":"short explanation"}]}. Har question mein exactly 4 distinct options hon aur answer 0,1,2,3 mein se sahi option ka index ho. Chapter se bahar ke sawal mat banana. Agar exact syllabus detail uncertain ho to well-established chapter concepts hi use karo.`;
+    const raw=await aiAsk({message:prompt,cls:c,ctx:`Practice Quiz | ${s} | ${ch}`,maxTokens:2600,timeout:100000});
+    const cleaned=String(raw).replace(/^```(?:json)?\s*/i,"").replace(/\s*```$/i,"");let obj;
+    try{obj=JSON.parse(cleaned)}catch(_){const a=cleaned.indexOf("{"),z=cleaned.lastIndexOf("}");if(a<0||z<=a)throw new Error("AI ne valid quiz format nahi diya");obj=JSON.parse(cleaned.slice(a,z+1));}
+    if(!obj||!Array.isArray(obj.questions))throw new Error("Quiz format sahi nahi mila");
+    const questions=obj.questions.filter(q=>q&&typeof q.q==="string"&&Array.isArray(q.options)&&q.options.length===4&&Number.isInteger(Number(q.answer))&&Number(q.answer)>=0&&Number(q.answer)<4).slice(0,10).map(q=>({q:q.q,options:q.options.map(String),answer:Number(q.answer),explain:String(q.explain||"")}));
+    if(!questions.length)throw new Error("Is chapter ka usable quiz nahi bana. Dobara try karo.");
+    if(!CH_QUIZZES[c])CH_QUIZZES[c]={};if(!CH_QUIZZES[c][s])CH_QUIZZES[c][s]={};
+    CH_QUIZZES[c][s][ch]=[{title:`${obj.title||"AI Chapter Quiz"} (${questions.length} MCQ)`,type:"mcq",questions}];renderQuizPicker();
+    const st=document.getElementById("quizGenStatus");if(st)st.textContent=`Quiz ready: ${questions.length} questions.`;
+  }catch(e){const st=document.getElementById("quizGenStatus");if(st)st.textContent=(typeof aiErr==="function"?aiErr(e):e.message||"Quiz nahi ban saka")+" Dobara try karo.";if(btn){btn.disabled=false;btn.textContent="✨ Dobara quiz banao";}}
 }
 let CURRENT_QUIZ_SET=null;
 function startChapterQuiz(i){
@@ -1226,13 +1697,13 @@ if(document.readyState==="loading"){document.addEventListener("DOMContentLoaded"
 
 <script>
 const ncertMap={
-6:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer/Vocational"],
-7:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer"],
-8:["Mathematics","Science","English","Hindi","Social Science","Sanskrit","Computer"],
-9:["Mathematics","Science","English","Hindi","Social Science","Information Technology"],
-10:["Mathematics","Science","English","Hindi","Social Science","Information Technology"],
-11:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"],
-12:["Physics","Chemistry","Mathematics","Biology","English","Computer Science","Economics","Accountancy","Business Studies"]
+6:Object.keys(STUDYAI_CHAPTER_CATALOG["6"]),
+7:Object.keys(STUDYAI_CHAPTER_CATALOG["7"]),
+8:Object.keys(STUDYAI_CHAPTER_CATALOG["8"]),
+9:Object.keys(STUDYAI_CHAPTER_CATALOG["9"]),
+10:Object.keys(STUDYAI_CHAPTER_CATALOG["10"]),
+11:Object.keys(STUDYAI_CHAPTER_CATALOG["11"]),
+12:Object.keys(STUDYAI_CHAPTER_CATALOG["12"])
 };
 function fillExtraSelects(){
  const o=Object.keys(ncertMap).map(c=>`<option>${c}</option>`).join("");
@@ -1240,12 +1711,18 @@ function fillExtraSelects(){
  let c=localStorage.getItem("class")||"10";["ncertClass","paperClass"].forEach(id=>{let e=document.getElementById(id);if(e)e.value=c});
  updatePaperSubjects();renderNCERT();
 }
+function catalogChaptersHTML(c,s){
+ const list=((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{})[s]||[];
+ if(!list.length)return "";
+ return '<details><summary>Chapter list dekho</summary><ol>'+list.map(ch=>'<li>'+String(ch).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;")+'</li>').join("")+'</ol></details>';
+}
 function renderNCERT(){
  let c=document.getElementById("ncertClass").value,q=(document.getElementById("ncertSearch").value||"").toLowerCase();
- document.getElementById("ncertCards").innerHTML=ncertMap[c].filter(s=>s.toLowerCase().includes(q)).map(s=>`
+ document.getElementById("ncertCards").innerHTML=[...new Set([...Object.keys((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{}),...(ncertMap[c]||[])])].filter(s=>s.toLowerCase().includes(q)).map(s=>`
  <div class="card ncertCard">
   <span class="tag">Class ${c}</span><h3>${s}</h3>
-  <p class="muted">Official textbook + StudyAI short notes + solutions + practice</p>
+  <p class="muted">Official textbook + chapter-wise notes, quizzes and practice. Optional subjects depend on your school.</p>
+  ${catalogChaptersHTML(c,s)}
   <div class="resourceRow">
    <a class="btn" href="https://ncert.nic.in/textbook.php" target="_blank" rel="noopener">NCERT Book</a>
    <button class="btn alt" onclick="openSubject('${s.replace(/'/g,"\\'")}')">Short Notes</button>
@@ -1254,7 +1731,9 @@ function renderNCERT(){
 }
 function updatePaperSubjects(){
  let c=document.getElementById("paperClass").value;
- document.getElementById("paperSubject").innerHTML=(ncertMap[c]||[]).map(s=>`<option>${s}</option>`).join("");updatePaperChapters();
+ const catalog=Object.keys((typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[c])||{});
+ const subjects=[...new Set([...catalog,...(ncertMap[c]||[])])];
+ document.getElementById("paperSubject").innerHTML=subjects.map(s=>`<option>${String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;")}</option>`).join("");updatePaperChapters();
 }
 const PAPER_CH_RAW={
 6:{"Mathematics":"Patterns in Mathematics|Lines and Angles|Number Play|Data Handling and Presentation|Prime Time|Perimeter and Area|Fractions|Playing with Constructions|Symmetry|The Other Side of Zero",
@@ -1292,7 +1771,11 @@ const PAPER_CH_RAW={
 };
 const PAPER_RULE=`You are an expert CBSE board paper setter. Output ONLY clean HTML (no markdown, no code fences, no <script>). Follow the latest CBSE pattern and NCERT syllabus strictly. Use ONLY the given chapter(s). No repeated or trivial questions; every answer must be correct. Write questions in English (Hindi subject: Hindi, Sanskrit subject: Sanskrit).
 Format: each question = <div class="q"><b>Q{number}.</b> question text <span class="mk">[{marks}]</span> ...</div>. For MCQs put the 4 options as <ol type="a"><li>..</li></ol>. Right after every question add <details><summary>Answer</summary>correct answer with short working/explanation</details>. Number questions exactly as asked. Do not add any intro or closing text.`;
-function paperList(c,s){const r=(PAPER_CH_RAW[c]||{})[s];return r?r.split("|"):[]}
+function paperList(c,s){
+ const catalog=(typeof STUDYAI_CHAPTER_CATALOG!=="undefined"&&STUDYAI_CHAPTER_CATALOG[String(c)]&&STUDYAI_CHAPTER_CATALOG[String(c)][s])||[];
+ if(catalog.length)return [...new Set(catalog)];
+ const r=(PAPER_CH_RAW[c]||{})[s];return r?r.split("|"):[];
+}
 function updatePaperChapters(){
  const sel=document.getElementById("paperChapter");if(!sel)return;
  const c=document.getElementById("paperClass").value,s=document.getElementById("paperSubject").value;
@@ -1653,7 +2136,7 @@ function gen(html){
  const seen=new Set();return out.filter(c=>{const k=c.q.toLowerCase();if(seen.has(k))return false;seen.add(k);return true}).slice(0,45)}
 function chapCards(c,s,ch){const key=c+'|'+s+'|'+ch;let raw='';try{raw=localStorage.getItem('notes:'+key)||''}catch(e){}
  if(!raw)raw=(((REAL_NOTES_DATA[c]||{})[s])||{})[ch]||'';
- const out=!raw||/Notes aa rahe hain/.test(raw)?[]:gen(raw);
+ const out=!raw||/(Notes aa rahe hain|Chapter added to StudyAI)/.test(raw)?[]:gen(raw);
  const qz=(((typeof CH_QUIZZES!=='undefined'&&CH_QUIZZES[c])||{})[s]||{})[ch]||[];
  qz.filter(z=>z.type==='mcq').forEach(z=>(z.questions||[]).forEach(q=>{if(q.options&&q.options[q.answer]!=null)out.push({q:q.q,a:String(q.options[q.answer]),t:'qa'})}));
  (MINE[key]||[]).forEach(m=>out.push({q:m.q,a:m.a,t:'qa',mine:1,id:m.id}));
@@ -2071,11 +2554,12 @@ function pool(c,sub,only,weak){
 }
 function renderMockSetup(){
   const box=$('mockBox');const c=mockCfg.c||curClass();
-  const subs=Object.keys(CH_QUIZZES[c]||{});
-  box.innerHTML=`<div class="card"><div class="saiRow"><label>Class<select id="mkC">${copts(c)}</select></label><label>Subject<select id="mkS"><option value="*">Sabhi subjects (mix)</option>${subs.map(s=>`<option>${esc(s)}</option>`).join('')}</select></label><label>Sawal<select id="mkN">${[10,20,30,40,50].map(n=>`<option${n===(mockCfg.n||20)?' selected':''}>${n}</option>`).join('')}</select></label><label>Time (minute)<select id="mkT">${[10,15,20,30,45,60,90,120,180].map(n=>`<option${n===(mockCfg.t||30)?' selected':''}>${n}</option>`).join('')}</select></label></div><p class="muted" id="mkInfo"></p><button class="btn" id="mkGo">▶ Test shuru karo</button></div>
+  const subs=Object.keys(STUDYAI_CHAPTER_CATALOG[c]||CH_QUIZZES[c]||{});
+  box.innerHTML=`<div class="card"><div class="saiRow"><label>Class<select id="mkC">${copts(c)}</select></label><label>Subject<select id="mkS"><option value="*">Sabhi subjects (mix)</option>${subs.map(s=>`<option>${esc(s)}</option>`).join('')}</select></label><label>Sawal<select id="mkN">${[10,20,30,40,50].map(n=>`<option${n===(mockCfg.n||20)?' selected':''}>${n}</option>`).join('')}</select></label><label>Time (minute)<select id="mkT">${[10,15,20,30,45,60,90,120,180].map(n=>`<option${n===(mockCfg.t||30)?' selected':''}>${n}</option>`).join('')}</select></label></div><p class="muted" id="mkInfo"></p><button class="btn" id="mkGo">▶ Test shuru karo</button> <button class="btn alt" type="button" id="mkToQuiz">📘 Chapter quiz banao</button></div>
   <div class="card" style="margin-top:14px"><h3 style="margin-top:0">Pichhle mock tests</h3>${(()=>{const m=LS.g('scores',[]).filter(x=>x.kind==='mock').slice(-6).reverse();return m.length?`<ul class="saiList">${m.map(x=>`<li><span>Class ${esc(x.c)} • ${esc(x.s)}<br><span class="muted">${new Date(x.t).toLocaleString()}</span></span><span class="saiBadge">${x.score}/${x.total}</span></li>`).join('')}</ul>`:'<p class="muted">Abhi koi mock test nahi diya.</p>'})()}</div>`;
-  const info=()=>{const p=pool($('mkC').value,$('mkS').value);$('mkInfo').textContent=p.length?`${p.length} MCQ sawal available hain. Agar available sawal kam hue to utne hi aayenge.`:'Is selection ke liye abhi MCQ sawal nahi hain.'};
+  const info=()=>{const cc=$('mkC').value,ss=$('mkS').value,p=pool(cc,ss);$('mkInfo').textContent=p.length?`${p.length} saved MCQ sawal available hain. Mock test inhi saved questions se banega.`:`Is subject ke chapters catalogue mein hain, lekin saved MCQ bank abhi khaali hai. Practice Quiz mein chapter chuno aur 'quiz banao' karke save karo.`;$('mkGo').disabled=!p.length;};
   $('mkC').onchange=()=>{mockCfg.c=$('mkC').value;renderMockSetup()};$('mkS').onchange=info;$('mkS').value=mockCfg.s&&subs.includes(mockCfg.s)?mockCfg.s:'*';info();
+  $('mkToQuiz').onclick=()=>{const qc=$("quizClass");if(qc)qc.value=$("mkC").value;if(typeof renderQuizSelectors==="function")renderQuizSelectors();location.hash='quiz'};
   $('mkGo').onclick=()=>{mockCfg={c:$('mkC').value,s:$('mkS').value,n:+$('mkN').value,t:+$('mkT').value};LS.s('mockcfg',mockCfg);startMock({c:mockCfg.c,s:mockCfg.s,count:mockCfg.n,mins:mockCfg.t})};
 }
 function startMock(o){
