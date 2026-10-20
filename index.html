@@ -616,6 +616,9 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
 .donUpiValue{margin:17px 0 12px;padding:14px;border:1px dashed rgba(99,91,255,.38);border-radius:12px;background:var(--panel);font-size:14px;font-weight:850;color:var(--muted);overflow-wrap:anywhere}
 .donPayBtn{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:13px;background:linear-gradient(110deg,#635bff,#a34fdb);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 9px 20px rgba(99,91,255,.22)}
 .donPayBtn:disabled{cursor:not-allowed;opacity:.65;box-shadow:none}
+.donPayActions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:stretch}
+.donCopyBtn{min-height:48px;border:1px solid var(--line);border-radius:13px;padding:0 15px;background:var(--panel);color:var(--text);font-weight:850;cursor:pointer}
+.donPayHelp{margin:10px 0 0;font-size:12px;line-height:1.55;color:var(--muted)}
 .donSecure{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:11px;line-height:1.55;color:var(--muted)}
 .donSecure span{font-size:15px}
 .donTrust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
@@ -970,6 +973,7 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
     <button class="btn" onclick="location.hash='classes'">Choose Class</button>
     <button class="btn alt" onclick="location.hash='ncert'">Open NCERT</button>
     <button class="btn alt" onclick="location.hash='tutor'">Ask AI Tutor</button>
+    <button class="btn alt" type="button" onclick="openStudyAIDonation()">💜 Support StudyAI</button>
     <div id="saiAccentBox" aria-label="Dashboard accent colour">
       <span class="saiAccentLabel">🎨 Accent colour</span>
       <div class="saiAccentDots" id="saiAccentDots">
@@ -1132,7 +1136,11 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
         <div class="donUpiCard">
           <div class="donUpiTop"><div class="donUpiMark"><span class="donUpiLogo">₹</span><span>UPI payment</span></div><span class="donSoon" id="donStatus">UPI ready</span></div>
           <div class="donUpiValue" id="donUpiValue">9250686173@upi</div>
-          <button class="donPayBtn" id="donPayBtn" type="button" disabled>♡ &nbsp; Donate with UPI</button>
+          <div class="donPayActions">
+            <button class="donPayBtn" id="donPayBtn" type="button" disabled>♡ &nbsp; Donate with UPI</button>
+            <button class="donCopyBtn" id="donCopyBtn" type="button">Copy UPI ID</button>
+          </div>
+          <p class="donPayHelp" id="donPayHelp">Phone par UPI app se khol sakte ho. Agar app na khule, UPI ID copy karke apne payment app mein manually paste karo.</p>
           <div class="donSecure"><span>🔐</span><span>Payment will happen in your own UPI app. Never share your UPI PIN or OTP with anyone. Verify the recipient details in your app before paying.</span></div>
         </div>
         <div class="donFaq">
@@ -3587,25 +3595,87 @@ hub();
 })();</script>
 
 <script id="studyai-donation-setup">
-/* Add your UPI ID here later, for example: const STUDYAI_DONATION_UPI = "yourname@bank"; */
 (function(){
   const STUDYAI_DONATION_UPI = "9250686173@upi";
   const value = document.getElementById("donUpiValue");
   const button = document.getElementById("donPayBtn");
+  const copyButton = document.getElementById("donCopyBtn");
   const status = document.getElementById("donStatus");
+  const help = document.getElementById("donPayHelp");
   if(!value || !button || !status) return;
-  if(STUDYAI_DONATION_UPI.trim()){
-    const upi = STUDYAI_DONATION_UPI.trim();
+  const upi = STUDYAI_DONATION_UPI.trim();
+  if(upi){
     value.textContent = upi;
     status.textContent = "UPI ready";
     status.style.background = "#dcfce7";
     status.style.color = "#166534";
     button.disabled = false;
-    button.textContent = "♡  Donate with UPI";
     button.addEventListener("click", function(){
       const link = "upi://pay?pa=" + encodeURIComponent(upi) + "&pn=" + encodeURIComponent("StudyAI") + "&tn=" + encodeURIComponent("Support StudyAI");
+      if(help) help.textContent = "UPI app khulne ki koshish ho rahi hai. Agar app na khule, Copy UPI ID dabao aur apne UPI app mein manually payment shuru karo.";
       window.location.href = link;
     });
+    if(copyButton){
+      copyButton.addEventListener("click", async function(){
+        let copied = false;
+        try{
+          if(navigator.clipboard && navigator.clipboard.writeText){
+            await navigator.clipboard.writeText(upi);
+            copied = true;
+          }
+        }catch(e){}
+        if(!copied){
+          const temp = document.createElement("textarea");
+          temp.value = upi; temp.setAttribute("readonly", "");
+          temp.style.position = "fixed"; temp.style.opacity = "0";
+          document.body.appendChild(temp); temp.select();
+          try{copied = document.execCommand("copy");}catch(e){}
+          temp.remove();
+        }
+        if(copied){
+          const old = copyButton.textContent;
+          copyButton.textContent = "Copied ✓";
+          status.textContent = "UPI ID copied";
+          if(help) help.textContent = "UPI ID copy ho gayi. Apna UPI app kholkar recipient details verify karna aur tabhi payment confirm karna.";
+          setTimeout(()=>{ if(copyButton.isConnected) copyButton.textContent = old; }, 2200);
+        }else{
+          if(help) help.textContent = "UPI ID ko select karke copy karo: " + upi;
+        }
+      });
+    }
+  }
+})();
+
+/* Direct, dependable navigation for the Support StudyAI section. */
+(function(){
+  function openStudyAIDonation(){
+    const section = document.getElementById("donate");
+    if(!section) return;
+    if(location.hash !== "#donate") location.hash = "donate";
+    document.querySelectorAll(".section").forEach(el=>el.classList.toggle("active", el === section));
+    document.querySelectorAll("[data-route]").forEach(el=>el.classList.toggle("active", el.getAttribute("data-route") === "donate"));
+    document.querySelectorAll(".side .nav a").forEach(el=>el.classList.toggle("active", el.getAttribute("href") === "#donate"));
+    const title = document.getElementById("pageTitle");
+    if(title) title.textContent = "Support StudyAI";
+    document.body.classList.add("notHome");
+    document.getElementById("appDrawer")?.classList.remove("open");
+    document.getElementById("drawerOverlay")?.classList.remove("show");
+    window.scrollTo(0, 0);
+  }
+  window.openStudyAIDonation = openStudyAIDonation;
+  document.addEventListener("click", function(event){
+    const item = event.target && event.target.closest ? event.target.closest('[data-route="donate"], a[href="#donate"]') : null;
+    if(!item) return;
+    event.preventDefault();
+    openStudyAIDonation();
+  }, true);
+  window.addEventListener("hashchange", function(){
+    if(location.hash === "#donate") openStudyAIDonation();
+  });
+  if(document.readyState === "loading"){
+    document.addEventListener("DOMContentLoaded", function(){ if(location.hash === "#donate") openStudyAIDonation(); });
+  }else if(location.hash === "#donate"){
+    openStudyAIDonation();
   }
 })();
 </script>
