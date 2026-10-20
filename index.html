@@ -637,6 +637,45 @@ body.dark .donTrustItem,body.dark .donUpiValue{background:#111827}
 @media(max-width:760px){.donLayout{grid-template-columns:1fr}.donTrust{grid-template-columns:1fr}.donTrustItem{display:flex;align-items:center;text-align:left;gap:12px}.donTrustItem b{margin:0 0 3px}.donTrustItem .donTrustEmoji{font-size:22px}.donHero{border-radius:22px}.donHero h1{letter-spacing:-1px}}
 </style>
 
+<style id="study-community-css">
+.communityWrap{max-width:1100px;margin:0 auto}
+.communityHero{position:relative;overflow:hidden;border-radius:28px;padding:30px;color:#fff;background:radial-gradient(circle at 90% 10%,rgba(255,255,255,.24),transparent 28%),linear-gradient(125deg,#312e81,#635bff 48%,#ec4899);box-shadow:0 20px 50px #635bff30}
+.communityHero:after{content:"✦";position:absolute;right:7%;top:8%;font-size:100px;color:#ffffff18;transform:rotate(15deg)}
+.communityHero h1{font-size:clamp(26px,4vw,38px);margin:0 0 9px}.communityHero p{max-width:620px;color:#f0edff;line-height:1.65;margin:0}
+.communityHero .btn{margin-top:18px;background:#fff;color:#5145cd;box-shadow:none}
+.communityStats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:16px 0}
+.communityStat{padding:15px;border-radius:17px;background:var(--panel);border:1px solid var(--line);box-shadow:var(--shadow)}.communityStat b{display:block;font-size:23px;color:var(--primary)}.communityStat span{font-size:12px;color:var(--muted)}
+.communityLayout{display:grid;grid-template-columns:minmax(0,1fr) 285px;gap:16px;align-items:start}
+.communityComposer,.communitySideCard,.communityPost{background:var(--panel);border:1px solid var(--line);border-radius:20px;padding:17px;box-shadow:var(--shadow);margin-bottom:14px;min-width:0}
+.communitySectionTitle{font-size:18px;margin:0 0 12px}
+.communityProfileMini{display:flex;gap:11px;align-items:center;margin-bottom:13px}
+.communityAvatar{width:48px;height:48px;flex:0 0 48px;border-radius:50%;display:grid;place-items:center;overflow:hidden;color:#fff;font-weight:900;font-size:19px;background:linear-gradient(135deg,#635bff,#ff4fa3);border:2px solid #fff;box-shadow:0 0 0 2px #d9d5ff}
+.communityAvatar img{width:100%;height:100%;object-fit:cover}
+.communityProfileMini b{display:block}.communityProfileMini small{color:var(--muted)}
+.communityComposer textarea{width:100%;resize:vertical;min-height:85px;border:1px solid var(--line);border-radius:14px;padding:13px;background:var(--bg);color:var(--text)}
+.communityComposer input[type=text],.communityComposer select{width:100%;margin-top:9px}
+.communityComposeTools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin-top:10px}
+.communityComposeTools label{display:inline-flex;align-items:center;gap:7px;padding:10px 12px;border:1px solid var(--line);border-radius:12px;cursor:pointer;font-weight:750;font-size:13px}
+.communityFeedTabs{display:flex;gap:8px;flex-wrap:wrap;margin:16px 0}
+.communityFeedTabs button{border:1px solid var(--line);background:var(--panel);color:var(--text);padding:9px 13px;border-radius:99px;font-weight:800;cursor:pointer}
+.communityFeedTabs button.active{background:linear-gradient(120deg,#635bff,#a855f7);color:#fff;border-color:transparent}
+.communityPostHead{display:flex;gap:10px;align-items:center}.communityPostHead .meta{min-width:0;flex:1}.communityPostHead b{display:block}.communityPostHead small{color:var(--muted);font-size:12px}
+.communityPostType{font-size:11px;font-weight:850;color:#635bff;background:#eeecff;padding:5px 8px;border-radius:99px;white-space:nowrap}
+.communityPostText{line-height:1.7;white-space:pre-wrap;overflow-wrap:anywhere;margin:14px 0}
+.communityPostImage{width:100%;max-height:520px;object-fit:contain;background:var(--bg);border-radius:15px;display:block}
+.communityPostActions{display:flex;gap:8px;flex-wrap:wrap;padding-top:12px;border-top:1px solid var(--line);margin-top:12px}
+.communityPostActions button,.communityFollowBtn{border:1px solid var(--line);background:var(--bg);color:var(--text);border-radius:11px;padding:8px 11px;cursor:pointer;font-weight:750;font-size:13px}
+.communityPostActions button.liked{background:#fff0f5;color:#e11d48;border-color:#fecdd3}
+.communityComments{margin-top:12px;display:none}.communityComments.open{display:block}.communityComment{padding:9px 0;border-bottom:1px solid var(--line);font-size:13px;line-height:1.5}.communityCommentForm{display:flex;gap:7px;margin-top:9px}.communityCommentForm input{min-width:0;flex:1;width:100%}
+.communityPerson{display:flex;align-items:center;gap:9px;padding:10px 0;border-bottom:1px solid var(--line)}.communityPerson:last-child{border-bottom:0}.communityPerson .communityAvatar{width:38px;height:38px;flex-basis:38px;font-size:15px}.communityPerson .personInfo{min-width:0;flex:1}.communityPerson b{font-size:13px;display:block}.communityPerson small{font-size:11px;color:var(--muted)}
+.communityFollowBtn{padding:7px 10px;color:#5a4ce0;background:#f0eeff;border-color:#e0dcff}
+.communityEmpty{text-align:center;padding:30px 15px;color:var(--muted);line-height:1.6}
+.communityModal{position:fixed;inset:0;z-index:10020;background:#090d20a8;display:none;align-items:center;justify-content:center;padding:15px}.communityModal.open{display:flex}.communityModalBox{width:min(530px,100%);max-height:90vh;overflow:auto;background:var(--panel);color:var(--text);border-radius:24px;padding:22px;box-shadow:0 30px 90px #0005}.communityModalBox h2{margin-top:0}.communityModalBox label{display:grid;gap:6px;font-weight:800;font-size:13px;margin:12px 0}.communityModalBox input,.communityModalBox textarea{width:100%;min-width:0}.communityModalActions{display:flex;gap:8px;justify-content:flex-end;flex-wrap:wrap;margin-top:15px}
+.communityNotice{font-size:12px;line-height:1.6;color:var(--muted);padding:11px 13px;background:var(--bg);border-radius:12px;margin-top:12px}
+#scBackendStatus[data-kind="success"]{border:1px solid #86d4ac;background:rgba(34,197,94,.08);color:var(--text)}#scBackendStatus[data-kind="warning"]{border:1px solid #f0c56a;background:rgba(245,158,11,.09);color:var(--text)}#scBackendStatus[data-kind="error"]{border:1px solid #f2a1a1;background:rgba(239,68,68,.08);color:var(--text)}
+@media(max-width:850px){.communityLayout{grid-template-columns:1fr}.communitySide{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.communitySideCard{margin-bottom:0}}
+@media(max-width:520px){.communityHero{padding:23px 19px}.communityStats{gap:7px}.communityStat{padding:11px}.communityStat b{font-size:19px}.communityStat span{font-size:10px}.communityComposer,.communityPost,.communitySideCard{padding:13px}.communityPostType{white-space:normal}}
+</style>
 </head>
 
 <body>
@@ -656,6 +695,7 @@ body.dark .donTrustItem,body.dark .donUpiValue{background:#111827}
     <button class="drawerItem" data-route="classes">🎓 <span>Classes 6–12</span></button>
     <button class="drawerItem" data-route="subjects">📚 <span>Subjects</span></button>
     <button class="drawerItem" data-route="notes">📖 <span>Study Notes</span></button>
+    <button class="drawerItem" data-route="community">🌐 <span>Study Community</span></button>
     <button class="drawerItem" data-route="flashcards">🗂️ <span>Flashcards</span></button>
     <button class="drawerItem" data-route="quiz">🧠 <span>Practice Quiz</span></button>
     <button class="drawerItem" data-route="papers">📝 <span>Chapter Papers</span></button>
@@ -1154,6 +1194,72 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
     <div class="donThanks">Made for students, with care. <strong>Thank you for being part of StudyAI.</strong><br>Questions or suggestions? You can still use StudyAI's existing tools as usual.</div>
   </div>
 </section>
+
+<section id="community" class="section">
+ <div class="communityWrap">
+  <div class="communityHero">
+   <div style="font-size:12px;font-weight:900;letter-spacing:1.3px;opacity:.85;margin-bottom:10px">STUDYAI • STUDENT COMMUNITY</div>
+   <h1>Share what you know. ✨</h1>
+   <p>Apni handwritten notes, school papers aur study tips share karo. Dusre students ko follow karo, unki posts dekho aur milkar padhai ko aasan banao.</p>
+   <button class="btn" type="button" onclick="scOpenProfile()">✦ Create your student profile</button>
+  </div>
+  <div class="communityStats">
+   <div class="communityStat"><b id="scPostCount">0</b><span>Community posts</span></div>
+   <div class="communityStat"><b id="scFollowingCount">0</b><span>Students you follow</span></div>
+   <div class="communityStat"><b id="scFollowerCount">0</b><span>Your followers</span></div>
+  </div>
+  <div id="scBackendStatus" class="communityNotice" role="status" aria-live="polite">Connecting to StudyAI Community…</div>
+  <div class="communityLayout">
+   <div>
+    <div class="communityComposer">
+     <div class="communityProfileMini"><div class="communityAvatar" id="scMyAvatar">S</div><div><b id="scComposerName">Your student profile</b><small id="scComposerSub">Share a helpful study resource</small></div></div>
+     <textarea id="scPostText" maxlength="1200" placeholder="Aaj kya helpful padha? Notes ke baare mein batao…"></textarea>
+     <input id="scPostTitle" type="text" maxlength="100" placeholder="Post title (e.g. Class 10 • Biology handwritten notes)">
+     <div class="communityComposeTools">
+      <label>📷 Add notes / paper image<input id="scPostImage" type="file" accept="image/*" hidden></label>
+      <select id="scPostType" aria-label="Post category" style="max-width:190px"><option value="Handwritten Notes">✍️ Handwritten Notes</option><option value="School Paper">📝 School Paper</option><option value="Study Tips">💡 Study Tips</option><option value="Question Help">❓ Question Help</option></select>
+      <button class="btn" type="button" onclick="scPublish()">Publish post ↗</button>
+     </div>
+     <div id="scImagePreview" style="display:none;margin-top:12px"></div>
+     <div class="communityNotice">Posts are shared with other StudyAI students. Share only notes and papers you are allowed to distribute. Never post passwords, phone numbers, private records or other personal information.</div>
+    </div>
+    <div class="communityFeedTabs" id="scFeedTabs"><button class="active" data-feed="all" onclick="scSetFeed('all',this)">🌈 For you</button><button data-feed="following" onclick="scSetFeed('following',this)">💜 Following</button><button data-feed="notes" onclick="scSetFeed('notes',this)">✍️ Notes & papers</button><button type="button" onclick="scRefresh()">↻ Refresh</button></div>
+    <div id="scFeed"></div>
+   </div>
+   <aside class="communitySide">
+    <div class="communitySideCard">
+     <h3 class="communitySectionTitle">👤 Your student profile</h3>
+     <div class="communityProfileMini"><div class="communityAvatar" id="scSideAvatar">S</div><div><b id="scSideName">Create your profile</b><small id="scSideHandle">@student</small></div></div>
+     <p id="scBioText" class="muted" style="line-height:1.6">Add your class, subjects and a short bio so other students can know what you study.</p>
+     <button class="btn" style="width:100%" onclick="scOpenProfile()">Edit profile</button>
+     <div class="communityNotice">Your public profile shows your display name, username, class, interests and photo. Your email and password are not displayed on your profile.</div>
+    </div>
+    <div class="communitySideCard">
+     <h3 class="communitySectionTitle">🌟 Students to discover</h3>
+     <div id="scPeople"></div>
+    </div>
+    <div class="communitySideCard">
+     <h3 class="communitySectionTitle">📌 Community guidelines</h3>
+     <div class="muted" style="line-height:1.8;font-size:13px">• Share original notes and useful papers.<br>• Respect other students.<br>• Never post phone numbers, passwords or private information.<br>• Only share school papers you're allowed to distribute.</div>
+    </div>
+   </aside>
+  </div>
+ </div>
+</section>
+<div class="communityModal" id="scProfileModal" role="dialog" aria-modal="true" aria-labelledby="scProfileTitle">
+ <div class="communityModalBox">
+  <button type="button" onclick="scCloseProfile()" style="float:right;border:0;background:transparent;font-size:25px;color:var(--muted);cursor:pointer" aria-label="Close">×</button>
+  <h2 id="scProfileTitle">Make your student profile ✨</h2><p class="muted">Set up the profile that appears next to your study posts.</p>
+  <label>Display name<input id="scNameInput" type="text" maxlength="40" placeholder="Your name or nickname"></label>
+  <label>Username<input id="scHandleInput" type="text" maxlength="24" placeholder="e.g. study_star10"></label>
+  <label>Your class<select id="scClassInput"><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option></select></label>
+  <label>Subjects / interests<input id="scInterestsInput" type="text" maxlength="100" placeholder="Biology, Maths, handwritten notes"></label>
+  <label>Short bio<textarea id="scBioInput" rows="3" maxlength="180" placeholder="I share clear revision notes and exam tips…"></textarea></label>
+  <label>Profile photo<input id="scAvatarInput" type="file" accept="image/*"></label>
+  <div class="communityNotice">Use a nickname if you prefer. Avoid putting your school name, location, phone number or other private details in your profile.</div>
+  <div class="communityModalActions"><button class="btn alt" onclick="scCloseProfile()">Cancel</button><button class="btn" onclick="scSaveProfile()">Save profile</button></div>
+ </div>
+</div>
 
 <section id="settings" class="section"><div class="top"><div><h1>Settings</h1><p class="muted">Change the student's class and tutor guidance.</p></div></div><div class="card"><label>Student class</label><br><select id="setClass"></select><br><br><label>AI instruction</label><br><textarea id="instruction" rows="5" style="width:100%">You are a friendly school tutor for Classes 6–12. Explain clearly and step-by-step. Adapt to the student's class.</textarea><br><br><button class="btn" onclick="save()">Save settings</button> <button class="btn alt" onclick="resetAll()">Reset</button></div></section>
 
@@ -3252,9 +3358,12 @@ const SUPABASE_URL = window.STUDYAI_SUPABASE_URL || "https://xrziavazhzbiejdzioi
 const SUPABASE_ANON_KEY = window.STUDYAI_SUPABASE_ANON_KEY || "sb_publishable_FBBST75QSQBYnkk1X2wn-Q_7hlJawpi";
 const hasSupabase = !!(window.supabase && SUPABASE_URL.startsWith("http") && !SUPABASE_URL.includes("PASTE_YOUR") && !SUPABASE_ANON_KEY.includes("PASTE_YOUR"));
 const sb = hasSupabase ? window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY) : null;
+// Safe to expose the browser client: this is the public/publishable key, protected by Supabase RLS. Never place a service-role key here.
+window.studyAISupabaseClient = sb; window.studyAIHasSupabase = hasSupabase;
 const qs=id=>document.getElementById(id);
 const setMessage=(text,show=true)=>{const m=qs("accountMessage");if(!m)return;m.textContent=text;m.classList.toggle("show",show)};
 const openModal=()=>{qs("accountOverlay")?.classList.add("show");document.body.style.overflow="hidden";refreshAuthUI()};
+window.studyAIOpenAccount=()=>openModal();
 const closeModal=()=>{qs("accountOverlay")?.classList.remove("show");document.body.style.overflow=""};
 const setTab=mode=>{
   const login=mode!=="signup";
@@ -3331,7 +3440,7 @@ qs("forgotBtn")?.addEventListener("click",forgot);qs("logoutBtn")?.addEventListe
 document.querySelectorAll(".passwordToggle").forEach(b=>b.addEventListener("click",()=>togglePassword(b)));
 qs("signupPassword")?.addEventListener("input",e=>strength(e.target.value));
 document.addEventListener("keydown",e=>{if(e.key==="Escape")closeModal()});
-if(sb)sb.auth.onAuthStateChange(()=>refreshAuthUI());
+if(sb)sb.auth.onAuthStateChange((event,session)=>{window.dispatchEvent(new CustomEvent("studyai-auth-changed",{detail:{event,user:session?.user||null}}));setTimeout(()=>refreshAuthUI(),0);});
 refreshAuthUI();
 })();
 </script>
@@ -3686,6 +3795,217 @@ hub();
   }else if(location.hash === "#donate"){
     openStudyAIDonation();
   }
+})();
+</script>
+
+<script id="study-community-js">
+(function(){
+ 'use strict';
+ const sb=window.studyAISupabaseClient||null;
+ const $=id=>document.getElementById(id);
+ const state={user:null,profile:null,people:[],posts:[],follows:[],following:[],feed:'all',draftFile:null,draftPreview:'',profileBusy:false,publishBusy:false,totalPosts:0};
+ let refreshing=false,queuedRefresh=false,realtimeTimer=null,channel=null,backendReady=false;
+ const TABLES={profiles:'community_profiles',posts:'community_posts',follows:'community_follows',likes:'community_post_likes',comments:'community_comments'};
+ const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ const setStatus=(message,kind='info')=>{const el=$('scBackendStatus');if(!el)return;el.textContent=message;el.dataset.kind=kind;};
+ function initials(name){return (String(name||'S').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('')||'S').toUpperCase();}
+ function avatarHTML(person,extra=''){const name=person?.display_name||person?.name||'Student',src=person?.avatar_url||person?.avatar||'';return '<div class="communityAvatar '+extra+'">'+(src?'<img src="'+esc(src)+'" alt="'+esc(name)+' profile photo" loading="lazy">':esc(initials(name)))+'</div>';}
+ function setAvatar(id,person){const el=$(id);if(el)el.innerHTML=avatarHTML(person||{}).replace(/^<div[^>]*>|<\/div>$/g,'');}
+ function openAccount(){if(window.studyAIOpenAccount)window.studyAIOpenAccount();else alert('Please open My StudyAI Account to sign in.');}
+ function requireLogin(){if(state.user)return true;setStatus('Sign in or create a StudyAI account before posting, following, liking or commenting.','warning');openAccount();return false;}
+ function normalError(err){const msg=String(err?.message||err||'Unknown error');if(/relation .* does not exist|could not find the table|schema cache/i.test(msg))return 'Database setup is still missing. Run StudyAI_Community_Setup.sql in your Supabase project → SQL Editor, then refresh this page.';if(/row-level security|permission denied|not allowed/i.test(msg))return 'Supabase security rules blocked this action. Re-run the supplied setup SQL and check that Row Level Security policies were created.';if(/duplicate key|community_profiles_username_key|username/i.test(msg))return 'That username is already taken. Choose a different username.';return msg;}
+ function slugify(s){return String(s||'student').toLowerCase().normalize('NFKD').replace(/[^a-z0-9_.]+/g,'_').replace(/^[_\.]+|[_\.]+$/g,'').slice(0,24)||'student';}
+ function filename(s){return String(s||'image').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-90)||'image';}
+ async function uploadImage(file,folder,maxBytes){
+  if(!sb||!state.user)throw new Error('Sign in first to upload an image.');
+  if(!file||!/^image\/(png|jpeg|webp)$/i.test(file.type))throw new Error('Please choose a JPG, PNG or WebP image.');
+  if(file.size>maxBytes)throw new Error('Image is too large. Choose a smaller image and try again.');
+  const path=state.user.id+'/'+folder+'/'+Date.now()+'-'+filename(file.name);
+  const {error}=await sb.storage.from('community-media').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
+  if(error)throw error;
+  const result=sb.storage.from('community-media').getPublicUrl(path);
+  if(!result?.data?.publicUrl)throw new Error('Could not create an image URL.');
+  return result.data.publicUrl;
+ }
+ async function refreshCommunity(quiet=false){
+  if(refreshing){queuedRefresh=true;return;} refreshing=true;
+  try{
+   if(!sb){state.user=null;state.profile=null;state.people=[];state.posts=[];state.follows=[];render();setStatus('Account connection is unavailable. Check the Supabase URL/key configured in this HTML file.','error');return;}
+   if(!quiet)setStatus('Connecting to the shared StudyAI Community…','info');
+   const {data:userData,error:userError}=await sb.auth.getUser();
+   if(userError)throw userError;
+   state.user=userData?.user||null;
+   const profilesResult=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at').order('created_at',{ascending:false}).limit(100);
+   if(profilesResult.error)throw profilesResult.error;
+   state.people=profilesResult.data||[];
+   if(state.user){
+    const pr=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at').eq('id',state.user.id).maybeSingle();
+    if(pr.error)throw pr.error;
+    state.profile=pr.data||null;
+   }else state.profile=null;
+   const followQueries=state.user?Promise.all([
+    sb.from(TABLES.follows).select('following_id').eq('follower_id',state.user.id),
+    sb.from(TABLES.follows).select('follower_id').eq('following_id',state.user.id)
+   ]):Promise.resolve([{data:[],error:null},{data:[],error:null}]);
+   const [postsResult,followResults]=await Promise.all([
+    sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,created_at,author:community_profiles!community_posts_user_id_fkey(id,username,display_name,class_name,avatar_url)',{count:'exact'}).order('created_at',{ascending:false}).limit(60),
+    followQueries
+   ]);
+   if(postsResult.error)throw postsResult.error;
+   const [followingResult,followersResult]=followResults;if(followingResult.error)throw followingResult.error;if(followersResult.error)throw followersResult.error;
+   state.following=(followingResult.data||[]).map(f=>f.following_id);
+   state.followerCount=(followersResult.data||[]).length;
+   state.totalPosts=postsResult.count??(postsResult.data||[]).length;
+   const rawPosts=postsResult.data||[],ids=rawPosts.map(p=>p.id);
+   let likes=[],comments=[];
+   if(ids.length){
+    const [lr,cr]=await Promise.all([
+     sb.from(TABLES.likes).select('post_id,user_id').in('post_id',ids),
+     sb.from(TABLES.comments).select('id,post_id,user_id,body,created_at,author:community_profiles!community_comments_user_id_fkey(id,username,display_name,avatar_url)').in('post_id',ids).order('created_at',{ascending:true}).limit(500)
+    ]);
+    if(lr.error)throw lr.error;if(cr.error)throw cr.error;likes=lr.data||[];comments=cr.data||[];
+   }
+   state.posts=rawPosts.map(p=>({...p,handle:p.author?.username||'student',authorName:p.author?.display_name||'StudyAI Student',cls:p.author?.class_name||'Student',avatar:p.author?.avatar_url||'',title:p.title||'',body:p.body||'',type:p.post_type||'Study post',image:p.image_url||'',created:Date.parse(p.created_at)||Date.now(),likes:likes.filter(l=>l.post_id===p.id).map(l=>l.user_id),comments:comments.filter(c=>c.post_id===p.id).map(c=>({id:c.id,userId:c.user_id,name:c.author?.display_name||'Student',handle:c.author?.username||'student',avatar:c.author?.avatar_url||'',text:c.body,created:Date.parse(c.created_at)||Date.now()}))}));
+   backendReady=true;render();
+   setStatus(state.user?(state.profile?'✓ Connected · Your profile and posts sync across devices.':'✓ Connected · Create your student profile to start sharing.'):'✓ Public feed connected · Sign in to make a profile, follow students and post.','success');
+   setupRealtime();
+  }catch(err){
+   backendReady=false;
+   const msg=normalError(err);render();
+   setStatus(msg,'error');
+  }finally{
+   refreshing=false;
+   if(queuedRefresh){queuedRefresh=false;setTimeout(()=>refreshCommunity(true),200);}
+  }
+ }
+ function setupRealtime(){
+  if(!sb||channel)return;
+  try{
+   channel=sb.channel('studyai-community-live')
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.profiles},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.posts},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.follows},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.likes},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.comments},scheduleRefresh)
+    .subscribe();
+  }catch(_){channel=null;}
+ }
+ function scheduleRefresh(){clearTimeout(realtimeTimer);realtimeTimer=setTimeout(()=>refreshCommunity(true),450);}
+ function timeAgo(t){const mins=Math.max(0,Math.floor((Date.now()-t)/60000));if(mins<1)return 'just now';if(mins<60)return mins+'m ago';if(mins<1440)return Math.floor(mins/60)+'h ago';return Math.floor(mins/1440)+'d ago';}
+ function renderProfile(){
+  const p=state.profile;
+  setAvatar('scMyAvatar',p);setAvatar('scSideAvatar',p);
+  if($('scComposerName'))$('scComposerName').textContent=p?p.display_name:(state.user?'Finish your profile':'Sign in to StudyAI');
+  if($('scComposerSub'))$('scComposerSub').textContent=p?'@'+p.username+' · '+p.class_name:(state.user?'Set up your student profile':'Sign in to share a study resource');
+  if($('scSideName'))$('scSideName').textContent=p?p.display_name:(state.user?'Set up your profile':'Sign in to StudyAI');
+  if($('scSideHandle'))$('scSideHandle').textContent=p?'@'+p.username:(state.user?'Profile setup needed':'@student');
+  if($('scBioText'))$('scBioText').textContent=p?[p.class_name,p.interests,p.bio].filter(Boolean).join(' · '):'Add your class, subjects and a short bio so other students can know what you study.';
+  if($('scFollowingCount'))$('scFollowingCount').textContent=String(state.following.length);
+  if($('scFollowerCount'))$('scFollowerCount').textContent=String(state.user?(state.followerCount||0):0);
+  const cta=document.querySelector('.communityHero .btn');if(cta)cta.textContent=p?'✦ Edit your student profile':state.user?'✦ Create your student profile':'✦ Sign in / Create account';
+  const publish=document.querySelector('.communityComposeTools .btn');if(publish)publish.textContent=state.publishBusy?'Publishing…':state.user?'Publish post ↗':'Sign in to post ↗';
+ }
+ function renderPeople(){
+  const box=$('scPeople');if(!box)return;
+  const people=state.people.filter(p=>p.id!==state.user?.id).slice(0,8);
+  if(!people.length){box.innerHTML='<p class="muted" style="font-size:13px;line-height:1.6">New student profiles will appear here when they join StudyAI.</p>';return;}
+  box.innerHTML=people.map(p=>'<div class="communityPerson">'+avatarHTML(p)+'<div class="personInfo"><b>'+esc(p.display_name)+'</b><small>'+esc(p.class_name||'Student')+' · @'+esc(p.username)+'</small></div><button class="communityFollowBtn" '+(!state.user||!state.profile?'title="Sign in and create a profile to follow"':'')+' onclick="scToggleFollow(\''+esc(p.id)+'\')">'+(state.following.includes(p.id)?'Following':'Follow')+'</button></div>').join('');
+ }
+ function renderFeed(){
+  const el=$('scFeed');if(!el)return;
+  let posts=state.posts.slice();
+  if(state.feed==='following')posts=posts.filter(p=>p.user_id===state.user?.id||state.following.includes(p.user_id));
+  if(state.feed==='notes')posts=posts.filter(p=>p.type==='Handwritten Notes'||p.type==='School Paper');
+  if($('scPostCount'))$('scPostCount').textContent=String(state.totalPosts??state.posts.length);
+  if(!posts.length){const heading=state.feed==='following'?'Your following feed is quiet':state.feed==='notes'?'No notes or papers yet':'Your study community starts here!';el.innerHTML='<div class="communityPost communityEmpty"><div style="font-size:40px">📚</div><b>'+esc(heading)+'</b><p>'+(state.feed==='following'?'Follow real StudyAI students to see their posts here.':'Be one of the first students to share helpful notes, permitted school papers or study tips.')+'</p><button class="btn" onclick="'+(state.user?(state.profile?'document.getElementById(\'scPostTitle\').focus()':'scOpenProfile()'):'studyAIOpenAccount()')+'">'+(state.user?(state.profile?'Create a post':'Set up profile'):'Sign in / Create account')+'</button></div>';return;}
+  el.innerHTML=posts.map(p=>{
+   const own=state.user&&p.user_id===state.user.id,liked=state.user&&p.likes.includes(state.user.id),following=state.following.includes(p.user_id);
+   const commentHtml=p.comments.map(c=>'<div class="communityComment"><b>'+esc(c.name)+'</b> <small style="color:var(--muted)">@'+esc(c.handle)+'</small><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(c.text)+'</div></div>').join('');
+   return '<article class="communityPost"><div class="communityPostHead">'+avatarHTML({display_name:p.authorName,avatar_url:p.avatar})+'<div class="meta"><b>'+esc(p.authorName)+(own?' <small>(you)</small>':'')+'</b><small>@'+esc(p.handle)+' · '+esc(p.cls)+' · '+esc(timeAgo(p.created))+'</small></div><span class="communityPostType">'+esc(p.type)+'</span></div>'+(p.title?'<h3 style="margin:14px 0 0;font-size:18px">'+esc(p.title)+'</h3>':'')+(p.body?'<div class="communityPostText">'+esc(p.body)+'</div>':'')+(p.image?'<a href="'+esc(p.image)+'" target="_blank" rel="noopener noreferrer"><img class="communityPostImage" src="'+esc(p.image)+'" alt="Shared study notes or paper" loading="lazy"></a>':'')+'<div class="communityPostActions"><button class="'+(liked?'liked':'')+'" onclick="scLike(\''+esc(p.id)+'\')">'+(liked?'❤️ Liked':'♡ Like')+' · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button>'+(own?'<button onclick="scDeletePost(\''+esc(p.id)+'\')">🗑 Delete</button>':p.user_id?'<button onclick="scToggleFollow(\''+esc(p.user_id)+'\')">'+(following?'✓ Following':'＋ Follow')+'</button>':'')+'</div><div class="communityComments" id="scComments_'+esc(p.id)+'">'+commentHtml+'<div class="communityCommentForm"><input id="scCommentInput_'+esc(p.id)+'" maxlength="500" placeholder="Write a helpful comment…" aria-label="Write a comment"><button class="btn" onclick="scAddComment(\''+esc(p.id)+'\')">Send</button></div></div></article>';
+  }).join('');
+ }
+ function render(){renderProfile();renderPeople();renderFeed();}
+ window.scOpenProfile=function(){
+  if(!requireLogin())return;
+  const p=state.profile||{},u=state.user||{};const metadata=u.user_metadata||{};const defaultName=p.display_name||metadata.full_name||metadata.name||(u.email?u.email.split('@')[0]:'');
+  $('scNameInput').value=defaultName;$('scHandleInput').value=p.username||slugify(defaultName);$('scClassInput').value=p.class_name||'Class 10';$('scInterestsInput').value=p.interests||'';$('scBioInput').value=p.bio||'';
+  $('scProfileModal').classList.add('open');
+ };
+ window.scCloseProfile=function(){$('scProfileModal')?.classList.remove('open');};
+ window.scSaveProfile=async function(){
+  if(state.profileBusy)return;if(!requireLogin())return;
+  const name=$('scNameInput').value.trim(),username=$('scHandleInput').value.trim().replace(/^@/,'').replace(/[^a-zA-Z0-9_.]/g,'').toLowerCase();
+  if(name.length<2){alert('Please enter a display name (at least 2 characters).');return;}
+  if(!/^[a-z0-9_.]{3,24}$/.test(username)){alert('Username 3–24 characters ka hona chahiye; letters, numbers, _ aur . use karo.');return;}
+  state.profileBusy=true;const saveButton=document.querySelector('#scProfileModal .communityModalActions .btn');if(saveButton){saveButton.disabled=true;saveButton.textContent='Saving…';}
+  try{
+   let avatarUrl=state.profile?.avatar_url||null;const file=$('scAvatarInput')?.files?.[0];
+   if(file)avatarUrl=await uploadImage(file,'avatars',900000);
+   const row={id:state.user.id,username,display_name:name,class_name:$('scClassInput').value,interests:$('scInterestsInput').value.trim(),bio:$('scBioInput').value.trim(),avatar_url:avatarUrl,updated_at:new Date().toISOString()};
+   const {error}=await sb.from(TABLES.profiles).upsert(row,{onConflict:'id'});if(error)throw error;
+   $('scAvatarInput').value='';window.scCloseProfile();await refreshCommunity(true);setStatus('Student profile saved and synced across devices.','success');
+  }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
+  finally{state.profileBusy=false;if(saveButton){saveButton.disabled=false;saveButton.textContent='Save profile';}}
+ };
+ $('scAvatarInput')?.addEventListener('change',function(){const f=this.files?.[0];if(f&&f.size>900000){alert('Choose a profile photo under 900 KB.');this.value='';}});
+ $('scPostImage')?.addEventListener('change',function(){
+  const file=this.files?.[0];state.draftFile=null;state.draftPreview='';const preview=$('scImagePreview');
+  if(!file){preview.style.display='none';preview.innerHTML='';return;}
+  if(!/^image\/(png|jpeg|webp)$/i.test(file.type)){alert('Choose a JPG, PNG or WebP image.');this.value='';return;}
+  if(file.size>1400000){alert('Choose an image under 1.4 MB.');this.value='';return;}
+  state.draftFile=file;state.draftPreview=URL.createObjectURL(file);preview.innerHTML='<img class="communityPostImage" style="max-height:220px" src="'+esc(state.draftPreview)+'" alt="Post preview"><button type="button" class="btn alt" style="margin-top:8px" onclick="scRemoveDraftImage()">Remove image</button>';preview.style.display='block';
+ });
+ window.scRemoveDraftImage=function(){if(state.draftPreview)URL.revokeObjectURL(state.draftPreview);state.draftFile=null;state.draftPreview='';if($('scPostImage'))$('scPostImage').value='';if($('scImagePreview')){$('scImagePreview').innerHTML='';$('scImagePreview').style.display='none';}};
+ window.scPublish=async function(){
+  if(state.publishBusy)return;if(!requireLogin())return;if(!state.profile){alert('Create your student profile first.');window.scOpenProfile();return;}
+  const body=$('scPostText').value.trim(),title=$('scPostTitle').value.trim(),type=$('scPostType').value,file=state.draftFile;
+  if(!body&&!title&&!file){alert('Add a title, a short description or a notes image first.');return;}
+  state.publishBusy=true;renderProfile();
+  try{
+   let imageUrl=null;if(file)imageUrl=await uploadImage(file,'posts',1400000);
+   const {error}=await sb.from(TABLES.posts).insert({user_id:state.user.id,title:title||null,body:body||null,post_type:type,image_url:imageUrl});if(error)throw error;
+   $('scPostText').value='';$('scPostTitle').value='';$('scPostType').value='Handwritten Notes';window.scRemoveDraftImage();await refreshCommunity(true);setStatus('Your post is live for other StudyAI students.','success');
+  }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
+  finally{state.publishBusy=false;renderProfile();}
+ };
+ window.scSetFeed=function(mode){state.feed=mode;document.querySelectorAll('#scFeedTabs button[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed===mode));renderFeed();};
+ window.scRefresh=function(){refreshCommunity(false);};
+ window.scToggleFollow=async function(id){
+  if(!requireLogin())return;if(!state.profile){alert('Set up your student profile first.');window.scOpenProfile();return;}if(id===state.user.id)return;
+  try{
+   const isFollowing=state.following.includes(id);
+   if(isFollowing){const {error}=await sb.from(TABLES.follows).delete().eq('follower_id',state.user.id).eq('following_id',id);if(error)throw error;}
+   else{const {error}=await sb.from(TABLES.follows).insert({follower_id:state.user.id,following_id:id});if(error)throw error;}
+   await refreshCommunity(true);setStatus(isFollowing?'You unfollowed this student.':'You are now following this student.','success');
+  }catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
+ };
+ window.scLike=async function(id){
+  if(!requireLogin())return;try{
+   const p=state.posts.find(p=>p.id===id);if(!p)return;const liked=p.likes.includes(state.user.id);
+   if(liked){const {error}=await sb.from(TABLES.likes).delete().eq('post_id',id).eq('user_id',state.user.id);if(error)throw error;}
+   else{const {error}=await sb.from(TABLES.likes).insert({post_id:id,user_id:state.user.id});if(error)throw error;}
+   await refreshCommunity(true);
+  }catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
+ };
+ window.scToggleComments=function(id){const el=$('scComments_'+id);if(el)el.classList.toggle('open');};
+ window.scAddComment=async function(id){
+  if(!requireLogin())return;if(!state.profile){alert('Create your student profile before commenting.');window.scOpenProfile();return;}
+  const input=$('scCommentInput_'+id),body=input?.value.trim();if(!body)return;
+  if(body.length>500){alert('Keep comments under 500 characters.');return;}
+  try{const {error}=await sb.from(TABLES.comments).insert({post_id:id,user_id:state.user.id,body});if(error)throw error;await refreshCommunity(true);const box=$('scComments_'+id);if(box)box.classList.add('open');}
+  catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
+ };
+ window.scDeletePost=async function(id){
+  const p=state.posts.find(p=>p.id===id);if(!p||!state.user||p.user_id!==state.user.id)return;
+  if(!confirm('Delete this shared post for everyone?'))return;
+  try{const {error}=await sb.from(TABLES.posts).delete().eq('id',id).eq('user_id',state.user.id);if(error)throw error;await refreshCommunity(true);setStatus('Post deleted.','success');}
+  catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
+ };
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')window.scCloseProfile();});
+ $('scProfileModal')?.addEventListener('click',e=>{if(e.target===$('scProfileModal'))window.scCloseProfile();});
+ window.addEventListener('studyai-auth-changed',()=>{setTimeout(()=>refreshCommunity(false),0);});
+ document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshCommunity(true);});
+ render();refreshCommunity(false);
 })();
 </script>
 
