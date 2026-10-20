@@ -589,6 +589,51 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
 }
 </style>
 <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 width=%22512%22 height=%22512%22%3E %3Cdefs%3E %3ClinearGradient id=%22bg%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%235B5BFF%22/%3E %3Cstop offset=%220.55%22 stop-color=%22%23B04FD8%22/%3E %3Cstop offset=%221%22 stop-color=%22%23FF4FA3%22/%3E %3C/linearGradient%3E %3ClinearGradient id=%22shine%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%23fff%22 stop-opacity=%22.28%22/%3E %3Cstop offset=%221%22 stop-color=%22%23fff%22 stop-opacity=%220%22/%3E %3C/linearGradient%3E %3CclipPath id=%22c%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22116%22/%3E%3C/clipPath%3E %3C/defs%3E %3Crect width=%22512%22 height=%22512%22 rx=%22116%22 fill=%22url%28%23bg%29%22/%3E %3Crect width=%22512%22 height=%22256%22 fill=%22url%28%23shine%29%22 clip-path=%22url%28%23c%29%22/%3E %3Cpath d=%22M338 168C300 118 188 118 180 190C172 256 332 246 334 322C336 396 214 404 166 350%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%2246%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E %3Cpath d=%22M396 78C401 118 410 128 450 133C410 138 401 148 396 188C391 148 382 138 342 133C382 128 391 118 396 78Z%22 fill=%22%23FFD95A%22/%3E %3Cpath d=%22M112 392C114 410 120 416 138 418C120 420 114 426 112 444C110 426 104 420 86 418C104 416 110 410 112 392Z%22 fill=%22%23fff%22 opacity=%22.85%22/%3E %3C/svg%3E ">
+
+<style id="studyai-donation-style">
+/* StudyAI Donation page */
+.donPage{max-width:1120px;margin:0 auto 35px}
+.donHero{position:relative;isolation:isolate;overflow:hidden;border-radius:28px;padding:clamp(24px,5vw,52px);color:#fff;background:radial-gradient(circle at 85% 15%,rgba(255,255,255,.22),transparent 23%),radial-gradient(circle at 12% 100%,rgba(255,190,230,.2),transparent 32%),linear-gradient(125deg,#17163d 0%,#5144d8 48%,#b44dba 100%);box-shadow:0 24px 60px rgba(73,58,180,.24)}
+.donHero:before{content:"";position:absolute;z-index:-1;width:330px;height:330px;border:1px solid rgba(255,255,255,.17);border-radius:50%;right:-90px;bottom:-180px;box-shadow:0 0 0 32px rgba(255,255,255,.035),0 0 0 70px rgba(255,255,255,.025)}
+.donEyebrow{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border:1px solid rgba(255,255,255,.23);background:rgba(255,255,255,.12);border-radius:99px;font-size:12px;font-weight:850;letter-spacing:.04em}
+.donHero h1{font-size:clamp(32px,5vw,54px);line-height:1.08;letter-spacing:-1.8px;max-width:690px;margin:19px 0 14px}
+.donHero p{max-width:650px;color:#eeebff;line-height:1.75;font-size:clamp(14px,2vw,17px);margin:0}
+.donHero .donNote{font-size:12px;color:#e0dcff;margin-top:19px}
+.donLayout{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:18px;margin-top:20px;align-items:stretch}
+.donPanel{background:var(--panel);border:1px solid var(--line);border-radius:22px;padding:clamp(18px,3vw,27px);box-shadow:var(--shadow);min-width:0}
+.donPanel h2{font-size:21px;margin:0 0 8px;letter-spacing:-.5px}
+.donMuted{color:var(--muted);font-size:13px;line-height:1.65}
+.donReasons{display:grid;gap:13px;margin-top:22px}
+.donReason{display:flex;gap:13px;align-items:flex-start}
+.donReasonIcon{width:43px;height:43px;flex:0 0 43px;border-radius:14px;display:grid;place-items:center;font-size:20px;background:linear-gradient(135deg,#eeecff,#ffe8f4)}
+.donReason b{display:block;font-size:14px;margin:2px 0 4px}
+.donReason span{display:block;color:var(--muted);font-size:12px;line-height:1.55}
+.donUpiCard{margin-top:20px;padding:19px;border-radius:18px;background:linear-gradient(145deg,rgba(99,91,255,.10),rgba(255,79,163,.07));border:1px solid rgba(99,91,255,.19)}
+.donUpiTop{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.donUpiMark{display:flex;align-items:center;gap:9px;font-weight:900}
+.donUpiLogo{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;color:#fff;background:linear-gradient(135deg,#635bff,#c34fae);font-size:19px}
+.donSoon{font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;border-radius:99px;padding:7px 9px;background:#fff0d9;color:#8b4c00}
+.donUpiValue{margin:17px 0 12px;padding:14px;border:1px dashed rgba(99,91,255,.38);border-radius:12px;background:var(--panel);font-size:14px;font-weight:850;color:var(--muted);overflow-wrap:anywhere}
+.donPayBtn{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:13px;background:linear-gradient(110deg,#635bff,#a34fdb);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 9px 20px rgba(99,91,255,.22)}
+.donPayBtn:disabled{cursor:not-allowed;opacity:.65;box-shadow:none}
+.donSecure{display:flex;gap:8px;align-items:flex-start;margin-top:12px;font-size:11px;line-height:1.55;color:var(--muted)}
+.donSecure span{font-size:15px}
+.donTrust{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:18px}
+.donTrustItem{border:1px solid var(--line);background:var(--panel);border-radius:16px;padding:16px;text-align:center}
+.donTrustItem b{display:block;font-size:14px;margin:8px 0 4px}
+.donTrustItem span{display:block;color:var(--muted);font-size:11px;line-height:1.5}
+.donFaq{margin-top:18px}
+.donFaq details{border-top:1px solid var(--line);padding:14px 0}
+.donFaq summary{font-weight:850;font-size:13px;cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:10px}
+.donFaq summary:after{content:"＋";color:var(--primary);font-size:17px}
+.donFaq details[open] summary:after{content:"−"}
+.donFaq details p{font-size:12px;line-height:1.7;color:var(--muted);margin:10px 0 0}
+.donThanks{text-align:center;padding:24px 12px 8px;color:var(--muted);font-size:12px;line-height:1.7}
+.donThanks strong{color:var(--text)}
+body.dark .donTrustItem,body.dark .donUpiValue{background:#111827}
+@media(max-width:760px){.donLayout{grid-template-columns:1fr}.donTrust{grid-template-columns:1fr}.donTrustItem{display:flex;align-items:center;text-align:left;gap:12px}.donTrustItem b{margin:0 0 3px}.donTrustItem .donTrustEmoji{font-size:22px}.donHero{border-radius:22px}.donHero h1{letter-spacing:-1px}}
+</style>
+
 </head>
 
 <body>
@@ -614,6 +659,8 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
     <button class="drawerItem" data-route="ncert">📘 <span>NCERT Library</span></button>
     <div class="drawerSection">AI</div>
     <button class="drawerItem" data-route="tutor">✨ <span>AI Tutor</span></button>
+    <div class="drawerSection">Support</div>
+    <button class="drawerItem" data-route="donate">💜 <span>Support StudyAI</span></button>
     <button class="drawerItem" data-route="settings">⚙️ <span>Settings</span></button>
   </div>
   <div class="themeRow">
@@ -1054,6 +1101,51 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
 <div id="paperBox"></div>
 </section>
 <section id="tutor" class="section"><div class="top"><div><h1>AI Tutor 🤖</h1><p class="muted">Apna doubt likho, StudyAI step-by-step samjhayega.</p></div></div><div class="card chat"><div class="msgs" id="msgs"><div class="msg bot">Hi! I’m StudyAI. Ask me any school question and I will explain it step by step.</div></div><div class="chatbar"><textarea id="chatText" rows="2" enterkeyhint="send" placeholder="e.g. Explain quadratic equations step by step"></textarea><button class="btn" onclick="send()">Send</button></div></div></section>
+
+
+<section id="donate" class="section">
+  <div class="donPage">
+    <div class="donHero">
+      <span class="donEyebrow">💜 A little support goes a long way</span>
+      <h1>Help StudyAI grow.<br>Help students learn.</h1>
+      <p>StudyAI is built to make studying feel simpler. If these tools help you or someone you know, you can support the project and help us keep improving learning resources for students.</p>
+      <div class="donNote">Every contribution is voluntary. Even sharing StudyAI with a friend helps.</div>
+    </div>
+    <div class="donLayout">
+      <div class="donPanel">
+        <h2>What your support can help with</h2>
+        <p class="donMuted">Support goes toward improving the student experience and keeping useful study tools available.</p>
+        <div class="donReasons">
+          <div class="donReason"><div class="donReasonIcon">📚</div><div><b>Better study resources</b><span>Improve notes, flashcards, quizzes and chapter-wise learning material.</span></div></div>
+          <div class="donReason"><div class="donReasonIcon">✨</div><div><b>Useful new features</b><span>Make StudyAI easier to use on phones, tablets and computers.</span></div></div>
+          <div class="donReason"><div class="donReasonIcon">🛠️</div><div><b>Ongoing improvements</b><span>Help with the work involved in maintaining and improving the website.</span></div></div>
+        </div>
+        <div class="donTrust">
+          <div class="donTrustItem"><span class="donTrustEmoji">🤝</span><div><b>Always optional</b><span>Donate only if you want to.</span></div></div>
+          <div class="donTrustItem"><span class="donTrustEmoji">🔎</span><div><b>Clear and honest</b><span>No made-up goals or impact claims.</span></div></div>
+          <div class="donTrustItem"><span class="donTrustEmoji">💜</span><div><b>Every bit helps</b><span>Sharing the site helps too.</span></div></div>
+        </div>
+      </div>
+      <div class="donPanel">
+        <h2>Support via UPI</h2>
+        <p class="donMuted">A simple, India-friendly way to support StudyAI. Use the UPI ID below to support StudyAI. Check the recipient details in your UPI app before confirming any payment.</p>
+        <div class="donUpiCard">
+          <div class="donUpiTop"><div class="donUpiMark"><span class="donUpiLogo">₹</span><span>UPI payment</span></div><span class="donSoon" id="donStatus">UPI ready</span></div>
+          <div class="donUpiValue" id="donUpiValue">9250686173@upi</div>
+          <button class="donPayBtn" id="donPayBtn" type="button" disabled>♡ &nbsp; Donate with UPI</button>
+          <div class="donSecure"><span>🔐</span><span>Payment will happen in your own UPI app. Never share your UPI PIN or OTP with anyone. Verify the recipient details in your app before paying.</span></div>
+        </div>
+        <div class="donFaq">
+          <h2 style="margin-top:24px">Quick questions</h2>
+          <details><summary>Do I have to donate?</summary><p>No. Donations are completely optional. You can continue using StudyAI without donating.</p></details>
+          <details><summary>Will my bank details be shown?</summary><p>This page is planned to display your UPI ID only. Do not publish your bank account number or other private banking information here.</p></details>
+          <details><summary>How will I know a payment worked?</summary><p>Check the payment status in your UPI app or bank account. Clicking a button or opening a payment app does not itself confirm a successful payment.</p></details>
+        </div>
+      </div>
+    </div>
+    <div class="donThanks">Made for students, with care. <strong>Thank you for being part of StudyAI.</strong><br>Questions or suggestions? You can still use StudyAI's existing tools as usual.</div>
+  </div>
+</section>
 
 <section id="settings" class="section"><div class="top"><div><h1>Settings</h1><p class="muted">Change the student's class and tutor guidance.</p></div></div><div class="card"><label>Student class</label><br><select id="setClass"></select><br><br><label>AI instruction</label><br><textarea id="instruction" rows="5" style="width:100%">You are a friendly school tutor for Classes 6–12. Explain clearly and step-by-step. Adapt to the student's class.</textarea><br><br><button class="btn" onclick="save()">Save settings</button> <button class="btn alt" onclick="resetAll()">Reset</button></div></section>
 
@@ -1556,7 +1648,7 @@ function route(){
   const title = document.getElementById("pageTitle");
   if(title){
     const names = {home:"Dashboard",subjects:"Subjects",notes:"Study Notes",quiz:"Practice Quiz",
-      papers:"Chapter Papers",ncert:"NCERT Library",tutor:"AI Tutor",settings:"Settings"};
+      papers:"Chapter Papers",ncert:"NCERT Library",tutor:"AI Tutor",settings:"Settings",donate:"Support StudyAI"};
     title.textContent = names[target] || "StudyAI";
   }
 }
@@ -3493,6 +3585,30 @@ document.addEventListener('keydown',e=>{
 const sec=$('quiz');if(sec)new MutationObserver(()=>{if(!sec.classList.contains('active'))clearT()}).observe(sec,{attributes:true,attributeFilter:['class']});
 hub();
 })();</script>
+
+<script id="studyai-donation-setup">
+/* Add your UPI ID here later, for example: const STUDYAI_DONATION_UPI = "yourname@bank"; */
+(function(){
+  const STUDYAI_DONATION_UPI = "9250686173@upi";
+  const value = document.getElementById("donUpiValue");
+  const button = document.getElementById("donPayBtn");
+  const status = document.getElementById("donStatus");
+  if(!value || !button || !status) return;
+  if(STUDYAI_DONATION_UPI.trim()){
+    const upi = STUDYAI_DONATION_UPI.trim();
+    value.textContent = upi;
+    status.textContent = "UPI ready";
+    status.style.background = "#dcfce7";
+    status.style.color = "#166534";
+    button.disabled = false;
+    button.textContent = "♡  Donate with UPI";
+    button.addEventListener("click", function(){
+      const link = "upi://pay?pa=" + encodeURIComponent(upi) + "&pn=" + encodeURIComponent("StudyAI") + "&tn=" + encodeURIComponent("Support StudyAI");
+      window.location.href = link;
+    });
+  }
+})();
+</script>
 
 </body>
 </html>
