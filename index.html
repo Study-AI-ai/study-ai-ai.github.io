@@ -3612,8 +3612,17 @@ hub();
     button.disabled = false;
     button.addEventListener("click", function(){
       const link = "upi://pay?pa=" + encodeURIComponent(upi) + "&pn=" + encodeURIComponent("StudyAI") + "&tn=" + encodeURIComponent("Support StudyAI");
-      if(help) help.textContent = "UPI app khulne ki koshish ho rahi hai. Agar app na khule, Copy UPI ID dabao aur apne UPI app mein manually payment shuru karo.";
-      window.location.href = link;
+      if(!/android/i.test(navigator.userAgent)){
+        if(help) help.textContent = "UPI deep link sirf Android phones par kaam karta hai. iPhone ya desktop par Copy UPI ID button use karke manually apne UPI app mein paste karo.";
+      } else {
+        if(help) help.textContent = "UPI app khulne ki koshish ho rahi hai. Agar app na khule, Copy UPI ID dabao aur apne UPI app mein manually payment shuru karo.";
+      }
+      const a = document.createElement("a");
+      a.href = link;
+      a.style.display = "none";
+      document.body.appendChild(a);
+      a.click();
+      setTimeout(function(){ if(a.parentNode) a.parentNode.removeChild(a); }, 500);
     });
     if(copyButton){
       copyButton.addEventListener("click", async function(){
