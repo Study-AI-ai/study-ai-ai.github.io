@@ -253,12 +253,11 @@ body.dark .menuBtn{background:#111827;color:#fff;border-color:#29354d}
 .tutorHead .hBtns{display:flex;gap:4px}
 .tutorHead .hBtns button{width:32px;height:32px;border-radius:10px;background:rgba(255,255,255,.2);font-size:17px;line-height:1}
 .tutorHead .hBtns button:hover{background:rgba(255,255,255,.35)}
-.tutorPop.big{width:min(760px,calc(100vw - 30px))}
-.tutorPop.big .floatMsgs{max-height:58vh}
+.tutorPop.big{position:fixed;left:0;right:0;top:12px;bottom:12px;margin-left:auto;margin-right:auto;width:min(760px,calc(100vw - 24px));max-height:calc(100dvh - 24px);display:flex;flex-direction:column;overflow:hidden}.tutorPop.big .tutorHead{flex:0 0 auto;position:relative;z-index:2}.tutorPop.big .tutorBody{min-height:0;overflow-y:auto;overscroll-behavior:contain}.tutorPop.big .floatMsgs{max-height:none;height:auto;min-height:100px;overflow-y:auto}.tutorPop.big .tutorInput{position:sticky;bottom:0;background:var(--panel);padding-top:8px}
 .floatMsgs .msg{font-size:15px!important;line-height:1.6!important}
 .tutorInput input{font-size:15px}
 .tutorBody p{font-size:15px}
-@media(max-width:700px){.fLabel{display:none}}
+@media(max-width:700px){.fLabel{display:none}.tutorPop.big{top:8px;bottom:8px;width:calc(100vw - 16px);max-height:calc(100dvh - 16px);border-radius:16px}.tutorPop.big .tutorBody{padding:10px}.tutorPop.big .tutorHead{padding:10px 12px}}
 
 .lesson h4{margin:18px 0 8px;padding:7px 12px;border-left:5px solid #6c5ce7;background:rgba(108,92,231,.10);border-radius:0 10px 10px 0;font-size:16px}
 .lesson ul{padding-left:20px}.lesson li{margin:5px 0;line-height:1.6;font-size:15px}.lesson p{font-size:15px;line-height:1.7}
@@ -310,6 +309,8 @@ table.pwt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;dis
 }
 @media print{.mpMenuLabel{display:none!important}}
 
+
+.scHandleRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:3px 0 7px}.scInlineFollow{padding:5px 9px;font-size:10px;line-height:1.2;min-height:27px;box-shadow:0 0 14px #8b5cf633;white-space:nowrap}
 </style>
 <style id="ix12">
 .ixBanner,.ixTips{margin-top:18px}.ixH{margin:22px 0 12px}
@@ -613,7 +614,7 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
 .donUpiMark{display:flex;align-items:center;gap:9px;font-weight:900}
 .donUpiLogo{display:grid;place-items:center;width:39px;height:39px;border-radius:12px;color:#fff;background:linear-gradient(135deg,#635bff,#c34fae);font-size:19px}
 .donSoon{font-size:10px;font-weight:900;letter-spacing:.07em;text-transform:uppercase;border-radius:99px;padding:7px 9px;background:#fff0d9;color:#8b4c00}
-.donUpiValue{margin:17px 0 12px;padding:14px;border:1px dashed rgba(99,91,255,.38);border-radius:12px;background:var(--panel);font-size:14px;font-weight:850;color:var(--muted);overflow-wrap:anywhere}
+.donUpiValue{display:none!important;margin:17px 0 12px;padding:14px;border:1px dashed rgba(99,91,255,.38);border-radius:12px;background:var(--panel);font-size:14px;font-weight:850;color:var(--muted);overflow-wrap:anywhere}
 .donPayBtn{width:100%;min-height:48px;display:flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:13px;background:linear-gradient(110deg,#635bff,#a34fdb);color:#fff;font-weight:900;cursor:pointer;box-shadow:0 9px 20px rgba(99,91,255,.22)}
 .donPayBtn:disabled{cursor:not-allowed;opacity:.65;box-shadow:none}
 .donPayActions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:9px;align-items:stretch}
@@ -676,6 +677,311 @@ body.dark .donTrustItem,body.dark .donUpiValue{background:#111827}
 @media(max-width:850px){.communityLayout{grid-template-columns:1fr}.communitySide{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:12px}.communitySideCard{margin-bottom:0}}
 @media(max-width:520px){.communityHero{padding:23px 19px}.communityStats{gap:7px}.communityStat{padding:11px}.communityStat b{font-size:19px}.communityStat span{font-size:10px}.communityComposer,.communityPost,.communitySideCard{padding:13px}.communityPostType{white-space:normal}}
 </style>
+<style id="studyai-supporter-visual-refresh">
+/* Animated teal / blue glass ribbon: displayed only on the Support StudyAI page. */
+.donPage .homeSupportRibbon{margin:16px 0 20px}.homeSupportRibbon{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:76px minmax(0,1fr) auto;align-items:center;gap:19px;margin:0 0 20px;padding:22px 25px;border-radius:24px;color:#f7fffe;background:linear-gradient(115deg,#073b4c 0%,#087e8b 32%,#3a52b4 65%,#6d36a9 100%);background-size:220% 220%;animation:hsrFlow 13s ease-in-out infinite;box-shadow:0 18px 42px #087e8b2b;border:1px solid #ffffff20}
+.homeSupportRibbon:before{content:"";position:absolute;z-index:-1;inset:-70%;background:conic-gradient(from 90deg,transparent 0 35%,#ffffff16 42%,transparent 49% 75%,#8fffe31c 82%,transparent 90%);animation:hsrSpin 22s linear infinite;pointer-events:none}
+.hsrOrb{width:66px;height:66px;display:grid;place-items:center;border-radius:22px;font-size:32px;background:linear-gradient(145deg,#ffffff30,#ffffff0b);border:1px solid #ffffff50;box-shadow:inset 0 0 18px #ffffff12,0 10px 25px #021f283a;animation:hsrFloat 4.4s ease-in-out infinite}
+.hsrCopy{min-width:0}.hsrKicker{font-size:10px;letter-spacing:1.8px;font-weight:950;color:#a9fff0}.hsrCopy h2{font-size:clamp(20px,2.4vw,28px);line-height:1.16;margin:5px 0 7px;letter-spacing:-.7px}.hsrCopy p{color:#e3fffb;font-size:13px;line-height:1.65;margin:0;max-width:690px}.hsrPerks{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}.hsrPerks span{padding:6px 9px;border:1px solid #ffffff35;border-radius:999px;background:#ffffff12;font-size:10px;font-weight:800;color:#f3fffe}.hsrButton{display:inline-flex;align-items:center;justify-content:center;gap:15px;border:0;border-radius:15px;padding:14px 17px;background:linear-gradient(120deg,#fafffe,#ddfff5);color:#075267;font-weight:950;white-space:nowrap;box-shadow:0 7px 24px #00181c35;cursor:pointer;transition:transform .2s,box-shadow .2s}.hsrButton span{font-size:20px}.hsrButton:hover{transform:translateY(-3px);box-shadow:0 12px 28px #00181c45}
+@keyframes hsrFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 45%}}@keyframes hsrSpin{to{transform:rotate(360deg)}}@keyframes hsrFloat{0%,100%{transform:translateY(0) rotate(-4deg)}50%{transform:translateY(-6px) rotate(4deg)}}
+/* Donation: moving aurora, glowing badge and soft floating light. */
+.donHero{background-size:170% 170%;animation:donAurora 16s ease-in-out infinite;box-shadow:0 25px 65px #6c42c23b}
+.donHero:after{content:"✦";position:absolute;right:20%;top:16%;font-size:clamp(44px,8vw,95px);line-height:1;color:#fff3;transform-origin:center;animation:donSpark 7s ease-in-out infinite;pointer-events:none}
+.donEyebrow{animation:donEyebrowGlow 3.7s ease-in-out infinite}
+.donBadgePerk{display:flex;align-items:center;gap:12px;max-width:600px;margin-top:23px;padding:12px 15px;border:1px solid #ffffff35;border-radius:17px;background:linear-gradient(110deg,#ffffff1f,#ffffff0c);backdrop-filter:blur(8px);box-shadow:inset 0 1px #ffffff20}
+.donBadgeSpark{display:grid;place-items:center;width:38px;height:38px;flex:0 0 38px;border-radius:13px;background:linear-gradient(135deg,#ffca68,#ff70bb);color:#54225f;font-size:21px;animation:donBadgePulse 2.8s ease-in-out infinite}
+.donBadgePerk b{display:block;font-size:13px;color:#fff}.donBadgePerk small{display:block;margin-top:3px;color:#e8deff;font-size:11px;line-height:1.45}.donBadgePreview{margin-left:auto;flex:0 0 auto;padding:6px 8px;border:1px solid #ffe1a966;border-radius:999px;color:#fff0c8;background:#ffd77b18;font-size:9px;font-weight:950;letter-spacing:1px;animation:donPreview 3s ease-in-out infinite}
+@keyframes donAurora{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes donSpark{0%,100%{transform:translateY(0) rotate(12deg) scale(.95);opacity:.45}50%{transform:translateY(-12px) rotate(38deg) scale(1.12);opacity:.85}}@keyframes donEyebrowGlow{0%,100%{box-shadow:0 0 0 #ffffff00}50%{box-shadow:0 0 24px #ffb6f522}}@keyframes donBadgePulse{0%,100%{box-shadow:0 0 0 0 #ffb8df44;transform:scale(1)}50%{box-shadow:0 0 0 7px #ffb8df00;transform:scale(1.05)}}@keyframes donPreview{0%,100%{filter:brightness(1)}50%{filter:brightness(1.35)}}
+/* Community: vivid coral / aqua social-space banner with orbiting accents. */
+.communityHero{isolation:isolate;background:linear-gradient(125deg,#5c174d,#b82e77 32%,#e56f55 59%,#ffbd62 100%);background-size:240% 240%;animation:commAurora 17s ease-in-out infinite;box-shadow:0 22px 55px #c3447829}
+.communityHero:before{content:"";position:absolute;z-index:-1;right:5%;bottom:-130px;width:280px;height:280px;border:1px solid #ffffff35;border-radius:50%;box-shadow:0 0 0 22px #ffffff0a,0 0 0 56px #ffffff08;animation:commOrbit 18s linear infinite;pointer-events:none}
+.communityHero:after{content:"✧";right:9%;top:10%;font-size:clamp(64px,10vw,112px);color:#fff5;animation:commStar 6s ease-in-out infinite}
+.communitySupportRibbon{position:relative;isolation:isolate;overflow:hidden;display:grid;grid-template-columns:84px minmax(0,1fr) auto;align-items:center;gap:18px;margin:16px 0 18px;padding:21px 23px;border-radius:24px;color:#fff;background:linear-gradient(120deg,#102d42 0%,#155e75 28%,#087f8c 51%,#33418b 78%,#6c378e 100%);background-size:250% 250%;animation:csrFlow 15s ease-in-out infinite;box-shadow:0 16px 44px #104e7050;border:1px solid #ffffff1f}
+.communitySupportRibbon:before{content:"";position:absolute;z-index:-1;inset:-80%;background:radial-gradient(circle at 30% 30%,#58fff52b,transparent 22%),radial-gradient(circle at 65% 70%,#f9b8ff20,transparent 24%);animation:csrFloat 11s ease-in-out infinite alternate;pointer-events:none}
+.csrArt{position:relative;width:74px;height:74px;display:grid;place-items:center;border-radius:24px;background:linear-gradient(145deg,#ffffff2a,#ffffff08);border:1px solid #ffffff43;box-shadow:inset 0 0 20px #ffffff12;transform:rotate(-4deg)}.csrArt span{font-size:34px;filter:drop-shadow(0 5px 8px #071e3544);animation:csrHeart 3s ease-in-out infinite}.csrArt i,.csrArt b{position:absolute;color:#ffedb0;font-size:24px;font-style:normal;animation:csrStar 4s ease-in-out infinite}.csrArt i{top:-10px;right:-7px}.csrArt b{left:-7px;bottom:-8px;color:#c7fff6;animation-delay:-2s}
+.csrCopy{min-width:0}.csrEyebrow{font-size:10px;letter-spacing:1.8px;font-weight:950;color:#a8fff1}.csrCopy h2{font-size:clamp(19px,2.5vw,27px);line-height:1.2;letter-spacing:-.7px;margin:5px 0 7px}.csrCopy p{margin:0;max-width:660px;color:#e4fffc;font-size:13px;line-height:1.65}.csrBadgeLine{display:flex;align-items:center;flex-wrap:wrap;gap:9px;margin-top:12px}.csrBadgeLine small{font-size:10px;color:#c5f2f4}
+.csrButton{display:flex;align-items:center;justify-content:center;gap:10px;padding:13px 15px;border:0;border-radius:15px;background:linear-gradient(115deg,#ffefc4,#ffd5ea);color:#752858;font-weight:950;white-space:nowrap;cursor:pointer;box-shadow:0 8px 25px #061d3745;transition:transform .2s,box-shadow .2s}.csrButton span{font-size:18px}.csrButton:hover{transform:translateY(-3px);box-shadow:0 14px 31px #061d3760}
+.studySupporterBadge{display:inline-flex;align-items:center;gap:4px;padding:3px 8px;margin-left:5px;vertical-align:middle;white-space:nowrap;border:1px solid #d8b4fe;border-radius:999px;background:linear-gradient(120deg,#f5d0fe,#ede9fe 55%,#dbeafe);color:#702c91;font-size:10px;font-weight:950;line-height:1.5;box-shadow:0 2px 8px #8b5cf61b;animation:badgeSoftGlow 4s ease-in-out infinite}
+@keyframes commAurora{0%,100%{background-position:0% 50%}50%{background-position:100% 55%}}@keyframes commOrbit{to{transform:rotate(360deg)}}@keyframes commStar{0%,100%{transform:rotate(12deg) scale(1);opacity:.55}50%{transform:rotate(38deg) scale(1.12);opacity:.95}}@keyframes csrFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}@keyframes csrFloat{0%{transform:translate(-2%,-2%) rotate(0deg)}100%{transform:translate(3%,3%) rotate(7deg)}}@keyframes csrHeart{0%,100%{transform:scale(1) rotate(-5deg)}50%{transform:scale(1.13) rotate(5deg)}}@keyframes csrStar{0%,100%{transform:translateY(0) rotate(0deg);opacity:.65}50%{transform:translateY(-5px) rotate(25deg);opacity:1}}@keyframes badgeSoftGlow{0%,100%{box-shadow:0 2px 8px #8b5cf61b}50%{box-shadow:0 2px 13px #a855f742}}
+/* Smooth hover response without turning every content card into a moving target. */
+.donPanel,.communityComposer,.communitySideCard,.communityPost,.communityStat{transition:transform .22s ease,box-shadow .22s ease,border-color .22s ease}
+.communityPost:hover,.communityStat:hover{transform:translateY(-2px);box-shadow:0 15px 34px #20336a14;border-color:color-mix(in srgb,var(--primary) 22%,var(--line))}
+@media(max-width:760px){.homeSupportRibbon,.communitySupportRibbon{grid-template-columns:56px minmax(0,1fr);gap:13px;padding:18px}.hsrOrb,.csrArt{width:54px;height:54px;border-radius:17px;font-size:25px}.csrArt span{font-size:27px}.hsrButton,.csrButton{grid-column:1/-1;width:100%;padding:13px}.donBadgePerk{align-items:flex-start;flex-wrap:wrap}.donBadgePreview{margin-left:50px}.communitySupportRibbon{margin-top:13px}}
+@media(max-width:450px){.homeSupportRibbon,.communitySupportRibbon{padding:15px;border-radius:19px;gap:11px}.hsrCopy h2,.csrCopy h2{font-size:19px}.hsrCopy p,.csrCopy p{font-size:12px}.hsrKicker,.csrEyebrow{font-size:9px;letter-spacing:1.2px}.hsrPerks span{font-size:9px;padding:5px 7px}.donBadgePerk{padding:10px}.donBadgePreview{margin-left:50px}}
+@media(prefers-reduced-motion:reduce){.homeSupportRibbon,.homeSupportRibbon:before,.hsrOrb,.donHero,.donHero:after,.donEyebrow,.donBadgeSpark,.donBadgePreview,.communityHero,.communityHero:before,.communityHero:after,.communitySupportRibbon,.communitySupportRibbon:before,.csrArt span,.csrArt i,.csrArt b,.studySupporterBadge{animation:none!important;scroll-behavior:auto!important}.hsrButton,.csrButton,.donPanel,.communityComposer,.communitySideCard,.communityPost,.communityStat{transition:none!important}}
+/* Expanded community hub: fast discovery, study circles, progress and saved resources. */
+.scMomentsPanel,.scFeatureCard,.scDiscoveryToolbar{background:var(--panel);border:1px solid var(--line);border-radius:23px;box-shadow:var(--shadow);min-width:0}
+.scMomentsPanel{padding:20px;margin:17px 0}.scModuleHead,.scCardTop,.scDiscoveryTitle{display:flex;align-items:flex-start;justify-content:space-between;gap:12px}.scModuleHead h2,.scDiscoveryTitle h2{margin:4px 0 5px;font-size:clamp(19px,2.6vw,25px);letter-spacing:-.5px}.scModuleHead p,.scDiscoveryTitle p{margin:0;color:var(--muted);font-size:12px;line-height:1.6}.scEyebrow{display:block;font-size:9px;font-weight:950;letter-spacing:1.7px;color:#b04483}.scMiniBtn{border:1px solid var(--line);border-radius:12px;background:var(--bg);color:var(--text);font-size:12px;font-weight:850;padding:9px 12px;cursor:pointer;transition:transform .18s,border-color .18s}.scMiniBtn:hover{transform:translateY(-2px);border-color:#c084fc}.scMomentsScroller{display:flex;gap:12px;overflow-x:auto;padding:17px 2px 4px;scroll-snap-type:x proximity}.scMoment{border:0;background:transparent;color:var(--text);display:grid;gap:8px;justify-items:center;min-width:77px;max-width:92px;cursor:pointer;scroll-snap-align:start}.scMomentRing{width:65px;height:65px;border-radius:22px;display:grid;place-items:center;background:linear-gradient(135deg,#ff7d9c,#c77dff,#43c6c9);padding:3px;box-shadow:0 6px 18px #a05be629;transition:transform .2s}.scMoment:hover .scMomentRing{transform:translateY(-4px) rotate(-3deg)}.scMomentRing .communityAvatar{width:100%;height:100%;border:3px solid var(--panel);box-shadow:none}.scMomentName{font-size:11px;font-weight:850;max-width:85px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.scMomentClass{color:var(--muted);font-size:10px}.scMomentPlaceholder{color:var(--muted);font-size:12px;padding:12px 0}.scCommunityFeatureGrid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:15px;margin:15px 0}.scCommunityFeatureGridSecond{margin-top:0}.scFeatureCard{position:relative;overflow:hidden;padding:20px}.scFeatureCard h2{font-size:21px;letter-spacing:-.5px;margin:7px 0}.scFeatureCard>p{font-size:12px;color:var(--muted);line-height:1.65;margin:0 0 15px;max-width:520px}.scCardTop{align-items:center;margin-bottom:14px}.scFeatureIcon{height:43px;width:43px;border-radius:15px;display:grid;place-items:center;font-size:22px;background:linear-gradient(135deg,#ffe1ef,#e8ddff);box-shadow:inset 0 1px #fff}.scFeaturePill{font-size:8px;letter-spacing:1px;font-weight:950;padding:7px 9px;border:1px solid var(--line);border-radius:99px;color:var(--muted);background:var(--bg)}.scSprintCard{background:radial-gradient(circle at 100% 0%,#a7f3d022,transparent 32%),var(--panel)}.scCirclesCard{background:radial-gradient(circle at 100% 0%,#d8b4fe26,transparent 35%),var(--panel)}.scSprintTasks{display:grid;gap:10px;margin:14px 0}.scSprintTasks label{display:flex;gap:10px;align-items:center;padding:10px;border:1px solid var(--line);background:var(--bg);border-radius:14px;cursor:pointer}.scSprintTasks input{width:17px;height:17px;accent-color:#7c3aed;flex:0 0 auto}.scSprintTasks b,.scSprintTasks small{display:block}.scSprintTasks b{font-size:12px}.scSprintTasks small{font-size:10px;color:var(--muted);line-height:1.5;margin-top:3px}.scSprintBottom{display:flex;align-items:center;gap:10px;margin-bottom:12px}.scSprintBottom b{font-size:10px;white-space:nowrap}.scProgressTrack{height:8px;border-radius:99px;background:var(--line);overflow:hidden;flex:1}.scProgressTrack span{display:block;width:0;height:100%;border-radius:99px;background:linear-gradient(90deg,#22c1a5,#6366f1,#ec4899);transition:width .3s}.scCircleGrid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.scCircle{display:grid;grid-template-columns:35px minmax(0,1fr);align-items:center;column-gap:9px;text-align:left;border:1px solid transparent;border-radius:16px;padding:12px;cursor:pointer;transition:transform .2s,box-shadow .2s;color:#201b39}.scCircle:hover{transform:translateY(-3px);box-shadow:0 8px 20px #3332}.scCircle>span{grid-row:span 2;display:grid;place-items:center;width:34px;height:34px;border-radius:12px;background:#ffffffb8;font-size:18px}.scCircle b{font-size:11px}.scCircle small{font-size:10px;opacity:.72;margin-top:3px}.scCircleLilac{background:linear-gradient(135deg,#efe7ff,#e4ddff)}.scCirclePeach{background:linear-gradient(135deg,#ffe6db,#ffd0cd)}.scCircleMint{background:linear-gradient(135deg,#dcfff1,#c4f4e1)}.scCircleBlue{background:linear-gradient(135deg,#e0f2fe,#d4e2ff)}.scTextLink{margin-top:13px;border:0;background:transparent;padding:7px 0;color:var(--primary);font-weight:900;font-size:12px;cursor:pointer}.scPulseStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin:17px 0 12px}.scPulseStats>div{padding:12px 9px;border-radius:14px;background:var(--bg);border:1px solid var(--line)}.scPulseStats b,.scPulseStats small{display:block}.scPulseStats b{font-size:23px;letter-spacing:-1px;color:var(--primary)}.scPulseStats small{font-size:10px;line-height:1.4;color:var(--muted)}.scSubtleNote{font-size:10px!important;margin:0!important}.scPromptList{display:grid;gap:7px}.scPromptList button,.scSideAction{display:grid;grid-template-columns:32px minmax(0,1fr) 18px;align-items:center;gap:8px;text-align:left;border:1px solid var(--line);background:var(--bg);padding:10px;border-radius:13px;color:var(--text);cursor:pointer;transition:transform .18s,border-color .18s}.scPromptList button:hover,.scSideAction:hover{transform:translateX(2px);border-color:#d8b4fe}.scPromptList button>span:first-child,.scSideAction>span:first-child{font-size:19px}.scPromptList b,.scPromptList small,.scSideAction b,.scSideAction small{display:block}.scPromptList b,.scSideAction b{font-size:11px}.scPromptList small,.scSideAction small{font-size:10px;color:var(--muted);margin-top:3px;line-height:1.45}.scPromptList button>span:last-child,.scSideAction>span:last-child{font-weight:900;color:var(--primary)}.scDiscoveryToolbar{padding:20px;margin:15px 0}.scDiscoveryTitle{display:block}.scDiscoveryControls{display:grid;grid-template-columns:minmax(0,1.7fr) minmax(130px,1fr) minmax(125px,.8fr) auto;gap:8px;margin-top:15px}.scDiscoveryControls input,.scDiscoveryControls select{margin:0!important;min-width:0;width:100%;border:1px solid var(--line);border-radius:12px;padding:11px 12px;background:var(--bg);color:var(--text);font:inherit;font-size:12px}.scDiscoveryControls input:focus,.scDiscoveryControls select:focus{outline:2px solid #a78bfa66;border-color:#a78bfa}.scCommunityResultLabel{font-size:11px;color:var(--muted);margin:8px 0}.scPostActions .scSavedButton{border-color:#d8b4fe;background:#f5f3ff;color:#6d28d9}.scSidebarQuickCard{background:linear-gradient(145deg,var(--panel),color-mix(in srgb,#c4b5fd 8%,var(--panel)))}.scSideAction{width:100%;margin:8px 0}.communitySupportRibbon{display:none!important}
+@media(max-width:900px){.scDiscoveryControls{grid-template-columns:1fr 1fr}.scDiscoveryControls input{grid-column:1/-1}.scCommunityFeatureGrid{gap:12px}.scFeatureCard{padding:16px}}
+@media(max-width:680px){.scCommunityFeatureGrid{grid-template-columns:1fr}.scMomentsPanel,.scDiscoveryToolbar{padding:15px;border-radius:19px}.scModuleHead{align-items:center}.scCommunityFeatureGridSecond .scFeatureCard{min-width:0}.scDiscoveryControls{grid-template-columns:1fr}.scDiscoveryControls input{grid-column:auto}.scDiscoveryControls .scMiniBtn{width:100%}.scCircleGrid{gap:8px}.scCircle{padding:10px;grid-template-columns:30px minmax(0,1fr)}.scCircle>span{width:29px;height:29px;font-size:16px}.scPulseStats{gap:6px}.scPulseStats>div{padding:10px 7px}.scSprintBottom{align-items:flex-start;flex-direction:column}.scDiscoveryTitle h2{font-size:20px}}
+@media(prefers-reduced-motion:reduce){.scMomentRing,.scMiniBtn,.scCircle,.scPromptList button,.scSideAction,.scProgressTrack span{transition:none!important}}
+</style>
+<style id="studyai-community-studio-polish">
+/* A colourful learning studio: separate stories, editorial lessons and video discovery */
+#community .communityWrap{max-width:1240px}
+#community .communityHero{min-height:230px;padding:clamp(25px,4vw,42px);border-radius:30px;background:radial-gradient(circle at 88% 14%,#ffc3f26b,transparent 24%),radial-gradient(circle at 8% 110%,#5fffe43e,transparent 31%),linear-gradient(125deg,#17164e 0%,#5c45d8 42%,#df4fa4 75%,#ff9069 100%);box-shadow:0 24px 65px #6853db30}
+#community .communityHero:before{content:"";position:absolute;inset:-60% -15%;background:conic-gradient(from 80deg,transparent,#ffffff16,transparent 24%,#87fff51f,transparent 60%);animation:scHeroAurora 19s linear infinite;pointer-events:none}
+#community .communityHero:after{content:"✦";font-size:clamp(90px,13vw,160px);right:7%;top:3%;color:#ffffff21;animation:scHeroSpark 6s ease-in-out infinite}
+#community .communityHero h1{font-size:clamp(30px,4.3vw,48px);letter-spacing:-1.6px;max-width:700px}
+#community .communityHero p{max-width:690px;font-size:14px;color:#f5f1ff}
+#community .communityHero .btn{position:relative;z-index:1;border:0;border-radius:14px;padding:13px 17px;background:linear-gradient(100deg,#fff,#e3fff7);color:#3d2d97;box-shadow:0 8px 24px #0a0b3433}
+#community .communityStats{gap:13px;margin:17px 0}
+#community .communityStat{border-radius:19px;padding:18px 19px;background:linear-gradient(140deg,var(--panel),color-mix(in srgb,var(--panel) 88%,#d8d4ff));transition:transform .22s,box-shadow .22s}
+#community .communityStat:hover{transform:translateY(-3px);box-shadow:0 15px 30px #624ce61c}
+.scStudioPanel{--sc-ink:#241f4a;--sc-muted:#615b80;position:relative;overflow:hidden;margin:19px 0;padding:clamp(16px,2.5vw,27px);border-radius:28px;border:1px solid #d9d3ff;background:radial-gradient(circle at 2% 0%,#d9fbff 0,transparent 24%),radial-gradient(circle at 100% 30%,#ffdff0 0,transparent 27%),linear-gradient(140deg,#fbfaff 0%,#f7f6ff 52%,#fff6fc 100%);box-shadow:0 18px 55px #5b4bba13;color:var(--sc-ink)}
+body.dark .scStudioPanel{--sc-ink:#f0edff;--sc-muted:#b7b3d2;background:radial-gradient(circle at 2% 0%,#1b565d88 0,transparent 28%),radial-gradient(circle at 100% 30%,#6a285788 0,transparent 30%),linear-gradient(140deg,#11172a,#17182e 55%,#22162b);border-color:#343250}
+.scStudioHeading{display:flex;align-items:center;justify-content:space-between;gap:18px;margin-bottom:24px}.scStudioEyebrow{display:block;font-size:10px;font-weight:1000;letter-spacing:2px;color:#a13f9b}.scStudioHeading h2{font-size:clamp(24px,3.5vw,36px);line-height:1.12;letter-spacing:-1.2px;margin:7px 0 8px;color:var(--sc-ink)}.scStudioHeading p{max-width:690px;margin:0;color:var(--sc-muted);font-size:13px;line-height:1.7}.scStudioSticker{width:100px;height:100px;flex:0 0 100px;display:flex;flex-direction:column;gap:2px;align-items:center;justify-content:center;border-radius:27px;transform:rotate(6deg);background:linear-gradient(140deg,#ffdd70,#ff9caa 52%,#c9b9ff);box-shadow:0 15px 30px #b15c9b2e;animation:scStickerFloat 4.6s ease-in-out infinite;color:#472b74}.scStudioSticker span{font-size:30px}.scStudioSticker small{text-align:center;line-height:1.15;font-size:9px;font-weight:1000;text-transform:uppercase;letter-spacing:.5px}.scStudioSectionHead{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin:22px 0 11px}.scStudioSectionHead h3{font-size:clamp(18px,2.2vw,23px);letter-spacing:-.5px;margin:4px 0}.scStudioSectionHead p{font-size:12px;color:var(--sc-muted);line-height:1.5;margin:0}.scStudioSectionTag{white-space:nowrap;border:1px solid #dcd4ff;border-radius:99px;padding:7px 10px;background:#fff9;font-size:10px;font-weight:900;color:#6c48b6}.scStudioGapTop{margin-top:29px}
+.scStoryRail,.scReelRail{display:flex;gap:13px;overflow-x:auto;padding:5px 2px 14px;scroll-snap-type:x mandatory;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#c4b7ff transparent}.scStoryTile{position:relative;flex:0 0 142px;height:191px;overflow:hidden;isolation:isolate;display:flex;flex-direction:column;justify-content:flex-end;gap:5px;padding:13px;border:0;border-radius:22px;text-align:left;color:white;cursor:pointer;scroll-snap-align:start;box-shadow:0 9px 24px #35265a1d;transition:transform .2s,box-shadow .2s}.scStoryTile:hover{transform:translateY(-5px) rotate(-1deg);box-shadow:0 17px 30px #35265a2a}.scStoryTile:focus-visible,.scReelCard:focus-visible,.scPickButton:focus-visible{outline:3px solid #6c5ce7;outline-offset:3px}.scStoryTile img,.scPickImage img,.scReelCard>img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-3;transition:transform .45s}.scStoryTile:hover img,.scReelCard:hover>img{transform:scale(1.08)}.scStoryTile:before{content:"";position:absolute;inset:0;z-index:-2;background:linear-gradient(180deg,#27184a20 0%,#1713344a 35%,#121026ef 100%)}.scStoryGlow{position:absolute;z-index:-1;width:115px;height:115px;right:-35px;top:30px;border-radius:50%;background:#ff8fcd35;filter:blur(12px)}.scStoryChip{align-self:flex-start;border:1px solid #ffffff70;background:#ffffff2a;backdrop-filter:blur(8px);border-radius:99px;padding:5px 7px;font-size:8px;font-weight:1000;letter-spacing:.6px}.scStoryIcon{position:absolute;right:13px;top:51px;display:grid;place-items:center;width:36px;height:36px;border:1px solid #ffffff65;border-radius:14px;background:#ffffff25;backdrop-filter:blur(6px);font-size:19px;animation:scIconBob 3.5s ease-in-out infinite}.scStoryTile b{font-size:14px;line-height:1.2;letter-spacing:-.2px}.scStoryTile small{font-size:10px;color:#f3edff}.storyLilac{background:linear-gradient(145deg,#7c3aed,#312e81)}.storyMint{background:linear-gradient(145deg,#0d9488,#164e63)}.storyPeach{background:linear-gradient(145deg,#fb923c,#be185d)}.storyBlue{background:linear-gradient(145deg,#0284c7,#3730a3)}.storyPink{background:linear-gradient(145deg,#db2777,#6d28d9)}.storyGold{background:linear-gradient(145deg,#f59e0b,#be123c)}
+.scPickGrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:13px}.scPickCard{overflow:hidden;border:1px solid #e2dcfa;border-radius:22px;background:#fff;box-shadow:0 9px 24px #2e245b0b;transition:transform .22s,box-shadow .22s;min-width:0;display:flex;flex-direction:column}.scPickCard:hover{transform:translateY(-4px);box-shadow:0 18px 30px #2e245b18}.scPickImage{position:relative;height:150px;overflow:hidden;isolation:isolate;background:linear-gradient(130deg,#6555ef,#ec4899)}.scPickImage:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#1b18401a,#16112e4c)}.scPickImage img{z-index:-2;transition:transform .5s}.scPickCard:hover .scPickImage img{transform:scale(1.07)}.scPickBadge{position:absolute;left:10px;top:10px;border:1px solid #ffffff75;background:#ffffffdc;color:#46316d;border-radius:99px;padding:6px 8px;font-size:8px;font-weight:1000;letter-spacing:.3px}.scPickEmoji{position:absolute;right:10px;bottom:9px;display:grid;place-items:center;width:43px;height:43px;border-radius:15px;background:#ffffffdf;font-size:23px;box-shadow:0 8px 20px #170b392c}.scPickCopy{display:flex;flex:1;flex-direction:column;align-items:flex-start;padding:14px}.scPickKicker{font-size:8px;letter-spacing:1.4px;font-weight:1000;color:#9c4998}.scPickCopy h4{font-size:16px;line-height:1.28;letter-spacing:-.3px;margin:7px 0;color:#282044}.scPickCopy p{font-size:11px;line-height:1.65;color:#625c77;margin:0 0 15px}.scPickCopy p b{color:#453c65}.scPickButton{margin-top:auto;display:inline-flex;gap:13px;align-items:center;justify-content:space-between;border:0;border-radius:12px;padding:10px 12px;background:linear-gradient(105deg,#6d5dfc,#aa5ce4 65%,#f16aab);color:#fff;font-weight:900;font-size:11px;cursor:pointer;box-shadow:0 6px 16px #7755d625;transition:transform .18s}.scPickButton:hover{transform:translateY(-2px)}.scPickButton span{font-size:16px}.scPickBio .scPickImage{background:linear-gradient(120deg,#0e9f6e,#8bdc76)}.scPickEnglish .scPickImage{background:linear-gradient(120deg,#0ea5e9,#8b5cf6)}.scPickFocus .scPickImage{background:linear-gradient(120deg,#ec4899,#f59e0b)}
+.scReelRail{padding-top:6px}.scReelCard{position:relative;isolation:isolate;flex:0 0 172px;height:290px;overflow:hidden;display:block;border-radius:23px;color:#fff;text-decoration:none;scroll-snap-align:start;background:linear-gradient(160deg,#6655ef,#ee5ca8);box-shadow:0 11px 25px #2d20551a;transition:transform .22s,box-shadow .22s}.scReelCard:hover{transform:translateY(-4px);box-shadow:0 18px 32px #2d205528}.scReelCard:before{content:"";position:absolute;z-index:-1;inset:0;background:linear-gradient(180deg,#1b154b1c 0%,transparent 25%,#111028ec 100%)}.scReelCard>img{z-index:-2}.scReelShade{position:absolute;inset:0;background:linear-gradient(180deg,#2118490d 0%,#15102b16 42%,#141027ed 100%);z-index:-1}.scReelLabel{position:absolute;left:10px;right:10px;top:12px;font-size:8px;font-weight:1000;letter-spacing:1px;text-shadow:0 2px 8px #0008}.scReelPlay{position:absolute;left:50%;top:47%;transform:translate(-50%,-50%);display:grid;place-items:center;width:49px;height:49px;padding-left:3px;border-radius:50%;background:#ffffffdd;color:#5b3ba0;font-size:18px;box-shadow:0 0 0 7px #ffffff28,0 8px 26px #0003;transition:transform .2s}.scReelCard:hover .scReelPlay{transform:translate(-50%,-50%) scale(1.1)}.scReelDuration{position:absolute;left:10px;bottom:72px;border:1px solid #ffffff55;background:#ffffff20;backdrop-filter:blur(7px);border-radius:7px;padding:5px 7px;font-size:8px;font-weight:900}.scReelCaption{position:absolute;bottom:0;left:0;right:0;padding:13px 11px 15px}.scReelCaption b,.scReelCaption small{display:block}.scReelCaption b{font-size:14px;line-height:1.25;letter-spacing:-.2px}.scReelCaption small{font-size:10px;line-height:1.4;color:#ece7ff;margin-top:5px}.scStudioFootnote{margin-top:9px;padding:12px 14px;border:1px solid #ded6ff;border-radius:14px;background:#ffffffa8;color:#62567e;font-size:10px;line-height:1.65}.scMediaModal{position:fixed;inset:0;z-index:10050;display:none;align-items:center;justify-content:center;padding:16px;background:#090921bf;backdrop-filter:blur(9px)}.scMediaModal.open{display:flex;animation:scModalFade .18s ease}.scMediaSheet{position:relative;width:min(510px,100%);max-height:min(90dvh,760px);overflow:auto;border:1px solid #ffffff70;border-radius:27px;background:#fff;color:#292047;box-shadow:0 28px 95px #0007;animation:scModalRise .28s ease}.scMediaClose{position:absolute;right:12px;top:12px;z-index:4;border:1px solid #ffffff8a;background:#ffffffdf;color:#2d2450;width:38px;height:38px;border-radius:14px;font-size:22px;cursor:pointer;box-shadow:0 4px 12px #0002}.scMediaHero{position:relative;height:230px;overflow:hidden;isolation:isolate;background:linear-gradient(125deg,#4f46e5,#ec4899)}.scMediaHero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2}.scMediaHero:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#1c14441c,#17112a99)}.scMediaHeroLabel{position:absolute;left:18px;bottom:15px;color:#fff;font-size:10px;font-weight:1000;letter-spacing:1.5px;text-shadow:0 2px 9px #0008}.scMediaCopy{padding:22px}.scMediaCopy h2{font-size:26px;line-height:1.14;letter-spacing:-.7px;margin:0 45px 10px 0;color:#292047}.scMediaCopy p{font-size:13px;line-height:1.8;color:#605776;margin:0 0 14px}.scMediaTakeaway{padding:13px 14px;border:1px solid #ded6ff;border-radius:15px;background:linear-gradient(110deg,#f1ecff,#fff0f6);font-size:12px;line-height:1.7;color:#4d3d78}.scMediaTakeaway b{color:#6c3eb0}.scMediaActions{display:flex;gap:8px;margin-top:17px;flex-wrap:wrap}.scMediaActions button,.scMediaActions a{display:inline-flex;align-items:center;justify-content:center;gap:8px;border:0;border-radius:12px;padding:11px 14px;background:linear-gradient(110deg,#6855ec,#c44fc0);color:#fff;text-decoration:none;font-size:12px;font-weight:900;cursor:pointer}.scMediaActions .scMediaSecondary{background:#f2efff;color:#5d45a1;border:1px solid #e0d7ff}
+@keyframes scHeroAurora{to{transform:rotate(360deg)}}@keyframes scHeroSpark{0%,100%{transform:translateY(0) rotate(10deg)}50%{transform:translateY(-9px) rotate(24deg)}}@keyframes scStickerFloat{0%,100%{transform:rotate(6deg) translateY(0)}50%{transform:rotate(1deg) translateY(-6px)}}@keyframes scIconBob{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-5px) rotate(7deg)}}@keyframes scModalFade{from{opacity:0}to{opacity:1}}@keyframes scModalRise{from{opacity:0;transform:translateY(15px) scale(.98)}to{opacity:1;transform:translateY(0) scale(1)}}
+.donHero{background:radial-gradient(circle at 88% 10%,rgba(255,255,255,.28),transparent 22%),radial-gradient(circle at 0% 110%,#67e8f91c,transparent 32%),linear-gradient(125deg,#17163d 0%,#5144d8 46%,#bd489f 78%,#f08a61 100%);background-size:155% 155%;animation:scDonationGlow 16s ease-in-out infinite}.donHero:after{content:"✦";position:absolute;right:9%;top:12%;font-size:clamp(68px,9vw,116px);color:#ffffff15;pointer-events:none;animation:scHeroSpark 7s ease-in-out infinite}.donHeroFooter{display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;margin-top:22px}.donHeroPills{display:flex;gap:8px;flex-wrap:wrap;max-width:730px}.donHeroPills span{display:inline-flex;align-items:center;gap:6px;padding:8px 10px;border:1px solid #ffffff3d;border-radius:999px;background:#ffffff12;color:#f7f3ff;font-size:10px;font-weight:850;backdrop-filter:blur(8px)}.donHeroCta{display:inline-flex;align-items:center;justify-content:center;gap:12px;border:0;border-radius:14px;padding:13px 16px;background:linear-gradient(110deg,#fff,#e4fffa);color:#45339b;font-weight:950;cursor:pointer;box-shadow:0 9px 22px #09052536;white-space:nowrap;transition:transform .2s}.donHeroCta:hover{transform:translateY(-3px)}@keyframes scDonationGlow{0%,100%{background-position:0% 45%}50%{background-position:100% 55%}}
+@media(max-width:1000px){.scPickGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.scPickImage{height:175px}}
+@media(max-width:680px){.scStudioHeading{align-items:flex-start}.scStudioSticker{width:74px;height:74px;flex-basis:74px;border-radius:21px}.scStudioSticker span{font-size:24px}.scStudioSticker small{font-size:7px}.scStoryTile{flex-basis:127px;height:177px}.scPickGrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.scPickImage{height:130px}.scPickCopy{padding:11px}.scPickCopy h4{font-size:14px}.scPickCopy p{font-size:10px}.scPickButton{width:100%}.scReelCard{flex-basis:155px;height:264px}.donHeroFooter{align-items:stretch}.donHeroCta{width:100%}}
+@media(max-width:430px){.scStudioPanel{padding:13px;border-radius:21px}.scStudioHeading{gap:8px}.scStudioHeading h2{font-size:23px}.scStudioHeading p{font-size:11px}.scStudioSticker{width:62px;height:62px;flex-basis:62px;border-radius:18px}.scStudioSticker span{font-size:20px}.scStudioSticker small{font-size:6px}.scStudioSectionHead{align-items:flex-start}.scStudioSectionTag{font-size:8px;padding:6px 7px}.scStoryTile{flex-basis:119px;height:168px;padding:10px}.scStoryTile b{font-size:12px}.scPickGrid{grid-template-columns:1fr}.scPickCard{display:grid;grid-template-columns:116px minmax(0,1fr)}.scPickImage{height:100%;min-height:200px}.scPickCopy{padding:12px}.scPickCopy h4{font-size:15px}.scPickCopy p{font-size:11px}.scPickBadge{font-size:7px;left:6px;top:7px}.scPickEmoji{right:7px;bottom:7px;width:34px;height:34px;font-size:18px}.scReelCard{flex-basis:148px;height:250px}.scMediaHero{height:185px}.scMediaCopy{padding:17px}.scMediaCopy h2{font-size:23px}}
+@media(prefers-reduced-motion:reduce){#community .communityHero:before,#community .communityHero:after,.scStudioSticker,.scStoryIcon,.scStoryTile,.scPickCard,.scReelCard,.scMediaModal,.donHero,.donHero:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
+</style>
+
+
+<style id="studyai-social-profile-neon">
+#community{--sc-neon-violet:#a78bfa;--sc-neon-pink:#ff4fa3;--sc-neon-cyan:#4fffea;--sc-neon-blue:#5d8cff}
+#community .communityHero{isolation:isolate;background:radial-gradient(circle at 12% 110%,#4fffea32,transparent 27%),radial-gradient(circle at 96% 5%,#ff4fa344,transparent 27%),linear-gradient(125deg,#0a1230 0%,#351b70 37%,#741b78 68%,#0d566d 100%);background-size:230% 230%;animation:scNeonFlow 16s ease-in-out infinite;box-shadow:0 0 0 1px #a78bfa66,0 18px 58px #8b5cf638,0 0 42px #4fffea12}
+#community .communityHero:before{content:"";position:absolute;inset:-70%;z-index:-1;pointer-events:none;background:conic-gradient(from 30deg,transparent 0 32%,#4fffea15 40%,transparent 48% 65%,#ff4fa31f 73%,transparent 80%);animation:scNeonSpin 24s linear infinite}
+#community .communityHero:after{color:#fff5;text-shadow:0 0 20px #ff4fa377;animation:scNeonFloat 5s ease-in-out infinite}
+#community .communityHero h1{text-shadow:0 0 22px #c4b5fd28}
+#community .communityStats .communityStat{position:relative;overflow:hidden;border-color:#a78bfa32;background:linear-gradient(145deg,var(--panel),color-mix(in srgb,var(--panel) 86%,#7c3aed));box-shadow:0 0 0 1px #a78bfa0d,0 12px 30px #5b21b612}
+#community .communityStats .communityStat:after{content:"";position:absolute;inset:auto -30% -70% -30%;height:100%;background:radial-gradient(ellipse,#a78bfa18,transparent 70%);pointer-events:none}
+.scSocialDock{display:flex;gap:9px;flex-wrap:wrap;margin:14px 0 20px;padding:11px;border:1px solid #a78bfa36;border-radius:20px;background:linear-gradient(110deg,#101932e8,#241644e8,#10303ce8);box-shadow:0 0 28px #8b5cf61a;backdrop-filter:blur(12px)}
+.scSocialDock button{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:10px 13px;border:1px solid #a78bfa50;border-radius:12px;background:#ffffff08;color:#f5f3ff;font-size:12px;font-weight:900;cursor:pointer;transition:transform .18s,border-color .18s,box-shadow .18s;min-height:40px}.scSocialDock button:hover{transform:translateY(-2px);border-color:#4fffea;color:#fff;box-shadow:0 0 17px #4fffea24}.scSocialDock button span{font-size:16px}.scSocialDock button b{min-width:20px;padding:3px 6px;border-radius:999px;background:linear-gradient(110deg,#ff4fa3,#8b5cf6);color:white;font-size:10px}
+body.dark .scSocialDock{background:linear-gradient(110deg,#101932e8,#241644e8,#10303ce8)}
+.scProfileTap{display:inline-flex;align-items:center;gap:9px;min-width:0;border:0;padding:0;margin:0;background:transparent;color:inherit;text-align:left;cursor:pointer;font:inherit}.scProfileTap:focus-visible{outline:2px solid #4fffea;outline-offset:4px;border-radius:10px}.scProfileTap .communityAvatar{transition:transform .2s,box-shadow .2s}.scProfileTap:hover .communityAvatar{transform:scale(1.045);box-shadow:0 0 0 3px #4fffea70,0 0 20px #a78bfa55}.scProfileNameLink{border:0;background:transparent;color:inherit;padding:0;font:inherit;font-weight:900;cursor:pointer;text-align:left}.scProfileNameLink:hover{color:#a78bfa;text-decoration:underline}.communityPostHead .meta{min-width:0;flex:1}.communityPostHead .meta small{display:block}
+.scSocialModalBox{width:min(790px,100%);max-height:min(92dvh,900px);position:relative;border:1px solid #a78bfa63!important;background:linear-gradient(145deg,var(--panel),color-mix(in srgb,var(--panel) 95%,#a78bfa))!important;box-shadow:0 0 0 1px #4fffea0b,0 24px 90px #0306118c,0 0 40px #8b5cf622!important;animation:scModalUp .23s ease}
+.scSocialClose{position:sticky;float:right;top:0;z-index:3;border:1px solid var(--line);background:var(--panel);color:var(--text);width:35px;height:35px;border-radius:12px;font-size:23px;line-height:1;cursor:pointer}
+.scSocialModalBox h2{font-size:clamp(21px,3vw,28px);letter-spacing:-.7px;margin:4px 42px 16px 0}.scProfileHero{position:relative;overflow:hidden;padding:22px;border-radius:22px;color:#fff;background:radial-gradient(circle at 100% 0%,#4fffea3a,transparent 27%),linear-gradient(125deg,#151a4d,#5b21b6 48%,#be287d 75%,#0d6272);box-shadow:0 12px 34px #652db42e;margin-bottom:15px}.scProfileHero:after{content:"✦";position:absolute;right:18px;top:4px;font-size:78px;color:#fff2;pointer-events:none}.scProfileHeroTop{display:flex;align-items:center;gap:18px;position:relative;z-index:1}.scProfileHero .communityAvatar{width:92px;height:92px;flex-basis:92px;font-size:30px;border:3px solid #ffffffd8;box-shadow:0 0 0 4px #a78bfa99,0 0 28px #4fffea3d}.scProfileHero .communityAvatar img{object-fit:cover}.scProfileHero h3{font-size:23px;margin:0 0 3px;line-height:1.15}.scProfileHero .scHandle{color:#e9e4ff;font-size:12px;overflow-wrap:anywhere}.scProfileBio{margin:12px 0 0;max-width:650px;color:#f1edff;font-size:13px;line-height:1.7;position:relative;z-index:1}.scPrivacyPill{display:inline-flex;align-items:center;gap:5px;padding:5px 8px;border:1px solid #ffffff40;border-radius:99px;background:#ffffff15;font-size:10px;font-weight:900;margin-top:9px;position:relative;z-index:1}
+.scProfileStats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:14px 0}.scProfileStats button{border:1px solid #a78bfa3d;border-radius:15px;padding:11px 7px;background:var(--panel);color:var(--text);cursor:pointer;transition:transform .2s,border-color .2s}.scProfileStats button:hover{transform:translateY(-2px);border-color:#4fffea}.scProfileStats b,.scProfileStats span{display:block}.scProfileStats b{font-size:20px;color:#a78bfa}.scProfileStats span{font-size:10px;color:var(--muted);margin-top:3px}
+.scProfileActions{display:flex;flex-wrap:wrap;gap:8px;margin:13px 0}.scActionNeon{border:1px solid #a78bfa6b;border-radius:12px;background:linear-gradient(110deg,#6546db,#a33ec2);color:white;font-weight:900;font-size:12px;padding:10px 14px;cursor:pointer;box-shadow:0 6px 18px #6f40ce2c;transition:transform .18s,box-shadow .18s}.scActionNeon:hover{transform:translateY(-2px);box-shadow:0 0 22px #8b5cf644}.scActionNeon.alt{background:var(--panel);color:var(--text);box-shadow:none}.scActionNeon.cyan{background:linear-gradient(110deg,#087c8a,#2861a9);border-color:#4fffea66}.scActionNeon.warn{background:var(--panel);border-color:#fca5a5;color:#dc2626;box-shadow:none}.scProfileTabs{display:flex;gap:5px;margin:12px 0;border-bottom:1px solid var(--line);overflow:auto}.scProfileTabs button{flex:1;min-width:90px;border:0;border-bottom:3px solid transparent;background:transparent;color:var(--muted);padding:12px 9px;font-weight:900;font-size:12px;cursor:pointer;white-space:nowrap}.scProfileTabs button.active{color:#a78bfa;border-bottom-color:#a78bfa;text-shadow:0 0 15px #a78bfa43}.scProfilePostGrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;margin-top:13px}.scProfilePostTile{position:relative;overflow:hidden;min-height:130px;aspect-ratio:1/1;border:1px solid #a78bfa30;border-radius:13px;background:linear-gradient(140deg,#1c1d4d,#6032ab,#087d8d);color:white;cursor:pointer;text-align:left;padding:0;isolation:isolate}.scProfilePostTile img,.scProfilePostTile video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:-2;opacity:.82}.scProfilePostTile:after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(180deg,#10102705,#100a28ad)}.scProfilePostTile .tileText{position:absolute;left:10px;right:8px;bottom:9px;font-size:11px;font-weight:900;line-height:1.35;text-shadow:0 1px 4px #000}.scProfilePostTile .tileIcon{position:absolute;top:8px;right:8px;font-size:15px}.scProfilePostTile .tilePending{position:absolute;left:7px;top:7px;border-radius:99px;padding:4px 6px;background:#f59e0b;color:#251b08;font-size:8px;font-weight:1000}.scSocialList{display:grid;gap:7px}.scSocialListRow{display:flex;align-items:center;gap:10px;border:1px solid var(--line);border-radius:14px;background:var(--panel);padding:10px}.scSocialListRow .communityAvatar{width:42px;height:42px;flex-basis:42px;font-size:14px}.scSocialListMain{min-width:0;flex:1}.scSocialListMain b,.scSocialListMain small{display:block;overflow-wrap:anywhere}.scSocialListMain b{font-size:12px}.scSocialListMain small{font-size:10px;color:var(--muted);margin-top:3px}.scActivityItem{border:1px solid var(--line);border-radius:13px;padding:12px;margin:8px 0;background:var(--panel)}.scActivityItem b{font-size:12px}.scActivityItem p{font-size:12px;line-height:1.6;margin:6px 0}.scSettingGrid{display:grid;grid-template-columns:1fr 1fr;gap:12px}.scSettingCard{padding:13px;border:1px solid var(--line);border-radius:15px;background:var(--panel)}.scSettingCard label{display:grid;gap:7px;font-size:12px;font-weight:900}.scSettingCard select{padding:10px;border:1px solid var(--line);border-radius:10px;background:var(--bg);color:var(--text);width:100%;font:inherit;font-size:12px}.scSettingToggle{display:flex;align-items:flex-start;gap:9px;border:1px solid var(--line);border-radius:13px;padding:12px;margin:9px 0;font-size:12px;line-height:1.55;background:var(--panel)}.scSettingToggle input{margin-top:3px;accent-color:#8b5cf6}.scConversation{display:flex;flex-direction:column;gap:9px;max-height:46dvh;overflow:auto;padding:5px 0 12px}.scBubble{max-width:83%;border:1px solid var(--line);border-radius:15px;padding:10px 12px;font-size:12px;line-height:1.65;white-space:pre-wrap;overflow-wrap:anywhere;background:var(--bg)}.scBubble.mine{align-self:flex-end;color:white;border-color:#8b5cf6;background:linear-gradient(115deg,#6546db,#a43fc0)}.scBubble small{display:block;font-size:9px;opacity:.75;margin-top:5px}.scMessageCompose{display:flex;gap:8px;align-items:flex-end;margin-top:12px}.scMessageCompose textarea{min-width:0;flex:1;resize:vertical;min-height:64px;border:1px solid var(--line);border-radius:12px;padding:10px;background:var(--bg);color:var(--text)}.scSocialEmpty{padding:22px;border:1px dashed #a78bfa71;border-radius:16px;text-align:center;color:var(--muted);font-size:12px;line-height:1.7}.scReviewItem{border:1px solid #f59e0b75;border-radius:15px;padding:12px;margin:9px 0;background:color-mix(in srgb,#f59e0b 5%,var(--panel))}.scReviewItem img,.scReviewItem video{max-width:100%;max-height:250px;border-radius:12px;display:block;margin:10px 0}
+.scStudyConfirm{display:flex;align-items:flex-start;gap:9px;margin-top:10px!important;padding:11px 12px;border:1px solid #4fffea3a;border-radius:13px;background:linear-gradient(100deg,#4fffea0a,#a78bfa0b);font-size:11px!important;font-weight:700!important;line-height:1.6}.scStudyConfirm input{flex:0 0 auto;margin-top:3px;accent-color:#a78bfa}.communityPostVideo{display:block;width:100%;max-height:560px;background:#070b17;border-radius:15px;margin-top:8px}.communityPostMediaPending{padding:12px;border:1px solid #fbbf24;border-radius:12px;background:#fbbf2412;color:var(--text);font-size:11px;line-height:1.6;margin-top:10px}
+@keyframes scNeonFlow{0%,100%{background-position:0% 50%}50%{background-position:100% 40%}}@keyframes scNeonSpin{to{transform:rotate(360deg)}}@keyframes scNeonFloat{0%,100%{transform:translateY(0) rotate(10deg)}50%{transform:translateY(-9px) rotate(20deg)}}@keyframes scModalUp{from{opacity:0;transform:translateY(14px) scale(.99)}to{opacity:1;transform:none}}
+@media(max-width:620px){.scSocialDock{padding:8px;gap:7px}.scSocialDock button{flex:1 1 calc(50% - 7px);justify-content:flex-start;padding:10px;font-size:11px}.scProfileHero{padding:15px}.scProfileHeroTop{gap:12px}.scProfileHero .communityAvatar{width:73px;height:73px;flex-basis:73px}.scProfileHero h3{font-size:19px}.scProfileStats{gap:5px}.scProfileStats b{font-size:17px}.scProfileStats span{font-size:9px}.scSettingGrid{grid-template-columns:1fr}.scProfilePostGrid{gap:5px}.scProfilePostTile{min-height:94px;border-radius:10px}.scProfilePostTile .tileText{font-size:9px;left:6px;bottom:6px}.scSocialModalBox{padding:15px!important;border-radius:20px!important}.scSocialModalBox h2{font-size:22px}}
+@media(prefers-reduced-motion:reduce){#community .communityHero,#community .communityHero:before,#community .communityHero:after,.scSocialDock button,.scActionNeon,.scProfileHero,.scProfileStats button{animation:none!important;transition:none!important}}
+</style>
+
+
+<style id="studyai-final-neon-restore">
+/* FINAL VISUAL PASS — restore always-visible animated neon treatment on both requested pages. */
+@keyframes saiCommunityGlow {
+  0%,100% { background-position: 0% 45%; box-shadow: 0 0 0 1px #a78bfa80, 0 18px 50px #8b5cf63c, 0 0 26px #4fffea20; }
+  50% { background-position: 100% 58%; box-shadow: 0 0 0 1px #4fffeaa8, 0 22px 62px #ff4fa34a, 0 0 38px #4fffea36; }
+}
+@keyframes saiCommunityOrbit { to { transform: rotate(360deg); } }
+@keyframes saiCommunityStar { 0%,100% { transform: translateY(0) rotate(8deg) scale(.96); opacity:.55; } 50% { transform: translateY(-10px) rotate(34deg) scale(1.12); opacity:.98; } }
+@keyframes saiCommunityCta { 0%,100% { box-shadow: 0 5px 0 #6d28d933, 0 0 0 0 #4fffea00, 0 8px 25px #090d2a44; } 50% { box-shadow: 0 5px 0 #6d28d933, 0 0 0 5px #4fffea16, 0 8px 30px #ff4fa34a; } }
+@keyframes saiNavGlow { 0%,100% { box-shadow: inset 0 1px #ffffff16, 0 6px 18px #05081738, 0 0 0 0 var(--navglow); } 50% { box-shadow: inset 0 1px #ffffff23, 0 10px 23px #05081755, 0 0 0 1px color-mix(in srgb, var(--navglow) 42%, transparent); } }
+@keyframes saiSupportGlow { 0%,100% { background-position: 0% 45%; box-shadow: 0 22px 56px #6c42c23a, 0 0 0 1px #ffb8f04a; } 50% { background-position: 100% 58%; box-shadow: 0 26px 70px #ec489955, 0 0 0 1px #4fffea75, 0 0 35px #a855f733; } }
+@keyframes saiSupportSweep { from { transform: rotate(0deg) translateX(-1%); } to { transform: rotate(360deg) translateX(1%); } }
+@keyframes saiSupportSpark { 0%,100% { transform: translateY(0) rotate(12deg) scale(.95); opacity:.35; } 50% { transform: translateY(-10px) rotate(35deg) scale(1.12); opacity:.82; } }
+@keyframes saiSupportBadge { 0%,100% { transform: translateY(0); box-shadow: 0 0 0 0 #ffb6df00; } 50% { transform: translateY(-2px); box-shadow: 0 0 0 6px #ffb6df19, 0 0 20px #ff83d455; } }
+@keyframes saiProfileNeon { 0%,100% { background-position:0% 50%; box-shadow:0 12px 34px #652db42e,0 0 0 1px #a78bfa35; } 50% { background-position:100% 50%; box-shadow:0 16px 44px #ec48994b,0 0 0 1px #4fffea66; } }
+@keyframes saiPerkShimmer { 0%,100% { border-color: #ffffff32; background-position: 0% 50%; } 50% { border-color: #8fffee99; background-position: 100% 50%; } }
+
+/* Study Community: a saturated animated hero rather than a static gradient. */
+#community .communityHero {
+  position:relative; isolation:isolate; overflow:hidden;
+  border:1px solid #b6fff05e;
+  background:radial-gradient(circle at 12% 112%,#4fffea48,transparent 31%),radial-gradient(circle at 91% 8%,#ff4fa350,transparent 30%),linear-gradient(115deg,#0c163a 0%,#4520a0 27%,#b32078 55%,#ef654e 76%,#126b83 100%);
+  background-size:260% 260%;
+  animation:saiCommunityGlow 11s ease-in-out infinite !important;
+  box-shadow:0 0 0 1px #a78bfa80,0 20px 58px #8b5cf640,0 0 36px #4fffea23;
+}
+#community .communityHero:before {
+  content:""; position:absolute; z-index:0; inset:-75%; pointer-events:none;
+  background:conic-gradient(from 25deg,transparent 0 29%,#4fffea24 35%,transparent 44% 59%,#ff4fa330 68%,transparent 76% 90%,#c4b5fd23 96%,transparent);
+  animation:saiCommunityOrbit 24s linear infinite !important;
+}
+#community .communityHero:after {
+  content:"✧"; position:absolute; z-index:1; right:8%; top:8%; line-height:1;
+  color:#ffffffb3; font-size:clamp(70px,10vw,122px); text-shadow:0 0 22px #ff4fa380,0 0 45px #4fffea40;
+  animation:saiCommunityStar 5.5s ease-in-out infinite !important;
+}
+#community .communityHero > * { position:relative; z-index:2; }
+#community .communityHero h1 { color:#fff; text-shadow:0 2px 14px #170d4166,0 0 24px #d7c7ff32; }
+#community .communityHero p { color:#fff4fe; text-shadow:0 1px 7px #170d4140; }
+#community .scProfileHero { background-size:220% 220%; animation:saiProfileNeon 12s ease-in-out infinite !important; }
+#community .scProfileHero:after { animation:saiCommunityStar 5.8s ease-in-out infinite !important; }
+#community .studySupporterBadge { border-color:#4fffea99; color:#61237b; background:linear-gradient(110deg,#fbcfe8,#e9d5ff 42%,#cffafe 75%,#fef3c7); box-shadow:0 0 0 1px #a78bfa50,0 0 15px #d946ef3a; animation:saiSupportBadge 3.2s ease-in-out infinite !important; }
+#community .communityHero .btn {
+  position:relative; isolation:isolate; overflow:hidden; min-height:47px; padding:13px 19px;
+  border:1px solid #fff; border-radius:15px; color:#35166f;
+  background:linear-gradient(110deg,#ffffff 0%,#dffefa 38%,#ffe2f6 75%,#fff5cc 100%);
+  background-size:200% 200%; font-weight:950; animation:saiCommunityCta 3.4s ease-in-out infinite !important;
+  box-shadow:0 8px 25px #090d2a44;
+}
+#community .communityHero .btn:hover { transform:translateY(-3px) scale(1.015); background-position:100% 50%; }
+
+/* The five social controls become a set of polished neon action cards, not a plain toolbar. */
+#community .scSocialDock {
+  position:relative; display:grid; grid-template-columns:repeat(auto-fit,minmax(175px,1fr)); gap:10px;
+  margin:18px 0 22px; padding:16px; border:1px solid #a78bfa70; border-radius:24px;
+  background:radial-gradient(ellipse at 12% 0%,#4fffea18,transparent 36%),radial-gradient(ellipse at 95% 100%,#ff4fa31a,transparent 35%),linear-gradient(135deg,#0c142c,#191537 57%,#102d3a);
+  box-shadow:0 16px 36px #10102e20,0 0 25px #8b5cf61c; backdrop-filter:blur(14px);
+}
+#community .scSocialDock:before {
+  content:"YOUR STUDY SPACE  ✦  Manage your profile, requests, messages and activity";
+  grid-column:1/-1; display:block; padding:0 2px 5px; color:#d9d4ff; font-size:10px; font-weight:950;
+  letter-spacing:1.25px; line-height:1.6; text-transform:uppercase;
+}
+#community .scSocialDock button {
+  --navglow:#8b5cf6; min-width:0; min-height:61px; display:flex; align-items:center; justify-content:flex-start; gap:11px;
+  padding:11px 13px; border:1px solid color-mix(in srgb,var(--navglow) 65%,#ffffff20); border-radius:16px;
+  color:#fbfaff; background:linear-gradient(135deg,color-mix(in srgb,var(--navglow) 24%,#11152d),#11172d 82%);
+  font-size:12px; font-weight:900; text-align:left; line-height:1.35; cursor:pointer;
+  animation:saiNavGlow 4.8s ease-in-out infinite !important; transition:transform .2s,border-color .2s,filter .2s;
+}
+#community .scSocialDock button:nth-of-type(1){--navglow:#a78bfa;animation-delay:-.4s!important}
+#community .scSocialDock button:nth-of-type(2){--navglow:#ff4fa3;animation-delay:-1.1s!important}
+#community .scSocialDock button:nth-of-type(3){--navglow:#4fffea;animation-delay:-1.8s!important}
+#community .scSocialDock button:nth-of-type(4){--navglow:#5d8cff;animation-delay:-2.5s!important}
+#community .scSocialDock button:nth-of-type(5){--navglow:#ffbd62;animation-delay:-3.2s!important}
+#community .scSocialDock button:nth-of-type(6){--navglow:#f87171;animation-delay:-3.8s!important}
+#community .scSocialDock button:hover { transform:translateY(-3px); filter:brightness(1.17); border-color:var(--navglow); }
+#community .scSocialDock button span { flex:0 0 36px; width:36px; height:36px; display:grid; place-items:center; border-radius:12px;
+  background:linear-gradient(145deg,color-mix(in srgb,var(--navglow) 42%,#ffffff18),color-mix(in srgb,var(--navglow) 17%,#090d20));
+  border:1px solid color-mix(in srgb,var(--navglow) 65%,transparent); font-size:18px; box-shadow:0 0 16px color-mix(in srgb,var(--navglow) 23%,transparent);
+}
+#community .scSocialDock button b { margin-left:auto; min-width:23px; padding:4px 7px; border:1px solid #ffffff36; border-radius:99px; text-align:center; color:#fff; background:linear-gradient(120deg,#ff4fa3,#7c3aed); box-shadow:0 0 14px #ec48994f; }
+
+/* Support StudyAI: keep this as ONE hero banner, with a visible moving aurora and glowing supporter panel. */
+#donate .donHero {
+  position:relative; isolation:isolate; overflow:hidden; border:1px solid #ffffff30;
+  background:radial-gradient(circle at 90% 8%,#ffb8ef55,transparent 23%),radial-gradient(circle at 6% 108%,#4fffea37,transparent 33%),linear-gradient(115deg,#16113c 0%,#4d28a8 25%,#962c9c 52%,#db4d91 71%,#e77b52 87%,#146e80 100%);
+  background-size:245% 245%; animation:saiSupportGlow 12s ease-in-out infinite !important;
+  box-shadow:0 22px 56px #6c42c23a,0 0 0 1px #ffb8f04a;
+}
+#donate .donHero:before {
+  content:""; position:absolute; z-index:0; inset:-80%; pointer-events:none;
+  background:conic-gradient(from 40deg,transparent 0 26%,#ffffff15 32%,transparent 40% 53%,#4fffea24 60%,transparent 68% 81%,#ffb8ed27 88%,transparent 94%);
+  animation:saiSupportSweep 27s linear infinite !important;
+}
+#donate .donHero:after { content:"✦"; z-index:1; right:8%; top:9%; color:#ffffff45; font-size:clamp(72px,10vw,125px); text-shadow:0 0 26px #ffdcff50; animation:saiSupportSpark 6.5s ease-in-out infinite !important; }
+#donate .donHero > * { position:relative; z-index:2; }
+#donate .donEyebrow { border-color:#ffffff5c; background:linear-gradient(110deg,#ffffff22,#ffffff0d); box-shadow:0 0 0 1px #ffffff0b; animation:saiSupportBadge 3.7s ease-in-out infinite !important; }
+#donate .donHero h1 { text-shadow:0 2px 16px #140d4140,0 0 25px #ffd8f729; }
+#donate .donHero .donNote { color:#f1edff; }
+#donate .donBadgePerk { position:relative; overflow:hidden; border-color:#ffffff55; background:linear-gradient(115deg,#ffffff24,#ffffff0d,#4fffea17); background-size:220% 220%; box-shadow:0 0 0 1px #ffb8f022,0 8px 25px #12082d20; animation:saiPerkShimmer 5.5s ease-in-out infinite !important; }
+#donate .donBadgeSpark { animation:saiSupportBadge 2.8s ease-in-out infinite !important; }
+#donate .donBadgePreview { border-color:#ffe1a9bb; color:#fff0c8; background:linear-gradient(120deg,#9b6a1b66,#a32c7f44); box-shadow:0 0 16px #ffd77b35; animation:saiSupportBadge 3.1s ease-in-out infinite !important; }
+#donate .donHeroPills span { border-color:#ffffff52; color:#fff; background:linear-gradient(110deg,#ffffff20,#ffffff0b); box-shadow:inset 0 1px #ffffff18,0 0 16px #ffb8f010; animation:saiPerkShimmer 6s ease-in-out infinite !important; }
+#donate .donHeroPills span:nth-child(2){animation-delay:-2s!important}#donate .donHeroPills span:nth-child(3){animation-delay:-4s!important}
+#donate .donHeroCta { border:1px solid #ffffffb8; background:linear-gradient(115deg,#fff9e5,#e0fffa 46%,#ffe2f5); background-size:200% 200%; color:#4b2179; box-shadow:0 8px 27px #14062c45; animation:saiCommunityCta 3.8s ease-in-out infinite !important; }
+#donate .donHeroCta:hover { transform:translateY(-3px); background-position:100% 50%; }
+
+@media(max-width:700px){
+  #community .scSocialDock{grid-template-columns:repeat(2,minmax(0,1fr));padding:12px;gap:8px}
+  #community .scSocialDock:before{font-size:9px;letter-spacing:.85px}
+  #community .scSocialDock button{min-height:58px;padding:9px 8px;gap:8px;font-size:11px}
+  #community .scSocialDock button span{width:31px;height:31px;flex-basis:31px;font-size:16px;border-radius:10px}
+  #community .communityHero{border-radius:24px}
+  #donate .donHero{border-radius:24px}
+  #donate .donHero:after{right:5%;top:7%;font-size:76px}
+}
+@media(max-width:390px){#community .scSocialDock{grid-template-columns:minmax(0,1fr)}#community .scSocialDock button{min-height:54px}#community .scSocialDock:before{line-height:1.8}}
+</style>
+
+<style id="studyai-white-neon-social-tools">
+/* White-first social controls: crisp cards with colorful neon edges, never a dark toolbar. */
+#community .scSocialDock {
+  position:relative!important; isolation:isolate; display:grid!important;
+  grid-template-columns:repeat(5,minmax(0,1fr)); gap:11px!important;
+  margin:16px 0 22px!important; padding:15px!important;
+  border:1px solid #e8e1ff!important; border-radius:22px!important;
+  background:linear-gradient(135deg,#ffffff 0%,#fcfbff 55%,#f7fffe 100%)!important;
+  color:#26213f!important; backdrop-filter:none!important;
+  box-shadow:0 10px 28px rgba(81,60,150,.08),0 0 0 1px rgba(167,139,250,.12)!important;
+  animation:saiWhiteDockGlow 7s ease-in-out infinite!important;
+}
+#community .scSocialDock:before {
+  content:"✦  YOUR STUDY SPACE"!important; grid-column:1/-1; display:block;
+  padding:0 2px 2px!important; color:#5b4b91!important; font-size:10px!important;
+  font-weight:950!important; letter-spacing:1.4px!important; line-height:1.6!important;
+  text-transform:uppercase;
+}
+#community .scSocialDock button {
+  --navglow:#8b5cf6; position:relative; overflow:hidden; min-width:0!important;
+  width:100%; min-height:66px!important; display:flex!important; align-items:center!important;
+  justify-content:flex-start!important; gap:10px!important; padding:11px 12px!important;
+  border:1.5px solid color-mix(in srgb,var(--navglow) 70%,#ffffff)!important;
+  border-radius:16px!important; color:#282341!important;
+  background:#ffffff!important; font-size:12px!important; font-weight:850!important;
+  text-align:left!important; line-height:1.35!important; cursor:pointer;
+  box-shadow:0 4px 12px color-mix(in srgb,var(--navglow) 10%,transparent),
+    inset 0 1px 0 #ffffff!important;
+  animation:saiWhiteNavGlow 4.8s ease-in-out infinite!important;
+  transition:transform .2s ease,background-color .2s ease,box-shadow .2s ease,border-color .2s ease!important;
+}
+#community .scSocialDock button:nth-of-type(1){--navglow:#8b5cf6;animation-delay:-.4s!important}
+#community .scSocialDock button:nth-of-type(2){--navglow:#ff4fa3;animation-delay:-1.1s!important}
+#community .scSocialDock button:nth-of-type(3){--navglow:#0891b2;animation-delay:-1.8s!important}
+#community .scSocialDock button:nth-of-type(4){--navglow:#4f70e8;animation-delay:-2.5s!important}
+#community .scSocialDock button:nth-of-type(5){--navglow:#d97706;animation-delay:-3.2s!important}
+#community .scSocialDock button:nth-of-type(6){--navglow:#e54868;animation-delay:-3.8s!important}
+#community .scSocialDock button:hover {
+  transform:translateY(-3px)!important; color:#201936!important;
+  border-color:var(--navglow)!important;
+  background:linear-gradient(135deg,#ffffff 0%,color-mix(in srgb,var(--navglow) 7%,#ffffff) 100%)!important;
+  box-shadow:0 0 0 2px color-mix(in srgb,var(--navglow) 13%,transparent),
+    0 9px 24px color-mix(in srgb,var(--navglow) 23%,transparent)!important;
+}
+#community .scSocialDock button:focus-visible {
+  outline:3px solid color-mix(in srgb,var(--navglow) 65%,white)!important; outline-offset:3px;
+}
+#community .scSocialDock button span {
+  flex:0 0 37px!important; width:37px!important; height:37px!important;
+  display:grid!important; place-items:center!important; border-radius:12px!important;
+  background:color-mix(in srgb,var(--navglow) 12%,#ffffff)!important;
+  border:1px solid color-mix(in srgb,var(--navglow) 38%,#ffffff)!important;
+  color:#27213f!important; font-size:18px!important;
+  box-shadow:0 0 0 0 color-mix(in srgb,var(--navglow) 16%,transparent)!important;
+  transition:transform .2s ease,box-shadow .2s ease!important;
+}
+#community .scSocialDock button:hover span {
+  transform:scale(1.06) rotate(-3deg)!important;
+  box-shadow:0 0 15px color-mix(in srgb,var(--navglow) 28%,transparent)!important;
+}
+#community .scSocialDock button b {
+  margin-left:auto!important; min-width:24px!important; padding:4px 7px!important;
+  border:1px solid #ffc4e6!important; border-radius:99px!important; text-align:center!important;
+  color:#8c185c!important; background:#fff0f8!important;
+  box-shadow:0 0 13px #ec48991e!important; font-size:10px!important;
+}
+/* Keep these surfaces light even when the site's separate global dark-mode toggle is on. */
+body.dark #community .scSocialDock {
+  background:linear-gradient(135deg,#ffffff 0%,#fcfbff 55%,#f7fffe 100%)!important;
+  border-color:#e8e1ff!important; color:#26213f!important;
+}
+body.dark #community .scSocialDock:before {color:#5b4b91!important}
+body.dark #community .scSocialDock button {background:#ffffff!important;color:#282341!important}
+body.dark #community .scSocialDock button:hover {background:linear-gradient(135deg,#ffffff 0%,color-mix(in srgb,var(--navglow) 7%,#ffffff) 100%)!important;color:#201936!important}
+@keyframes saiWhiteNavGlow {
+  0%,100% {box-shadow:0 4px 12px color-mix(in srgb,var(--navglow) 9%,transparent),0 0 0 0 color-mix(in srgb,var(--navglow) 0%,transparent);border-color:color-mix(in srgb,var(--navglow) 52%,#ffffff)}
+  50% {box-shadow:0 5px 17px color-mix(in srgb,var(--navglow) 17%,transparent),0 0 0 3px color-mix(in srgb,var(--navglow) 8%,transparent);border-color:var(--navglow)}
+}
+@keyframes saiWhiteDockGlow {
+  0%,100% {box-shadow:0 10px 28px rgba(81,60,150,.07),0 0 0 1px rgba(167,139,250,.10)}
+  50% {box-shadow:0 12px 30px rgba(81,60,150,.11),0 0 0 2px rgba(79,255,234,.18)}
+}
+@media(max-width:980px){#community .scSocialDock{grid-template-columns:repeat(3,minmax(0,1fr))!important}}
+@media(max-width:620px){
+  #community .scSocialDock{grid-template-columns:repeat(2,minmax(0,1fr))!important;padding:11px!important;gap:8px!important;border-radius:18px!important}
+  #community .scSocialDock button{min-height:60px!important;padding:9px 8px!important;gap:8px!important;font-size:11px!important;border-radius:14px!important}
+  #community .scSocialDock button span{width:32px!important;height:32px!important;flex-basis:32px!important;border-radius:10px!important;font-size:16px!important}
+  #community .scSocialDock:before{font-size:9px!important;letter-spacing:1px!important}
+}
+@media(max-width:390px){#community .scSocialDock{grid-template-columns:1fr!important}#community .scSocialDock button{min-height:55px!important}}
+@media(prefers-reduced-motion:reduce){
+  #community .scSocialDock,#community .scSocialDock button{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+</style>
+
 </head>
 
 <body>
@@ -1013,7 +1319,6 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
     <button class="btn" onclick="location.hash='classes'">Choose Class</button>
     <button class="btn alt" onclick="location.hash='ncert'">Open NCERT</button>
     <button class="btn alt" onclick="location.hash='tutor'">Ask AI Tutor</button>
-    <button class="btn alt" type="button" onclick="openStudyAIDonation()">💜 Support StudyAI</button>
     <div id="saiAccentBox" aria-label="Dashboard accent colour">
       <span class="saiAccentLabel">🎨 Accent colour</span>
       <div class="saiAccentDots" id="saiAccentDots">
@@ -1154,8 +1459,10 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
       <h1>Help StudyAI grow.<br>Help students learn.</h1>
       <p>StudyAI is built to make studying feel simpler. If these tools help you or someone you know, you can support the project and help us keep improving learning resources for students.</p>
       <div class="donNote">Every contribution is voluntary. Even sharing StudyAI with a friend helps.</div>
+   <div class="donBadgePerk"><span class="donBadgeSpark" aria-hidden="true">✦</span><span><b>💜 StudyAI Supporter</b><small>Verified supporters can wear this badge beside their name in the community, posts and comments.</small></span><span class="donBadgePreview">SUPPORTER</span></div>
+      <div class="donHeroFooter"><div class="donHeroPills"><span>📚 Better learning resources</span><span>✨ Useful new tools</span><span>💜 Supporter badge after verification</span></div><button class="donHeroCta" type="button" onclick="document.querySelector('#donate .donLayout')?.scrollIntoView({behavior:'smooth',block:'start'})">Explore ways to support <span aria-hidden="true">↓</span></button></div>
     </div>
-    <div class="donLayout">
+<div class="donLayout">
       <div class="donPanel">
         <h2>What your support can help with</h2>
         <p class="donMuted">Support goes toward improving the student experience and keeping useful study tools available.</p>
@@ -1172,21 +1479,21 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
       </div>
       <div class="donPanel">
         <h2>Support via UPI</h2>
-        <p class="donMuted">A simple, India-friendly way to support StudyAI. Use the UPI ID below to support StudyAI. Check the recipient details in your UPI app before confirming any payment.</p>
+        <p class="donMuted">Start a UPI payment using the button below. Your payment app will show the recipient details—check them carefully before confirming any payment.</p>
         <div class="donUpiCard">
           <div class="donUpiTop"><div class="donUpiMark"><span class="donUpiLogo">₹</span><span>UPI payment</span></div><span class="donSoon" id="donStatus">UPI ready</span></div>
           <div class="donUpiValue" id="donUpiValue">9250686173@upi</div>
           <div class="donPayActions">
             <button class="donPayBtn" id="donPayBtn" type="button" disabled>♡ &nbsp; Donate with UPI</button>
-            <button class="donCopyBtn" id="donCopyBtn" type="button">Copy UPI ID</button>
+            
           </div>
-          <p class="donPayHelp" id="donPayHelp">Phone par UPI app se khol sakte ho. Agar app na khule, UPI ID copy karke apne payment app mein manually paste karo.</p>
+          <p class="donPayHelp" id="donPayHelp">Donate with UPI dabane par payment app kholne ki koshish hogi. Payment app mein recipient ka naam aur details verify karke hi payment confirm karein.</p>
           <div class="donSecure"><span>🔐</span><span>Payment will happen in your own UPI app. Never share your UPI PIN or OTP with anyone. Verify the recipient details in your app before paying.</span></div>
         </div>
         <div class="donFaq">
           <h2 style="margin-top:24px">Quick questions</h2>
           <details><summary>Do I have to donate?</summary><p>No. Donations are completely optional. You can continue using StudyAI without donating.</p></details>
-          <details><summary>Will my bank details be shown?</summary><p>This page is planned to display your UPI ID only. Do not publish your bank account number or other private banking information here.</p></details>
+          <details><summary>Will my bank details be shown?</summary><p>StudyAI page par UPI ID seedhe display nahi hoti. UPI app payment ke waqt recipient details dikha sakta hai.</p></details>
           <details><summary>How will I know a payment worked?</summary><p>Check the payment status in your UPI app or bank account. Clicking a button or opening a payment app does not itself confirm a successful payment.</p></details>
         </div>
       </div>
@@ -1201,12 +1508,28 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
    <div style="font-size:12px;font-weight:900;letter-spacing:1.3px;opacity:.85;margin-bottom:10px">STUDYAI • STUDENT COMMUNITY</div>
    <h1>Share what you know. ✨</h1>
    <p>Apni handwritten notes, school papers aur study tips share karo. Dusre students ko follow karo, unki posts dekho aur milkar padhai ko aasan banao.</p>
-   <button class="btn" type="button" onclick="scOpenProfile()">✦ Create your student profile</button>
+   <button class="btn" type="button" onclick="scOpenProfile()">✦ Sign in / Create account</button>
   </div>
   <div class="communityStats">
    <div class="communityStat"><b id="scPostCount">0</b><span>Community posts</span></div>
    <div class="communityStat"><b id="scFollowingCount">0</b><span>Students you follow</span></div>
    <div class="communityStat"><b id="scFollowerCount">0</b><span>Your followers</span></div>
+  </div>
+  <nav class="scSocialDock" aria-label="StudyAI social tools">
+   <button type="button" onclick="scOpenMyProfile()"><span>👤</span> My profile</button>
+   <button type="button" onclick="scOpenRequests()"><span>📨</span> Requests <b id="scRequestBadge">0</b></button>
+   <button type="button" onclick="scOpenInbox()"><span>💬</span> Messages</button>
+   <button type="button" onclick="scOpenSocialSettings()"><span>⚙️</span> Privacy & interactions</button>
+   <button type="button" onclick="scOpenActivityHistory()"><span>🕘</span> Your activity</button>
+   <button type="button" id="scModerationButton" style="display:none" onclick="scOpenModerationQueue()"><span>🛡️</span> Review uploads</button>
+  </nav>
+  
+  
+  
+  
+  <div class="scDiscoveryToolbar" aria-label="Search and filter community posts">
+   <div class="scDiscoveryTitle"><span class="scEyebrow">YOUR COMMUNITY FEED</span><h2>Discover something useful 🔎</h2><p id="scResultsCount">Search posts, find a topic or save resources for later.</p></div>
+   <div class="scDiscoveryControls"><input id="scSearchInput" type="search" placeholder="Search notes, topics, students…" oninput="scSetSearch(this.value)" aria-label="Search community posts"><select id="scCategoryFilter" onchange="scSetCategory(this.value)" aria-label="Filter by category"><option value="all">All categories</option><option value="Handwritten Notes">✍️ Handwritten Notes</option><option value="School Paper">📝 School Paper</option><option value="Study Tips">💡 Study Tips</option><option value="Question Help">❓ Question Help</option><option value="Video Lesson">🎬 Video Lesson</option></select><select id="scSortSelect" onchange="scSetSort(this.value)" aria-label="Sort community posts"><option value="new">Newest first</option><option value="popular">Most liked</option><option value="discussed">Most discussed</option></select><button type="button" class="scMiniBtn" onclick="scClearDiscovery()">Clear filters</button></div>
   </div>
   <div id="scBackendStatus" class="communityNotice" role="status" aria-live="polite">Connecting to StudyAI Community…</div>
   <div class="communityLayout">
@@ -1216,14 +1539,15 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
      <textarea id="scPostText" maxlength="1200" placeholder="Aaj kya helpful padha? Notes ke baare mein batao…"></textarea>
      <input id="scPostTitle" type="text" maxlength="100" placeholder="Post title (e.g. Class 10 • Biology handwritten notes)">
      <div class="communityComposeTools">
-      <label>📷 Add notes / paper image<input id="scPostImage" type="file" accept="image/*" hidden></label>
+      <label>📷 Add study photo / video<input id="scPostImage" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label>
       <select id="scPostType" aria-label="Post category" style="max-width:190px"><option value="Handwritten Notes">✍️ Handwritten Notes</option><option value="School Paper">📝 School Paper</option><option value="Study Tips">💡 Study Tips</option><option value="Question Help">❓ Question Help</option></select>
       <button class="btn" type="button" onclick="scPublish()">Publish post ↗</button>
      </div>
+     <label class="scStudyConfirm"><input id="scStudyOnlyConfirm" type="checkbox"> <span>✅ I confirm this upload is only study material (notes, school work, educational diagrams or learning videos).</span></label>
      <div id="scImagePreview" style="display:none;margin-top:12px"></div>
-     <div class="communityNotice">Posts are shared with other StudyAI students. Share only notes and papers you are allowed to distribute. Never post passwords, phone numbers, private records or other personal information.</div>
+     <div class="communityNotice">Study-only rule: obvious off-topic text and contact details are blocked. Every photo/video and new profile photo stays private until it is reviewed. Automatic image recognition is not connected yet, so uploads cannot be approved by the browser alone.</div>
     </div>
-    <div class="communityFeedTabs" id="scFeedTabs"><button class="active" data-feed="all" onclick="scSetFeed('all',this)">🌈 For you</button><button data-feed="following" onclick="scSetFeed('following',this)">💜 Following</button><button data-feed="notes" onclick="scSetFeed('notes',this)">✍️ Notes & papers</button><button type="button" onclick="scRefresh()">↻ Refresh</button></div>
+    <div class="communityFeedTabs" id="scFeedTabs"><button class="active" data-feed="all" onclick="scSetFeed('all',this)">🌈 For you</button><button data-feed="following" onclick="scSetFeed('following',this)">💜 Following</button><button data-feed="notes" onclick="scSetFeed('notes',this)">✍️ Notes & papers</button><button data-feed="saved" onclick="scSetFeed('saved',this)">🔖 Saved</button><button type="button" onclick="scRefresh()">↻ Refresh</button></div>
     <div id="scFeed"></div>
    </div>
    <aside class="communitySide">
@@ -1237,6 +1561,14 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
     <div class="communitySideCard">
      <h3 class="communitySectionTitle">🌟 Students to discover</h3>
      <div id="scPeople"></div>
+    </div>
+    <div class="communitySideCard scSidebarQuickCard">
+     <h3 class="communitySectionTitle">🎯 Quick actions</h3>
+     <button type="button" class="scSideAction" onclick="scUsePrompt('Question Help','I need help understanding…')"><span>🧠</span><span><b>Ask a doubt</b><small>Make a question post</small></span><span>↗</span></button>
+     <button type="button" class="scSideAction" onclick="scSetFeed('saved')"><span>🔖</span><span><b>Saved resources</b><small>Things you bookmarked</small></span><span>↗</span></button>
+     <button type="button" class="scSideAction" onclick="scOpenProfile()"><span>🎨</span><span><b>Personalise profile</b><small>Name, class and interests</small></span><span>↗</span></button>
+     <button type="button" class="scSideAction" onclick="scOpenSocialSettings()"><span>🔐</span><span><b>Privacy & interactions</b><small>Account and contact controls</small></span><span>↗</span></button>
+     <button type="button" class="scSideAction" onclick="scOpenInbox()"><span>💌</span><span><b>Messages & requests</b><small>Manage conversations</small></span><span>↗</span></button>
     </div>
     <div class="communitySideCard">
      <h3 class="communitySectionTitle">📌 Community guidelines</h3>
@@ -1255,9 +1587,17 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
   <label>Your class<select id="scClassInput"><option>Class 6</option><option>Class 7</option><option>Class 8</option><option>Class 9</option><option>Class 10</option><option>Class 11</option><option>Class 12</option></select></label>
   <label>Subjects / interests<input id="scInterestsInput" type="text" maxlength="100" placeholder="Biology, Maths, handwritten notes"></label>
   <label>Short bio<textarea id="scBioInput" rows="3" maxlength="180" placeholder="I share clear revision notes and exam tips…"></textarea></label>
-  <label>Profile photo<input id="scAvatarInput" type="file" accept="image/*"></label>
-  <div class="communityNotice">Use a nickname if you prefer. Avoid putting your school name, location, phone number or other private details in your profile.</div>
+  <label>Profile photo<input id="scAvatarInput" type="file" accept="image/jpeg,image/png,image/webp"></label>
+  <div class="communityNotice">Use a nickname if you prefer. Avoid putting your school name, location, phone number or other private details in your profile. New profile photos stay hidden from other students until reviewed.</div>
   <div class="communityModalActions"><button class="btn alt" onclick="scCloseProfile()">Cancel</button><button class="btn" onclick="scSaveProfile()">Save profile</button></div>
+ </div>
+</div>
+
+<div class="communityModal" id="scSocialModal" role="dialog" aria-modal="true" aria-labelledby="scSocialTitle">
+ <div class="communityModalBox scSocialModalBox">
+  <button type="button" onclick="scCloseSocialModal()" class="scSocialClose" aria-label="Close">×</button>
+  <h2 id="scSocialTitle">StudyAI Community</h2>
+  <div id="scSocialBody"></div>
  </div>
 </div>
 
@@ -2283,7 +2623,7 @@ function pretty(s){
  s=s.replace(/(?<![\w\/.])(\d{1,3})\s?\/\s?(\d{1,3})(?![\w\/.])/g,(m,a,b)=>FR[a+"/"+b]||[...a].map(c=>SUP[c]).join("")+"⁄"+[...b].map(c=>SUB[c]).join(""));
  return s;
 }
-function toggleBig(){const p=document.getElementById("tutorPop"),b=document.getElementById("tutorBig"),on=p.classList.toggle("big");b.textContent=on?"⤡":"⤢";b.title=on?"Chhota karo":"Bada karo"}
+function toggleBig(){const p=document.getElementById("tutorPop"),b=document.getElementById("tutorBig"),on=p.classList.toggle("big");b.textContent=on?"⤢":"⤢";b.title=on?"Chhota karo":"Bada karo";b.setAttribute("aria-label",on?"Chhota karo":"Bada karo");if(on){p.style.left="";p.style.right="";p.style.top="";p.style.bottom="";}}
 function quickReply(t){
  const raw=t.trim(),k=raw.toLowerCase().replace(/[^\p{L}\p{N}\s]/gu," ").replace(/\s+/g," ").trim();
  const pick=a=>a[Math.floor(Math.random()*a.length)];
@@ -3708,7 +4048,7 @@ hub();
   const STUDYAI_DONATION_UPI = "9250686173@upi";
   const value = document.getElementById("donUpiValue");
   const button = document.getElementById("donPayBtn");
-  const copyButton = document.getElementById("donCopyBtn");
+  const copyButton = null;
   const status = document.getElementById("donStatus");
   const help = document.getElementById("donPayHelp");
   if(!value || !button || !status) return;
@@ -3722,9 +4062,9 @@ hub();
     button.addEventListener("click", function(){
       const link = "upi://pay?pa=" + encodeURIComponent(upi) + "&pn=" + encodeURIComponent("StudyAI") + "&tn=" + encodeURIComponent("Support StudyAI");
       if(!/android/i.test(navigator.userAgent)){
-        if(help) help.textContent = "UPI deep link sirf Android phones par kaam karta hai. iPhone ya desktop par Copy UPI ID button use karke manually apne UPI app mein paste karo.";
+        if(help) help.textContent = "Aapke device par UPI app automatically na khule to apna UPI app manually open karein. Recipient details verify kiye bina payment confirm na karein.";
       } else {
-        if(help) help.textContent = "UPI app khulne ki koshish ho rahi hai. Agar app na khule, Copy UPI ID dabao aur apne UPI app mein manually payment shuru karo.";
+        if(help) help.textContent = "UPI payment app kholne ki koshish ho rahi hai. App mein recipient details verify karein; payment confirm hone se pehle PIN/OTP kisi ke saath share na karein.";
       }
       const a = document.createElement("a");
       a.href = link;
@@ -3803,30 +4143,59 @@ hub();
  'use strict';
  const sb=window.studyAISupabaseClient||null;
  const $=id=>document.getElementById(id);
- const state={user:null,profile:null,people:[],posts:[],follows:[],following:[],feed:'all',draftFile:null,draftPreview:'',profileBusy:false,publishBusy:false,totalPosts:0};
+ const state={user:null,profile:null,people:[],posts:[],follows:[],following:[],followers:[],supporters:new Map(),feed:'all',draftFile:null,draftPreview:'',draftMediaType:'',profileBusy:false,publishBusy:false,totalPosts:0,query:'',category:'all',sort:'new',authorFilter:null,saved:new Set(),pendingFollowRequests:new Set(),postAccess:new Set(),pendingPostAccess:new Set(),blocked:new Set(),viewingProfile:null,viewingTab:'posts',viewingCounts:{followers:0,following:0,posts:0},isModerator:false};
+ try{state.saved=new Set(JSON.parse(localStorage.getItem('studyaiCommunitySavedPosts')||'[]'));}catch(_){}
  let refreshing=false,queuedRefresh=false,realtimeTimer=null,channel=null,backendReady=false;
- const TABLES={profiles:'community_profiles',posts:'community_posts',follows:'community_follows',likes:'community_post_likes',comments:'community_comments'};
+ const TABLES={profiles:'community_profiles',posts:'community_posts',follows:'community_follows',likes:'community_post_likes',comments:'community_comments',followRequests:'community_follow_requests',postRequests:'community_post_access_requests',messageRequests:'community_message_requests',messages:'community_messages',blocks:'community_blocks',reports:'community_reports',moderators:'community_moderators'};
  const esc=v=>String(v??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+ function badgeHTML(userId){const label=state.supporters&&state.supporters.get(userId);return label?'<span class="studySupporterBadge" title="Verified StudyAI supporter">💜 '+esc(label)+'</span>':'';}
  const setStatus=(message,kind='info')=>{const el=$('scBackendStatus');if(!el)return;el.textContent=message;el.dataset.kind=kind;};
  function initials(name){return (String(name||'S').trim().split(/\s+/).slice(0,2).map(x=>x[0]).join('')||'S').toUpperCase();}
  function avatarHTML(person,extra=''){const name=person?.display_name||person?.name||'Student',src=person?.avatar_url||person?.avatar||'';return '<div class="communityAvatar '+extra+'">'+(src?'<img src="'+esc(src)+'" alt="'+esc(name)+' profile photo" loading="lazy">':esc(initials(name)))+'</div>';}
  function setAvatar(id,person){const el=$(id);if(el)el.innerHTML=avatarHTML(person||{}).replace(/^<div[^>]*>|<\/div>$/g,'');}
  function openAccount(){if(window.studyAIOpenAccount)window.studyAIOpenAccount();else alert('Please open My StudyAI Account to sign in.');}
  function requireLogin(){if(state.user)return true;setStatus('Sign in or create a StudyAI account before posting, following, liking or commenting.','warning');openAccount();return false;}
- function normalError(err){const msg=String(err?.message||err||'Unknown error');if(/relation .* does not exist|could not find the table|schema cache/i.test(msg))return 'Database setup is still missing. Run StudyAI_Community_Setup.sql in your Supabase project → SQL Editor, then refresh this page.';if(/row-level security|permission denied|not allowed/i.test(msg))return 'Supabase security rules blocked this action. Re-run the supplied setup SQL and check that Row Level Security policies were created.';if(/duplicate key|community_profiles_username_key|username/i.test(msg))return 'That username is already taken. Choose a different username.';return msg;}
+ function normalError(err){const msg=String(err?.message||err||'Unknown error');if(/relation .* does not exist|could not find the table|schema cache/i.test(msg))return 'Database setup is still missing. Run StudyAI_Social_Upgrade.sql in your Supabase project → SQL Editor, then refresh this page.';if(/row-level security|permission denied|not allowed/i.test(msg))return 'Supabase security rules blocked this action. Re-run the supplied setup SQL and check that Row Level Security policies were created.';if(/duplicate key|community_profiles_username_key|username/i.test(msg))return 'That username is already taken. Choose a different username.';return msg;}
  function slugify(s){return String(s||'student').toLowerCase().normalize('NFKD').replace(/[^a-z0-9_.]+/g,'_').replace(/^[_\.]+|[_\.]+$/g,'').slice(0,24)||'student';}
  function filename(s){return String(s||'image').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-90)||'image';}
+ function mediaPath(value){
+  const v=String(value||'');if(!v)return '';
+  if(/^https?:\/\//i.test(v)){
+   const m=v.match(/\/storage\/v1\/object\/(?:public|sign|authenticated)\/community-media\/(.+?)(?:\?.*)?$/i);
+   return m?decodeURIComponent(m[1]):'';
+  }
+  return v;
+ }
+ async function signedMediaUrl(value){
+  if(!value)return '';
+  // Community media must come from the private StudyAI storage bucket. Do not render external URLs that bypass upload review.
+  const path=mediaPath(value);if(!path||!sb)return '';
+  try{const {data,error}=await sb.storage.from('community-media').createSignedUrl(path,1800);return error?'':(data?.signedUrl||'');}catch(_){return '';}
+ }
  async function uploadImage(file,folder,maxBytes){
-  if(!sb||!state.user)throw new Error('Sign in first to upload an image.');
-  if(!file||!/^image\/(png|jpeg|webp)$/i.test(file.type))throw new Error('Please choose a JPG, PNG or WebP image.');
-  if(file.size>maxBytes)throw new Error('Image is too large. Choose a smaller image and try again.');
+  if(!sb||!state.user)throw new Error('Sign in first to upload.');
+  if(!file)throw new Error('Choose a file first.');
+  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type);
+  const isVideo=/^video\/(mp4|webm|quicktime)$/i.test(file.type);
+  if(folder==='avatars'&&!isImage)throw new Error('Profile photos must be JPG, PNG or WebP images.');
+  if(folder==='posts'&&!isImage&&!isVideo)throw new Error('Only JPG/PNG/WebP study images or MP4/WebM/MOV learning videos are allowed.');
+  if(file.size>maxBytes)throw new Error('File is too large. Choose a smaller file and try again.');
   const path=state.user.id+'/'+folder+'/'+Date.now()+'-'+filename(file.name);
   const {error}=await sb.storage.from('community-media').upload(path,file,{cacheControl:'3600',upsert:false,contentType:file.type});
   if(error)throw error;
-  const result=sb.storage.from('community-media').getPublicUrl(path);
-  if(!result?.data?.publicUrl)throw new Error('Could not create an image URL.');
-  return result.data.publicUrl;
+  return path;
  }
+ function isStudyText(title,body,type){
+  const value=(String(title||'')+' '+String(body||'')).trim();
+  if(value.length<12)return false;
+  if(/\b(porn(?:ography)?|xxx|hentai|nudes?|naked|nsfw|explicit sexual|adult video|adult content|erotic|fetish|onlyfans|dirty chat|dirty video|sex chat|hook.?up|escort|gore|graphic violence|hate speech|slur compilation|ashleel|nangi? photos?|adult pics?)\b/i.test(value))return false;
+  if(/[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(value))return false;
+  if(/(?:\+?\d[\s().-]*){10,}/.test(value))return false;
+  return /\b(math(?:ematics)?|algebra|geometry|trigonometry|equation|formula|science|physics|chemistry|biology|photosynthesis|history|geography|civics|economics|english|grammar|hindi|sanskrit|computer|coding|python|class\s*(?:[6-9]|1[0-2])|homework|study|studying|notes?|revision|exam|chapter|question|answer|worksheet|school|education|learning|lesson|experiment|diagram|definition|theorem|literature|essay|textbook|ncert|quiz|flashcard|paper|teacher|student|concept|proof|solve|calculate|explain|subject|science|video lesson)\b/i.test(value);
+ }
+ function hasPrivateContact(text){return /[\w.+-]+@[\w.-]+\.[a-z]{2,}/i.test(String(text||''))||/(?:\+?\d[\s().-]*){10,}/.test(String(text||''));}
+ function canSeePostsLocal(userId){const p=state.people.find(x=>x.id===userId)||(state.profile?.id===userId?state.profile:null);return !!state.user&&state.user.id===userId||!p?.is_private||state.following.includes(userId)||state.postAccess.has(userId);}
+ function canSeeActivityLocal(p){return !!state.user&&p?.id===state.user.id||(!p?.is_private||state.following.includes(p?.id))&&p?.show_activity!==false;}
  async function refreshCommunity(quiet=false){
   if(refreshing){queuedRefresh=true;return;} refreshing=true;
   try{
@@ -3835,26 +4204,49 @@ hub();
    const {data:userData,error:userError}=await sb.auth.getUser();
    if(userError)throw userError;
    state.user=userData?.user||null;
-   const profilesResult=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at').order('created_at',{ascending:false}).limit(100);
+   const profilesResult=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at,is_private,interaction_mode,message_mode,show_activity,avatar_moderation_status').order('created_at',{ascending:false}).limit(100);
    if(profilesResult.error)throw profilesResult.error;
-   state.people=profilesResult.data||[];
+   state.people=await Promise.all((profilesResult.data||[]).map(async p=>({...p,avatar_path:mediaPath(p.avatar_url),avatar_url:await signedMediaUrl(p.avatar_url)})));
+   // Optional, verified donor badges. This table is independent of profile fields so existing accounts keep working.
+   state.supporters=new Map();
+   try{
+    const supporterResult=await sb.from('studyai_supporters').select('user_id,badge_label');
+    if(!supporterResult.error)state.supporters=new Map((supporterResult.data||[]).map(r=>[r.user_id,r.badge_label||'StudyAI Supporter']));
+   }catch(_){state.supporters=new Map();}
    if(state.user){
-    const pr=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at').eq('id',state.user.id).maybeSingle();
+    const pr=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at,is_private,interaction_mode,message_mode,show_activity,avatar_moderation_status').eq('id',state.user.id).maybeSingle();
     if(pr.error)throw pr.error;
-    state.profile=pr.data||null;
+    state.profile=pr.data?({...pr.data,avatar_path:mediaPath(pr.data.avatar_url),avatar_url:await signedMediaUrl(pr.data.avatar_url)}):null;
    }else state.profile=null;
    const followQueries=state.user?Promise.all([
     sb.from(TABLES.follows).select('following_id').eq('follower_id',state.user.id),
     sb.from(TABLES.follows).select('follower_id').eq('following_id',state.user.id)
    ]):Promise.resolve([{data:[],error:null},{data:[],error:null}]);
    const [postsResult,followResults]=await Promise.all([
-    sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,created_at,author:community_profiles!community_posts_user_id_fkey(id,username,display_name,class_name,avatar_url)',{count:'exact'}).order('created_at',{ascending:false}).limit(60),
+    sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,media_type,moderation_status,created_at,author:community_profiles!community_posts_user_id_fkey(id,username,display_name,class_name,avatar_url,is_private,avatar_moderation_status)',{count:'exact'}).order('created_at',{ascending:false}).limit(60),
     followQueries
    ]);
    if(postsResult.error)throw postsResult.error;
    const [followingResult,followersResult]=followResults;if(followingResult.error)throw followingResult.error;if(followersResult.error)throw followersResult.error;
    state.following=(followingResult.data||[]).map(f=>f.following_id);
-   state.followerCount=(followersResult.data||[]).length;
+   state.followers=(followersResult.data||[]).map(f=>f.follower_id);
+   state.followerCount=state.followers.length;
+   state.pendingFollowRequests=new Set();state.postAccess=new Set();state.pendingPostAccess=new Set();state.blocked=new Set();state.isModerator=false;
+   if(state.user){
+    const [outReq,postAccess,postPending,blockRes,modRes]=await Promise.all([
+     sb.from(TABLES.followRequests).select('target_id').eq('requester_id',state.user.id).eq('status','pending'),
+     sb.from(TABLES.postRequests).select('target_id').eq('requester_id',state.user.id).eq('status','accepted'),
+     sb.from(TABLES.postRequests).select('target_id').eq('requester_id',state.user.id).eq('status','pending'),
+     sb.from(TABLES.blocks).select('blocked_id').eq('blocker_id',state.user.id),
+     sb.from(TABLES.moderators).select('user_id').eq('user_id',state.user.id).maybeSingle()
+    ]);
+    if(!outReq.error)state.pendingFollowRequests=new Set((outReq.data||[]).map(x=>x.target_id));
+    if(!postAccess.error)state.postAccess=new Set((postAccess.data||[]).map(x=>x.target_id));
+    if(!postPending.error)state.pendingPostAccess=new Set((postPending.data||[]).map(x=>x.target_id));
+    if(!blockRes.error)state.blocked=new Set((blockRes.data||[]).map(x=>x.blocked_id));
+    state.isModerator=!modRes.error&&!!modRes.data;
+   }
+   const modBtn=$('scModerationButton');if(modBtn)modBtn.style.display=state.isModerator?'inline-flex':'none';
    state.totalPosts=postsResult.count??(postsResult.data||[]).length;
    const rawPosts=postsResult.data||[],ids=rawPosts.map(p=>p.id);
    let likes=[],comments=[];
@@ -3865,7 +4257,7 @@ hub();
     ]);
     if(lr.error)throw lr.error;if(cr.error)throw cr.error;likes=lr.data||[];comments=cr.data||[];
    }
-   state.posts=rawPosts.map(p=>({...p,handle:p.author?.username||'student',authorName:p.author?.display_name||'StudyAI Student',cls:p.author?.class_name||'Student',avatar:p.author?.avatar_url||'',title:p.title||'',body:p.body||'',type:p.post_type||'Study post',image:p.image_url||'',created:Date.parse(p.created_at)||Date.now(),likes:likes.filter(l=>l.post_id===p.id).map(l=>l.user_id),comments:comments.filter(c=>c.post_id===p.id).map(c=>({id:c.id,userId:c.user_id,name:c.author?.display_name||'Student',handle:c.author?.username||'student',avatar:c.author?.avatar_url||'',text:c.body,created:Date.parse(c.created_at)||Date.now()}))}));
+   state.posts=await Promise.all(rawPosts.map(async p=>({...p,handle:p.author?.username||'student',authorName:p.author?.display_name||'StudyAI Student',cls:p.author?.class_name||'Student',avatar:await signedMediaUrl(p.author?.avatar_url),title:p.title||'',body:p.body||'',type:p.post_type||'Study post',mediaPath:mediaPath(p.image_url),image:await signedMediaUrl(p.image_url),mediaType:p.media_type||'image',moderationStatus:p.moderation_status||'approved',authorPrivate:!!p.author?.is_private,created:Date.parse(p.created_at)||Date.now(),likes:likes.filter(l=>l.post_id===p.id).map(l=>l.user_id),comments:comments.filter(c=>c.post_id===p.id).map(c=>({id:c.id,userId:c.user_id,name:c.author?.display_name||'Student',handle:c.author?.username||'student',avatar:'',text:c.body,created:Date.parse(c.created_at)||Date.now()}))})));
    backendReady=true;render();
    setStatus(state.user?(state.profile?'✓ Connected · Your profile and posts sync across devices.':'✓ Connected · Create your student profile to start sharing.'):'✓ Public feed connected · Sign in to make a profile, follow students and post.','success');
    setupRealtime();
@@ -3887,6 +4279,11 @@ hub();
     .on('postgres_changes',{event:'*',schema:'public',table:TABLES.follows},scheduleRefresh)
     .on('postgres_changes',{event:'*',schema:'public',table:TABLES.likes},scheduleRefresh)
     .on('postgres_changes',{event:'*',schema:'public',table:TABLES.comments},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:'studyai_supporters'},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.followRequests},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.postRequests},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.messageRequests},scheduleRefresh)
+    .on('postgres_changes',{event:'*',schema:'public',table:TABLES.messages},scheduleRefresh)
     .subscribe();
   }catch(_){channel=null;}
  }
@@ -3896,9 +4293,9 @@ hub();
   const p=state.profile;
   setAvatar('scMyAvatar',p);setAvatar('scSideAvatar',p);
   if($('scComposerName'))$('scComposerName').textContent=p?p.display_name:(state.user?'Finish your profile':'Sign in to StudyAI');
-  if($('scComposerSub'))$('scComposerSub').textContent=p?'@'+p.username+' · '+p.class_name:(state.user?'Set up your student profile':'Sign in to share a study resource');
+  if($('scComposerSub'))$('scComposerSub').innerHTML=p?esc('@'+p.username+' · '+p.class_name)+badgeHTML(p.id):(state.user?'Set up your student profile':'Sign in to share a study resource');
   if($('scSideName'))$('scSideName').textContent=p?p.display_name:(state.user?'Set up your profile':'Sign in to StudyAI');
-  if($('scSideHandle'))$('scSideHandle').textContent=p?'@'+p.username:(state.user?'Profile setup needed':'@student');
+  if($('scSideHandle'))$('scSideHandle').innerHTML=p?esc('@'+p.username)+badgeHTML(p.id):(state.user?'Profile setup needed':'@student');
   if($('scBioText'))$('scBioText').textContent=p?[p.class_name,p.interests,p.bio].filter(Boolean).join(' · '):'Add your class, subjects and a short bio so other students can know what you study.';
   if($('scFollowingCount'))$('scFollowingCount').textContent=String(state.following.length);
   if($('scFollowerCount'))$('scFollowerCount').textContent=String(state.user?(state.followerCount||0):0);
@@ -3909,22 +4306,65 @@ hub();
   const box=$('scPeople');if(!box)return;
   const people=state.people.filter(p=>p.id!==state.user?.id).slice(0,8);
   if(!people.length){box.innerHTML='<p class="muted" style="font-size:13px;line-height:1.6">New student profiles will appear here when they join StudyAI.</p>';return;}
-  box.innerHTML=people.map(p=>'<div class="communityPerson">'+avatarHTML(p)+'<div class="personInfo"><b>'+esc(p.display_name)+'</b><small>'+esc(p.class_name||'Student')+' · @'+esc(p.username)+'</small></div><button class="communityFollowBtn" '+(!state.user||!state.profile?'title="Sign in and create a profile to follow"':'')+' onclick="scToggleFollow(\''+esc(p.id)+'\')">'+(state.following.includes(p.id)?'Following':'Follow')+'</button></div>').join('');
+  box.innerHTML=people.map(p=>{const follows=state.following.includes(p.id),pending=state.pendingFollowRequests.has(p.id);const followLabel=follows?'✓ Following':pending?'Requested':p.is_private?'Request':'＋ Follow';return '<div class="communityPerson"><button type="button" class="scProfileTap" onclick="scOpenUserProfile(\''+esc(p.id)+'\')">'+avatarHTML(p)+'</button><div class="personInfo"><button type="button" class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(p.id)+'\')">'+esc(p.display_name||'Student')+'</button><small>'+esc(p.is_private?'🔒 Private profile':(p.class_name||'Student'))+' · @'+esc(p.username)+badgeHTML(p.id)+'</small></div><button class="communityFollowBtn" '+((!state.user||!state.profile||pending)?'title="Sign in, create a profile or wait for request acceptance"':'')+' onclick="scToggleFollow(\''+esc(p.id)+'\')">'+followLabel+'</button></div>';}).join('');
  }
  function renderFeed(){
   const el=$('scFeed');if(!el)return;
-  let posts=state.posts.slice();
+  let posts=state.posts.filter(p=>canSeePostsLocal(p.user_id)&&(p.moderationStatus==='approved'||p.user_id===state.user?.id||state.isModerator));
   if(state.feed==='following')posts=posts.filter(p=>p.user_id===state.user?.id||state.following.includes(p.user_id));
   if(state.feed==='notes')posts=posts.filter(p=>p.type==='Handwritten Notes'||p.type==='School Paper');
+  if(state.feed==='saved')posts=posts.filter(p=>state.saved.has(p.id));
+  if(state.authorFilter)posts=posts.filter(p=>p.user_id===state.authorFilter);
+  if(state.category!=='all')posts=posts.filter(p=>p.type===state.category);
+  const q=(state.query||'').trim().toLowerCase();
+  if(q)posts=posts.filter(p=>[p.title,p.body,p.type,p.authorName,p.handle,p.cls].some(v=>String(v||'').toLowerCase().includes(q)));
+  if(state.sort==='popular')posts.sort((a,b)=>b.likes.length-a.likes.length||b.created-a.created);
+  else if(state.sort==='discussed')posts.sort((a,b)=>b.comments.length-a.comments.length||b.created-a.created);
+  else posts.sort((a,b)=>b.created-a.created);
   if($('scPostCount'))$('scPostCount').textContent=String(state.totalPosts??state.posts.length);
-  if(!posts.length){const heading=state.feed==='following'?'Your following feed is quiet':state.feed==='notes'?'No notes or papers yet':'Your study community starts here!';el.innerHTML='<div class="communityPost communityEmpty"><div style="font-size:40px">📚</div><b>'+esc(heading)+'</b><p>'+(state.feed==='following'?'Follow real StudyAI students to see their posts here.':'Be one of the first students to share helpful notes, permitted school papers or study tips.')+'</p><button class="btn" onclick="'+(state.user?(state.profile?'document.getElementById(\'scPostTitle\').focus()':'scOpenProfile()'):'studyAIOpenAccount()')+'">'+(state.user?(state.profile?'Create a post':'Set up profile'):'Sign in / Create account')+'</button></div>';return;}
+  if($('scResultsCount'))$('scResultsCount').textContent=posts.length+' result'+(posts.length===1?'':'s')+' · '+(state.authorFilter?'selected student':state.feed==='saved'?'saved on this device':state.feed==='following'?'following feed':'community posts');
+  if(!posts.length){
+   let heading=state.feed==='following'?'Your following feed is quiet':state.feed==='notes'?'No notes or papers match yet':state.feed==='saved'?'No saved posts yet':state.query?'No matches found':'Your study community starts here!';
+   const message=state.feed==='saved'?'Tap “🔖 Save” on a useful post to keep it on this device.':(state.query||state.category!=='all'||state.authorFilter)?'Try a different search or clear the filters to see more posts.':state.feed==='following'?'Follow StudyAI students to see their approved posts here.':'Be one of the first students to share helpful notes, permitted school papers or study tips.';
+   el.innerHTML='<div class="communityPost communityEmpty"><div style="font-size:40px">'+(state.feed==='saved'?'🔖':'📚')+'</div><b>'+esc(heading)+'</b><p>'+esc(message)+'</p><button class="btn" onclick="scClearDiscovery()">Show all posts</button></div>';return;
+  }
   el.innerHTML=posts.map(p=>{
-   const own=state.user&&p.user_id===state.user.id,liked=state.user&&p.likes.includes(state.user.id),following=state.following.includes(p.user_id);
-   const commentHtml=p.comments.map(c=>'<div class="communityComment"><b>'+esc(c.name)+'</b> <small style="color:var(--muted)">@'+esc(c.handle)+'</small><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(c.text)+'</div></div>').join('');
-   return '<article class="communityPost"><div class="communityPostHead">'+avatarHTML({display_name:p.authorName,avatar_url:p.avatar})+'<div class="meta"><b>'+esc(p.authorName)+(own?' <small>(you)</small>':'')+'</b><small>@'+esc(p.handle)+' · '+esc(p.cls)+' · '+esc(timeAgo(p.created))+'</small></div><span class="communityPostType">'+esc(p.type)+'</span></div>'+(p.title?'<h3 style="margin:14px 0 0;font-size:18px">'+esc(p.title)+'</h3>':'')+(p.body?'<div class="communityPostText">'+esc(p.body)+'</div>':'')+(p.image?'<a href="'+esc(p.image)+'" target="_blank" rel="noopener noreferrer"><img class="communityPostImage" src="'+esc(p.image)+'" alt="Shared study notes or paper" loading="lazy"></a>':'')+'<div class="communityPostActions"><button class="'+(liked?'liked':'')+'" onclick="scLike(\''+esc(p.id)+'\')">'+(liked?'❤️ Liked':'♡ Like')+' · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button>'+(own?'<button onclick="scDeletePost(\''+esc(p.id)+'\')">🗑 Delete</button>':p.user_id?'<button onclick="scToggleFollow(\''+esc(p.user_id)+'\')">'+(following?'✓ Following':'＋ Follow')+'</button>':'')+'</div><div class="communityComments" id="scComments_'+esc(p.id)+'">'+commentHtml+'<div class="communityCommentForm"><input id="scCommentInput_'+esc(p.id)+'" maxlength="500" placeholder="Write a helpful comment…" aria-label="Write a comment"><button class="btn" onclick="scAddComment(\''+esc(p.id)+'\')">Send</button></div></div></article>';
+   const own=state.user&&p.user_id===state.user.id,liked=state.user&&p.likes.includes(state.user.id),following=state.following.includes(p.user_id),saved=state.saved.has(p.id),pending=p.moderationStatus!=='approved';
+   const author='<button type="button" class="scProfileTap" onclick="scOpenUserProfile(\''+esc(p.user_id)+'\')">'+avatarHTML({display_name:p.authorName,avatar_url:p.avatar})+'</button><div class="meta"><button type="button" class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(p.user_id)+'\')">'+esc(p.authorName)+(own?' <small>(you)</small>':'')+'</button>'+badgeHTML(p.user_id)+'<small>@'+esc(p.handle)+' · '+esc(p.cls)+' · '+esc(timeAgo(p.created))+'</small></div>';
+   const commentHtml=p.comments.map(c=>'<div class="communityComment"><button type="button" class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(c.userId)+'\')">'+esc(c.name)+'</button>'+badgeHTML(c.userId)+' <small style="color:var(--muted)">@'+esc(c.handle)+'</small><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(c.text)+'</div></div>').join('');
+   const mediaHtml=p.image?(p.mediaType==='video'?'<video class="communityPostVideo" controls playsinline preload="metadata" src="'+esc(p.image)+'"></video>':'<a href="'+esc(p.image)+'" target="_blank" rel="noopener noreferrer"><img class="communityPostImage" src="'+esc(p.image)+'" alt="Shared study notes or paper" loading="lazy"></a>'):'';
+   return '<article class="communityPost" id="scPost_'+esc(p.id)+'"><div class="communityPostHead">'+author+'<span class="communityPostType">'+esc(p.type)+'</span></div>'+(pending?'<div class="communityPostMediaPending">🕵️ '+(own?'Your media is awaiting review and is visible only to you.':'Upload is awaiting review.')+(state.isModerator?'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewPost(\''+esc(p.id)+'\',true)">Approve</button><button class="scActionNeon warn" onclick="scReviewPost(\''+esc(p.id)+'\',false)">Reject</button></div>':'')+'</div>':'')+(p.title?'<h3 style="margin:14px 0 0;font-size:18px">'+esc(p.title)+'</h3>':'')+(p.body?'<div class="communityPostText">'+esc(p.body)+'</div>':'')+(!pending?mediaHtml:'')+'<div class="communityPostActions"><button class="'+(liked?'liked':'')+'" onclick="scLike(\''+esc(p.id)+'\')">'+(liked?'❤️ Liked':'♡ Like')+' · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button><button class="'+(saved?'scSavedButton':'')+'" onclick="scToggleSaved(\''+esc(p.id)+'\')">'+(saved?'🔖 Saved':'🔖 Save')+'</button><button onclick="scSharePost(\''+esc(p.id)+'\')">↗ Share</button>'+(own?'<button onclick="scDeletePost(\''+esc(p.id)+'\')">🗑 Delete</button>':p.user_id?'<button onclick="scToggleFollow(\''+esc(p.user_id)+'\')">'+(following?'✓ Following':state.pendingFollowRequests.has(p.user_id)?'Requested':p.authorPrivate?'🔒 Request':'＋ Follow')+'</button><button onclick="scReportPost(\''+esc(p.id)+'\')">⚑ Report</button>':'')+'</div><div class="communityComments" id="scComments_'+esc(p.id)+'">'+commentHtml+'<div class="communityCommentForm"><input id="scCommentInput_'+esc(p.id)+'" maxlength="500" placeholder="Write a helpful study comment…" aria-label="Write a comment"><button class="btn" onclick="scAddComment(\''+esc(p.id)+'\')">Send</button></div></div></article>';
   }).join('');
  }
- function render(){renderProfile();renderPeople();renderFeed();}
+ function renderMoments(){
+  const box=$('scMoments');if(!box)return;
+  const people=(state.people||[]).filter(p=>p&&p.id).slice(0,14);
+  if(!people.length){box.innerHTML='<div class="scMomentPlaceholder">🌱 Your study circle is starting to grow. Create a profile and invite classmates to join.</div>';return;}
+  const mine=state.profile?people.find(p=>p.id===state.profile.id):null;
+  const ordered=mine?[mine,...people.filter(p=>p.id!==mine.id)]:people;
+  box.innerHTML=ordered.slice(0,14).map(p=>'<button type="button" class="scMoment" onclick="scMomentProfile(\''+esc(p.id)+'\')"><span class="scMomentRing">'+avatarHTML(p)+'</span><span class="scMomentName">'+esc(p.id===state.user?.id?'You':p.display_name||'Student')+'</span><span class="scMomentClass">'+esc(p.class_name||'Student')+'</span></button>').join('');
+ }
+ function renderPulse(){
+  const box=$('scActivityPulse');if(!box)return;
+  const likes=state.posts.reduce((n,p)=>n+(p.likes?.length||0),0);
+  box.innerHTML='<div><b>'+esc(state.posts.length)+'</b><small>Posts loaded</small></div><div><b>'+esc(state.people.length)+'</b><small>Student profiles</small></div><div><b>'+esc(likes)+'</b><small>Likes on loaded posts</small></div>';
+ }
+ function sprintKey(){return 'studyaiSprint_'+new Date().toISOString().slice(0,10);}
+ function readSprint(){try{const v=JSON.parse(localStorage.getItem(sprintKey())||'[false,false,false]');return [!!v[0],!!v[1],!!v[2]];}catch(_){return [false,false,false];}}
+ function renderSprint(){const values=readSprint();document.querySelectorAll('[data-sprint-task]').forEach(el=>{el.checked=!!values[Number(el.dataset.sprintTask)];});const done=values.filter(Boolean).length;const txt=$('scSprintProgress'),bar=$('scSprintProgressBar');if(txt)txt.textContent=done+' / 3 complete';if(bar)bar.style.width=(done/3*100)+'%';}
+
+ function render(){renderProfile();renderPeople();renderFeed();renderMoments();renderPulse();renderSprint();const rb=$('scRequestBadge');if(rb)rb.textContent=String(state.pendingFollowRequests.size+state.pendingPostAccess.size);}
+ window.scSetSearch=function(value){state.query=String(value||'');state.authorFilter=null;renderFeed();};
+ window.scSetCategory=function(value){state.category=value||'all';state.authorFilter=null;renderFeed();};
+ window.scSetSort=function(value){state.sort=value||'new';renderFeed();};
+ window.scClearDiscovery=function(){state.query='';state.category='all';state.authorFilter=null;state.sort='new';state.feed='all';const q=$('scSearchInput'),cat=$('scCategoryFilter'),sort=$('scSortSelect');if(q)q.value='';if(cat)cat.value='all';if(sort)sort.value='new';document.querySelectorAll('#scFeedTabs button[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed==='all'));renderFeed();};
+ window.scExploreTopic=function(type){state.authorFilter=null;state.feed='all';state.category=type||'all';state.query='';const q=$('scSearchInput'),cat=$('scCategoryFilter');if(q)q.value='';if(cat)cat.value=state.category;document.querySelectorAll('#scFeedTabs button[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed==='all'));renderFeed();$('scFeed')?.scrollIntoView({behavior:'smooth',block:'start'});};
+ window.scMomentProfile=function(id){window.scOpenUserProfile(id);};
+ window.scUsePrompt=function(type,text){if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}const ta=$('scPostText'),sel=$('scPostType');if(ta){ta.value=text;ta.focus();}if(sel)sel.value=type;document.querySelector('.communityComposer')?.scrollIntoView({behavior:'smooth',block:'center'});};
+ window.scToggleSprint=function(index,checked){const vals=readSprint();if(index>=0&&index<3)vals[index]=!!checked;try{localStorage.setItem(sprintKey(),JSON.stringify(vals));}catch(_){}renderSprint();};
+ window.scResetSprint=function(){try{localStorage.removeItem(sprintKey());}catch(_){}renderSprint();};
+ window.scToggleSaved=function(id){if(state.saved.has(id))state.saved.delete(id);else state.saved.add(id);try{localStorage.setItem('studyaiCommunitySavedPosts',JSON.stringify([...state.saved]));}catch(_){}renderFeed();setStatus(state.saved.has(id)?'Saved on this device.':'Removed from saved posts.','success');};
+ window.scSharePost=async function(id){const p=state.posts.find(x=>x.id===id);if(!p)return;const url=location.origin+location.pathname+'#community';const data={title:p.title||'StudyAI Community post',text:(p.title?p.title+' — ':'')+(p.body||'A study resource shared on StudyAI.'),url};try{if(navigator.share)await navigator.share(data);else if(navigator.clipboard?.writeText){await navigator.clipboard.writeText(data.text+'\n'+url);setStatus('Post title and community link copied.','success');}else{window.prompt('Copy this StudyAI Community link:',url);}}catch(err){if(err?.name!=='AbortError')setStatus('Could not share automatically. Use the community page link from your browser address bar.','warning');}};
  window.scOpenProfile=function(){
   if(!requireLogin())return;
   const p=state.profile||{},u=state.user||{};const metadata=u.user_metadata||{};const defaultName=p.display_name||metadata.full_name||metadata.name||(u.email?u.email.split('@')[0]:'');
@@ -3939,36 +4379,45 @@ hub();
   if(!/^[a-z0-9_.]{3,24}$/.test(username)){alert('Username 3–24 characters ka hona chahiye; letters, numbers, _ aur . use karo.');return;}
   state.profileBusy=true;const saveButton=document.querySelector('#scProfileModal .communityModalActions .btn');if(saveButton){saveButton.disabled=true;saveButton.textContent='Saving…';}
   try{
-   let avatarUrl=state.profile?.avatar_url||null;const file=$('scAvatarInput')?.files?.[0];
-   if(file)avatarUrl=await uploadImage(file,'avatars',900000);
-   const row={id:state.user.id,username,display_name:name,class_name:$('scClassInput').value,interests:$('scInterestsInput').value.trim(),bio:$('scBioInput').value.trim(),avatar_url:avatarUrl,updated_at:new Date().toISOString()};
+   let avatarUrl=state.profile?.avatar_path||mediaPath(state.profile?.avatar_url)||null;let avatarStatus=state.profile?.avatar_moderation_status||'approved';const file=$('scAvatarInput')?.files?.[0];
+   if(file){if(!/^image\/(png|jpeg|webp)$/i.test(file.type)||file.size>900000)throw new Error('Profile photo must be JPG, PNG or WebP under 900 KB.');avatarUrl=await uploadImage(file,'avatars',900000);avatarStatus='pending';}
+   const row={id:state.user.id,username,display_name:name,class_name:$('scClassInput').value,interests:$('scInterestsInput').value.trim(),bio:$('scBioInput').value.trim(),avatar_url:avatarUrl,avatar_moderation_status:avatarStatus,is_private:!!state.profile?.is_private,interaction_mode:state.profile?.interaction_mode||'everyone',message_mode:state.profile?.message_mode||'everyone',show_activity:state.profile?.show_activity!==false,updated_at:new Date().toISOString()};
    const {error}=await sb.from(TABLES.profiles).upsert(row,{onConflict:'id'});if(error)throw error;
    $('scAvatarInput').value='';window.scCloseProfile();await refreshCommunity(true);setStatus('Student profile saved and synced across devices.','success');
   }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
   finally{state.profileBusy=false;if(saveButton){saveButton.disabled=false;saveButton.textContent='Save profile';}}
  };
- $('scAvatarInput')?.addEventListener('change',function(){const f=this.files?.[0];if(f&&f.size>900000){alert('Choose a profile photo under 900 KB.');this.value='';}});
+ $('scAvatarInput')?.addEventListener('change',function(){const f=this.files?.[0];if(f&&(!/^image\/(png|jpeg|webp)$/i.test(f.type)||f.size>900000)){alert('Choose a JPG, PNG or WebP profile photo under 900 KB. New photos stay hidden from other students until reviewed.');this.value='';}});
  $('scPostImage')?.addEventListener('change',function(){
-  const file=this.files?.[0];state.draftFile=null;state.draftPreview='';const preview=$('scImagePreview');
+  const file=this.files?.[0];state.draftFile=null;state.draftPreview='';state.draftMediaType='';const preview=$('scImagePreview');
   if(!file){preview.style.display='none';preview.innerHTML='';return;}
-  if(!/^image\/(png|jpeg|webp)$/i.test(file.type)){alert('Choose a JPG, PNG or WebP image.');this.value='';return;}
-  if(file.size>1400000){alert('Choose an image under 1.4 MB.');this.value='';return;}
-  state.draftFile=file;state.draftPreview=URL.createObjectURL(file);preview.innerHTML='<img class="communityPostImage" style="max-height:220px" src="'+esc(state.draftPreview)+'" alt="Post preview"><button type="button" class="btn alt" style="margin-top:8px" onclick="scRemoveDraftImage()">Remove image</button>';preview.style.display='block';
+  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type),isVideo=/^video\/(mp4|webm|quicktime)$/i.test(file.type);
+  if(!isImage&&!isVideo){alert('Only JPG/PNG/WebP images or MP4/WebM/MOV educational videos are allowed.');this.value='';return;}
+  const max=isVideo?15*1024*1024:2*1024*1024;
+  if(file.size>max){alert(isVideo?'Choose a learning video under 15 MB.':'Choose an image under 2 MB.');this.value='';return;}
+  state.draftFile=file;state.draftMediaType=isVideo?'video':'image';state.draftPreview=URL.createObjectURL(file);
+  const mediaHtml=isVideo?'<video class="communityPostVideo" style="max-height:230px" controls playsinline src="'+esc(state.draftPreview)+'"></video>':'<img class="communityPostImage" style="max-height:220px" src="'+esc(state.draftPreview)+'" alt="Study material preview">';
+  preview.innerHTML=mediaHtml+'<div class="communityNotice">🔒 This '+(isVideo?'video':'image')+' will stay hidden from other students until reviewed.</div><button type="button" class="btn alt" style="margin-top:8px" onclick="scRemoveDraftImage()">Remove media</button>';preview.style.display='block';
  });
- window.scRemoveDraftImage=function(){if(state.draftPreview)URL.revokeObjectURL(state.draftPreview);state.draftFile=null;state.draftPreview='';if($('scPostImage'))$('scPostImage').value='';if($('scImagePreview')){$('scImagePreview').innerHTML='';$('scImagePreview').style.display='none';}};
+ window.scRemoveDraftImage=function(){if(state.draftPreview)URL.revokeObjectURL(state.draftPreview);state.draftFile=null;state.draftMediaType='';state.draftPreview='';if($('scPostImage'))$('scPostImage').value='';if($('scImagePreview')){$('scImagePreview').innerHTML='';$('scImagePreview').style.display='none';}};
  window.scPublish=async function(){
   if(state.publishBusy)return;if(!requireLogin())return;if(!state.profile){alert('Create your student profile first.');window.scOpenProfile();return;}
   const body=$('scPostText').value.trim(),title=$('scPostTitle').value.trim(),type=$('scPostType').value,file=state.draftFile;
-  if(!body&&!title&&!file){alert('Add a title, a short description or a notes image first.');return;}
+  if(!body&&!title&&!file){alert('Add a title, description or study image/video first.');return;}
+  if(!$('scStudyOnlyConfirm')?.checked){alert('Please confirm that this upload is only for study material.');return;}
+  if(!isStudyText(title,body,type)){alert('StudyAI Community par sirf study-related material allowed hai. Title/description mein class, subject, chapter, notes, formula, exam ya learning topic clearly likho.');return;}
+  if(hasPrivateContact(title+' '+body)){alert('For safety, do not post phone numbers or email addresses.');return;}
   state.publishBusy=true;renderProfile();
   try{
-   let imageUrl=null;if(file)imageUrl=await uploadImage(file,'posts',1400000);
-   const {error}=await sb.from(TABLES.posts).insert({user_id:state.user.id,title:title||null,body:body||null,post_type:type,image_url:imageUrl});if(error)throw error;
-   $('scPostText').value='';$('scPostTitle').value='';$('scPostType').value='Handwritten Notes';window.scRemoveDraftImage();await refreshCommunity(true);setStatus('Your post is live for other StudyAI students.','success');
+   let mediaPathValue=null;const mediaType=state.draftMediaType||'';
+   if(file)mediaPathValue=await uploadImage(file,'posts',mediaType==='video'?15*1024*1024:2*1024*1024);
+   const row={user_id:state.user.id,title:title||null,body:body||null,post_type:type,image_url:mediaPathValue,media_type:mediaType||'none',moderation_status:file?'pending':'approved'};
+   const {error}=await sb.from(TABLES.posts).insert(row);if(error)throw error;
+   $('scPostText').value='';$('scPostTitle').value='';$('scPostType').value='Handwritten Notes';if($('scStudyOnlyConfirm'))$('scStudyOnlyConfirm').checked=false;window.scRemoveDraftImage();await refreshCommunity(true);setStatus(file?'Upload submitted for review. It will appear to other students after approval.':'Your study post is live.','success');
   }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
   finally{state.publishBusy=false;renderProfile();}
  };
- window.scSetFeed=function(mode){state.feed=mode;document.querySelectorAll('#scFeedTabs button[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed===mode));renderFeed();};
+ window.scSetFeed=function(mode){state.feed=mode;state.authorFilter=null;document.querySelectorAll('#scFeedTabs button[data-feed]').forEach(b=>b.classList.toggle('active',b.dataset.feed===mode));renderFeed();};
  window.scRefresh=function(){refreshCommunity(false);};
  window.scToggleFollow=async function(id){
   if(!requireLogin())return;if(!state.profile){alert('Set up your student profile first.');window.scOpenProfile();return;}if(id===state.user.id)return;
@@ -4001,11 +4450,246 @@ hub();
   try{const {error}=await sb.from(TABLES.posts).delete().eq('id',id).eq('user_id',state.user.id);if(error)throw error;await refreshCommunity(true);setStatus('Post deleted.','success');}
   catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
  };
- document.addEventListener('keydown',e=>{if(e.key==='Escape')window.scCloseProfile();});
+
+ // Profile-first social features: profiles, private accounts, requests, inbox, settings and history.
+ function openSocialModal(title,html){const modal=$('scSocialModal');if(!modal)return;$('scSocialTitle').textContent=title;$('scSocialBody').innerHTML=html;modal.classList.add('open');}
+ window.scCloseSocialModal=function(){$('scSocialModal')?.classList.remove('open');};
+ window.scOpenMyProfile=function(){if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}window.scOpenUserProfile(state.user.id);};
+ function byId(id){return state.people.find(p=>p.id===id)||(state.profile?.id===id?state.profile:null);}
+ async function loadProfile(id){
+  let p=byId(id);if(p)return p;
+  if(!sb)return null;
+  const {data,error}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,created_at,is_private,interaction_mode,message_mode,show_activity,avatar_moderation_status').eq('id',id).maybeSingle();
+  if(error||!data)return null;
+  p={...data,avatar_path:mediaPath(data.avatar_url),avatar_url:await signedMediaUrl(data.avatar_url)};state.people.push(p);return p;
+ }
+ function allowedViewProfile(p){return !!p&&((state.user&&p.id===state.user.id)||!p.is_private||state.following.includes(p.id));}
+ function allowedViewPosts(p){return allowedViewProfile(p)||!!(p&&state.postAccess.has(p.id));}
+ window.scOpenUserProfile=async function(id){
+  if(!id)return;
+  if(state.user&&id===state.user.id&&!state.profile){window.scOpenProfile();return;}
+  openSocialModal('Student profile','<div class="scSocialEmpty">✨ Loading profile…</div>');
+  try{
+   const p=await loadProfile(id);if(!p){openSocialModal('Student profile','<div class="scSocialEmpty">This profile could not be loaded. Please refresh the community.</div>');return;}
+   state.viewingProfile=p;state.viewingTab='posts';
+   const [fr,fg,pc]=await Promise.all([
+    sb.from(TABLES.follows).select('follower_id',{count:'exact',head:true}).eq('following_id',id),
+    sb.from(TABLES.follows).select('following_id',{count:'exact',head:true}).eq('follower_id',id),
+    sb.from(TABLES.posts).select('id',{count:'exact',head:true}).eq('user_id',id).eq('moderation_status','approved')
+   ]);
+   state.viewingCounts={followers:fr.error?0:(fr.count||0),following:fg.error?0:(fg.count||0),posts:pc.error?0:(pc.count||0)};
+   await renderViewedProfile();
+  }catch(err){openSocialModal('Student profile','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
+ };
+ async function renderViewedProfile(){
+  const p=state.viewingProfile;if(!p)return;
+  const own=!!state.user&&p.id===state.user.id,canProfile=allowedViewProfile(p),canPosts=allowedViewPosts(p);
+  const isFollowing=state.following.includes(p.id),followPending=state.pendingFollowRequests.has(p.id),postPending=state.pendingPostAccess.has(p.id),blocked=state.blocked.has(p.id);
+  const profileAvatar=avatarHTML({display_name:p.display_name,avatar_url:p.avatar_url},'scProfileAvatar');
+  const classLine=canProfile?[p.class_name,p.interests].filter(Boolean).join(' · '):'Student profile';
+  const bioLine=canProfile?(p.bio||'This student has not added a bio yet.'):'This account is private. Follow approval is needed to view profile details.';
+  const posts=canPosts?state.posts.filter(x=>x.user_id===p.id&&(x.moderationStatus==='approved'||own&&x.moderationStatus!=='rejected')):[];
+  const showActivity=canProfile&&canSeeActivityLocal(p);
+  const mutual=state.following.includes(p.id)&&state.followers.includes(p.id);
+  const followLabel=own?'':isFollowing?'✓ Following':followPending?'⏳ Follow requested':p.is_private?'🔒 Request to follow':'＋ Follow';
+  const followInline=!own?'<button type="button" class="scActionNeon scInlineFollow" '+(followPending?'disabled':'')+' onclick="scToggleFollow(\''+esc(p.id)+'\')">'+esc(followLabel)+'</button>':'';
+  let actions='';
+  if(!own){actions+='<button type="button" class="scActionNeon cyan" onclick="scStartMessage(\''+esc(p.id)+'\')">💬 Message</button>';
+   if(p.is_private&&!canPosts)actions+='<button type="button" class="scActionNeon alt" '+(postPending?'disabled':'')+' onclick="scRequestPostAccess(\''+esc(p.id)+'\')">'+(postPending?'⏳ Post access requested':'👀 Request to view posts')+'</button>';
+   if(!blocked)actions+='<button type="button" class="scActionNeon warn" onclick="scBlockUser(\''+esc(p.id)+'\')">🚫 Block</button>';
+   actions+='<button type="button" class="scActionNeon alt" onclick="scReportUser(\''+esc(p.id)+'\')">⚑ Report</button>';
+  }else actions+='<button type="button" class="scActionNeon" onclick="scOpenProfile()">✏️ Edit profile</button><button type="button" class="scActionNeon alt" onclick="scOpenSocialSettings()">🔐 Privacy settings</button><button type="button" class="scActionNeon alt" onclick="scOpenActivityHistory()">🕘 Your activity</button>';
+  let body='';
+  if(state.viewingTab==='posts'){
+   if(!canPosts)body='<div class="scSocialEmpty"><div style="font-size:35px">🔒</div><b>This account is private</b><p>Posts are hidden. Follow the student or request post-view access to see approved study material.</p></div>';
+   else if(!posts.length)body='<div class="scSocialEmpty">📚 No approved posts yet.</div>';
+   else body='<div class="scProfilePostGrid">'+posts.map(post=>'<button type="button" class="scProfilePostTile" onclick="scOpenProfilePost(\''+esc(post.id)+'\')">'+(post.image?(post.mediaType==='video'?'<video muted playsinline preload="metadata" src="'+esc(post.image)+'"></video>':'<img loading="lazy" src="'+esc(post.image)+'" alt="Study material">'):'')+(post.moderationStatus!=='approved'?'<span class="tilePending">PENDING</span>':'')+'<span class="tileIcon">'+(post.mediaType==='video'?'▶':'📚')+'</span><span class="tileText">'+esc(post.title||post.body||post.type)+'</span></button>').join('')+'</div>';
+  }else if(state.viewingTab==='activity'){
+   if(!showActivity)body='<div class="scSocialEmpty">🔐 Activity history is hidden by this student’s privacy settings.</div>';
+   else {
+    body='<div class="scSocialEmpty">Loading recent likes and comments…</div>';
+    try{
+     const [likedResult,commentResult]=await Promise.all([
+      sb.from(TABLES.likes).select('post_id,user_id').eq('user_id',p.id).limit(100),
+      sb.from(TABLES.comments).select('post_id,body,created_at').eq('user_id',p.id).order('created_at',{ascending:false}).limit(100)
+     ]);
+     if(likedResult.error)throw likedResult.error;if(commentResult.error)throw commentResult.error;
+     const likedRows=likedResult.data||[],commentRows=commentResult.data||[];
+     const ids=[...new Set([...likedRows.map(x=>x.post_id),...commentRows.map(x=>x.post_id)].filter(Boolean))];
+     let activityPosts=[],authorMap=new Map();
+     if(ids.length){
+      const {data:postRows,error:postError}=await sb.from(TABLES.posts).select('id,user_id,title,body,post_type,created_at,moderation_status').in('id',ids).eq('moderation_status','approved');
+      if(postError)throw postError;activityPosts=postRows||[];
+      const authorIds=[...new Set(activityPosts.map(x=>x.user_id).filter(Boolean))];
+      if(authorIds.length){const {data:authors,error:authorError}=await sb.from(TABLES.profiles).select('id,username,display_name').in('id',authorIds);if(authorError)throw authorError;(authors||[]).forEach(a=>authorMap.set(a.id,a));}
+     }
+     const postMap=new Map(activityPosts.map(x=>[x.id,x]));const items=[];
+     likedRows.forEach(l=>{const post=postMap.get(l.post_id);if(!post)return;const author=authorMap.get(post.user_id)||byId(post.user_id)||{};items.push({sort:Date.parse(post.created_at)||0,html:'<div class="scActivityItem"><b>❤️ Liked a post by @'+esc(author.username||'student')+'</b><p>'+esc(post.title||post.body||post.post_type||'Study post')+'</p><small>'+esc(author.display_name||'StudyAI student')+'</small></div>'});});
+     commentRows.forEach(c=>{const post=postMap.get(c.post_id);if(!post)return;const author=authorMap.get(post.user_id)||byId(post.user_id)||{};items.push({sort:Date.parse(c.created_at)||Date.parse(post.created_at)||0,html:'<div class="scActivityItem"><b>💬 Commented on @'+esc(author.username||'student')+'’s post</b><p><strong>Post:</strong> '+esc(post.title||post.body||post.post_type||'Study post')+'</p><p><strong>Your comment:</strong> '+esc(c.body||'')+'</p><small>'+esc(author.display_name||'StudyAI student')+'</small></div>'});});
+     items.sort((a,b)=>b.sort-a.sort);
+     body=items.length?'<p class="muted" style="font-size:11px">Recent activity from up to 100 likes and 100 comments on posts you are allowed to view.</p>'+items.map(x=>x.html).join(''):'<div class="scSocialEmpty">No visible like/comment activity found.</div>';
+    }catch(err){body='<div class="scSocialEmpty">Activity history could not be loaded. '+esc(normalError(err))+'</div>';}
+   }
+  }else{
+   body='<div class="scSocialList"><div class="scSocialListRow"><div class="scSocialListMain"><b>Username</b><small>@'+esc(p.username)+'</small></div></div><div class="scSocialListRow"><div class="scSocialListMain"><b>Class</b><small>'+esc(canProfile?p.class_name||'Not provided':'Hidden while private')+'</small></div></div><div class="scSocialListRow"><div class="scSocialListMain"><b>Subjects & interests</b><small>'+esc(canProfile?p.interests||'Not added':'Hidden while private')+'</small></div></div><div class="scSocialListRow"><div class="scSocialListMain"><b>About</b><small>'+esc(bioLine)+'</small></div></div></div>';
+  }
+  const countPost=canPosts?state.viewingCounts.posts:'🔒';
+  openSocialModal(own?'Your profile':(p.display_name||'Student')+' · Profile',
+   '<div class="scProfileHero"><div class="scProfileHeroTop">'+profileAvatar+'<div><h3>'+esc(p.display_name||'StudyAI Student')+badgeHTML(p.id)+'</h3><div class="scHandleRow"><div class="scHandle">@'+esc(p.username||'student')+'</div>'+followInline+'</div><div class="scPrivacyPill">'+(p.is_private?'🔒 Private account':'🌐 Public account')+(blocked?' · blocked':'')+'</div></div></div><p class="scProfileBio">'+esc(bioLine)+'</p></div>'+
+   '<div class="scProfileStats"><button onclick="scOpenProfileList(\''+esc(p.id)+'\',\'posts\')"><b>'+esc(countPost)+'</b><span>Posts</span></button><button onclick="scOpenProfileList(\''+esc(p.id)+'\',\'followers\')"><b>'+esc(canProfile?state.viewingCounts.followers:'—')+'</b><span>Followers</span></button><button onclick="scOpenProfileList(\''+esc(p.id)+'\',\'following\')"><b>'+esc(canProfile?state.viewingCounts.following:'—')+'</b><span>Following</span></button></div>'+
+   '<div class="scProfileActions">'+actions+'</div>'+
+   '<div class="scProfileTabs"><button class="'+(state.viewingTab==='posts'?'active':'')+'" onclick="scShowProfileTab(\'posts\')">▦ Posts</button><button class="'+(state.viewingTab==='activity'?'active':'')+'" onclick="scShowProfileTab(\'activity\')">♡ Activity</button><button class="'+(state.viewingTab==='about'?'active':'')+'" onclick="scShowProfileTab(\'about\')">ⓘ About</button></div>'+body);
+ }
+ window.scShowProfileTab=async function(tab){state.viewingTab=tab;await renderViewedProfile();};
+ window.scOpenProfilePost=function(id){const p=state.posts.find(x=>x.id===id);if(!p)return;const media=p.image?(p.mediaType==='video'?'<video class="communityPostVideo" controls playsinline src="'+esc(p.image)+'"></video>':'<img class="communityPostImage" src="'+esc(p.image)+'" alt="Study post">'):'';openSocialModal(p.title||'StudyAI post','<div class="communityPostText">'+esc(p.body||'')+'</div>'+media+'<div class="communityPostActions"><button onclick="scLike(\''+esc(p.id)+'\')">❤️ Like · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button></div><div>'+p.comments.map(c=>'<p><button class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(c.userId)+'\')">@'+esc(c.handle)+'</button> '+esc(c.text)+'</p>').join('')+'</div>');};
+ window.scOpenProfileList=async function(id,kind){
+  const p=await loadProfile(id);if(!p)return;
+  if(kind!=='posts'&&!allowedViewProfile(p)){openSocialModal('Private list','<div class="scSocialEmpty">🔒 Follow approval is needed to view this student’s followers and following.</div>');return;}
+  if(kind==='posts'){window.scOpenUserProfile(id);return;}
+  openSocialModal(kind==='followers'?'Followers':'Following','<div class="scSocialEmpty">Loading student list…</div>');
+  const col=kind==='followers'?'follower_id':'following_id';const filterCol=kind==='followers'?'following_id':'follower_id';
+  const {data,error}=await sb.from(TABLES.follows).select(col).eq(filterCol,id).limit(200);
+  if(error){openSocialModal('Student list','<div class="scSocialEmpty">'+esc(normalError(error))+'</div>');return;}
+  const ids=(data||[]).map(x=>x[col]).filter(Boolean);if(!ids.length){openSocialModal(kind==='followers'?'Followers':'Following','<div class="scSocialEmpty">No students here yet.</div>');return;}
+  let entries=state.people.filter(x=>ids.includes(x.id));
+  if(entries.length<ids.length){const {data:more}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,is_private,interaction_mode,message_mode,show_activity,avatar_moderation_status').in('id',ids);for(const x of more||[])if(!entries.some(y=>y.id===x.id))entries.push({...x,avatar_path:mediaPath(x.avatar_url),avatar_url:await signedMediaUrl(x.avatar_url)});}
+  openSocialModal(kind==='followers'?'Followers':'Following','<div class="scSocialList">'+entries.map(x=>'<div class="scSocialListRow"><button class="scProfileTap" onclick="scOpenUserProfile(\''+esc(x.id)+'\')">'+avatarHTML(x)+'</button><div class="scSocialListMain"><button class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(x.id)+'\')">'+esc(x.display_name||'Student')+'</button><small>@'+esc(x.username||'student')+' · '+(x.is_private?'Private account':'StudyAI student')+'</small></div><button class="scActionNeon alt" onclick="scOpenUserProfile(\''+esc(x.id)+'\')">View</button></div>').join('')+'</div>');
+ };
+ window.scToggleFollow=async function(id){
+  if(!requireLogin())return;if(!state.profile){alert('Set up your student profile first.');window.scOpenProfile();return;}if(id===state.user.id)return;
+  try{
+   const isFollowing=state.following.includes(id),target=await loadProfile(id);
+   if(isFollowing){const {error}=await sb.from(TABLES.follows).delete().eq('follower_id',state.user.id).eq('following_id',id);if(error)throw error;}
+   else if(target?.is_private){if(state.pendingFollowRequests.has(id)){setStatus('Follow request is already waiting for approval.','info');return;}const {error}=await sb.from(TABLES.followRequests).insert({requester_id:state.user.id,target_id:id,status:'pending'});if(error)throw error;state.pendingFollowRequests.add(id);}
+   else {const {error}=await sb.from(TABLES.follows).insert({follower_id:state.user.id,following_id:id});if(error)throw error;}
+   await refreshCommunity(true);if(state.viewingProfile?.id===id)await renderViewedProfile();setStatus(isFollowing?'You unfollowed this student.':target?.is_private?'Follow request sent.':'You are now following this student.','success');
+  }catch(err){setStatus(normalError(err),'error');alert(normalError(err));}
+ };
+ window.scRequestPostAccess=async function(id){if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}try{const {error}=await sb.from(TABLES.postRequests).insert({requester_id:state.user.id,target_id:id,status:'pending'});if(error)throw error;state.pendingPostAccess.add(id);await renderViewedProfile();setStatus('Post-view request sent.','success');}catch(err){alert(normalError(err));}};
+ window.scOpenSocialSettings=function(){
+  if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}const p=state.profile;
+  openSocialModal('Privacy & interactions','<p class="muted" style="font-size:12px;line-height:1.6">Private means only approved followers or separately approved post-view requests can access approved posts. New media remains hidden until reviewed.</p><div class="scSettingGrid"><div class="scSettingCard"><label>Account visibility<select id="scPrivacySelect"><option value="false" '+(!p.is_private?'selected':'')+'>🌐 Public account</option><option value="true" '+(p.is_private?'selected':'')+'>🔒 Private account</option></select></label></div><div class="scSettingCard"><label>Who can like/comment?<select id="scInteractionSelect"><option value="everyone" '+((p.interaction_mode||'everyone')==='everyone'?'selected':'')+'>Everyone</option><option value="followers" '+(p.interaction_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.interaction_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.interaction_mode==='nobody'?'selected':'')+'>Nobody except me</option></select></label></div><div class="scSettingCard"><label>Who can message me?<select id="scMessageModeSelect"><option value="everyone" '+((p.message_mode||'everyone')==='everyone'?'selected':'')+'>Everyone (public accounts)</option><option value="followers" '+(p.message_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.message_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.message_mode==='nobody'?'selected':'')+'>Nobody new</option></select></label></div></div><label class="scSettingToggle"><input id="scShowActivitySelect" type="checkbox" '+(p.show_activity!==false?'checked':'')+'><span><b>Show my like/comment activity</b><br><span class="muted">When off, other students cannot open the Activity tab.</span></span></label><div class="communityModalActions"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Cancel</button><button class="scActionNeon" onclick="scSaveSocialSettings()">Save settings</button></div><div class="communityNotice">Block or report options are also available from each student’s profile. Browser history is not used as private account history.</div>');
+ };
+ window.scSaveSocialSettings=async function(){
+  if(!requireLogin()||!state.profile)return;
+  try{const row={is_private:$('scPrivacySelect').value==='true',interaction_mode:$('scInteractionSelect').value,message_mode:$('scMessageModeSelect').value,show_activity:$('scShowActivitySelect').checked,updated_at:new Date().toISOString()};const {error}=await sb.from(TABLES.profiles).update(row).eq('id',state.user.id);if(error)throw error;await refreshCommunity(true);setStatus('Privacy settings saved.','success');window.scCloseSocialModal();if(state.viewingProfile?.id===state.user.id)await window.scOpenUserProfile(state.user.id);}catch(err){alert(normalError(err));}
+ };
+ window.scOpenActivityHistory=async function(){if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}await window.scOpenUserProfile(state.user.id);await window.scShowProfileTab('activity');};
+ window.scOpenRequests=async function(){
+  if(!requireLogin())return;
+  openSocialModal('Requests','<div class="scSocialEmpty">Loading follow, post-view and message requests…</div>');
+  try{
+   const [f,p,m]=await Promise.all([
+    sb.from(TABLES.followRequests).select('id,requester_id,target_id,created_at').eq('target_id',state.user.id).eq('status','pending').order('created_at',{ascending:false}).limit(50),
+    sb.from(TABLES.postRequests).select('id,requester_id,target_id,created_at').eq('target_id',state.user.id).eq('status','pending').order('created_at',{ascending:false}).limit(50),
+    sb.from(TABLES.messageRequests).select('id,requester_id,target_id,first_message,created_at').eq('target_id',state.user.id).eq('status','pending').order('created_at',{ascending:false}).limit(50)
+   ]);
+   for(const r of [f,p,m])if(r.error)throw r.error;
+   const rows=[];
+   (f.data||[]).forEach(r=>{const q=byId(r.requester_id);rows.push('<div class="scSocialListRow"><div class="scSocialListMain"><b>👤 '+esc(q?.display_name||'Student')+' · @'+esc(q?.username||'student')+'</b><small>Wants to follow your private account.</small></div><button class="scActionNeon" onclick="scRespondFollowRequest(\''+esc(r.id)+'\',true)">Accept</button><button class="scActionNeon warn" onclick="scRespondFollowRequest(\''+esc(r.id)+'\',false)">Decline</button></div>');});
+   (p.data||[]).forEach(r=>{const q=byId(r.requester_id);rows.push('<div class="scSocialListRow"><div class="scSocialListMain"><b>👀 '+esc(q?.display_name||'Student')+'</b><small>Requests to view your private posts.</small></div><button class="scActionNeon" onclick="scRespondPostRequest(\''+esc(r.id)+'\',true)">Allow</button><button class="scActionNeon warn" onclick="scRespondPostRequest(\''+esc(r.id)+'\',false)">Decline</button></div>');});
+   (m.data||[]).forEach(r=>{const q=byId(r.requester_id);rows.push('<div class="scSocialListRow"><div class="scSocialListMain"><b>💬 Message request · '+esc(q?.display_name||'Student')+'</b><small>'+esc(r.first_message||'')+'</small></div><button class="scActionNeon" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',true)">Accept</button><button class="scActionNeon warn" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',false)">Decline</button></div>');});
+   if(state.isModerator)rows.push('<div class="scSocialListRow"><div class="scSocialListMain"><b>🛡️ Moderation queue</b><small>Review new media and profile photos before they appear.</small></div><button class="scActionNeon" onclick="scOpenModerationQueue()">Review uploads</button></div>');
+   openSocialModal('Requests','<div class="scSocialList">'+(rows.join('')||'<div class="scSocialEmpty">✅ No new requests. You are all caught up.</div>')+'</div>');
+   const badge=$('scRequestBadge');if(badge)badge.textContent=String((f.data||[]).length+(p.data||[]).length+(m.data||[]).length);
+  }catch(err){openSocialModal('Requests','<div class="scSocialEmpty">'+esc(normalError(err))+'<br>Run the supplied StudyAI_Social_Upgrade.sql migration first.</div>');}
+ };
+ window.scRespondFollowRequest=async function(id,accept){try{const {error}=await sb.rpc('studyai_respond_follow_request',{p_request_id:id,p_accept:!!accept});if(error)throw error;await refreshCommunity(true);await window.scOpenRequests();}catch(err){alert(normalError(err));}};
+ window.scRespondPostRequest=async function(id,accept){try{const {error}=await sb.rpc('studyai_respond_post_access_request',{p_request_id:id,p_accept:!!accept});if(error)throw error;await refreshCommunity(true);await window.scOpenRequests();}catch(err){alert(normalError(err));}};
+ window.scRespondMessageRequest=async function(id,accept){try{const {error}=await sb.rpc('studyai_respond_message_request',{p_request_id:id,p_accept:!!accept});if(error)throw error;await refreshCommunity(true);await window.scOpenInbox();}catch(err){alert(normalError(err));}};
+ window.scStartMessage=async function(id){
+  if(!requireLogin())return;if(id===state.user.id){alert('You cannot message yourself.');return;}
+  try{const p=await loadProfile(id);if(!p)throw new Error('Student profile not found.');if(state.blocked.has(id))throw new Error('You have blocked this student. Unblock them to continue.');
+   const mutual=state.following.includes(id)&&state.followers.includes(id);const mode=p.message_mode||'everyone';
+   if(mode==='nobody'){alert('This student is not accepting new messages.');return;}
+   if(mutual){await window.scOpenConversation(id);return;}
+   if(mode==='mutuals'){alert('This student accepts messages from mutual follows only.');return;}
+   if(mode==='followers'&&!state.following.includes(id)){alert('This student accepts message requests only from students who follow them. Follow first, then try again.');return;}
+   openSocialModal('Message request to @'+p.username,'<p class="muted" style="font-size:12px;line-height:1.65">Send a study-related request. The conversation opens only after this student accepts it. Mutual followers can message directly.</p><label>Write a short, study-related message<textarea id="scFirstMessage" rows="4" maxlength="1000" placeholder="Hi, I had a question about your Maths notes…"></textarea></label><div class="communityModalActions"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Cancel</button><button class="scActionNeon" onclick="scSendMessageRequest(\''+esc(id)+'\')">Send request</button></div>');
+  }catch(err){alert(normalError(err));}
+ };
+ window.scSendMessageRequest=async function(id){const text=$('scFirstMessage')?.value.trim()||'';if(text.length<3||text.length>1000){alert('Write a message between 3 and 1000 characters.');return;}if(!isStudyText('',text,'')||hasPrivateContact(text)){alert('Keep messages study-related and do not share phone numbers, emails or inappropriate content.');return;}try{const {error}=await sb.from(TABLES.messageRequests).insert({requester_id:state.user.id,target_id:id,first_message:text,status:'pending'});if(error)throw error;window.scCloseSocialModal();setStatus('Message request sent.','success');}catch(err){alert(normalError(err));}};
+ window.scOpenConversation=async function(id){
+  const p=await loadProfile(id);if(!p)return;
+  openSocialModal('💬 @'+p.username,'<div class="scSocialEmpty">Loading messages…</div>');
+  try{const me=state.user.id;const [a,b]=await Promise.all([sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',me).eq('recipient_id',id).order('created_at',{ascending:true}).limit(100),sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',id).eq('recipient_id',me).order('created_at',{ascending:true}).limit(100)]);if(a.error)throw a.error;if(b.error)throw b.error;const messages=[...(a.data||[]),...(b.data||[])].sort((x,y)=>Date.parse(x.created_at)-Date.parse(y.created_at));
+   openSocialModal('💬 @'+p.username+' · Messages','<div class="scConversation" id="scConversationBody">'+(messages.length?messages.map(m=>'<div class="scBubble '+(m.sender_id===me?'mine':'')+'">'+esc(m.body)+'<small>'+esc(timeAgo(Date.parse(m.created_at)||Date.now()))+'</small></div>').join(''):'<div class="scSocialEmpty">Start a friendly study conversation. Keep it respectful and never share private contact details.</div>')+'</div><div class="scMessageCompose"><textarea id="scDirectMessage" rows="2" maxlength="1000" placeholder="Write a study-related message…"></textarea><button class="scActionNeon" onclick="scSendDirectMessage(\''+esc(id)+'\')">Send ↗</button></div><div class="communityNotice">If this conversation becomes uncomfortable, close it and block or report the account from its profile.</div>');
+  }catch(err){openSocialModal('Messages','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
+ };
+ window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}if(!isStudyText('',body,'')||hasPrivateContact(body)){alert('Messages must stay study-related and cannot include phone numbers or email addresses.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error)throw error;await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
+ window.scOpenInbox=async function(){
+  if(!requireLogin())return;
+  openSocialModal('Messages & inbox','<div class="scSocialEmpty">Loading inbox…</div>');
+  try{const [rq1,rq2,m1,m2]=await Promise.all([
+    sb.from(TABLES.messageRequests).select('id,requester_id,target_id,first_message,status,created_at').eq('target_id',state.user.id).in('status',['pending','accepted']).order('created_at',{ascending:false}).limit(100),
+    sb.from(TABLES.messageRequests).select('id,requester_id,target_id,first_message,status,created_at').eq('requester_id',state.user.id).in('status',['pending','accepted']).order('created_at',{ascending:false}).limit(100),
+    sb.from(TABLES.messages).select('sender_id,recipient_id,body,created_at').eq('sender_id',state.user.id).order('created_at',{ascending:false}).limit(100),
+    sb.from(TABLES.messages).select('sender_id,recipient_id,body,created_at').eq('recipient_id',state.user.id).order('created_at',{ascending:false}).limit(100)
+  ]);for(const r of [rq1,rq2,m1,m2])if(r.error)throw r.error;
+  const contacts=new Map();for(const r of [...(rq1.data||[]),...(rq2.data||[])]){if(r.status!=='accepted')continue;const other=r.requester_id===state.user.id?r.target_id:r.requester_id;if(!contacts.has(other))contacts.set(other,{id:other,last:r.first_message||'',created:r.created_at});}
+  for(const m of [...(m1.data||[]),...(m2.data||[])]){const other=m.sender_id===state.user.id?m.recipient_id:m.sender_id;const old=contacts.get(other);if(!old||Date.parse(m.created_at)>Date.parse(old.created)){contacts.set(other,{id:other,last:m.body,created:m.created_at});}}
+  const pending=(rq1.data||[]).filter(x=>x.status==='pending');const ids=[...contacts.keys()];let entries=state.people.filter(x=>ids.includes(x.id));if(ids.length){const missing=ids.filter(i=>!entries.some(x=>x.id===i));if(missing.length){const {data}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,interests,bio,avatar_url,is_private,interaction_mode,message_mode,show_activity,avatar_moderation_status').in('id',missing);for(const x of data||[])entries.push({...x,avatar_path:mediaPath(x.avatar_url),avatar_url:await signedMediaUrl(x.avatar_url)});}}
+  const list=[...pending.map(r=>{const q=byId(r.requester_id);return '<div class="scSocialListRow"><div class="scSocialListMain"><b>📨 Request from '+esc(q?.display_name||'Student')+'</b><small>'+esc(r.first_message||'')+'</small></div><button class="scActionNeon" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',true)">Accept</button><button class="scActionNeon warn" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',false)">Decline</button></div>';})];
+  for(const c of contacts.values()){const q=entries.find(x=>x.id===c.id)||byId(c.id);list.push('<div class="scSocialListRow"><button class="scProfileTap" onclick="scOpenUserProfile(\''+esc(c.id)+'\')">'+avatarHTML(q||{display_name:'Student'})+'</button><div class="scSocialListMain"><b>'+esc(q?.display_name||'Student')+'</b><small>'+esc(String(c.last||'Conversation opened').slice(0,100))+'</small></div><button class="scActionNeon" onclick="scOpenConversation(\''+esc(c.id)+'\')">Open chat</button></div>');}
+  openSocialModal('Messages & inbox','<div class="scSocialList">'+(list.filter(Boolean).join('')||'<div class="scSocialEmpty">Your inbox is empty. Open a student profile to start a study-related conversation.</div>')+'</div>');
+  }catch(err){openSocialModal('Messages & inbox','<div class="scSocialEmpty">'+esc(normalError(err))+'<br>Run StudyAI_Social_Upgrade.sql in Supabase SQL Editor, then refresh.</div>');}
+ };
+ window.scBlockUser=async function(id){if(!requireLogin())return;if(!confirm('Block this student? Their posts/messages will be hidden from you and future contact will be blocked.'))return;try{const {error}=await sb.from(TABLES.blocks).upsert({blocker_id:state.user.id,blocked_id:id},{onConflict:'blocker_id,blocked_id'});if(error)throw error;state.blocked.add(id);state.posts=state.posts.filter(p=>p.user_id!==id);window.scCloseSocialModal();render();setStatus('Student blocked.','success');}catch(err){alert(normalError(err));}};
+ window.scReportUser=async function(id){if(!requireLogin())return;const reason=prompt('Why are you reporting this profile? (StudyAI only allows educational content)');if(!reason||!reason.trim())return;try{const {error}=await sb.from(TABLES.reports).insert({reporter_id:state.user.id,target_user_id:id,reason:reason.trim().slice(0,500)});if(error)throw error;alert('Report received. Thank you for helping keep StudyAI safe.');}catch(err){alert(normalError(err));}};
+ window.scReportPost=async function(id){if(!requireLogin())return;const reason=prompt('Why are you reporting this post?');if(!reason||!reason.trim())return;try{const {error}=await sb.from(TABLES.reports).insert({reporter_id:state.user.id,post_id:id,reason:reason.trim().slice(0,500)});if(error)throw error;alert('Post reported for review.');}catch(err){alert(normalError(err));}};
+ window.scOpenModerationQueue=async function(){if(!state.user||!state.isModerator){alert('Moderator approval is required.');return;}openSocialModal('🛡️ Upload review queue','<div class="scSocialEmpty">Loading uploads awaiting review…</div>');try{
+  const [posts,profiles]=await Promise.all([sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,media_type,moderation_status,created_at').eq('moderation_status','pending').order('created_at',{ascending:true}).limit(50),sb.from(TABLES.profiles).select('id,username,display_name,avatar_url,avatar_moderation_status').eq('avatar_moderation_status','pending').limit(50)]);if(posts.error)throw posts.error;if(profiles.error)throw profiles.error;
+  const postCards=await Promise.all((posts.data||[]).map(async p=>{const who=byId(p.user_id);const media=await signedMediaUrl(p.image_url);return '<div class="scReviewItem"><b>📚 '+esc(p.title||p.post_type||'Study upload')+'</b><p>'+esc(p.body||'')+'</p><small>@'+esc(who?.username||p.user_id)+' · '+esc(p.created_at||'')+'</small>'+(media?(p.media_type==='video'?'<video controls playsinline src="'+esc(media)+'"></video>':'<img src="'+esc(media)+'" alt="Pending study upload">'):'<p>Media is unavailable for review.</p>')+'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewPost(\''+esc(p.id)+'\',true)">Approve</button><button class="scActionNeon warn" onclick="scReviewPost(\''+esc(p.id)+'\',false)">Reject</button></div></div>'; }));
+  const avatarCards=await Promise.all((profiles.data||[]).map(async p=>{const media=await signedMediaUrl(p.avatar_url);return '<div class="scReviewItem"><b>👤 '+esc(p.display_name||p.username)+' · @'+esc(p.username)+'</b>'+(media?'<img src="'+esc(media)+'" alt="Profile photo pending review">':'<p>No preview available</p>')+'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewAvatar(\''+esc(p.id)+'\',true)">Approve photo</button><button class="scActionNeon warn" onclick="scReviewAvatar(\''+esc(p.id)+'\',false)">Reject photo</button></div></div>'; }));
+  openSocialModal('🛡️ Upload review queue','<p class="muted" style="font-size:12px">Check each image/video for educational relevance, personal data and unsafe content. Approval makes it visible according to account privacy rules.</p><h3>Study posts & videos</h3>'+ (postCards.join('')||'<div class="scSocialEmpty">No media posts waiting.</div>')+'<h3 style="margin-top:18px">Profile photos</h3>'+ (avatarCards.join('')||'<div class="scSocialEmpty">No profile photos waiting.</div>'));
+  }catch(err){openSocialModal('Upload review queue','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}};
+ window.scReviewPost=async function(id,approve){if(!state.isModerator)return;const note=prompt(approve?'Optional review note':'Reason for rejecting this content')||'';try{const {error}=await sb.rpc('studyai_review_post',{p_post_id:id,p_approve:!!approve,p_note:note.slice(0,500)});if(error)throw error;await refreshCommunity(true);await window.scOpenModerationQueue();}catch(err){alert(normalError(err));}};
+ window.scReviewAvatar=async function(id,approve){if(!state.isModerator)return;const note=prompt(approve?'Optional review note':'Reason for rejecting this photo')||'';try{const {error}=await sb.rpc('studyai_review_avatar',{p_user_id:id,p_approve:!!approve,p_note:note.slice(0,500)});if(error)throw error;await refreshCommunity(true);await window.scOpenModerationQueue();}catch(err){alert(normalError(err));}};
+
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){window.scCloseProfile();window.scCloseSocialModal();}});
  $('scProfileModal')?.addEventListener('click',e=>{if(e.target===$('scProfileModal'))window.scCloseProfile();});
+ $('scSocialModal')?.addEventListener('click',e=>{if(e.target===$('scSocialModal'))window.scCloseSocialModal();});
  window.addEventListener('studyai-auth-changed',()=>{setTimeout(()=>refreshCommunity(false),0);});
  document.addEventListener('visibilitychange',()=>{if(document.visibilityState==='visible')refreshCommunity(true);});
  render();refreshCommunity(false);
+})();
+</script>
+
+<div class="scMediaModal" id="scMediaModal" role="dialog" aria-modal="true" aria-labelledby="scMediaTitle" onclick="scMediaBackdropClose(event)">
+ <div class="scMediaSheet" role="document" onclick="event.stopPropagation()">
+  <button type="button" id="scMediaClose" class="scMediaClose" onclick="scCloseMedia()" aria-label="Close lesson">×</button>
+  <div class="scMediaHero"><img id="scMediaImage" alt=""><span id="scMediaHeroLabel" class="scMediaHeroLabel">STUDYAI QUICK LEARN</span></div>
+  <div class="scMediaCopy"><h2 id="scMediaTitle">A little learning goes a long way</h2><p id="scMediaText"></p><div class="scMediaTakeaway" id="scMediaTakeaway"></div><div class="scMediaActions"><button id="scMediaPrimary" type="button" onclick="scMediaPrimaryAction()">Next story →</button><button type="button" class="scMediaSecondary" onclick="scCloseMedia()">Back to community</button></div></div>
+ </div>
+</div>
+<script id="studyai-story-mini-lessons">
+(function(){
+ const $=id=>document.getElementById(id);
+ const storyList=[
+  {id:'math',label:'MATH SPARK',title:'Triangles made easy 📐',text:'A right triangle has one 90° angle. The Pythagorean rule connects its sides: a² + b² = c², where c is the longest side (the hypotenuse).',take:'Try it: 3² + 4² = 9 + 16 = 25 = 5². So 3, 4 and 5 make a right-triangle triple.',image:'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=86',next:'science'},
+  {id:'science',label:'SCIENCE WOW',title:'Science is all around 🧪',text:'Science begins with a question: What do I notice? What could explain it? A fair test changes one factor at a time and records what happens.',take:'Try it: predict which paper shape falls more slowly, test both safely from the same height, and write what you observe.',image:'https://images.unsplash.com/photo-1532094349884-543bc11b234d?auto=format&fit=crop&w=1000&q=86',next:'bio'},
+  {id:'bio',label:'BIO BREAK',title:'How plants make food 🌿',text:'Photosynthesis lets plants use light energy to turn water and carbon dioxide into glucose. Oxygen is released during the process.',take:'Remember the inputs: light + water + carbon dioxide. The plant stores energy in the food it makes.',image:'https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&fit=crop&w=1000&q=86',next:'english'},
+  {id:'english',label:'ENGLISH TIP',title:'There, their, they’re ✍️',text:'THERE points to a place or introduces something. THEIR shows belonging. THEY’RE is short for “they are.” Read the sentence aloud to test it.',take:'Example: They’re keeping their books over there. Three meanings, three uses!',image:'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=86',next:'memory'},
+  {id:'memory',label:'MEMORY HACK',title:'Remember more 🧠',text:'After reading a small section, close the book and explain the idea from memory. Then reopen it and check what you missed.',take:'Mini routine: read → close notes → recall → check → try again later. Keep practice short and take breaks.',image:'https://images.unsplash.com/photo-1456513080510-7bf3a84b82f8?auto=format&fit=crop&w=1000&q=86',next:'exam'},
+  {id:'exam',label:'EXAM RESET',title:'Reset your focus 🌈',text:'Pick one small target, such as solving two questions or revising one heading. Keep distractions aside for a short focused session.',take:'A simple option: 25 minutes of focus, then a 5-minute break. Adjust the timing to what works for you.',image:'https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=1000&q=86',next:'math'}
+ ];
+ const lessons={
+  triangle:{label:'MATH · MINI LESSON',title:'The 3–4–5 triangle trick 📐',text:'Pythagoras’ theorem says that in a right-angled triangle, the square of the hypotenuse equals the sum of the squares of the other two sides. With sides 3 and 4, the longest side is 5 because 9 + 16 = 25.',take:'Quick check: if the shorter sides are 5 and 12, then the hypotenuse is 13 because 25 + 144 = 169. Try calculating it yourself before opening the answer.',image:'https://images.unsplash.com/photo-1509228468518-180dd4864904?auto=format&fit=crop&w=1000&q=86'},
+  photosynthesis:{label:'BIOLOGY · MINI LESSON',title:'Plants are tiny food-makers 🌱',text:'In photosynthesis, green plants use light energy to make glucose from carbon dioxide and water. Oxygen is released. Chlorophyll helps absorb the light.',take:'Think of leaves as tiny solar-powered food factories. Sunlight is energy; carbon dioxide and water are raw materials.',image:'https://images.unsplash.com/photo-1470058869958-2a77ade41c02?auto=format&fit=crop&w=1000&q=86'},
+  english:{label:'ENGLISH · MINI LESSON',title:'Three words, three meanings ✍️',text:'There = a place (Put it there). Their = belonging to them (Their books). They’re = they are (They’re ready).',take:'Try replacing “they’re” with “they are.” If the sentence still makes sense, you probably have the right word.',image:'https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1000&q=86'},
+  recall:{label:'STUDY SKILLS · MINI LESSON',title:'Test yourself, don’t just reread 🧠',text:'Active recall means trying to retrieve what you learned without looking at the notes. Then check your answer and return to the areas that need more practice.',take:'Tiny experiment: read one page, close the book, write three things you remember, then verify them.',image:'https://images.unsplash.com/photo-1491841550275-ad7854e35ca6?auto=format&fit=crop&w=1000&q=86'}
+ };
+ let mode='story',currentStory='math',currentLesson='triangle',lastFocus=null;
+ function open(){const m=$('scMediaModal');if(!m)return;lastFocus=document.activeElement;m.classList.add('open');document.body.style.overflow='hidden';$('scMediaClose')?.focus();}
+ function paint(item,isStory){if(!item)return;const img=$('scMediaImage');img.style.display='block';img.src=item.image;img.alt=item.title;img.onerror=()=>{img.style.display='none';};$('scMediaHeroLabel').textContent=item.label;$('scMediaTitle').textContent=item.title;$('scMediaText').textContent=item.text;$('scMediaTakeaway').innerHTML='<b>💡 Remember this:</b> '+item.take;$('scMediaPrimary').textContent=isStory?'Next story →':'Try a quiz ↗';$('scMediaPrimary').dataset.mode=isStory?'story':'lesson';open();}
+ window.scOpenStory=function(id){const item=storyList.find(x=>x.id===id)||storyList[0];mode='story';currentStory=item.id;paint(item,true);};
+ window.scOpenMiniLesson=function(id){const item=lessons[id];if(!item)return;mode='lesson';currentLesson=id;paint(item,false);};
+ window.scCloseMedia=function(){const m=$('scMediaModal');if(!m)return;m.classList.remove('open');document.body.style.overflow='';if(lastFocus&&typeof lastFocus.focus==='function')lastFocus.focus();};
+ window.scMediaBackdropClose=function(e){if(e.target===$('scMediaModal'))window.scCloseMedia();};
+ window.scMediaPrimaryAction=function(){if(mode==='story'){const index=storyList.findIndex(x=>x.id===currentStory);window.scOpenStory(storyList[(index+1)%storyList.length].id);}else{window.scCloseMedia();location.hash='#quiz';}};
+ document.addEventListener('keydown',e=>{if(e.key==='Escape')window.scCloseMedia();if($('scMediaModal')?.classList.contains('open')&&e.key==='ArrowRight'&&mode==='story')window.scMediaPrimaryAction();});
+ // Save a story selection locally for a light personal touch without implying server-side tracking.
+ try{const saved=JSON.parse(localStorage.getItem('studyaiStoryOpens')||'{}');document.querySelectorAll('.scStoryTile').forEach(tile=>tile.addEventListener('click',()=>{const id=(tile.getAttribute('onclick')||'').match(/scOpenStory\('([^']+)'\)/)?.[1];if(id){saved[id]=(saved[id]||0)+1;localStorage.setItem('studyaiStoryOpens',JSON.stringify(saved));}}));}catch(_){}
 })();
 </script>
 
