@@ -4936,14 +4936,14 @@ hub();
 
 
 <style id="studyai-message-colors-fix">
-/* Incoming messages are pink; outgoing messages use the site's primary accent colour. */
-#community .scBubble:not(.mine){
+/* Message dialogs may be attached outside #community, so keep these selectors global. */
+.scBubble:not(.mine){
  background:linear-gradient(135deg,#fff0f7,#ffe0ed)!important;
  border:1px solid #ff9bc9!important;
  color:#702044!important;
  border-radius:16px 16px 16px 5px!important;
 }
-#community .scBubble.mine{
+.scBubble.mine{
  background:linear-gradient(135deg,var(--primary,#635bff),var(--purple,#8b5cf6))!important;
  border:1px solid var(--primary,#635bff)!important;
  color:#fff!important;
