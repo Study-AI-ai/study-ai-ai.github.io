@@ -4504,7 +4504,36 @@ hub();
  window.scOpenNextStoryV2=async function(userId,currentId){const arr=scStoryCacheV2.filter(s=>s.user_id===userId&&Date.parse(s.expires_at)>Date.now());const i=arr.findIndex(s=>s.id===currentId);if(i>=0&&arr[i+1]){const next=arr[i+1];scStoryCacheV2=scStoryCacheV2.filter(s=>s.id!==next.id).concat(next);await window.scOpenStoryGroupV2(userId);}else alert('No more stories.');};
  window.scReactStoryV2=async function(storyId,emoji){if(!requireLogin())return;try{const {error}=await sb.from('community_story_reactions').upsert({story_id:storyId,user_id:state.user.id,emoji},{onConflict:'story_id,user_id,emoji'});if(error)throw error;const story=scStoryCacheV2.find(s=>s.id===storyId);if(story)await window.scOpenStoryGroupV2(story.user_id);}catch(err){alert(normalError(err));}};
  window.scDeleteStoryV2=async function(storyId){if(!requireLogin()||!confirm('Delete this story?'))return;try{const {error}=await sb.from('community_stories').delete().eq('id',storyId).eq('user_id',state.user.id);if(error)throw error;window.scCloseSocialModal();await scLoadStoriesV2();}catch(err){alert(normalError(err));}};
- window.scSearchUsernames=async function(){const input=$('scExploreUsername'),results=$('scExploreResultsV2');if(!input||!results)return;const term=input.value.trim().replace(/^@/,'').toLowerCase();if(term.length<2){results.innerHTML='<div class="muted">Enter at least 2 characters of a username.</div>';return;}results.innerHTML='<div class="muted">Searching usernames…</div>';try{const {data,error}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,avatar_url,is_private,avatar_moderation_status').ilike('username','%'+term+'%').limit(20);if(error)throw error;const rows=(data||[]).filter(p=>p.id!==state.user?.id);if(!rows.length){results.innerHTML='<div class="muted">No matching username found.</div>';return;}results.innerHTML=await Promise.all(rows.map(async p=>{const img=await signedMediaUrl(p.avatar_url);return '<div class="scExploreResultV2"><div class="communityAvatar">'+(img?'<img src="'+esc(img)+'" alt="">':esc(initials(p.display_name||p.username)))+'</div><div class="scExploreMeta"><b>'+esc(p.display_name||p.username)+'</b><small>@'+esc(p.username)+' · '+(p.is_private?'Private account':'Public account')+'</small></div><button class="scActionNeon" onclick="scOpenUserProfile(\''+esc(p.id)+'\')">View profile</button></div>'; } )).join('');}catch(err){results.innerHTML='<div class="muted">'+esc(normalError(err))+'</div>';}};
+ window.scSearchUsernames=async function(){
+  const input=$('scExploreUsername'),results=$('scExploreResultsV2');
+  if(!input||!results)return;
+  const term=input.value.trim().replace(/^@/,'').toLowerCase();
+  if(term.length<2){results.innerHTML='<div class="muted">Kam se kam 2 username characters likho.</div>';return;}
+  results.innerHTML='<div class="muted">🔎 Students search ho rahe hain…</div>';
+  try{
+   // First search profiles already loaded by the community refresh; this avoids a second query failing under stricter RLS.
+   let rows=(state.people||[]).filter(p=>p.id!==state.user?.id&&(
+    String(p.username||'').toLowerCase().includes(term)||
+    String(p.display_name||'').toLowerCase().includes(term)
+   ));
+   // If the current list has no match, ask Supabase directly for username matches.
+   if(!rows.length){
+    const {data,error}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,avatar_url,is_private,avatar_moderation_status').ilike('username','%'+term+'%').limit(20);
+    if(error)throw error;
+    rows=(data||[]).filter(p=>p.id!==state.user?.id);
+   }
+   const unique=new Map(rows.map(p=>[p.id,p]));
+   rows=[...unique.values()].slice(0,20);
+   if(!rows.length){results.innerHTML='<div class="muted">Koi matching account nahi mila. Username ki spelling check karo.</div>';return;}
+   results.innerHTML=(await Promise.all(rows.map(async p=>{
+    const img=p.avatar_url||await signedMediaUrl(p.avatar_path||p.avatar_url);
+    return '<div class="scExploreResultV2"><div class="communityAvatar">'+(img?'<img src="'+esc(img)+'" alt="">':esc(initials(p.display_name||p.username)))+'</div><div class="scExploreMeta"><b>'+esc(p.display_name||p.username||'Student')+'</b><small>@'+esc(p.username||'username unavailable')+' · '+(p.is_private?'Private account':'Public account')+'</small></div><button type="button" class="scActionNeon" onclick="scOpenUserProfile(\''+esc(p.id)+'\')">View profile</button></div>';
+   }))).join('');
+  }catch(err){
+   const msg=normalError(err);
+   results.innerHTML='<div class="muted">Search nahi ho paya: '+esc(msg)+'. Community reload karke dobara try karo.</div>';
+  }
+}
  window.scOpenAvatarMenuV2=function(userId){openSocialModal('Profile picture','<button type="button" class="scV2MenuChoice" onclick="scOpenStoryGroupV2(\''+esc(userId)+'\')"><span>🌈</span><span>Story</span></button><button type="button" class="scV2MenuChoice" onclick="scShowProfilePictureV2(\''+esc(userId)+'\')"><span>🖼️</span><span>Profile picture</span></button>');};
  window.scShowProfilePictureV2=async function(userId){const p=state.people.find(x=>x.id===userId)||(state.profile?.id===userId?state.profile:await loadProfile(userId));if(!p){alert('Profile photo unavailable.');return;}const url=p.avatar_url||await signedMediaUrl(p.avatar_path||p.avatar_url);openSocialModal('Profile picture',url?'<img class="scV2AvatarLarge" src="'+esc(url)+'" alt="Profile picture"><div class="scV2Buttons"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Close</button></div>':'<div class="scSocialEmpty">This student has not added an approved profile photo yet.</div>');};
  document.addEventListener('click',function(e){const avatar=e.target.closest('#scMyAvatar,#scSideAvatar,.scProfileAvatar,.scProfileTap .communityAvatar,.scMoment .communityAvatar');if(!avatar)return;let id=null;if(avatar.id==='scMyAvatar'||avatar.id==='scSideAvatar')id=state.user?.id;else if(avatar.classList.contains('scProfileAvatar'))id=state.viewingProfile?.id;else{const parent=avatar.closest('button[onclick]');const match=(parent?.getAttribute('onclick')||'').match(/scOpenUserProfile\('([^']+)'\)|scMomentProfile\('([^']+)'\)/);id=match?(match[1]||match[2]):null;}if(id){e.preventDefault();e.stopPropagation();window.scOpenAvatarMenuV2(id);}},true);
