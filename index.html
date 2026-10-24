@@ -311,6 +311,34 @@ table.pwt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;dis
 
 
 .scHandleRow{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin:3px 0 7px}.scInlineFollow{padding:5px 9px;font-size:10px;line-height:1.2;min-height:27px;box-shadow:0 0 14px #8b5cf633;white-space:nowrap}
+
+/* StudyAI pastel colour-bomb animation: gentle colour shift, sparkle flash and speed cycling. */
+@keyframes scPastelColorBomb{0%{background-position:0% 50%;filter:hue-rotate(0deg)}25%{background-position:100% 15%;filter:hue-rotate(14deg)}50%{background-position:80% 100%;filter:hue-rotate(-8deg)}75%{background-position:0% 85%;filter:hue-rotate(20deg)}100%{background-position:0% 50%;filter:hue-rotate(0deg)}}
+@keyframes scPastelFlash{0%,88%,100%{opacity:.22}92%{opacity:.72}96%{opacity:.32}}
+#community .scProfileHero{background:linear-gradient(120deg,#fff3fa,#f0f2ff,#e9fbff,#fff6dc,#f3edff)!important;background-size:300% 300%!important;animation:scPastelColorBomb 18s ease-in-out infinite!important}
+#community .scProfileHero:after{animation:scLightBomb 9s linear infinite,scPastelFlash 7s ease-in-out infinite!important}
+@media(prefers-reduced-motion:reduce){#community .scProfileHero,#community .scProfileHero:after{animation:none!important}}
+
+
+/* StudyAI community polish: compact profile header, gentle pastel hue-bomb animation. */
+#community .scProfileHero{
+  padding:8px 0 15px!important;margin:0 0 14px!important;border:0!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important;isolation:isolate;overflow:hidden;
+  animation:studyaiHeaderHue 8s ease-in-out infinite!important;
+}
+#community .scProfileHero:after{
+  content:""!important;position:absolute!important;z-index:-1!important;inset:-55% -18%!important;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 16%,#ffb7df20 22%,transparent 28% 43%,#b9c5ff2b 49%,transparent 55% 70%,#a7f3e62b 78%,transparent 84%)!important;
+  animation:studyaiHeaderSpin 8s linear infinite,studyaiHeaderFlash 6s ease-in-out infinite!important;pointer-events:none!important;
+}
+#community .scProfileHero .communityAvatar{box-shadow:0 0 0 3px #fff,0 0 0 6px #d6ccff,0 0 20px #b7a8ff55!important;border-color:#fff!important}
+#community .scProfileHero h3,#community .scProfileHero .scHandle,#community .scProfileHero .scProfileBio{color:var(--text)!important}
+#community .scProfileHero .scPrivacyPill{color:#5546a8!important;border-color:#d7d0ff!important;background:#f6f3ff!important}
+@keyframes studyaiHeaderHue{0%,100%{filter:hue-rotate(0deg)}25%{filter:hue-rotate(12deg)}50%{filter:hue-rotate(-9deg)}75%{filter:hue-rotate(18deg)}}
+@keyframes studyaiHeaderSpin{to{transform:rotate(360deg)}}
+@keyframes studyaiHeaderFlash{0%,88%,100%{opacity:.10}92%{opacity:.30}96%{opacity:.16}}
+@media(prefers-reduced-motion:reduce){#community .scProfileHero,#community .scProfileHero:after{animation:none!important}}
+
 </style>
 <style id="ix12">
 .ixBanner,.ixTips{margin-top:18px}.ixH{margin:22px 0 12px}
@@ -998,6 +1026,27 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 @media(prefers-reduced-motion:reduce){.scProfileHero:after{animation:none}}
 </style>
 
+<style>/* StudyAI community polish final cascade */
+
+/* StudyAI community polish: compact profile header, gentle pastel hue-bomb animation. */
+#community .scProfileHero{
+  padding:8px 0 15px!important;margin:0 0 14px!important;border:0!important;border-radius:0!important;
+  background:transparent!important;box-shadow:none!important;isolation:isolate;overflow:hidden;
+  animation:studyaiHeaderHue 8s ease-in-out infinite!important;
+}
+#community .scProfileHero:after{
+  content:""!important;position:absolute!important;z-index:-1!important;inset:-55% -18%!important;border-radius:50%;
+  background:conic-gradient(from 0deg,transparent 0 16%,#ffb7df20 22%,transparent 28% 43%,#b9c5ff2b 49%,transparent 55% 70%,#a7f3e62b 78%,transparent 84%)!important;
+  animation:studyaiHeaderSpin 8s linear infinite,studyaiHeaderFlash 6s ease-in-out infinite!important;pointer-events:none!important;
+}
+#community .scProfileHero .communityAvatar{box-shadow:0 0 0 3px #fff,0 0 0 6px #d6ccff,0 0 20px #b7a8ff55!important;border-color:#fff!important}
+#community .scProfileHero h3,#community .scProfileHero .scHandle,#community .scProfileHero .scProfileBio{color:var(--text)!important}
+#community .scProfileHero .scPrivacyPill{color:#5546a8!important;border-color:#d7d0ff!important;background:#f6f3ff!important}
+@keyframes studyaiHeaderHue{0%,100%{filter:hue-rotate(0deg)}25%{filter:hue-rotate(12deg)}50%{filter:hue-rotate(-9deg)}75%{filter:hue-rotate(18deg)}}
+@keyframes studyaiHeaderSpin{to{transform:rotate(360deg)}}
+@keyframes studyaiHeaderFlash{0%,88%,100%{opacity:.10}92%{opacity:.30}96%{opacity:.16}}
+@media(prefers-reduced-motion:reduce){#community .scProfileHero,#community .scProfileHero:after{animation:none!important}}
+</style>
 </head>
 
 <body>
@@ -1036,7 +1085,7 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 
 <!-- StudyAI cinematic intro -->
 <div id="studyaiSplash" class="studyai-splash" aria-label="StudyAI intro">
-  <img src="studyai-intro.webp" alt="StudyAI — Created by Mayank Sharma">
+  <img src="studyai-intro.webp" alt="StudyAI — Created by Mayank Sharma" onerror="this.style.display='none';document.getElementById('studyaiSplash')?.classList.add('hide');document.body.classList.remove('splash-open');">
   <button id="skipSplash" type="button">Skip intro</button>
 </div>
 <style>
@@ -1543,6 +1592,17 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
   
   
   
+  <section class="scStoryStudio" id="scStoryStudio" aria-label="Stories and Explore">
+   <div class="scStoryStudioHead"><div><h2>✨ Stories</h2><p>Stories disappear automatically after 24 hours. Private-account stories require mutual follows.</p></div><button type="button" class="btn" onclick="scStartStory()">＋ Add story</button></div>
+   <div class="scStoryRailV2" id="scStoryRailV2"><span class="muted">Sign in to add a story, or refresh to view stories.</span></div>
+  </section>
+  <section class="scExploreV2" aria-label="Explore students by username">
+   <div><b>🔎 Explore students</b><div class="muted" style="font-size:12px;margin-top:3px">Search a unique username to find a student account.</div></div>
+   <button type="button" class="btn" onclick="scSearchUsernames()">Search</button>
+   <input id="scExploreUsername" type="search" maxlength="32" placeholder="Search username (e.g. student_10)" onkeydown="if(event.key==='Enter')scSearchUsernames()" aria-label="Search usernames">
+   <div class="scExploreResultsV2" id="scExploreResultsV2"></div>
+  </section>
+  <input id="scStoryFileV2" type="file" accept="image/jpeg,image/png,image/webp" hidden>
   <div class="scDiscoveryToolbar" aria-label="Search and filter community posts">
    <div class="scDiscoveryTitle"><span class="scEyebrow">YOUR COMMUNITY FEED</span><h2>Discover something useful 🔎</h2><p id="scResultsCount">Search posts, find a topic or save resources for later.</p></div>
    <div class="scDiscoveryControls"><input id="scSearchInput" type="search" placeholder="Search notes, topics, students…" oninput="scSetSearch(this.value)" aria-label="Search community posts"><select id="scCategoryFilter" onchange="scSetCategory(this.value)" aria-label="Filter by category"><option value="all">All categories</option><option value="Handwritten Notes">✍️ Handwritten Notes</option><option value="School Paper">📝 School Paper</option><option value="Study Tips">💡 Study Tips</option><option value="Question Help">❓ Question Help</option><option value="Video Lesson">🎬 Video Lesson</option></select><select id="scSortSelect" onchange="scSetSort(this.value)" aria-label="Sort community posts"><option value="new">Newest first</option><option value="popular">Most liked</option><option value="discussed">Most discussed</option></select><button type="button" class="scMiniBtn" onclick="scClearDiscovery()">Clear filters</button></div>
@@ -1555,13 +1615,13 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
      <textarea id="scPostText" maxlength="1200" placeholder="Aaj kya helpful padha? Notes ke baare mein batao…"></textarea>
      <input id="scPostTitle" type="text" maxlength="100" placeholder="Post title (e.g. Class 10 • Biology handwritten notes)">
      <div class="communityComposeTools">
-      <label>📷 Add study photo / video<input id="scPostImage" type="file" accept="image/jpeg,image/png,image/webp,video/mp4,video/webm,video/quicktime" hidden></label>
+      <label>📷 Add study photo<input id="scPostImage" type="file" accept="image/jpeg,image/png,image/webp" hidden></label>
       <select id="scPostType" aria-label="Post category" style="max-width:190px"><option value="Handwritten Notes">✍️ Handwritten Notes</option><option value="School Paper">📝 School Paper</option><option value="Study Tips">💡 Study Tips</option><option value="Question Help">❓ Question Help</option></select>
       <button class="btn" type="button" onclick="scPublish()">Publish post ↗</button>
      </div>
-     <label class="scStudyConfirm"><input id="scStudyOnlyConfirm" type="checkbox"> <span>✅ I confirm this upload is only study material (notes, school work, educational diagrams or learning videos).</span></label>
+     <label class="scStudyConfirm"><input id="scStudyOnlyConfirm" type="checkbox"> <span>✅ I confirm this upload is only study material (notes, school work, educational diagrams or learning images).</span></label>
      <div id="scImagePreview" style="display:none;margin-top:12px"></div>
-     <div class="communityNotice">Study-only rule: obvious off-topic text and contact details are blocked. Every photo/video and new profile photo stays private until it is reviewed. Automatic image recognition is not connected yet, so uploads cannot be approved by the browser alone.</div>
+     <div class="communityNotice">🛡️ PRE-UPLOAD AI SAFETY CHECK: when you publish a photo, StudyAI sends it to the secure AI checker before any upload. During checking, keep this page open. A photo uploads only if AI confirms it is appropriate Class 6–12 study material; rejected or failed checks are not uploaded. The Edge Function must be deployed and GROQ_API_KEY configured in Supabase.</div>
     </div>
     <div class="communityFeedTabs" id="scFeedTabs"><button class="active" data-feed="all" onclick="scSetFeed('all',this)">🌈 For you</button><button data-feed="following" onclick="scSetFeed('following',this)">💜 Following</button><button data-feed="notes" onclick="scSetFeed('notes',this)">✍️ Notes & papers</button><button data-feed="saved" onclick="scSetFeed('saved',this)">🔖 Saved</button><button type="button" onclick="scRefresh()">↻ Refresh</button></div>
     <div id="scFeed"></div>
@@ -2118,11 +2178,13 @@ function route(){
   const title = document.getElementById("pageTitle");
   if(title){
     const names = {home:"Dashboard",subjects:"Subjects",notes:"Study Notes",quiz:"Practice Quiz",
-      papers:"Chapter Papers",ncert:"NCERT Library",tutor:"AI Tutor",settings:"Settings",donate:"Support StudyAI"};
+      papers:"Chapter Papers",ncert:"NCERT Library",tutor:"AI Tutor",settings:"Settings",donate:"Support StudyAI",community:"StudyAI Community"};
     title.textContent = names[target] || "StudyAI";
   }
 }
 window.addEventListener("hashchange", route);
+// Apply the current route on first load too, including direct #community links.
+if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", route, { once: true }); else route();
 
 
 function save(){
@@ -4171,7 +4233,7 @@ hub();
  function setAvatar(id,person){const el=$(id);if(el)el.innerHTML=avatarHTML(person||{}).replace(/^<div[^>]*>|<\/div>$/g,'');}
  function openAccount(){if(window.studyAIOpenAccount)window.studyAIOpenAccount();else alert('Please open My StudyAI Account to sign in.');}
  function requireLogin(){if(state.user)return true;setStatus('Sign in or create a StudyAI account before posting, following, liking or commenting.','warning');openAccount();return false;}
- function normalError(err){const msg=String(err?.message||err||'Unknown error');if(/relation .* does not exist|could not find the table|schema cache/i.test(msg))return 'Database setup is still missing. Run StudyAI_Social_Upgrade.sql in your Supabase project → SQL Editor, then refresh this page.';if(/row-level security|permission denied|not allowed/i.test(msg))return 'Supabase security rules blocked this action. Re-run the supplied setup SQL and check that Row Level Security policies were created.';if(/duplicate key|community_profiles_username_key|username/i.test(msg))return 'That username is already taken. Choose a different username.';return msg;}
+ function normalError(err){const msg=String(err?.message||err||'Unknown error');if(/relation .* does not exist|could not find the table|schema cache/i.test(msg))return 'StudyAI database setup is incomplete: a required table is missing. Run the latest StudyAI_Social_Upgrade_Fixed.sql in this exact Supabase project. If SQL reports an error, fix that SQL error first; refresh only after the full script succeeds. Original: '+msg;if(/row-level security|permission denied|not allowed/i.test(msg))return 'Supabase security policy blocked this action. Run the latest fixed SQL successfully and check the policy error details. Original: '+msg;if(/duplicate key|community_profiles_username_key|username.*already|unique constraint/i.test(msg))return 'That username is already taken. Choose a different username. Details: '+msg;return msg;}
  function slugify(s){return String(s||'student').toLowerCase().normalize('NFKD').replace(/[^a-z0-9_.]+/g,'_').replace(/^[_\.]+|[_\.]+$/g,'').slice(0,24)||'student';}
  function filename(s){return String(s||'image').toLowerCase().replace(/[^a-z0-9._-]+/g,'-').replace(/^-+|-+$/g,'').slice(-90)||'image';}
  function mediaPath(value){
@@ -4316,7 +4378,7 @@ hub();
   if($('scFollowingCount'))$('scFollowingCount').textContent=String(state.following.length);
   if($('scFollowerCount'))$('scFollowerCount').textContent=String(state.user?(state.followerCount||0):0);
   const cta=document.querySelector('.communityHero .btn');if(cta)cta.textContent=p?'✦ Edit your student profile':state.user?'✦ Create your student profile':'✦ Sign in / Create account';
-  const publish=document.querySelector('.communityComposeTools .btn');if(publish)publish.textContent=state.publishBusy?'Publishing…':state.user?'Publish post ↗':'Sign in to post ↗';
+  const publish=document.querySelector('.communityComposeTools .btn');if(publish)publish.textContent=state.publishBusy?(state.draftFile?'SECURITY CHECKING…':'Publishing…'):state.user?'Publish post ↗':'Sign in to post ↗';
  }
  function renderPeople(){
   const box=$('scPeople');if(!box)return;
@@ -4349,7 +4411,7 @@ hub();
    const author='<button type="button" class="scProfileTap" onclick="scOpenUserProfile(\''+esc(p.user_id)+'\')">'+avatarHTML({display_name:p.authorName,avatar_url:p.avatar})+'</button><div class="meta"><button type="button" class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(p.user_id)+'\')">'+esc(p.authorName)+(own?' <small>(you)</small>':'')+'</button>'+badgeHTML(p.user_id)+'<small>@'+esc(p.handle)+' · '+esc(p.cls)+' · '+esc(timeAgo(p.created))+'</small></div>';
    const commentHtml=p.comments.map(c=>'<div class="communityComment"><button type="button" class="scProfileNameLink" onclick="scOpenUserProfile(\''+esc(c.userId)+'\')">'+esc(c.name)+'</button>'+badgeHTML(c.userId)+' <small style="color:var(--muted)">@'+esc(c.handle)+'</small><div style="white-space:pre-wrap;overflow-wrap:anywhere">'+esc(c.text)+'</div></div>').join('');
    const mediaHtml=p.image?(p.mediaType==='video'?'<video class="communityPostVideo" controls playsinline preload="metadata" src="'+esc(p.image)+'"></video>':'<a href="'+esc(p.image)+'" target="_blank" rel="noopener noreferrer"><img class="communityPostImage" src="'+esc(p.image)+'" alt="Shared study notes or paper" loading="lazy"></a>'):'';
-   return '<article class="communityPost" id="scPost_'+esc(p.id)+'"><div class="communityPostHead">'+author+'<span class="communityPostType">'+esc(p.type)+'</span></div>'+(pending?'<div class="communityPostMediaPending">🕵️ '+(own?'Your media is awaiting review and is visible only to you.':'Upload is awaiting review.')+(state.isModerator?'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewPost(\''+esc(p.id)+'\',true)">Approve</button><button class="scActionNeon warn" onclick="scReviewPost(\''+esc(p.id)+'\',false)">Reject</button></div>':'')+'</div>':'')+(p.title?'<h3 style="margin:14px 0 0;font-size:18px">'+esc(p.title)+'</h3>':'')+(p.body?'<div class="communityPostText">'+esc(p.body)+'</div>':'')+(!pending?mediaHtml:'')+'<div class="communityPostActions"><button class="'+(liked?'liked':'')+'" onclick="scLike(\''+esc(p.id)+'\')">'+(liked?'❤️ Liked':'♡ Like')+' · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button><button class="'+(saved?'scSavedButton':'')+'" onclick="scToggleSaved(\''+esc(p.id)+'\')">'+(saved?'🔖 Saved':'🔖 Save')+'</button><button onclick="scSharePost(\''+esc(p.id)+'\')">↗ Share</button>'+(own?'<button onclick="scDeletePost(\''+esc(p.id)+'\')">🗑 Delete</button>':p.user_id?'<button onclick="scToggleFollow(\''+esc(p.user_id)+'\')">'+(following?'✓ Following':state.pendingFollowRequests.has(p.user_id)?'Requested':p.authorPrivate?'🔒 Request':'＋ Follow')+'</button><button onclick="scReportPost(\''+esc(p.id)+'\')">⚑ Report</button>':'')+'</div><div class="communityComments" id="scComments_'+esc(p.id)+'">'+commentHtml+'<div class="communityCommentForm"><input id="scCommentInput_'+esc(p.id)+'" maxlength="500" placeholder="Write a helpful study comment…" aria-label="Write a comment"><button class="btn" onclick="scAddComment(\''+esc(p.id)+'\')">Send</button></div></div></article>';
+   return '<article class="communityPost" id="scPost_'+esc(p.id)+'"><div class="communityPostHead">'+author+'<span class="communityPostType">'+esc(p.type)+'</span></div>'+(pending?'<div class="communityPostMediaPending">🕵️ '+(own?'Your media is awaiting review and is visible only to you.':'Upload is awaiting review.')+(state.isModerator?'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewPost(\''+esc(p.id)+'\',true)">Approve</button><button class="scActionNeon warn" onclick="scReviewPost(\''+esc(p.id)+'\',false)">Reject</button></div>':'')+'</div>':'')+(p.title?'<h3 style="margin:14px 0 0;font-size:18px">'+esc(p.title)+'</h3>':'')+(p.body?'<div class="communityPostText">'+esc(p.body)+'</div>':'')+(!pending?mediaHtml:'')+'<div class="communityPostActions"><button class="'+(liked?'liked':'')+'" onclick="scLike(\''+esc(p.id)+'\')">'+(liked?'❤️ Liked':'♡ Like')+' · '+p.likes.length+'</button><button onclick="scToggleComments(\''+esc(p.id)+'\')">💬 Comments · '+p.comments.length+'</button><button class="'+(saved?'scSavedButton':'')+'" onclick="scToggleSaved(\''+esc(p.id)+'\')">'+(saved?'🔖 Saved':'🔖 Save')+'</button><button onclick="scSharePost(\''+esc(p.id)+'\')">↗ Share</button>'+(own?'<button onclick="scDeletePost(\''+esc(p.id)+'\')">🗑 Delete</button>':p.user_id?'<button onclick="scReportPost(\''+esc(p.id)+'\')">⚑ Report</button>':'')+'</div><div class="communityComments" id="scComments_'+esc(p.id)+'">'+commentHtml+'<div class="communityCommentForm"><input id="scCommentInput_'+esc(p.id)+'" maxlength="500" placeholder="Write a helpful study comment…" aria-label="Write a comment"><button class="btn" onclick="scAddComment(\''+esc(p.id)+'\')">Send</button></div></div></article>';
   }).join('');
  }
  function renderMoments(){
@@ -4369,7 +4431,70 @@ hub();
  function readSprint(){try{const v=JSON.parse(localStorage.getItem(sprintKey())||'[false,false,false]');return [!!v[0],!!v[1],!!v[2]];}catch(_){return [false,false,false];}}
  function renderSprint(){const values=readSprint();document.querySelectorAll('[data-sprint-task]').forEach(el=>{el.checked=!!values[Number(el.dataset.sprintTask)];});const done=values.filter(Boolean).length;const txt=$('scSprintProgress'),bar=$('scSprintProgressBar');if(txt)txt.textContent=done+' / 3 complete';if(bar)bar.style.width=(done/3*100)+'%';}
 
- function render(){renderProfile();renderPeople();renderFeed();renderMoments();renderPulse();renderSprint();const rb=$('scRequestBadge');if(rb)rb.textContent=String(state.pendingFollowRequests.size+state.pendingPostAccess.size);}
+ 
+ // Stories + username Explore V2. Database RLS enforces visibility and expiry; the UI is not the security boundary.
+ let scStoryCacheV2=[];
+ const scStoryEscV2=esc;
+ window.scStartStory=async function(){
+  if(!requireLogin())return;
+  if(!state.profile){alert('Create your student profile first.');window.scOpenProfile();return;}
+  const caption=prompt('Story caption (study-related, max 500 characters):');
+  if(caption===null)return;
+  const clean=caption.trim();
+  if(clean.length>500){alert('Story caption must be 500 characters or fewer.');return;}
+  const picker=$('scStoryFileV2');
+  if(!clean && !picker?.files?.length){
+   // Let the student choose an optional image after entering the caption.
+  }
+  const addImage=confirm('Add an image to this story? Press OK to choose an image, or Cancel to post a text-only story.');
+  if(addImage && picker){picker.value='';picker.onchange=async()=>{const f=picker.files?.[0]||null;if(f)await scPublishStoryV2(clean,f);else if(clean)await scPublishStoryV2(clean,null);};picker.click();}
+  else await scPublishStoryV2(clean,null);
+ };
+ async function scPublishStoryV2(caption,file){
+  if(!requireLogin())return;
+  if(!caption && !file){alert('Add a caption or choose a story image.');return;}
+  if(file && (!/^image\/(png|jpeg|webp)$/i.test(file.type)||file.size>2*1024*1024)){alert('Story image JPG/PNG/WebP honi chahiye aur 2 MB se chhoti.');return;}
+  let mediaPath=null;
+  try{
+   setStatus('🛡️ SECURITY CHECKING IS RUNNING — keep StudyAI open while AI checks this story image.','info');
+   if(file){const aiResult=await scCheckStudyImageWithAI(file,{folder:'stories',title:'Study story',description:caption,post_type:'Study story',class_name:state.profile?.class_name});mediaPath=aiResult.media_path;}
+   const {error}=await sb.from('community_stories').insert({user_id:state.user.id,caption:caption||null,media_path:mediaPath,media_type:file?'image':'text',moderation_status:'approved'});
+   if(error)throw error;
+   alert(file?'✅ AI security check passed. Your story is live and will expire in 24 hours.':'Story posted. It will expire in 24 hours.');
+   await scLoadStoriesV2();
+  }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
+ }
+ async function scLoadStoriesV2(){
+  const rail=$('scStoryRailV2');if(!rail||!sb)return;
+  try{
+   const {data,error}=await sb.from('community_stories').select('id,user_id,caption,media_path,media_type,moderation_status,created_at,expires_at').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:false}).limit(100);
+   if(error)throw error;
+   scStoryCacheV2=data||[];
+   const grouped=[];for(const story of scStoryCacheV2){let group=grouped.find(x=>x.user_id===story.user_id);if(!group){group={user_id:story.user_id,stories:[]};grouped.push(group);}group.stories.push(story);}
+   if(!grouped.length){rail.innerHTML='<span class="muted">No active stories yet. Add the first study story ✨</span>';return;}
+   rail.innerHTML=grouped.map(g=>{const person=state.people.find(p=>p.id===g.user_id)||(state.profile?.id===g.user_id?state.profile:null);const name=person?.username||person?.display_name||'Student';const avatar=person?.avatar_url?'<img src="'+esc(person.avatar_url)+'" alt="">':'<span class="scStoryInitialV2">'+esc(initials(name))+'</span>';return '<button type="button" class="scStoryItemV2" onclick="scOpenStoryGroupV2(\''+esc(g.user_id)+'\')"><span class="scStoryRingV2">'+avatar+'</span><small>'+esc(g.user_id===state.user?.id?'Your story':name)+'</small></button>';}).join('');
+  }catch(err){rail.innerHTML='<span class="muted">Stories could not load: '+esc(normalError(err))+'</span>';}
+ }
+ window.scOpenStoryGroupV2=async function(userId,storyId){
+  const stories=scStoryCacheV2.filter(s=>s.user_id===userId&&Date.parse(s.expires_at)>Date.now());if(!stories.length){alert('No active stories for this account.');await scLoadStoriesV2();return;}
+  const story=stories.find(s=>s.id===storyId)||stories[0];const person=state.people.find(p=>p.id===userId)||(state.profile?.id===userId?state.profile:null);let image='';
+  if(story.media_path)image=await signedMediaUrl(story.media_path);
+  let reactions=[];try{const {data,error}=await sb.from('community_story_reactions').select('user_id,emoji,created_at').eq('story_id',story.id).order('created_at',{ascending:true});if(!error)reactions=data||[];}catch(_){}
+  let who=[];if(reactions.length){const ids=[...new Set(reactions.map(r=>r.user_id))];const {data}=await sb.from(TABLES.profiles).select('id,username,display_name').in('id',ids);who=data||[];}
+  const names=reactions.map(r=>{const q=who.find(x=>x.id===r.user_id);return esc(q?.username||q?.display_name||'Student')+' '+r.emoji;}).join(' · ');
+  const own=state.user?.id===userId;
+  const html='<div style="display:flex;align-items:center;gap:10px;margin-bottom:10px"><b>'+esc(person?.display_name||person?.username||'Student')+'</b><small class="muted">'+esc(timeAgo(Date.parse(story.created_at)||Date.now()))+' · expires in 24h</small></div>'+(image?'<img class="scV2StoryMedia" src="'+esc(image)+'" alt="Story image">':'')+'<div class="scV2StoryCaption">'+esc(story.caption||'')+'</div>'+(own?'<button class="scActionNeon warn" onclick="scDeleteStoryV2(\''+esc(story.id)+'\')">Delete story</button>':'<div><b>Send a reaction</b><div class="scV2EmojiRow">'+['❤️','🔥','👏','😍','😂','💡','📚'].map(e=>'<button type="button" onclick="scReactStoryV2(\''+esc(story.id)+'\',\''+e+'\')" aria-label="React '+e+'">'+e+'</button>').join('')+'</div></div>')+'<div class="scV2ReactionList"><b>Reactions ('+reactions.length+'):</b> '+(names||'No reactions yet.')+'</div><div class="scV2Buttons"><button type="button" class="scActionNeon alt" onclick="scCloseSocialModal()">Close</button>'+(stories.length>1?'<button type="button" class="scActionNeon" onclick="scOpenNextStoryV2(\''+esc(userId)+'\',\''+esc(story.id)+'\')">Next story →</button>':'')+'</div>';
+  openSocialModal('✨ Story',html);
+ };
+ window.scOpenNextStoryV2=async function(userId,currentId){const arr=scStoryCacheV2.filter(s=>s.user_id===userId&&Date.parse(s.expires_at)>Date.now());const i=arr.findIndex(s=>s.id===currentId);if(i>=0&&arr[i+1]){const next=arr[i+1];scStoryCacheV2=scStoryCacheV2.filter(s=>s.id!==next.id).concat(next);await window.scOpenStoryGroupV2(userId);}else alert('No more stories.');};
+ window.scReactStoryV2=async function(storyId,emoji){if(!requireLogin())return;try{const {error}=await sb.from('community_story_reactions').upsert({story_id:storyId,user_id:state.user.id,emoji},{onConflict:'story_id,user_id,emoji'});if(error)throw error;const story=scStoryCacheV2.find(s=>s.id===storyId);if(story)await window.scOpenStoryGroupV2(story.user_id);}catch(err){alert(normalError(err));}};
+ window.scDeleteStoryV2=async function(storyId){if(!requireLogin()||!confirm('Delete this story?'))return;try{const {error}=await sb.from('community_stories').delete().eq('id',storyId).eq('user_id',state.user.id);if(error)throw error;window.scCloseSocialModal();await scLoadStoriesV2();}catch(err){alert(normalError(err));}};
+ window.scSearchUsernames=async function(){const input=$('scExploreUsername'),results=$('scExploreResultsV2');if(!input||!results)return;const term=input.value.trim().replace(/^@/,'').toLowerCase();if(term.length<2){results.innerHTML='<div class="muted">Enter at least 2 characters of a username.</div>';return;}results.innerHTML='<div class="muted">Searching usernames…</div>';try{const {data,error}=await sb.from(TABLES.profiles).select('id,username,display_name,class_name,avatar_url,is_private,avatar_moderation_status').ilike('username','%'+term+'%').limit(20);if(error)throw error;const rows=(data||[]).filter(p=>p.id!==state.user?.id);if(!rows.length){results.innerHTML='<div class="muted">No matching username found.</div>';return;}results.innerHTML=await Promise.all(rows.map(async p=>{const img=await signedMediaUrl(p.avatar_url);return '<div class="scExploreResultV2"><div class="communityAvatar">'+(img?'<img src="'+esc(img)+'" alt="">':esc(initials(p.display_name||p.username)))+'</div><div class="scExploreMeta"><b>'+esc(p.display_name||p.username)+'</b><small>@'+esc(p.username)+' · '+(p.is_private?'Private account':'Public account')+'</small></div><button class="scActionNeon" onclick="scOpenUserProfile(\''+esc(p.id)+'\')">View profile</button></div>'; } )).join('');}catch(err){results.innerHTML='<div class="muted">'+esc(normalError(err))+'</div>';}};
+ window.scOpenAvatarMenuV2=function(userId){openSocialModal('Profile picture','<button type="button" class="scV2MenuChoice" onclick="scOpenStoryGroupV2(\''+esc(userId)+'\')"><span>🌈</span><span>Story</span></button><button type="button" class="scV2MenuChoice" onclick="scShowProfilePictureV2(\''+esc(userId)+'\')"><span>🖼️</span><span>Profile picture</span></button>');};
+ window.scShowProfilePictureV2=async function(userId){const p=state.people.find(x=>x.id===userId)||(state.profile?.id===userId?state.profile:await loadProfile(userId));if(!p){alert('Profile photo unavailable.');return;}const url=p.avatar_url||await signedMediaUrl(p.avatar_path||p.avatar_url);openSocialModal('Profile picture',url?'<img class="scV2AvatarLarge" src="'+esc(url)+'" alt="Profile picture"><div class="scV2Buttons"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Close</button></div>':'<div class="scSocialEmpty">This student has not added an approved profile photo yet.</div>');};
+ document.addEventListener('click',function(e){const avatar=e.target.closest('#scMyAvatar,#scSideAvatar,.scProfileAvatar,.scProfileTap .communityAvatar,.scMoment .communityAvatar');if(!avatar)return;let id=null;if(avatar.id==='scMyAvatar'||avatar.id==='scSideAvatar')id=state.user?.id;else if(avatar.classList.contains('scProfileAvatar'))id=state.viewingProfile?.id;else{const parent=avatar.closest('button[onclick]');const match=(parent?.getAttribute('onclick')||'').match(/scOpenUserProfile\('([^']+)'\)|scMomentProfile\('([^']+)'\)/);id=match?(match[1]||match[2]):null;}if(id){e.preventDefault();e.stopPropagation();window.scOpenAvatarMenuV2(id);}},true);
+
+ function render(){renderProfile();renderPeople();renderFeed();renderMoments();renderPulse();renderSprint();scLoadStoriesV2();const rb=$('scRequestBadge');if(rb)rb.textContent=String(state.pendingFollowRequests.size+state.pendingPostAccess.size);}
  window.scSetSearch=function(value){state.query=String(value||'');state.authorFilter=null;renderFeed();};
  window.scSetCategory=function(value){state.category=value||'all';state.authorFilter=null;renderFeed();};
  window.scSetSort=function(value){state.sort=value||'new';renderFeed();};
@@ -4396,40 +4521,65 @@ hub();
   state.profileBusy=true;const saveButton=document.querySelector('#scProfileModal .communityModalActions .btn');if(saveButton){saveButton.disabled=true;saveButton.textContent='Saving…';}
   try{
    let avatarUrl=state.profile?.avatar_path||mediaPath(state.profile?.avatar_url)||null;let avatarStatus=state.profile?.avatar_moderation_status||'approved';const file=$('scAvatarInput')?.files?.[0];
-   if(file){if(!/^image\/(png|jpeg|webp)$/i.test(file.type)||file.size>900000)throw new Error('Profile photo must be JPG, PNG or WebP under 900 KB.');avatarUrl=await uploadImage(file,'avatars',900000);avatarStatus='pending';}
+   if(file){if(!/^image\/(png|jpeg|webp)$/i.test(file.type)||file.size>900000)throw new Error('Profile photo must be JPG, PNG or WebP under 900 KB.');const avatarCheck=await scCheckStudyImageWithAI(file,{folder:'avatars',title:'Student profile picture',description:'School-appropriate profile photo for a student account',post_type:'Profile photo',class_name:$('scClassInput').value||state.profile?.class_name||'Class 6–12'});avatarUrl=avatarCheck.media_path;avatarStatus='approved';}
    const row={id:state.user.id,username,display_name:name,class_name:$('scClassInput').value,interests:$('scInterestsInput').value.trim(),bio:$('scBioInput').value.trim(),avatar_url:avatarUrl,avatar_moderation_status:avatarStatus,is_private:!!state.profile?.is_private,interaction_mode:state.profile?.interaction_mode||'everyone',message_mode:state.profile?.message_mode||'everyone',show_activity:state.profile?.show_activity!==false,updated_at:new Date().toISOString()};
    const {error}=await sb.from(TABLES.profiles).upsert(row,{onConflict:'id'});if(error)throw error;
    $('scAvatarInput').value='';window.scCloseProfile();await refreshCommunity(true);setStatus('Student profile saved and synced across devices.','success');
   }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
   finally{state.profileBusy=false;if(saveButton){saveButton.disabled=false;saveButton.textContent='Save profile';}}
  };
- $('scAvatarInput')?.addEventListener('change',function(){const f=this.files?.[0];if(f&&(!/^image\/(png|jpeg|webp)$/i.test(f.type)||f.size>900000)){alert('Choose a JPG, PNG or WebP profile photo under 900 KB. New photos stay hidden from other students until reviewed.');this.value='';}});
+ $('scAvatarInput')?.addEventListener('change',function(){const f=this.files?.[0];if(f&&(!/^image\/(png|jpeg|webp)$/i.test(f.type)||f.size>900000)){alert('Choose a JPG, PNG or WebP profile photo under 900 KB. Profile photos are checked by AI before upload and become visible to everyone after approval.');this.value='';}});
  $('scPostImage')?.addEventListener('change',function(){
   const file=this.files?.[0];state.draftFile=null;state.draftPreview='';state.draftMediaType='';const preview=$('scImagePreview');
   if(!file){preview.style.display='none';preview.innerHTML='';return;}
-  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type),isVideo=/^video\/(mp4|webm|quicktime)$/i.test(file.type);
-  if(!isImage&&!isVideo){alert('Only JPG/PNG/WebP images or MP4/WebM/MOV educational videos are allowed.');this.value='';return;}
-  const max=isVideo?15*1024*1024:2*1024*1024;
-  if(file.size>max){alert(isVideo?'Choose a learning video under 15 MB.':'Choose an image under 2 MB.');this.value='';return;}
-  state.draftFile=file;state.draftMediaType=isVideo?'video':'image';state.draftPreview=URL.createObjectURL(file);
-  const mediaHtml=isVideo?'<video class="communityPostVideo" style="max-height:230px" controls playsinline src="'+esc(state.draftPreview)+'"></video>':'<img class="communityPostImage" style="max-height:220px" src="'+esc(state.draftPreview)+'" alt="Study material preview">';
-  preview.innerHTML=mediaHtml+'<div class="communityNotice">🔒 This '+(isVideo?'video':'image')+' will stay hidden from other students until reviewed.</div><button type="button" class="btn alt" style="margin-top:8px" onclick="scRemoveDraftImage()">Remove media</button>';preview.style.display='block';
+  const isImage=/^image\/(png|jpeg|webp)$/i.test(file.type);
+  if(!isImage){alert('AI SECURITY CHECK currently supports JPG, PNG or WebP study images only.');this.value='';return;}
+  if(file.size>2*1024*1024){alert('Choose an image under 2 MB for the secure AI check.');this.value='';return;}
+  state.draftFile=file;state.draftMediaType='image';state.draftPreview=URL.createObjectURL(file);
+  const mediaHtml='<img class="communityPostImage" style="max-height:220px" src="'+esc(state.draftPreview)+'" alt="Study material preview">';
+  preview.innerHTML=mediaHtml+'<div class="communityNotice">🛡️ PRE-UPLOAD AI CHECK: this photo will be analysed after you press Publish. It has not been uploaded; keep StudyAI open while the check runs.</div><button type="button" class="btn alt" style="margin-top:8px" onclick="scRemoveDraftImage()">Remove photo</button>';preview.style.display='block';
  });
  window.scRemoveDraftImage=function(){if(state.draftPreview)URL.revokeObjectURL(state.draftPreview);state.draftFile=null;state.draftMediaType='';state.draftPreview='';if($('scPostImage'))$('scPostImage').value='';if($('scImagePreview')){$('scImagePreview').innerHTML='';$('scImagePreview').style.display='none';}};
+ async function scCheckStudyImageWithAI(file,details={}){
+  if(!sb||!state.user)throw new Error('Sign in before checking this image.');
+  if(!file||!/^image\/(png|jpeg|webp)$/i.test(file.type))throw new Error('AI security check accepts JPG, PNG or WebP images only.');
+  if(file.size>2*1024*1024)throw new Error('Choose an image smaller than 2 MB for the security check.');
+  setStatus('🛡️ SECURITY CHECKING IS RUNNING — AI is checking the image before upload. Keep StudyAI open…','info');
+  const bytes=new Uint8Array(await file.arrayBuffer());let binary='';
+  for(let i=0;i<bytes.length;i++)binary+=String.fromCharCode(bytes[i]);
+  const image_base64=btoa(binary);
+  const {data,error}=await sb.functions.invoke('studyai-check-study-image',{body:{image_base64,mime_type:file.type,folder:String(details.folder||'posts'),title:String(details.title||''),description:String(details.description||''),post_type:String(details.post_type||'Study material'),class_name:String(details.class_name||state.profile?.class_name||'Class 6–12')}});
+  if(error){
+   const detail=String(error.message||error||'function unavailable');
+   const httpStatus=Number(error.context?.status||error.context?.statusCode||0);
+   const looksLikeMissingFunction=httpStatus===404||/not found|404|failed to send a request to the edge function|function.*missing|function.*unavailable|requested function was not found/i.test(detail);
+   if(looksLikeMissingFunction)throw new Error('AI CHECK FUNCTION IS NOT DEPLOYED OR ITS NAME IS WRONG. This is not an image rejection. In Supabase > Edge Functions, deploy the file at supabase/functions/studyai-check-study-image/index.ts with the exact function name studyai-check-study-image, then add GROQ_API_KEY in Edge Function Secrets. The image was NOT uploaded. Details: '+detail);
+   throw new Error('Groq AI security check could not run, so the image was NOT uploaded. Open Supabase > Edge Functions > studyai-check-study-image > Logs and verify GROQ_API_KEY in Secrets. Details: '+detail);
+  }
+  if(!data||data.approved!==true){const isAvatar=String(details.folder||'posts')==='avatars';throw new Error((isAvatar?'PROFILE PHOTO SAFETY CHECK REJECTED this image. ':'AI SECURITY CHECK REJECTED this image. ')+String(data?.reason||(isAvatar?'Choose a school-appropriate profile photo.':'Only appropriate Class 6–12 study material is allowed.'))+' The image was NOT uploaded.');}
+  if(!data.media_path)throw new Error('AI approved the image but secure upload did not finish. The post was not published. Please retry.');
+  setStatus('✅ AI security check passed; secure image upload is complete. Finalizing…','info');
+  return data;
+ }
  window.scPublish=async function(){
   if(state.publishBusy)return;if(!requireLogin())return;if(!state.profile){alert('Create your student profile first.');window.scOpenProfile();return;}
   const body=$('scPostText').value.trim(),title=$('scPostTitle').value.trim(),type=$('scPostType').value,file=state.draftFile;
   if(!body&&!title&&!file){alert('Add a title, description or study image/video first.');return;}
   if(!$('scStudyOnlyConfirm')?.checked){alert('Please confirm that this upload is only for study material.');return;}
-  if(!isStudyText(title,body,type)){alert('StudyAI Community par sirf study-related material allowed hai. Title/description mein class, subject, chapter, notes, formula, exam ya learning topic clearly likho.');return;}
+  if(!file&&!isStudyText(title,body,type)){alert('Text-only posts ke liye class, subject, chapter ya learning topic clearly likho. Image posts ki photo pehle AI check karega.');return;}
   if(hasPrivateContact(title+' '+body)){alert('For safety, do not post phone numbers or email addresses.');return;}
   state.publishBusy=true;renderProfile();
   try{
    let mediaPathValue=null;const mediaType=state.draftMediaType||'';
-   if(file)mediaPathValue=await uploadImage(file,'posts',mediaType==='video'?15*1024*1024:2*1024*1024);
-   const row={user_id:state.user.id,title:title||null,body:body||null,post_type:type,image_url:mediaPathValue,media_type:mediaType||'none',moderation_status:file?'pending':'approved'};
+   if(file){
+    if(mediaType==='video')throw new Error('AI security check currently supports JPG, PNG or WebP still images only.');
+    const aiResult=await scCheckStudyImageWithAI(file,{folder:'posts',title,description:body,post_type:type,class_name:state.profile?.class_name});
+    // The Edge Function stores the file only AFTER its AI approval. The browser never uploads post media directly.
+    mediaPathValue=aiResult.media_path;
+   }
+   const row={user_id:state.user.id,title:title||null,body:body||null,post_type:type,image_url:mediaPathValue,media_type:mediaType||'none',moderation_status:'approved'};
    const {error}=await sb.from(TABLES.posts).insert(row);if(error)throw error;
-   $('scPostText').value='';$('scPostTitle').value='';$('scPostType').value='Handwritten Notes';if($('scStudyOnlyConfirm'))$('scStudyOnlyConfirm').checked=false;window.scRemoveDraftImage();await refreshCommunity(true);setStatus(file?'Upload submitted for review. It will appear to other students after approval.':'Your study post is live.','success');
+   $('scPostText').value='';$('scPostTitle').value='';$('scPostType').value='Handwritten Notes';if($('scStudyOnlyConfirm'))$('scStudyOnlyConfirm').checked=false;window.scRemoveDraftImage();await refreshCommunity(true);setStatus(file?'✅ AI security check passed. Your study image is published.':'Your study post is live.','success');
   }catch(err){alert(normalError(err));setStatus(normalError(err),'error');}
   finally{state.publishBusy=false;renderProfile();}
  };
@@ -4584,7 +4734,7 @@ hub();
  window.scRequestPostAccess=async function(id){if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}try{const {error}=await sb.from(TABLES.postRequests).insert({requester_id:state.user.id,target_id:id,status:'pending'});if(error)throw error;state.pendingPostAccess.add(id);await renderViewedProfile();setStatus('Post-view request sent.','success');}catch(err){alert(normalError(err));}};
  window.scOpenSocialSettings=function(){
   if(!requireLogin())return;if(!state.profile){window.scOpenProfile();return;}const p=state.profile;
-  openSocialModal('Privacy & interactions','<p class="muted" style="font-size:12px;line-height:1.6">Private means only approved followers or separately approved post-view requests can access approved posts. New media remains hidden until reviewed.</p><div class="scSettingGrid"><div class="scSettingCard"><label>Account visibility<select id="scPrivacySelect"><option value="false" '+(!p.is_private?'selected':'')+'>🌐 Public account</option><option value="true" '+(p.is_private?'selected':'')+'>🔒 Private account</option></select></label></div><div class="scSettingCard"><label>Who can like/comment?<select id="scInteractionSelect"><option value="everyone" '+((p.interaction_mode||'everyone')==='everyone'?'selected':'')+'>Everyone</option><option value="followers" '+(p.interaction_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.interaction_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.interaction_mode==='nobody'?'selected':'')+'>Nobody except me</option></select></label></div><div class="scSettingCard"><label>Who can message me?<select id="scMessageModeSelect"><option value="everyone" '+((p.message_mode||'everyone')==='everyone'?'selected':'')+'>Everyone (public accounts)</option><option value="followers" '+(p.message_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.message_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.message_mode==='nobody'?'selected':'')+'>Nobody new</option></select></label></div></div><label class="scSettingToggle"><input id="scShowActivitySelect" type="checkbox" '+(p.show_activity!==false?'checked':'')+'><span><b>Show my like/comment activity</b><br><span class="muted">When off, other students cannot open the Activity tab.</span></span></label><div class="communityModalActions"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Cancel</button><button class="scActionNeon" onclick="scSaveSocialSettings()">Save settings</button></div><div class="communityNotice">Block or report options are also available from each student’s profile. Browser history is not used as private account history.</div>');
+  openSocialModal('Privacy & interactions','<p class="muted" style="font-size:12px;line-height:1.6">Private means only approved followers or separately approved post-view requests can access approved posts. New media remains hidden until reviewed.</p><div class="scSettingGrid"><div class="scSettingCard"><label>Account visibility<select id="scPrivacySelect"><option value="false" '+(!p.is_private?'selected':'')+'>🌐 Public account</option><option value="true" '+(p.is_private?'selected':'')+'>🔒 Private account</option></select></label></div><div class="scSettingCard"><label>Who can like/comment?<select id="scInteractionSelect"><option value="everyone" '+((p.interaction_mode||'everyone')==='everyone'?'selected':'')+'>Everyone</option><option value="followers" '+(p.interaction_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.interaction_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.interaction_mode==='nobody'?'selected':'')+'>Nobody except me</option></select></label></div><div class="scSettingCard"><label>Who can message me?<select id="scMessageModeSelect"><option value="everyone" '+((p.message_mode||'everyone')==='everyone'?'selected':'')+'>Everyone (public accounts)</option><option value="followers" '+(p.message_mode==='followers'?'selected':'')+'>People I follow</option><option value="mutuals" '+(p.message_mode==='mutuals'?'selected':'')+'>Mutual follows only</option><option value="nobody" '+(p.message_mode==='nobody'?'selected':'')+'>Nobody new</option></select></label></div></div><label class="scSettingToggle"><input id="scShowActivitySelect" type="checkbox" '+(p.show_activity!==false?'checked':'')+'><span><b>Show my like/comment activity</b><br><span class="muted">When off, other students cannot open the Activity tab.</span></span></label><div class="communityModalActions"><button class="scActionNeon alt" onclick="scCloseSocialModal()">Cancel</button><button class="scActionNeon" onclick="scSaveSocialSettings()">Save settings</button></div><div class="communityModalActions"><button class="scActionNeon alt" onclick="scOpenBlockedAccounts()">🚫 Manage blocked accounts</button></div><div class="communityNotice">Block or report options are also available from each student’s profile. Browser history is not used as private account history.</div>');
  };
  window.scSaveSocialSettings=async function(){
   if(!requireLogin()||!state.profile)return;
@@ -4648,19 +4798,50 @@ hub();
   const list=[...pending.map(r=>{const q=byId(r.requester_id);return '<div class="scSocialListRow"><div class="scSocialListMain"><b>📨 Request from '+esc(q?.display_name||'Student')+'</b><small>'+esc(r.first_message||'')+'</small></div><button class="scActionNeon" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',true)">Accept</button><button class="scActionNeon warn" onclick="scRespondMessageRequest(\''+esc(r.id)+'\',false)">Decline</button></div>';})];
   for(const c of contacts.values()){const q=entries.find(x=>x.id===c.id)||byId(c.id);list.push('<div class="scSocialListRow"><button class="scProfileTap" onclick="scOpenUserProfile(\''+esc(c.id)+'\')">'+avatarHTML(q||{display_name:'Student'})+'</button><div class="scSocialListMain"><b>'+esc(q?.display_name||'Student')+'</b><small>'+esc(String(c.last||'Conversation opened').slice(0,100))+'</small></div><button class="scActionNeon" onclick="scOpenConversation(\''+esc(c.id)+'\')">Open chat</button></div>');}
   openSocialModal('Messages & inbox','<div class="scSocialList">'+(list.filter(Boolean).join('')||'<div class="scSocialEmpty">Your inbox is empty. Open a student profile to start a study-related conversation.</div>')+'</div>');
-  }catch(err){openSocialModal('Messages & inbox','<div class="scSocialEmpty">'+esc(normalError(err))+'<br>Run StudyAI_Social_Upgrade.sql in Supabase SQL Editor, then refresh.</div>');}
+  }catch(err){openSocialModal('Messages & inbox','<div class="scSocialEmpty">'+esc(normalError(err))+'<br>Run StudyAI_Social_Upgrade_Fixed.sql in Supabase SQL Editor, then refresh.</div>');}
  };
  window.scBlockUser=async function(id){if(!requireLogin())return;if(!confirm('Block this student? Their posts/messages will be hidden from you and future contact will be blocked.'))return;try{const {error}=await sb.from(TABLES.blocks).upsert({blocker_id:state.user.id,blocked_id:id},{onConflict:'blocker_id,blocked_id'});if(error)throw error;state.blocked.add(id);state.posts=state.posts.filter(p=>p.user_id!==id);window.scCloseSocialModal();render();setStatus('Student blocked.','success');}catch(err){alert(normalError(err));}};
+ // Unblock is a real database delete; the earlier UI referenced this handler but did not define it.
+ window.scUnblockUser=async function(id){
+  if(!requireLogin())return;
+  if(!confirm('Unblock this student?'))return;
+  try{
+   const {error}=await sb.from(TABLES.blocks).delete().eq('blocker_id',state.user.id).eq('blocked_id',id);
+   if(error)throw error;
+   state.blocked.delete(id);
+   await refreshCommunity(true);
+   setStatus('Student unblocked.','success');
+   if($('scSocialModal')?.classList.contains('open')) await window.scOpenBlockedAccounts();
+   else if(state.viewingProfile?.id===id) await renderViewedProfile();
+   else render();
+  }catch(err){alert(normalError(err));}
+ };
+ window.scOpenBlockedAccounts=async function(){
+  if(!requireLogin())return;
+  openSocialModal('Blocked accounts','<div class="scSocialEmpty">Loading blocked accounts…</div>');
+  try{
+   const {data:rows,error}=await sb.from(TABLES.blocks).select('blocked_id').eq('blocker_id',state.user.id);
+   if(error)throw error;
+   const ids=(rows||[]).map(x=>x.blocked_id);
+   if(!ids.length){openSocialModal('Blocked accounts','<div class="scSocialEmpty">You have not blocked anyone.</div>');return;}
+   const {data:profiles,error:profileError}=await sb.from(TABLES.profiles).select('id,username,display_name,avatar_url').in('id',ids);
+   if(profileError)throw profileError;
+   const profileMap=new Map((profiles||[]).map(q=>[q.id,q]));const html=ids.map(id=>{const q=profileMap.get(id);return '<div class="scSocialListRow"><div class="scSocialListMain"><b>'+esc(q?.display_name||q?.username||'Blocked account')+'</b><small>'+(q?'@'+esc(q.username||'student'):'Account ID: '+esc(id.slice(0,8))+'…')+'</small></div><button class="scActionNeon" onclick="scUnblockUser(\''+esc(id)+'\')">↩ Unblock</button></div>';}).join('');
+   openSocialModal('Blocked accounts','<div class="scSocialList">'+(html||'<div class="scSocialEmpty">You have not blocked anyone.</div>')+'</div>');
+  }catch(err){openSocialModal('Blocked accounts','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
+ };
  window.scReportUser=async function(id){if(!requireLogin())return;const reason=prompt('Why are you reporting this profile? (StudyAI only allows educational content)');if(!reason||!reason.trim())return;try{const {error}=await sb.from(TABLES.reports).insert({reporter_id:state.user.id,target_user_id:id,reason:reason.trim().slice(0,500)});if(error)throw error;alert('Report received. Thank you for helping keep StudyAI safe.');}catch(err){alert(normalError(err));}};
  window.scReportPost=async function(id){if(!requireLogin())return;const reason=prompt('Why are you reporting this post?');if(!reason||!reason.trim())return;try{const {error}=await sb.from(TABLES.reports).insert({reporter_id:state.user.id,post_id:id,reason:reason.trim().slice(0,500)});if(error)throw error;alert('Post reported for review.');}catch(err){alert(normalError(err));}};
  window.scOpenModerationQueue=async function(){if(!state.user||!state.isModerator){alert('Moderator approval is required.');return;}openSocialModal('🛡️ Upload review queue','<div class="scSocialEmpty">Loading uploads awaiting review…</div>');try{
-  const [posts,profiles]=await Promise.all([sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,media_type,moderation_status,created_at').eq('moderation_status','pending').order('created_at',{ascending:true}).limit(50),sb.from(TABLES.profiles).select('id,username,display_name,avatar_url,avatar_moderation_status').eq('avatar_moderation_status','pending').limit(50)]);if(posts.error)throw posts.error;if(profiles.error)throw profiles.error;
+  const [posts,profiles,stories]=await Promise.all([sb.from(TABLES.posts).select('id,user_id,title,body,post_type,image_url,media_type,moderation_status,created_at').eq('moderation_status','pending').order('created_at',{ascending:true}).limit(50),sb.from(TABLES.profiles).select('id,username,display_name,avatar_url,avatar_moderation_status').eq('avatar_moderation_status','pending').limit(50),sb.from('community_stories').select('id,user_id,caption,media_path,media_type,created_at').eq('moderation_status','pending').gt('expires_at',new Date().toISOString()).order('created_at',{ascending:true}).limit(50)]);if(posts.error)throw posts.error;if(profiles.error)throw profiles.error;if(stories.error)throw stories.error;
   const postCards=await Promise.all((posts.data||[]).map(async p=>{const who=byId(p.user_id);const media=await signedMediaUrl(p.image_url);return '<div class="scReviewItem"><b>📚 '+esc(p.title||p.post_type||'Study upload')+'</b><p>'+esc(p.body||'')+'</p><small>@'+esc(who?.username||p.user_id)+' · '+esc(p.created_at||'')+'</small>'+(media?(p.media_type==='video'?'<video controls playsinline src="'+esc(media)+'"></video>':'<img src="'+esc(media)+'" alt="Pending study upload">'):'<p>Media is unavailable for review.</p>')+'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewPost(\''+esc(p.id)+'\',true)">Approve</button><button class="scActionNeon warn" onclick="scReviewPost(\''+esc(p.id)+'\',false)">Reject</button></div></div>'; }));
   const avatarCards=await Promise.all((profiles.data||[]).map(async p=>{const media=await signedMediaUrl(p.avatar_url);return '<div class="scReviewItem"><b>👤 '+esc(p.display_name||p.username)+' · @'+esc(p.username)+'</b>'+(media?'<img src="'+esc(media)+'" alt="Profile photo pending review">':'<p>No preview available</p>')+'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewAvatar(\''+esc(p.id)+'\',true)">Approve photo</button><button class="scActionNeon warn" onclick="scReviewAvatar(\''+esc(p.id)+'\',false)">Reject photo</button></div></div>'; }));
-  openSocialModal('🛡️ Upload review queue','<p class="muted" style="font-size:12px">Check each image/video for educational relevance, personal data and unsafe content. Approval makes it visible according to account privacy rules.</p><h3>Study posts & videos</h3>'+ (postCards.join('')||'<div class="scSocialEmpty">No media posts waiting.</div>')+'<h3 style="margin-top:18px">Profile photos</h3>'+ (avatarCards.join('')||'<div class="scSocialEmpty">No profile photos waiting.</div>'));
+  const storyCards=await Promise.all((stories.data||[]).map(async st=>{const who=byId(st.user_id);const media=st.media_path?await signedMediaUrl(st.media_path):'';return '<div class="scReviewItem"><b>🌈 Story from @'+esc(who?.username||st.user_id)+'</b><p>'+esc(st.caption||'')+'</p>'+(media?'<img src="'+esc(media)+'" alt="Story image awaiting review">':'')+'<div class="communityModalActions"><button class="scActionNeon" onclick="scReviewStoryV2(\''+esc(st.id)+'\',true)">Approve story</button><button class="scActionNeon warn" onclick="scReviewStoryV2(\''+esc(st.id)+'\',false)">Reject story</button></div></div>'; }));
+  openSocialModal('🛡️ Upload review queue','<p class="muted" style="font-size:12px">Review media for educational relevance and safety. Approved images become visible according to account privacy rules.</p><h3>Study posts & videos</h3>'+ (postCards.join('')||'<div class="scSocialEmpty">No media posts waiting.</div>')+'<h3 style="margin-top:18px">Stories</h3>'+ (storyCards.join('')||'<div class="scSocialEmpty">No stories waiting.</div>')+'<h3 style="margin-top:18px">Profile photos</h3>'+ (avatarCards.join('')||'<div class="scSocialEmpty">No profile photos waiting.</div>'));
   }catch(err){openSocialModal('Upload review queue','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}};
  window.scReviewPost=async function(id,approve){if(!state.isModerator)return;const note=prompt(approve?'Optional review note':'Reason for rejecting this content')||'';try{const {error}=await sb.rpc('studyai_review_post',{p_post_id:id,p_approve:!!approve,p_note:note.slice(0,500)});if(error)throw error;await refreshCommunity(true);await window.scOpenModerationQueue();}catch(err){alert(normalError(err));}};
  window.scReviewAvatar=async function(id,approve){if(!state.isModerator)return;const note=prompt(approve?'Optional review note':'Reason for rejecting this photo')||'';try{const {error}=await sb.rpc('studyai_review_avatar',{p_user_id:id,p_approve:!!approve,p_note:note.slice(0,500)});if(error)throw error;await refreshCommunity(true);await window.scOpenModerationQueue();}catch(err){alert(normalError(err));}};
+ window.scReviewStoryV2=async function(id,approve){if(!state.isModerator)return;try{const {error}=await sb.rpc('studyai_review_story',{p_story_id:id,p_approve:!!approve});if(error)throw error;await scLoadStoriesV2();await window.scOpenModerationQueue();}catch(err){alert(normalError(err));}};
 
  document.addEventListener('keydown',e=>{if(e.key==='Escape'){window.scCloseProfile();window.scCloseSocialModal();}});
  $('scProfileModal')?.addEventListener('click',e=>{if(e.target===$('scProfileModal'))window.scCloseProfile();});
