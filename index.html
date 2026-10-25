@@ -4847,7 +4847,7 @@ hub();
 
   }catch(err){openSocialModal('Messages','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
  };
- window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error)throw error;await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
+ window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error){const msg=String(error.message||error.details||error.hint||'');if(/study-related|contact details|inappropriate content/i.test(msg)){alert('Supabase database security is still blocking this message. The rule must be changed in Supabase SQL/RPC; changing this HTML alone cannot remove a database trigger.');return;}throw error;}await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
  window.scOpenInbox=async function(){
   if(!requireLogin())return;
   openSocialModal('Messages & inbox','<div class="scSocialEmpty">Loading inbox…</div>');
