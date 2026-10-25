@@ -4824,7 +4824,7 @@ hub();
   const modal=$('scSocialModal');modal?.classList.add('scChatOpen');
   const me=state.user.id,myProfile=state.profile||{id:me,display_name:'You'};
   const av=x=>avatarHTML(x||{display_name:'Student'},'scChatAvatar');
-  const row=m=>{const mine=m.sender_id===me,person=mine?myProfile:p;return '<div class="scChatRow '+(mine?'mine':'theirs')+'"><button class="scProfileTap scChatPerson" title="Open profile" onclick="scOpenUserProfile(\''+esc(m.sender_id)+'\')">'+av(person)+'</button><div class="scBubble '+(mine?'mine':'')+'">'+esc(m.body)+'<small>'+esc(timeAgo(Date.parse(m.created_at)||Date.now()))+'</small></div></div>';};
+  const row=m=>{const mine=m.sender_id===me;return '<div class="scChatRow '+(mine?'mine':'theirs')+'"><div class="scBubble '+(mine?'mine':'')+'">'+esc(m.body)+'<small>'+esc(timeAgo(Date.parse(m.created_at)||Date.now()))+'</small></div></div>';};
   openSocialModal('Messages','<div class="scChatHeader"><button class="scProfileTap scChatProfile" onclick="scOpenUserProfile(\''+esc(id)+'\')" title="Open profile">'+av(p)+'<span><b>'+esc(p.display_name||'Student')+'</b><small>@'+esc(p.username||'student')+' · View profile ↗</small></span></button><span class="scChatOnline">StudyAI chat</span></div><div class="scConversation" id="scConversationBody"><div class="scSocialEmpty">Loading messages…</div></div><div class="scMessageCompose"><textarea id="scDirectMessage" rows="2" maxlength="1000" placeholder="Message…"></textarea><button class="scActionNeon" onclick="scSendDirectMessage(\''+esc(id)+'\')">Send ↗</button></div><div class="communityNotice">If this conversation becomes uncomfortable, close it and block or report the account from its profile.</div>');
   try{
    const [a,b]=await Promise.all([sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',me).eq('recipient_id',id).order('created_at',{ascending:true}).limit(100),sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',id).eq('recipient_id',me).order('created_at',{ascending:true}).limit(100)]);
@@ -5070,3 +5070,22 @@ hub();
 .scConversation{flex:1;min-height:150px;max-height:none;overflow-y:auto;overscroll-behavior:contain;padding:12px 4px;scroll-behavior:smooth;background:radial-gradient(ellipse at 0% 0%,#d8f9f01c,transparent 45%),radial-gradient(ellipse at 100% 100%,#e9dfff35,transparent 45%);border-radius:15px}.scChatRow{display:flex;align-items:flex-end;gap:7px;max-width:100%;margin:7px 0}.scChatRow.mine{flex-direction:row-reverse}.scChatPerson{flex:0 0 auto;margin-bottom:3px}.scChatRow .scBubble{max-width:min(78%,460px);font-size:13px;padding:10px 13px;border-radius:17px;box-shadow:0 3px 10px #2517460b}.scChatRow.theirs .scBubble{border-color:#f2b5e5;background:linear-gradient(135deg,#ff4fd8,#f725b9 65%,#e91e9f)!important;color:#fff!important;border-bottom-left-radius:5px}.scChatRow.mine .scBubble{border:1px solid #b6a7ff;background:linear-gradient(130deg,#6558ed,#8b5cf6)!important;border-bottom-right-radius:5px}.scChatRow .scBubble small{color:inherit;opacity:.75}
 .communityModal.scChatOpen .scMessageCompose{flex:0 0 auto;align-items:center;gap:8px;margin-top:10px;padding-top:9px;border-top:1px solid #ece6f6}.communityModal.scChatOpen .scMessageCompose textarea{min-height:44px;max-height:120px;resize:vertical;border-radius:20px;border-color:#dcd2f2;background:#fff;padding:12px 15px;font-size:13px}.communityModal.scChatOpen .scMessageCompose .scActionNeon{border-radius:20px;min-height:42px;white-space:nowrap}.communityModal.scChatOpen .communityNotice{font-size:10px;margin-top:7px}
 @media(max-width:600px){.communityModal.scChatOpen{padding:7px;background:rgba(255,255,255,.25)!important}.communityModal.scChatOpen .scSocialModalBox{width:100%;height:91dvh;max-height:91dvh;padding:13px;border-radius:20px}.scChatHeader{padding-bottom:10px}.scChatOnline{display:none}.scChatRow .scBubble{max-width:82%;font-size:12px}.scChatAvatar.communityAvatar{width:32px;height:32px;min-width:32px;flex-basis:32px}}
+
+/* Requested polish: compact direct-message bubbles, one avatar in the chat header,
+   colourful main AI Tutor answers, and pastel floating-tutor replies. */
+.scChatRow{display:flex;align-items:flex-end;gap:0;width:100%;max-width:100%;margin:5px 0}
+.scChatRow.mine{justify-content:flex-end;flex-direction:row}
+.scChatRow.theirs{justify-content:flex-start}
+.scChatPerson{display:none!important}
+.scChatRow .scBubble{display:table;width:fit-content;min-width:0;max-width:min(72%,460px);padding:7px 10px;margin:0;font-size:13px;line-height:1.42;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal;border-radius:14px;box-sizing:border-box}
+.scChatRow .scBubble small{display:block;font-size:9px;line-height:1.2;margin-top:4px;text-align:right}
+@media(max-width:600px){.scChatRow .scBubble{max-width:84%;padding:7px 9px;font-size:12px}}
+/* Main AI Tutor replies: colourful, light, readable bubbles. */
+#msgs .msg.bot{background:linear-gradient(125deg,#fff0f7 0%,#f0edff 52%,#e5f8ff 100%)!important;color:#38275f!important;border:1px solid #d9c8ff!important;box-shadow:0 5px 16px #a78bfa22!important;border-radius:16px 16px 16px 5px}
+#msgs .msg.bot b,#msgs .msg.bot strong{color:#9a35b8}
+#msgs .msg.bot code{background:#ffffffbd;color:#2356a8;border-radius:5px;padding:2px 4px}
+#msgs .msg.bot a{color:#315ee8}
+#msgs .msg.bot{overflow-wrap:anywhere}
+/* Floating AI Tutor answers use a soft pastel pink/blue rather than dark pink. */
+.tutorPop .floatMsgs .msg.bot{align-self:flex-start;display:block;width:fit-content;max-width:92%;background:linear-gradient(125deg,#fff0f7 0%,#f1f0ff 58%,#e5f8ff 100%)!important;color:#3e315d!important;border:1px solid #d8c8ff!important;border-radius:16px 16px 16px 5px;padding:10px 12px;box-shadow:0 4px 14px #a78bfa20!important;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
+.tutorPop .floatMsgs .msg.bot *{color:#3e315d!important}
