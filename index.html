@@ -4970,6 +4970,52 @@ hub();
 }
 .tutorPop .floatMsgs .msg.bot *,.tutorPop .floatMsgs .msg.me *{color:#fff!important}
 
+
+/* FIX v2: floating tutor must always keep the composer visible and chat independently scrollable */
+#tutorPop{box-sizing:border-box}
+#tutorPop.big{
+  height:calc(100dvh - 24px)!important;max-height:calc(100dvh - 24px)!important;
+  top:12px!important;bottom:auto!important;left:0!important;right:0!important;
+  display:none;flex-direction:column;overflow:hidden!important;
+}
+#tutorPop.big[style*="display: block"]{display:flex!important}
+#tutorPop.big .tutorHead{flex:0 0 auto}
+#tutorPop.big .tutorBody{
+  display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  min-height:0!important;height:0!important;overflow:hidden!important;padding:12px 15px!important;
+}
+#tutorPop.big .floatMsgs{
+  display:flex!important;flex:1 1 auto!important;flex-direction:column!important;
+  min-height:0!important;height:0!important;max-height:none!important;
+  overflow-y:auto!important;overflow-x:hidden!important;overscroll-behavior:contain;
+  margin:0 0 10px!important;padding:2px 3px 8px!important;scroll-behavior:smooth;
+}
+#tutorPop.big .tutorActions{flex:0 0 auto!important}
+#tutorPop.big .tutorInput{
+  display:flex!important;flex:0 0 auto!important;position:relative!important;
+  bottom:auto!important;z-index:5;background:#fff!important;padding:10px 0 2px!important;
+  margin-top:8px!important;border-top:1px solid #f0d3e1;
+}
+#tutorPop.big .tutorInput input{width:0;min-height:44px;color:#17213a!important;background:#fff!important}
+#tutorPop.big .tutorInput button{flex:0 0 auto;min-height:44px}
+#tutorPop.big .floatMsgs .msg.bot{
+  align-self:stretch!important;flex:0 0 auto;width:100%!important;max-width:100%!important;
+  background:linear-gradient(135deg,#a90055,#d41472)!important;color:#fff!important;
+  border:1px solid #ff4fa3!important;border-radius:18px 18px 18px 5px!important;
+  box-shadow:0 0 10px rgba(255,20,120,.25)!important;overflow-wrap:anywhere;
+}
+#tutorPop.big .floatMsgs .msg.me{
+  align-self:flex-end!important;flex:0 0 auto;max-width:86%!important;margin-left:auto!important;
+  background:linear-gradient(135deg,var(--primary),var(--purple))!important;color:#fff!important;
+  border-radius:18px 18px 5px 18px!important;overflow-wrap:anywhere;
+}
+@media(max-width:700px){
+ #tutorPop.big{top:8px!important;height:calc(100dvh - 16px)!important;max-height:calc(100dvh - 16px)!important;width:calc(100vw - 16px)!important}
+ #tutorPop.big .tutorBody{padding:10px!important}
+ #tutorPop.big .tutorActions{grid-template-columns:1fr 1fr;gap:6px}
+ #tutorPop.big .tutorActions button{padding:8px 5px;font-size:12px}
+}
+
 </style>
 </body>
 </html>
