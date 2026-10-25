@@ -4824,6 +4824,27 @@ hub();
   openSocialModal('💬 @'+p.username,'<div class="scSocialEmpty">Loading messages…</div>');
   try{const me=state.user.id;const [a,b]=await Promise.all([sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',me).eq('recipient_id',id).order('created_at',{ascending:true}).limit(100),sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',id).eq('recipient_id',me).order('created_at',{ascending:true}).limit(100)]);if(a.error)throw a.error;if(b.error)throw b.error;const messages=[...(a.data||[]),...(b.data||[])].sort((x,y)=>Date.parse(x.created_at)-Date.parse(y.created_at));
    openSocialModal('💬 @'+p.username+' · Messages','<div class="scConversation" id="scConversationBody">'+(messages.length?messages.map(m=>'<div class="scBubble '+(m.sender_id===me?'mine':'')+'">'+esc(m.body)+'<small>'+esc(timeAgo(Date.parse(m.created_at)||Date.now()))+'</small></div>').join(''):'<div class="scSocialEmpty">Start a friendly study conversation. Keep it respectful and never share private contact details.</div>')+'</div><div class="scMessageCompose"><textarea id="scDirectMessage" rows="2" maxlength="1000" placeholder="Write a study-related message…"></textarea><button class="scActionNeon" onclick="scSendDirectMessage(\''+esc(id)+'\')">Send ↗</button></div><div class="communityNotice">If this conversation becomes uncomfortable, close it and block or report the account from its profile.</div>');
+   // Live DM refresh: keep the conversation open and update new messages without reopening the modal.
+   if(window.scConversationTimer)clearInterval(window.scConversationTimer);
+   window.scConversationTimer=setInterval(async()=>{
+    const box=$('scConversationBody');
+    if(!box){clearInterval(window.scConversationTimer);window.scConversationTimer=null;return;}
+    try{
+     const [liveA,liveB]=await Promise.all([
+      sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',me).eq('recipient_id',id).order('created_at',{ascending:true}).limit(100),
+      sb.from(TABLES.messages).select('id,sender_id,recipient_id,body,created_at').eq('sender_id',id).eq('recipient_id',me).order('created_at',{ascending:true}).limit(100)
+     ]);
+     if(liveA.error||liveB.error)return;
+     const live=[...(liveA.data||[]),...(liveB.data||[])].sort((x,y)=>Date.parse(x.created_at)-Date.parse(y.created_at));
+     const html=live.length?live.map(m=>'<div class="scBubble '+(m.sender_id===me?'mine':'')+'">'+esc(m.body)+'<small>'+esc(timeAgo(Date.parse(m.created_at)||Date.now()))+'</small></div>').join(''):'<div class="scSocialEmpty">Start a friendly study conversation. Keep it respectful and never share private contact details.</div>';
+     if(box.dataset.messageSnapshot!==String(live.map(m=>m.id).join(','))){
+      const wasNearBottom=box.scrollHeight-box.scrollTop-box.clientHeight<100;
+      box.innerHTML=html;box.dataset.messageSnapshot=String(live.map(m=>m.id).join(','));
+      if(wasNearBottom)box.scrollTop=box.scrollHeight;
+     }
+    }catch(_){}
+   },1800);
+
   }catch(err){openSocialModal('Messages','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
  };
  window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}if(!isStudyText('',body,'')||hasPrivateContact(body)){alert('Messages must stay study-related and cannot include phone numbers or email addresses.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error)throw error;await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
