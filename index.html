@@ -4847,7 +4847,7 @@ hub();
 
   }catch(err){openSocialModal('Messages','<div class="scSocialEmpty">'+esc(normalError(err))+'</div>');}
  };
- window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}if(!isStudyText('',body,'')||hasPrivateContact(body)){alert('Messages must stay study-related and cannot include phone numbers or email addresses.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error)throw error;await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
+ window.scSendDirectMessage=async function(id){const body=$('scDirectMessage')?.value.trim()||'';if(body.length<1||body.length>1000){alert('Message must be 1–1000 characters.');return;}try{const {error}=await sb.from(TABLES.messages).insert({sender_id:state.user.id,recipient_id:id,body});if(error)throw error;await window.scOpenConversation(id);}catch(err){alert(normalError(err));}};
  window.scOpenInbox=async function(){
   if(!requireLogin())return;
   openSocialModal('Messages & inbox','<div class="scSocialEmpty">Loading inbox…</div>');
@@ -5052,6 +5052,18 @@ hub();
   text-shadow:0 1px 1px rgba(70,0,35,.2)!important;
 }
 #tutorPop .floatMsgs .msg.bot *{color:#fff!important}
+
+
+/* Incoming student messages: bright neon pink like the requested chat bubble */
+.scConversation .scBubble:not(.mine){
+ background:#ff3fc7!important;
+ background-image:linear-gradient(135deg,#ff4fd8 0%,#f725b9 55%,#e91e9f 100%)!important;
+ color:#fff!important;border:1px solid #ff9be9!important;
+ border-radius:16px 16px 16px 5px!important;
+ box-shadow:0 4px 16px rgba(255,63,199,.25),0 0 12px rgba(255,63,199,.16)!important;
+}
+.scConversation .scBubble:not(.mine) small{color:#fff!important;opacity:.82!important}
+.scConversation .scBubble.mine{color:#fff!important}
 
 </style>
 </body>
