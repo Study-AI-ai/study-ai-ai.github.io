@@ -1053,19 +1053,20 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 
 
 <style id="studyai-more-pages-clean">
-/* One clean More Pages entry point on desktop and mobile */
-.menuBtn{display:block!important;left:244px!important;right:auto!important;top:16px!important;z-index:130!important}
+/* More Pages sits beside Search in the top-right; it works on desktop and mobile. */
 .mpMenuLabel{
- position:fixed;display:block!important;left:244px;right:auto;top:63px;z-index:131;
- border:1px solid #d7d2ff;border-radius:999px;padding:7px 12px;
+ position:fixed!important;display:block!important;left:auto!important;right:62px!important;top:10px!important;z-index:132!important;
+ min-height:38px;padding:0 13px;border:1px solid #d7d2ff;border-radius:12px;
  color:#5649d8;background:linear-gradient(120deg,#fff,#f0efff,#eefaff);
- box-shadow:0 8px 22px rgba(70,60,190,.18);font-size:12px;font-weight:900;
- white-space:nowrap;cursor:pointer;pointer-events:auto!important;animation:mpColorFlow 2.5s linear infinite,mpFloat 2s ease-in-out infinite
+ box-shadow:0 7px 19px rgba(70,60,190,.18);font-size:12px;font-weight:900;white-space:nowrap;
+ cursor:pointer;pointer-events:auto!important;animation:mpColorFlow 2.5s linear infinite,mpFloat 2s ease-in-out infinite
 }
+.mpMenuLabel:before{content:"✦ ";font-size:12px}
 .mpMenuLabel:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(70,60,190,.24)}
-#morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding:86px 16px 20px;background:rgba(20,28,60,.28);backdrop-filter:blur(3px);z-index:140}
+#saiSearchBtn{z-index:133!important}
+#morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding:86px 16px 20px;background:rgba(20,28,60,.32);backdrop-filter:blur(4px);z-index:150}
 #morePagesBackdrop.show{display:flex}
-#morePagesPopup{position:relative;width:min(420px,100%);padding:22px;border-radius:22px;border:1px solid #dcd6ff;background:linear-gradient(145deg,#fff 0%,#f7f5ff 56%,#f0fbff 100%);color:#1b2541;box-shadow:0 24px 80px rgba(23,28,75,.3);animation:morePagesPop .28s cubic-bezier(.2,.8,.2,1)}
+#morePagesPopup{position:relative;width:min(430px,100%);padding:22px;border-radius:22px;border:1px solid #dcd6ff;background:linear-gradient(145deg,#fff 0%,#f7f5ff 56%,#f0fbff 100%);color:#1b2541;box-shadow:0 24px 80px rgba(23,28,75,.3);animation:morePagesPop .28s cubic-bezier(.2,.8,.2,1)}
 #morePagesPopup .mp-eyebrow{display:inline-flex;align-items:center;gap:6px;font-weight:950;text-transform:uppercase;letter-spacing:.11em;font-size:10px;color:#635bff;background:#efedff;border-radius:999px;padding:7px 10px;margin-bottom:11px}
 #morePagesPopup h2{font-size:23px;line-height:1.2;margin:0 28px 9px 0;color:#1b2541}
 #morePagesPopup p{font-size:13px;line-height:1.65;color:#66718a;margin:0 0 14px}
@@ -1077,15 +1078,27 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 #morePagesPopup .mp-primary{background:linear-gradient(110deg,#635bff,#a855f7,#ec4899);color:#fff;box-shadow:0 7px 18px #635bff38}
 #morePagesPopup .mp-secondary{background:#eceef6;color:#424a66}
 #morePagesPopup .mp-x{position:absolute;right:12px;top:12px;border:0;background:#f0eff9;color:#646b84;border-radius:10px;width:30px;height:30px;font-size:20px;cursor:pointer}
+/* Labels in the drawer point students toward useful pages. */
+.drawerNav .drawerItem{position:relative;padding-right:66px}
+.drawerNav .drawerItem:after{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:9px;line-height:1;font-weight:950;letter-spacing:.03em;padding:5px 6px;border-radius:7px;border:1px solid #e1d9ff;background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8}
+.drawerNav .drawerItem[data-route="community"]:after{content:"NEW"}
+.drawerNav .drawerItem[data-route="flashcards"]:after{content:"NEW"}
+.drawerNav .drawerItem[data-route="tutor"]:after{content:"AI"}
+.drawerNav .drawerItem[data-route="quiz"]:after{content:"TRY"}
+.drawerNav .drawerItem[data-route="ncert"]:after{content:"EXPLORE"}
+.drawerNav .drawerItem[data-route="papers"]:after{content:"PRACTICE"}
 @keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:900px){
- .menuBtn{left:15px!important;right:auto!important;top:13px!important}
- .mpMenuLabel{left:7px!important;right:auto!important;top:62px!important}
- #morePagesBackdrop{padding:90px 12px 18px;align-items:flex-start}
+ .mpMenuLabel{right:52px!important;left:auto!important;top:8px!important;min-height:36px;padding:0 9px;font-size:10px;border-radius:11px}
+ #saiSearchBtn{top:8px!important;right:8px!important;width:36px!important;height:36px!important}
+ #morePagesBackdrop{padding:78px 12px 18px;align-items:flex-start}
 }
-@media(min-width:901px){
- .menuBtn{left:244px!important;right:auto!important}
- .mpMenuLabel{left:244px;right:auto}
+@media(max-width:380px){
+ .mpMenuLabel{right:50px!important;padding:0 7px;font-size:9px}
+ #morePagesPopup{padding:18px}
+ #morePagesPopup .mp-features{gap:6px}
+ #morePagesPopup .mp-feature{padding:8px;font-size:11px}
+ #morePagesPopup h2{font-size:21px}
 }
 @media(prefers-reduced-motion:reduce){.mpMenuLabel,#morePagesPopup{animation:none!important}}
 </style>
@@ -5156,21 +5169,21 @@ hub();
 (function(){
  const popup=document.getElementById('morePagesBackdrop');
  const button=document.getElementById('morePagesButton');
- const menuButton=document.getElementById('menuBtn');
  const drawer=document.getElementById('appDrawer');
  const overlay=document.getElementById('drawerOverlay');
  const close=document.getElementById('morePagesClose');
  const show=document.getElementById('morePagesShow');
  const later=document.getElementById('morePagesLater');
  if(!popup)return;
+ let autoPopupShown=false;
  function openMenu(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('show');}
- function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}}
+ function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');}
  function showPopup(){popup.classList.add('show');popup.setAttribute('aria-hidden','false');}
  function firstVisit(){
-   let seen=false;try{seen=localStorage.getItem('studyai-more-pages-popup-v2-seen')==='1'}catch(e){}
-   if(seen)return;
+   if(autoPopupShown)return;
+   autoPopupShown=true;
    const splash=document.getElementById('studyaiSplash');
-   const reveal=function(){openMenu();showPopup();};
+   const reveal=function(){showPopup();};
    if(splash && !splash.classList.contains('hide')){
      let finished=false;
      const afterSplash=function(){
@@ -5188,19 +5201,12 @@ hub();
      window.setTimeout(reveal,350);
    }
  }
- if(button)button.addEventListener('click',function(){openMenu();showPopup();});
- if(menuButton)menuButton.addEventListener('click',function(){
-   window.setTimeout(function(){if(drawer&&drawer.classList.contains('open'))showPopup();},80);
- });
+ // One automatic popup per page load; a refresh starts a fresh page load.
+ // Clicking the top-right More Pages button can reopen the guide intentionally.
+ if(button)button.addEventListener('click',showPopup);
  if(close)close.addEventListener('click',closePopup);
- if(later)later.addEventListener('click',function(){
-   try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}
-   closePopup();if(drawer)drawer.classList.remove('open');if(overlay)overlay.classList.remove('show');
- });
- if(show)show.addEventListener('click',function(){
-   try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}
-   closePopup();openMenu();
- });
+ if(later)later.addEventListener('click',closePopup);
+ if(show)show.addEventListener('click',function(){closePopup();openMenu();});
  popup.addEventListener('click',function(e){if(e.target===popup)closePopup();});
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup();});
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){window.setTimeout(firstVisit,700)},{once:true});
