@@ -5168,7 +5168,25 @@ hub();
  function showPopup(){popup.classList.add('show');popup.setAttribute('aria-hidden','false');}
  function firstVisit(){
    let seen=false;try{seen=localStorage.getItem('studyai-more-pages-popup-v2-seen')==='1'}catch(e){}
-   if(!seen){openMenu();showPopup();}
+   if(seen)return;
+   const splash=document.getElementById('studyaiSplash');
+   const reveal=function(){openMenu();showPopup();};
+   if(splash && !splash.classList.contains('hide')){
+     let finished=false;
+     const afterSplash=function(){
+       if(finished)return;
+       finished=true;
+       splash.removeEventListener('transitionend',afterSplash);
+       window.setTimeout(reveal,120);
+     };
+     splash.addEventListener('transitionend',afterSplash);
+     window.setTimeout(function(){
+       const current=document.getElementById('studyaiSplash');
+       if(!current || current.classList.contains('hide'))afterSplash();
+     },7500);
+   }else{
+     window.setTimeout(reveal,350);
+   }
  }
  if(button)button.addEventListener('click',function(){openMenu();showPopup();});
  if(menuButton)menuButton.addEventListener('click',function(){
