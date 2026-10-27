@@ -5176,33 +5176,16 @@ hub();
  const show=document.getElementById('morePagesShow');
  const later=document.getElementById('morePagesLater');
  if(!popup)return;
- let autoPopupShown=false;
  function openMenu(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('show');}
  function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');}
  function showPopup(){popup.classList.add('show');popup.setAttribute('aria-hidden','false');}
- function firstVisit(){
-   if(autoPopupShown)return;
-   autoPopupShown=true;
-   const splash=document.getElementById('studyaiSplash');
-   const reveal=function(){showPopup();};
-   if(splash && !splash.classList.contains('hide')){
-     let finished=false;
-     const afterSplash=function(){
-       if(finished)return;
-       finished=true;
-       splash.removeEventListener('transitionend',afterSplash);
-       window.setTimeout(reveal,120);
-     };
-     splash.addEventListener('transitionend',afterSplash);
-     window.setTimeout(function(){
-       const current=document.getElementById('studyaiSplash');
-       if(!current || current.classList.contains('hide'))afterSplash();
-     },7500);
-   }else{
-     window.setTimeout(reveal,350);
-   }
+ // Auto-show once per page load, exactly 20 seconds after the page finishes loading.
+ // Refreshing starts a fresh page load and therefore starts a fresh 20-second timer.
+ let autoPopupTimer=null;
+ function scheduleAutoPopup(){
+   if(autoPopupTimer!==null)return;
+   autoPopupTimer=window.setTimeout(function(){showPopup();},20000);
  }
- // One automatic popup per page load; a refresh starts a fresh page load.
  // Clicking More Pages beside ☰ can reopen the guide intentionally.
  if(button)button.addEventListener('click',showPopup);
  if(close)close.addEventListener('click',closePopup);
@@ -5210,8 +5193,8 @@ hub();
  if(show)show.addEventListener('click',function(){closePopup();openMenu();});
  popup.addEventListener('click',function(e){if(e.target===popup)closePopup();});
  document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup();});
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){window.setTimeout(firstVisit,700)},{once:true});
- else window.setTimeout(firstVisit,700);
+ if(document.readyState==='complete')scheduleAutoPopup();
+ else window.addEventListener('load',scheduleAutoPopup,{once:true});
 })();
 </script>
 
