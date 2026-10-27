@@ -1357,26 +1357,6 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function pairs(html){
   if(!html||/Notes aa rahe hain/.test(html))return[];
   const d=new DOMParser().parseFromString('<body>'+html+'
-<script id="studyai-page-discovery-click-fix">
-(function(){
- const label=document.querySelector('.mpMenuLabel');
- const button=document.getElementById('menuBtn');
- const drawer=document.getElementById('appDrawer');
- const overlay=document.getElementById('drawerOverlay');
- const guide=document.getElementById('pageDiscoveryGuide');
- if(!drawer||!overlay||!guide)return;
- function showHelp(){
-   drawer.classList.add('open');overlay.classList.add('show');
-   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
-   if(!seen)guide.hidden=false;
- }
- label&&label.addEventListener('click',showHelp);
- button&&button.addEventListener('click',function(){
-   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
-   if(!seen){guide.hidden=false;drawer.classList.add('open');overlay.classList.add('show')}
- });
-})();
-</script>
 
 </body>','text/html'),out=[];
   d.querySelectorAll('li').forEach(li=>{
@@ -5200,6 +5180,27 @@ hub();
  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!guide.hidden)hideGuide(true)});
  if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(openTour,650),{once:true});
  else setTimeout(openTour,650);
+})();
+</script>
+
+<script id="studyai-page-discovery-click-fix">
+(function(){
+ const label=document.querySelector('.mpMenuLabel');
+ const button=document.getElementById('menuBtn');
+ const drawer=document.getElementById('appDrawer');
+ const overlay=document.getElementById('drawerOverlay');
+ const guide=document.getElementById('pageDiscoveryGuide');
+ if(!drawer||!overlay||!guide)return;
+ function showHelp(){
+   drawer.classList.add('open');overlay.classList.add('show');
+   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
+   if(!seen)guide.hidden=false;
+ }
+ if(label)label.addEventListener('click',showHelp);
+ if(button)button.addEventListener('click',function(){
+   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
+   if(!seen){guide.hidden=false;drawer.classList.add('open');overlay.classList.add('show')}
+ });
 })();
 </script>
 </body>
