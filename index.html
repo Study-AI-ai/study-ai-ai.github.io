@@ -1105,12 +1105,51 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
   #pageDiscoveryGuide:before{display:none}
 }
 </style>
+
+<style id="studyai-more-pages-clean">
+/* One clean More Pages entry point on desktop and mobile */
+.menuBtn{display:block!important;left:244px!important;top:16px!important;z-index:130!important}
+.mpMenuLabel{
+ position:fixed;display:block!important;left:244px;top:63px;z-index:131;
+ border:1px solid #d7d2ff;border-radius:999px;padding:7px 12px;
+ color:#5649d8;background:linear-gradient(120deg,#fff,#f0efff,#eefaff);
+ box-shadow:0 8px 22px rgba(70,60,190,.18);font-size:12px;font-weight:900;
+ white-space:nowrap;cursor:pointer;animation:mpColorFlow 2.5s linear infinite,mpFloat 2s ease-in-out infinite
+}
+.mpMenuLabel:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(70,60,190,.24)}
+#morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding:86px 16px 20px;background:rgba(20,28,60,.28);backdrop-filter:blur(3px);z-index:140}
+#morePagesBackdrop.show{display:flex}
+#morePagesPopup{position:relative;width:min(420px,100%);padding:22px;border-radius:22px;border:1px solid #dcd6ff;background:linear-gradient(145deg,#fff 0%,#f7f5ff 56%,#f0fbff 100%);color:#1b2541;box-shadow:0 24px 80px rgba(23,28,75,.3);animation:morePagesPop .28s cubic-bezier(.2,.8,.2,1)}
+#morePagesPopup .mp-eyebrow{display:inline-flex;align-items:center;gap:6px;font-weight:950;text-transform:uppercase;letter-spacing:.11em;font-size:10px;color:#635bff;background:#efedff;border-radius:999px;padding:7px 10px;margin-bottom:11px}
+#morePagesPopup h2{font-size:23px;line-height:1.2;margin:0 28px 9px 0;color:#1b2541}
+#morePagesPopup p{font-size:13px;line-height:1.65;color:#66718a;margin:0 0 14px}
+#morePagesPopup .mp-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:15px 0 18px}
+#morePagesPopup .mp-feature{padding:10px;border:1px solid #e2e0fa;border-radius:12px;background:rgba(255,255,255,.85);font-size:12px;font-weight:800;color:#34395e}
+#morePagesPopup .mp-feature small{display:block;font-size:10px;font-weight:600;color:#77809a;margin-top:3px}
+#morePagesPopup .mp-actions{display:flex;gap:8px;flex-wrap:wrap}
+#morePagesPopup .mp-actions button{border:0;border-radius:11px;padding:11px 14px;font-size:12px;font-weight:900;cursor:pointer}
+#morePagesPopup .mp-primary{background:linear-gradient(110deg,#635bff,#a855f7,#ec4899);color:#fff;box-shadow:0 7px 18px #635bff38}
+#morePagesPopup .mp-secondary{background:#eceef6;color:#424a66}
+#morePagesPopup .mp-x{position:absolute;right:12px;top:12px;border:0;background:#f0eff9;color:#646b84;border-radius:10px;width:30px;height:30px;font-size:20px;cursor:pointer}
+@keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
+@media(max-width:900px){
+ .menuBtn{left:15px!important;top:13px!important}
+ .mpMenuLabel{left:7px;top:62px}
+ #morePagesBackdrop{padding:90px 12px 18px;align-items:flex-start}
+}
+@media(min-width:901px){
+ .menuBtn{left:244px!important}
+ .mpMenuLabel{left:244px}
+}
+@media(prefers-reduced-motion:reduce){.mpMenuLabel,#morePagesPopup{animation:none!important}}
+</style>
+
 </head>
 
 <body>
 <!-- StudyAI navigation drawer -->
 <button class="menuBtn" id="menuBtn" aria-label="Open StudyAI menu">☰</button>
-<div class="mpMenuLabel" aria-hidden="true">More Pages</div>
+<button type="button" class="mpMenuLabel" id="morePagesButton" aria-label="Open More Pages menu">More Pages</button>
 <div class="drawerOverlay" id="drawerOverlay"></div>
 <aside class="appDrawer" id="appDrawer" aria-label="StudyAI navigation">
   <div class="drawerHead">
@@ -1118,7 +1157,6 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
     <button class="drawerClose" id="drawerClose" aria-label="Close menu">×</button>
   </div>
   <div class="drawerSearch"><input id="drawerSearch" placeholder="Search pages & tools..." autocomplete="off"></div>
-  <div class="drawerDiscover" role="note"><strong>✨ Explore all StudyAI pages</strong><p>More than a dashboard—open a tool below and find your next way to study.</p><div class="discoverMini"><span>Study</span><span>Practice</span><span>Connect</span></div></div>
   <div class="drawerNav" id="drawerNav">
     <div class="drawerSection">Main</div>
     <button class="drawerItem active" data-route="home">🏠 <span>Dashboard</span></button>
@@ -1356,9 +1394,7 @@ const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.i
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function pairs(html){
   if(!html||/Notes aa rahe hain/.test(html))return[];
-  const d=new DOMParser().parseFromString('<body>'+html+'
-
-</body>','text/html'),out=[];
+  const d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];
   d.querySelectorAll('li').forEach(li=>{
     const b=li.firstElementChild;if(!b||b.tagName!=='B')return;
     const t=b.textContent.replace(/[\s:：=\-–]+$/,'').trim(),r=li.textContent.slice(b.textContent.length).replace(/^[\s:：=\-–]+/,'').replace(/\s+/g,' ').trim();
@@ -5149,60 +5185,64 @@ hub();
 .tutorPop .floatMsgs .msg.bot{align-self:flex-start;display:block;width:fit-content;max-width:92%;background:linear-gradient(125deg,#fff0f7 0%,#f1f0ff 58%,#e5f8ff 100%)!important;color:#3e315d!important;border:1px solid #d8c8ff!important;border-radius:16px 16px 16px 5px;padding:10px 12px;box-shadow:0 4px 14px #a78bfa20!important;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
 .tutorPop .floatMsgs .msg.bot *{color:#3e315d!important}
 </style>
-<div id="pageDiscoveryGuide" role="dialog" aria-live="polite" aria-label="Discover StudyAI pages" hidden>
- <div class="guideEyebrow">✨ StudyAI quick tour</div>
- <h3>There’s more to explore!</h3>
- <p>Open <b>More Pages</b> to discover StudyAI’s learning tools. Choose a page any time—your study space is all in one menu.</p>
- <div class="guideTags"><span>📖 Study Notes</span><span>🧠 Practice Quiz</span><span>🗂️ Flashcards</span><span>🌐 Community</span><span>✨ AI Tutor</span></div>
- <div class="guideActions"><button type="button" class="guideOkay" id="pageGuideOkay">Got it, explore! →</button><button type="button" class="guideLater" id="pageGuideLater">Later</button></div>
+
+
+
+
+<div id="morePagesBackdrop" aria-hidden="true">
+ <section id="morePagesPopup" role="dialog" aria-modal="true" aria-labelledby="morePagesTitle">
+  <button type="button" class="mp-x" id="morePagesClose" aria-label="Close popup">×</button>
+  <div class="mp-eyebrow">✨ StudyAI • Explore</div>
+  <h2 id="morePagesTitle">Have you discovered More Pages?</h2>
+  <p>StudyAI has more than a home page! Open <b>More Pages</b> to find learning tools, practice activities and the student community—all from one menu.</p>
+  <div class="mp-features">
+   <div class="mp-feature">📖 Study Notes<small>Revise topics and chapters</small></div>
+   <div class="mp-feature">🧠 Practice Quiz<small>Test what you have learned</small></div>
+   <div class="mp-feature">🗂️ Flashcards<small>Learn with quick cards</small></div>
+   <div class="mp-feature">🌐 Study Community<small>Explore student study posts</small></div>
+   <div class="mp-feature">✨ AI Tutor<small>Ask study questions</small></div>
+   <div class="mp-feature">📘 NCERT Library<small>Browse learning resources</small></div>
+  </div>
+  <div class="mp-actions"><button type="button" class="mp-primary" id="morePagesShow">Show me More Pages →</button><button type="button" class="mp-secondary" id="morePagesLater">Maybe later</button></div>
+ </section>
 </div>
-<script id="studyai-page-discovery-script">
+<script id="studyai-more-pages-clean-script">
 (function(){
- const guide=document.getElementById('pageDiscoveryGuide');
+ const popup=document.getElementById('morePagesBackdrop');
+ const button=document.getElementById('morePagesButton');
+ const menuButton=document.getElementById('menuBtn');
  const drawer=document.getElementById('appDrawer');
  const overlay=document.getElementById('drawerOverlay');
- const okay=document.getElementById('pageGuideOkay');
- const later=document.getElementById('pageGuideLater');
- const menu=document.getElementById('menuBtn');
- if(!guide||!drawer||!overlay)return;
- function hideGuide(closeMenu){
-   guide.hidden=true;
-   try{localStorage.setItem('studyai-page-tour-seen','1')}catch(e){}
-   if(closeMenu){drawer.classList.remove('open');overlay.classList.remove('show')}
+ const close=document.getElementById('morePagesClose');
+ const show=document.getElementById('morePagesShow');
+ const later=document.getElementById('morePagesLater');
+ if(!popup)return;
+ function openMenu(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('show');}
+ function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');}
+ function showPopup(){popup.classList.add('show');popup.setAttribute('aria-hidden','false');}
+ function firstVisit(){
+   let seen=false;try{seen=localStorage.getItem('studyai-more-pages-popup-v2-seen')==='1'}catch(e){}
+   if(!seen){openMenu();showPopup();}
  }
- function openTour(){
-   try{if(localStorage.getItem('studyai-page-tour-seen')==='1')return}catch(e){}
-   drawer.classList.add('open');overlay.classList.add('show');guide.hidden=false;
- }
- okay&&okay.addEventListener('click',()=>hideGuide(false));
- later&&later.addEventListener('click',()=>hideGuide(true));
- overlay.addEventListener('click',()=>{if(!guide.hidden)hideGuide(false)});
- document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!guide.hidden)hideGuide(true)});
- if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(openTour,650),{once:true});
- else setTimeout(openTour,650);
+ if(button)button.addEventListener('click',function(){openMenu();showPopup();});
+ if(menuButton)menuButton.addEventListener('click',function(){
+   window.setTimeout(function(){if(drawer&&drawer.classList.contains('open'))showPopup();},80);
+ });
+ if(close)close.addEventListener('click',closePopup);
+ if(later)later.addEventListener('click',function(){
+   try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}
+   closePopup();if(drawer)drawer.classList.remove('open');if(overlay)overlay.classList.remove('show');
+ });
+ if(show)show.addEventListener('click',function(){
+   try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}
+   closePopup();openMenu();
+ });
+ popup.addEventListener('click',function(e){if(e.target===popup)closePopup();});
+ document.addEventListener('keydown',function(e){if(e.key==='Escape')closePopup();});
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',function(){window.setTimeout(firstVisit,700)},{once:true});
+ else window.setTimeout(firstVisit,700);
 })();
 </script>
 
-<script id="studyai-page-discovery-click-fix">
-(function(){
- const label=document.querySelector('.mpMenuLabel');
- const button=document.getElementById('menuBtn');
- const drawer=document.getElementById('appDrawer');
- const overlay=document.getElementById('drawerOverlay');
- const guide=document.getElementById('pageDiscoveryGuide');
- if(!drawer||!overlay||!guide)return;
- function showHelp(){
-   drawer.classList.add('open');overlay.classList.add('show');
-   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
-   if(!seen)guide.hidden=false;
- }
- if(label)label.addEventListener('click',showHelp);
- if(button)button.addEventListener('click',function(){
-   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
-   if(!seen){guide.hidden=false;drawer.classList.add('open');overlay.classList.add('show')}
- });
-})();
-</script>
 </body>
 </html>
-
