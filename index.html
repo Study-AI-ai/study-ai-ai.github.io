@@ -1047,6 +1047,47 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 @keyframes studyaiHeaderFlash{0%,88%,100%{opacity:.10}92%{opacity:.30}96%{opacity:.16}}
 @media(prefers-reduced-motion:reduce){#community .scProfileHero,#community .scProfileHero:after{animation:none!important}}
 </style>
+
+<style id="studyai-page-discovery-upgrade">
+/* StudyAI page discovery: help visitors notice every section */
+.mpMenuLabel{display:block!important;top:63px;left:244px;z-index:76;padding:8px 12px;font-size:12px;border:1px solid #c9c5ff;color:#5148d7;background:linear-gradient(120deg,#fff,#f3f0ff,#eefaff);box-shadow:0 0 0 3px rgba(99,91,255,.08),0 8px 22px rgba(70,60,190,.18);pointer-events:none}
+.mpMenuLabel:before{content:"↖ ";font-size:14px}
+.menuBtn{left:244px}
+.drawerDiscover{margin:10px 12px 8px;padding:13px;border:1px solid #dcd8ff;border-radius:16px;background:linear-gradient(125deg,#f5f2ff,#eefaff 58%,#fff2f8);box-shadow:0 7px 22px rgba(99,91,255,.10);position:relative;overflow:hidden}
+.drawerDiscover:after{content:"✦";position:absolute;right:12px;top:8px;font-size:27px;color:#b7aaff;opacity:.75;animation:discoveryTwinkle 2.4s ease-in-out infinite}
+.drawerDiscover strong{display:block;font-size:14px;color:#342b91;margin-bottom:4px}
+.drawerDiscover p{font-size:11px;line-height:1.5;color:#626b85;margin:0;max-width:230px}
+.drawerDiscover .discoverMini{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
+.discoverMini span{font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px;background:#fff;border:1px solid #e0dcff;color:#5d52d9}
+.drawerNav .drawerItem{position:relative;padding-right:48px;min-height:43px}
+.drawerNav .drawerItem[data-route="community"]:after,
+.drawerNav .drawerItem[data-route="flashcards"]:after,
+.drawerNav .drawerItem[data-route="tutor"]:after,
+.drawerNav .drawerItem[data-route="donate"]:after{content:"EXPLORE";position:absolute;right:8px;font-size:8px;font-weight:950;letter-spacing:.03em;padding:4px 5px;border-radius:6px;background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8;border:1px solid #e1d9ff}
+.drawerNav .drawerItem[data-route="community"]:after{content:"NEW"}
+.drawerNav .drawerItem[data-route="flashcards"]:after{content:"TRY"}
+.drawerNav .drawerItem[data-route="tutor"]:after{content:"AI"}
+.drawerNav .drawerItem[data-route="donate"]:after{content:"SUPPORT"}
+#pageDiscoveryGuide{position:fixed;z-index:120;left:320px;top:96px;width:min(340px,calc(100vw - 340px));padding:18px;border:1px solid rgba(155,145,255,.65);border-radius:20px;background:rgba(255,255,255,.97);color:#18213a;box-shadow:0 18px 60px rgba(24,28,70,.24),0 0 0 4px rgba(99,91,255,.10);animation:discoveryArrive .45s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(12px)}
+#pageDiscoveryGuide:before{content:"";position:absolute;left:-9px;top:19px;width:16px;height:16px;background:#fff;border-left:1px solid #c9c5ff;border-bottom:1px solid #c9c5ff;transform:rotate(45deg)}
+#pageDiscoveryGuide .guideEyebrow{font-size:10px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;color:#6c5ce7;margin-bottom:7px}
+#pageDiscoveryGuide h3{font-size:19px;line-height:1.25;margin:0 0 8px;color:#20254b}
+#pageDiscoveryGuide p{font-size:13px;line-height:1.6;color:#657089;margin:0 0 12px}
+#pageDiscoveryGuide .guideTags{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
+#pageDiscoveryGuide .guideTags span{font-size:11px;font-weight:800;padding:6px 8px;border-radius:9px;background:#f0eeff;color:#574bd1}
+#pageDiscoveryGuide .guideActions{display:flex;align-items:center;gap:8px}
+#pageDiscoveryGuide button{border:0;border-radius:11px;padding:10px 13px;font-size:12px;font-weight:900;cursor:pointer}
+#pageDiscoveryGuide .guideOkay{background:linear-gradient(110deg,#635bff,#a855f7,#ff4fa3);color:white;box-shadow:0 6px 16px #635bff35}
+#pageDiscoveryGuide .guideLater{background:#f1f3f9;color:#59627b}
+@keyframes discoveryTwinkle{0%,100%{opacity:.5;transform:rotate(0) scale(.9)}50%{opacity:1;transform:rotate(18deg) scale(1.12)}}
+@keyframes discoveryArrive{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
+@media(max-width:900px){
+ .mpMenuLabel{left:7px;top:63px}
+ #pageDiscoveryGuide{left:12px;right:12px;top:auto;bottom:18px;width:auto}
+ #pageDiscoveryGuide:before{display:none}
+}
+@media(prefers-reduced-motion:reduce){.drawerDiscover:after,#pageDiscoveryGuide{animation:none!important}}
+</style>
 </head>
 
 <body>
@@ -1059,7 +1100,8 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
     <div class="drawerBrand"><span>StudyAI</span></div>
     <button class="drawerClose" id="drawerClose" aria-label="Close menu">×</button>
   </div>
-  <div class="drawerSearch"><input id="drawerSearch" placeholder="Search menu..." autocomplete="off"></div>
+  <div class="drawerSearch"><input id="drawerSearch" placeholder="Search pages & tools..." autocomplete="off"></div>
+  <div class="drawerDiscover" role="note"><strong>✨ Explore all StudyAI pages</strong><p>More than a dashboard—open a tool below and find your next way to study.</p><div class="discoverMini"><span>Study</span><span>Practice</span><span>Connect</span></div></div>
   <div class="drawerNav" id="drawerNav">
     <div class="drawerSection">Main</div>
     <button class="drawerItem active" data-route="home">🏠 <span>Dashboard</span></button>
@@ -5088,6 +5130,39 @@ hub();
 .tutorPop .floatMsgs .msg.bot{align-self:flex-start;display:block;width:fit-content;max-width:92%;background:linear-gradient(125deg,#fff0f7 0%,#f1f0ff 58%,#e5f8ff 100%)!important;color:#3e315d!important;border:1px solid #d8c8ff!important;border-radius:16px 16px 16px 5px;padding:10px 12px;box-shadow:0 4px 14px #a78bfa20!important;white-space:pre-wrap;overflow-wrap:anywhere;word-break:normal}
 .tutorPop .floatMsgs .msg.bot *{color:#3e315d!important}
 </style>
+<div id="pageDiscoveryGuide" role="dialog" aria-live="polite" aria-label="Discover StudyAI pages" hidden>
+ <div class="guideEyebrow">✨ StudyAI quick tour</div>
+ <h3>There’s more to explore!</h3>
+ <p>Open <b>More Pages</b> to discover StudyAI’s learning tools. Choose a page any time—your study space is all in one menu.</p>
+ <div class="guideTags"><span>📖 Study Notes</span><span>🧠 Practice Quiz</span><span>🗂️ Flashcards</span><span>🌐 Community</span><span>✨ AI Tutor</span></div>
+ <div class="guideActions"><button type="button" class="guideOkay" id="pageGuideOkay">Got it, explore! →</button><button type="button" class="guideLater" id="pageGuideLater">Later</button></div>
+</div>
+<script id="studyai-page-discovery-script">
+(function(){
+ const guide=document.getElementById('pageDiscoveryGuide');
+ const drawer=document.getElementById('appDrawer');
+ const overlay=document.getElementById('drawerOverlay');
+ const okay=document.getElementById('pageGuideOkay');
+ const later=document.getElementById('pageGuideLater');
+ const menu=document.getElementById('menuBtn');
+ if(!guide||!drawer||!overlay)return;
+ function hideGuide(closeMenu){
+   guide.hidden=true;
+   try{localStorage.setItem('studyai-page-tour-seen','1')}catch(e){}
+   if(closeMenu){drawer.classList.remove('open');overlay.classList.remove('show')}
+ }
+ function openTour(){
+   try{if(localStorage.getItem('studyai-page-tour-seen')==='1')return}catch(e){}
+   drawer.classList.add('open');overlay.classList.add('show');guide.hidden=false;
+ }
+ okay&&okay.addEventListener('click',()=>hideGuide(false));
+ later&&later.addEventListener('click',()=>hideGuide(true));
+ overlay.addEventListener('click',()=>{if(!guide.hidden)hideGuide(false)});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!guide.hidden)hideGuide(true)});
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',()=>setTimeout(openTour,650),{once:true});
+ else setTimeout(openTour,650);
+})();
+</script>
 </body>
 </html>
 
