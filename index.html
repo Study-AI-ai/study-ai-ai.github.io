@@ -1053,7 +1053,7 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 
 
 <style id="studyai-more-pages-clean">
-/* More Pages sits beside Search in the top-right; it works on desktop and mobile. */
+/* More Pages stays beside the hamburger on mobile; desktop keeps a clear top-right entry. */
 .mpMenuLabel{
  position:fixed!important;display:block!important;left:auto!important;right:62px!important;top:10px!important;z-index:132!important;
  min-height:38px;padding:0 13px;border:1px solid #d7d2ff;border-radius:12px;
@@ -1078,7 +1078,7 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 #morePagesPopup .mp-primary{background:linear-gradient(110deg,#635bff,#a855f7,#ec4899);color:#fff;box-shadow:0 7px 18px #635bff38}
 #morePagesPopup .mp-secondary{background:#eceef6;color:#424a66}
 #morePagesPopup .mp-x{position:absolute;right:12px;top:12px;border:0;background:#f0eff9;color:#646b84;border-radius:10px;width:30px;height:30px;font-size:20px;cursor:pointer}
-/* Page badges describe the purpose of each destination; NEW is reserved for Community. */
+/* Each destination gets a useful badge; NEW is reserved for genuinely new features. */
 .drawerNav .drawerItem{position:relative;padding-right:92px}
 .drawerNav .drawerItem:after{
  position:absolute;right:9px;top:50%;transform:translateY(-50%);
@@ -1087,23 +1087,33 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
  padding:5px 6px;border-radius:7px;border:1px solid #e1d9ff;
  background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8
 }
-.drawerNav .drawerItem[data-route="community"]:after{content:"✨ NEW";background:linear-gradient(100deg,#f0eaff,#ffe3f2);border-color:#e1d0ff;color:#7541b8}
-.drawerNav .drawerItem[data-route="flashcards"]:after{content:"🎯 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
-.drawerNav .drawerItem[data-route="tutor"]:after{content:"✨ AI";background:linear-gradient(100deg,#e8e4ff,#fce7f3);color:#6c45d8}
-.drawerNav .drawerItem[data-route="quiz"]:after{content:"🧠 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
-.drawerNav .drawerItem[data-route="ncert"]:after{content:"📘 NCERT";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
-.drawerNav .drawerItem[data-route="papers"]:after{content:"✍️ PRACTICE";background:linear-gradient(100deg,#fff0da,#fff7de);border-color:#f4e2a4;color:#94620a}
-.drawerNav .drawerItem[data-route="notes"]:after{content:"📚 STUDY";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="home"]:after{content:"🏠 START";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
 .drawerNav .drawerItem[data-route="classes"]:after{content:"🎓 LEARN";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
 .drawerNav .drawerItem[data-route="subjects"]:after{content:"🧭 EXPLORE";background:linear-gradient(100deg,#f0eaff,#ffe8f4);color:#7541b8}
+.drawerNav .drawerItem[data-route="notes"]:after{content:"📚 STUDY";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="community"]:after{content:"🌐 SOCIAL";background:linear-gradient(100deg,#f0eaff,#ffe3f2);border-color:#e1d0ff;color:#7541b8}
+.drawerNav .drawerItem[data-route="flashcards"]:after{content:"🎯 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="quiz"]:after{content:"🧠 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="papers"]:after{content:"✍️ PRACTICE";background:linear-gradient(100deg,#fff0da,#fff7de);border-color:#f4e2a4;color:#94620a}
+.drawerNav .drawerItem[data-route="ncert"]:after{content:"📘 NCERT";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
+.drawerNav .drawerItem[data-route="tutor"]:after{content:"✨ AI";background:linear-gradient(100deg,#e8e4ff,#fce7f3);color:#6c45d8}
+.drawerNav .drawerItem[data-route="donate"]:after{content:"💜 SUPPORT";background:linear-gradient(100deg,#ffe8f3,#f0eaff);border-color:#f2cde3;color:#99406e}
+.drawerNav .drawerItem[data-route="settings"]:after{content:"⚙️ SETUP";background:linear-gradient(100deg,#eef0f7,#e8f5ff);color:#45516f}
+.drawerNav .drawerItem[data-route="progress"]:after{content:"📊 TRACK";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="mock"]:after{content:"⏱️ TIMED";background:linear-gradient(100deg,#fff0da,#fff7de);border-color:#f4e2a4;color:#94620a}
+.drawerNav .drawerItem[data-route="planner"]:after{content:"🗓️ PLAN";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
+.drawerNav .drawerItem[data-route="revision"]:after{content:"⚡ REVISE";background:linear-gradient(100deg,#f0eaff,#ffe8f4);color:#7541b8}
+.drawerNav .drawerItem[data-route="pyq"]:after{content:"🧾 PYQ";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
 @keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:900px){
- .mpMenuLabel{right:52px!important;left:auto!important;top:8px!important;min-height:36px;padding:0 9px;font-size:10px;border-radius:11px}
+ /* Keep the More Pages message directly beside the visible hamburger button. */
+ .mpMenuLabel{left:64px!important;right:auto!important;top:13px!important;min-height:36px;padding:0 10px;font-size:11px;border-radius:11px}
  #saiSearchBtn{top:8px!important;right:8px!important;width:36px!important;height:36px!important}
- #morePagesBackdrop{padding:52px 8px 18px;align-items:flex-start;justify-content:flex-end}
+ /* Open the guide below the same top-left controls, not on the opposite side. */
+ #morePagesBackdrop{padding:58px 12px 18px;align-items:flex-start;justify-content:flex-start}
 }
 @media(max-width:380px){
- .mpMenuLabel{right:50px!important;padding:0 7px;font-size:9px}
+ .mpMenuLabel{left:64px!important;right:auto!important;padding:0 7px;font-size:9px}
  #morePagesPopup{padding:18px}
  #morePagesPopup .mp-features{gap:6px}
  #morePagesPopup .mp-feature{padding:8px;font-size:11px}
