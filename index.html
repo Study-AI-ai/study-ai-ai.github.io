@@ -1053,9 +1053,9 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 
 
 <style id="studyai-more-pages-clean">
-/* More Pages stays beside the hamburger on mobile; desktop keeps a clear top-right entry. */
+/* More Pages sits immediately to the right of ☰ on desktop and mobile. */
 .mpMenuLabel{
- position:fixed!important;display:block!important;left:auto!important;right:62px!important;top:10px!important;z-index:132!important;
+ position:fixed!important;display:block!important;left:64px!important;right:auto!important;top:13px!important;z-index:132!important;
  min-height:38px;padding:0 13px;border:1px solid #d7d2ff;border-radius:12px;
  color:#5649d8;background:linear-gradient(120deg,#fff,#f0efff,#eefaff);
  box-shadow:0 7px 19px rgba(70,60,190,.18);font-size:12px;font-weight:900;white-space:nowrap;
@@ -1064,15 +1064,15 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 .mpMenuLabel:before{content:"✦ ";font-size:12px}
 .mpMenuLabel:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(70,60,190,.24)}
 #saiSearchBtn{z-index:133!important}
-#morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:flex-end;padding:58px 12px 20px;background:rgba(20,28,60,.32);backdrop-filter:blur(4px);z-index:150}
+#morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:flex-start;padding:62px 12px 20px 64px;background:rgba(20,28,60,.38);backdrop-filter:blur(5px);z-index:150}
 #morePagesBackdrop.show{display:flex}
-#morePagesPopup{position:relative;width:min(430px,100%);padding:22px;border-radius:22px;border:1px solid #dcd6ff;background:linear-gradient(145deg,#fff 0%,#f7f5ff 56%,#f0fbff 100%);color:#1b2541;box-shadow:0 24px 80px rgba(23,28,75,.3);animation:morePagesPop .28s cubic-bezier(.2,.8,.2,1)}
-#morePagesPopup .mp-eyebrow{display:inline-flex;align-items:center;gap:6px;font-weight:950;text-transform:uppercase;letter-spacing:.11em;font-size:10px;color:#635bff;background:#efedff;border-radius:999px;padding:7px 10px;margin-bottom:11px}
-#morePagesPopup h2{font-size:23px;line-height:1.2;margin:0 28px 9px 0;color:#1b2541}
-#morePagesPopup p{font-size:13px;line-height:1.65;color:#66718a;margin:0 0 14px}
-#morePagesPopup .mp-features{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin:15px 0 18px}
-#morePagesPopup .mp-feature{padding:10px;border:1px solid #e2e0fa;border-radius:12px;background:rgba(255,255,255,.85);font-size:12px;font-weight:800;color:#34395e}
-#morePagesPopup .mp-feature small{display:block;font-size:10px;font-weight:600;color:#77809a;margin-top:3px}
+#morePagesPopup{position:relative;width:min(560px,calc(100vw - 88px));max-height:calc(100vh - 78px);overflow-y:auto;padding:26px;border-radius:24px;border:1px solid #dcd6ff;background:radial-gradient(ellipse at top right,#e6f8ff 0%,transparent 42%),linear-gradient(145deg,#fff 0%,#f7f5ff 56%,#f0fbff 100%);color:#1b2541;box-shadow:0 24px 80px rgba(23,28,75,.32);animation:morePagesPop .28s cubic-bezier(.2,.8,.2,1)}
+#morePagesPopup .mp-eyebrow{display:inline-flex;align-items:center;gap:7px;font-weight:950;text-transform:uppercase;letter-spacing:.08em;font-size:11px;color:#5747d9;background:#efedff;border:1px solid #ded8ff;border-radius:999px;padding:8px 11px;margin-bottom:13px}
+#morePagesPopup h2{font-size:clamp(22px,2.4vw,28px);line-height:1.18;margin:0 32px 11px 0;color:#1b2541;letter-spacing:-.035em}
+#morePagesPopup p{font-size:14px;line-height:1.65;color:#56627d;margin:0 0 17px;max-width:52ch}
+#morePagesPopup .mp-features{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:17px 0 20px}
+#morePagesPopup .mp-feature{padding:12px;border:1px solid #e2e0fa;border-radius:14px;background:rgba(255,255,255,.9);font-size:13px;font-weight:850;color:#34395e;box-shadow:0 3px 10px rgba(60,55,130,.04)}
+#morePagesPopup .mp-feature small{display:block;font-size:11px;line-height:1.4;font-weight:650;color:#69748e;margin-top:5px}
 #morePagesPopup .mp-actions{display:flex;gap:8px;flex-wrap:wrap}
 #morePagesPopup .mp-actions button{border:0;border-radius:11px;padding:11px 14px;font-size:12px;font-weight:900;cursor:pointer}
 #morePagesPopup .mp-primary{background:linear-gradient(110deg,#635bff,#a855f7,#ec4899);color:#fff;box-shadow:0 7px 18px #635bff38}
@@ -1081,15 +1081,18 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 /* Page-button taglines removed as requested. Keep only the More Pages prompt beside the hamburger. */
 @keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:900px){
- /* Keep the More Pages message directly beside the visible hamburger button. */
+ /* Same relationship to ☰ on wide and small screens. */
  .mpMenuLabel{left:64px!important;right:auto!important;top:13px!important;min-height:36px;padding:0 10px;font-size:11px;border-radius:11px}
  #saiSearchBtn{top:8px!important;right:8px!important;width:36px!important;height:36px!important}
- /* Open the guide below the same top-left controls, not on the opposite side. */
  #morePagesBackdrop{padding:58px 12px 18px;align-items:flex-start;justify-content:flex-start}
+ #morePagesPopup{width:min(560px,100%);max-height:calc(100vh - 70px);padding:20px}
+ #morePagesPopup .mp-features{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+ #morePagesPopup .mp-feature{padding:10px;font-size:12px}
+ #morePagesPopup .mp-feature small{font-size:10px}
 }
 @media(max-width:380px){
  .mpMenuLabel{left:64px!important;right:auto!important;padding:0 7px;font-size:9px}
- #morePagesPopup{padding:18px}
+ #morePagesPopup{padding:17px}
  #morePagesPopup .mp-features{gap:6px}
  #morePagesPopup .mp-feature{padding:8px;font-size:11px}
  #morePagesPopup h2{font-size:21px}
@@ -5145,18 +5148,22 @@ hub();
 <div id="morePagesBackdrop" aria-hidden="true">
  <section id="morePagesPopup" role="dialog" aria-modal="true" aria-labelledby="morePagesTitle">
   <button type="button" class="mp-x" id="morePagesClose" aria-label="Close popup">×</button>
-  <div class="mp-eyebrow">✨ StudyAI • Explore</div>
-  <h2 id="morePagesTitle">Have you discovered More Pages?</h2>
-  <p>StudyAI has more than a home page! Open <b>More Pages</b> to find learning tools, practice activities and the student community—all from one menu.</p>
+  <div class="mp-eyebrow">✨ YOUR STUDYAI MENU</div>
+  <h2 id="morePagesTitle">Everything you need to study, in one place</h2>
+  <p>Tap <b>Open More Pages</b> to see all the tools. Pick what you need—notes, quizzes, mock tests, AI help, and more.</p>
   <div class="mp-features">
-   <div class="mp-feature">📖 Study Notes<small>Revise topics and chapters</small></div>
-   <div class="mp-feature">🧠 Practice Quiz<small>Test what you have learned</small></div>
-   <div class="mp-feature">🗂️ Flashcards<small>Learn with quick cards</small></div>
+   <div class="mp-feature">📖 Study Notes<small>Read and revise chapters</small></div>
+   <div class="mp-feature">🧠 Practice Quiz<small>Check what you have learned</small></div>
+   <div class="mp-feature">⏱️ Mock Test<small>Try a timed exam</small></div>
+   <div class="mp-feature">🗂️ Flashcards<small>Remember key points</small></div>
+   <div class="mp-feature">✨ AI Tutor<small>Get step-by-step study help</small></div>
+   <div class="mp-feature">📘 NCERT Library<small>Find learning resources</small></div>
+   <div class="mp-feature">🗓️ Study Planner<small>Organise your study time</small></div>
+   <div class="mp-feature">⚡ Quick Revision<small>Review important points</small></div>
+   <div class="mp-feature">🧾 Previous Year Papers<small>Practise exam questions</small></div>
    <div class="mp-feature">🌐 Study Community<small>Explore student study posts</small></div>
-   <div class="mp-feature">✨ AI Tutor<small>Ask study questions</small></div>
-   <div class="mp-feature">📘 NCERT Library<small>Browse learning resources</small></div>
   </div>
-  <div class="mp-actions"><button type="button" class="mp-primary" id="morePagesShow">Show me More Pages →</button><button type="button" class="mp-secondary" id="morePagesLater">Maybe later</button></div>
+  <div class="mp-actions"><button type="button" class="mp-primary" id="morePagesShow">Open More Pages →</button><button type="button" class="mp-secondary" id="morePagesLater">Got it</button></div>
  </section>
 </div>
 <script id="studyai-more-pages-clean-script">
@@ -5196,7 +5203,7 @@ hub();
    }
  }
  // One automatic popup per page load; a refresh starts a fresh page load.
- // Clicking the top-right More Pages button can reopen the guide intentionally.
+ // Clicking More Pages beside ☰ can reopen the guide intentionally.
  if(button)button.addEventListener('click',showPopup);
  if(close)close.addEventListener('click',closePopup);
  if(later)later.addEventListener('click',closePopup);
