@@ -1048,69 +1048,15 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 @media(prefers-reduced-motion:reduce){#community .scProfileHero,#community .scProfileHero:after{animation:none!important}}
 </style>
 
-<style id="studyai-page-discovery-upgrade">
-/* StudyAI page discovery: help visitors notice every section */
-.mpMenuLabel{display:block!important;top:63px;left:244px;z-index:76;padding:8px 12px;font-size:12px;border:1px solid #c9c5ff;color:#5148d7;background:linear-gradient(120deg,#fff,#f3f0ff,#eefaff);box-shadow:0 0 0 3px rgba(99,91,255,.08),0 8px 22px rgba(70,60,190,.18);pointer-events:none}
-.mpMenuLabel:before{content:"↖ ";font-size:14px}
-.menuBtn{left:244px}
-.drawerDiscover{margin:10px 12px 8px;padding:13px;border:1px solid #dcd8ff;border-radius:16px;background:linear-gradient(125deg,#f5f2ff,#eefaff 58%,#fff2f8);box-shadow:0 7px 22px rgba(99,91,255,.10);position:relative;overflow:hidden}
-.drawerDiscover:after{content:"✦";position:absolute;right:12px;top:8px;font-size:27px;color:#b7aaff;opacity:.75;animation:discoveryTwinkle 2.4s ease-in-out infinite}
-.drawerDiscover strong{display:block;font-size:14px;color:#342b91;margin-bottom:4px}
-.drawerDiscover p{font-size:11px;line-height:1.5;color:#626b85;margin:0;max-width:230px}
-.drawerDiscover .discoverMini{display:flex;gap:5px;flex-wrap:wrap;margin-top:9px}
-.discoverMini span{font-size:10px;font-weight:900;padding:4px 7px;border-radius:999px;background:#fff;border:1px solid #e0dcff;color:#5d52d9}
-.drawerNav .drawerItem{position:relative;padding-right:48px;min-height:43px}
-.drawerNav .drawerItem[data-route="community"]:after,
-.drawerNav .drawerItem[data-route="flashcards"]:after,
-.drawerNav .drawerItem[data-route="tutor"]:after,
-.drawerNav .drawerItem[data-route="donate"]:after{content:"EXPLORE";position:absolute;right:8px;font-size:8px;font-weight:950;letter-spacing:.03em;padding:4px 5px;border-radius:6px;background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8;border:1px solid #e1d9ff}
-.drawerNav .drawerItem[data-route="community"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="flashcards"]:after{content:"TRY"}
-.drawerNav .drawerItem[data-route="tutor"]:after{content:"AI"}
-.drawerNav .drawerItem[data-route="donate"]:after{content:"SUPPORT"}
-#pageDiscoveryGuide{position:fixed;z-index:120;left:320px;top:96px;width:min(340px,calc(100vw - 340px));padding:18px;border:1px solid rgba(155,145,255,.65);border-radius:20px;background:rgba(255,255,255,.97);color:#18213a;box-shadow:0 18px 60px rgba(24,28,70,.24),0 0 0 4px rgba(99,91,255,.10);animation:discoveryArrive .45s cubic-bezier(.2,.8,.2,1);backdrop-filter:blur(12px)}
-#pageDiscoveryGuide:before{content:"";position:absolute;left:-9px;top:19px;width:16px;height:16px;background:#fff;border-left:1px solid #c9c5ff;border-bottom:1px solid #c9c5ff;transform:rotate(45deg)}
-#pageDiscoveryGuide .guideEyebrow{font-size:10px;font-weight:950;letter-spacing:.13em;text-transform:uppercase;color:#6c5ce7;margin-bottom:7px}
-#pageDiscoveryGuide h3{font-size:19px;line-height:1.25;margin:0 0 8px;color:#20254b}
-#pageDiscoveryGuide p{font-size:13px;line-height:1.6;color:#657089;margin:0 0 12px}
-#pageDiscoveryGuide .guideTags{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 14px}
-#pageDiscoveryGuide .guideTags span{font-size:11px;font-weight:800;padding:6px 8px;border-radius:9px;background:#f0eeff;color:#574bd1}
-#pageDiscoveryGuide .guideActions{display:flex;align-items:center;gap:8px}
-#pageDiscoveryGuide button{border:0;border-radius:11px;padding:10px 13px;font-size:12px;font-weight:900;cursor:pointer}
-#pageDiscoveryGuide .guideOkay{background:linear-gradient(110deg,#635bff,#a855f7,#ff4fa3);color:white;box-shadow:0 6px 16px #635bff35}
-#pageDiscoveryGuide .guideLater{background:#f1f3f9;color:#59627b}
-@keyframes discoveryTwinkle{0%,100%{opacity:.5;transform:rotate(0) scale(.9)}50%{opacity:1;transform:rotate(18deg) scale(1.12)}}
-@keyframes discoveryArrive{from{opacity:0;transform:translateY(8px) scale(.98)}to{opacity:1;transform:none}}
-@media(max-width:900px){
- .mpMenuLabel{left:7px;top:63px}
- #pageDiscoveryGuide{left:12px;right:12px;top:auto;bottom:18px;width:auto}
- #pageDiscoveryGuide:before{display:none}
-}
-@media(prefers-reduced-motion:reduce){.drawerDiscover:after,#pageDiscoveryGuide{animation:none!important}}
-</style>
 
-<style id="studyai-page-discovery-desktop-fix">
-/* Show More Pages on desktop AND mobile; use the compact drawer layout on every screen. */
-@media(min-width:901px){
-  .side{display:none!important}
-  .main{margin-left:0!important;padding-top:76px!important}
-}
-.menuBtn{display:block!important;left:15px!important;top:13px!important;z-index:130!important;width:44px;height:44px;font-size:22px}
-.mpMenuLabel{display:block!important;left:15px!important;top:63px!important;z-index:131!important;pointer-events:auto!important;cursor:pointer!important}
-#pageDiscoveryGuide{left:72px!important;top:16px!important;right:auto!important;bottom:auto!important;width:min(355px,calc(100vw - 90px))!important;z-index:150!important}
-#pageDiscoveryGuide[hidden]{display:none!important}
-#pageDiscoveryGuide:before{left:-9px;top:20px}
-@media(max-width:900px){
-  #pageDiscoveryGuide{left:12px!important;right:12px!important;top:auto!important;bottom:18px!important;width:auto!important}
-  #pageDiscoveryGuide:before{display:none}
-}
-</style>
+
+
 
 <style id="studyai-more-pages-clean">
 /* One clean More Pages entry point on desktop and mobile */
-.menuBtn{display:block!important;left:244px!important;top:16px!important;z-index:130!important}
+.menuBtn{display:block!important;right:20px!important;left:auto!important;top:16px!important;z-index:130!important}
 .mpMenuLabel{
- position:fixed;display:block!important;left:244px;top:63px;z-index:131;
+ position:fixed;display:block!important;right:20px;left:auto;top:63px;z-index:131;
  border:1px solid #d7d2ff;border-radius:999px;padding:7px 12px;
  color:#5649d8;background:linear-gradient(120deg,#fff,#f0efff,#eefaff);
  box-shadow:0 8px 22px rgba(70,60,190,.18);font-size:12px;font-weight:900;
@@ -1138,8 +1084,8 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
  #morePagesBackdrop{padding:90px 12px 18px;align-items:flex-start}
 }
 @media(min-width:901px){
- .menuBtn{left:244px!important}
- .mpMenuLabel{left:244px}
+ .menuBtn{right:20px!important;left:auto!important}
+ .mpMenuLabel{right:20px;left:auto}
 }
 @media(prefers-reduced-motion:reduce){.mpMenuLabel,#morePagesPopup{animation:none!important}}
 </style>
