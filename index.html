@@ -1078,16 +1078,24 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 #morePagesPopup .mp-primary{background:linear-gradient(110deg,#635bff,#a855f7,#ec4899);color:#fff;box-shadow:0 7px 18px #635bff38}
 #morePagesPopup .mp-secondary{background:#eceef6;color:#424a66}
 #morePagesPopup .mp-x{position:absolute;right:12px;top:12px;border:0;background:#f0eff9;color:#646b84;border-radius:10px;width:30px;height:30px;font-size:20px;cursor:pointer}
-/* Labels in the drawer point students toward useful pages. */
-.drawerNav .drawerItem{position:relative;padding-right:66px}
-.drawerNav .drawerItem:after{position:absolute;right:9px;top:50%;transform:translateY(-50%);font-size:9px;line-height:1;font-weight:950;letter-spacing:.03em;padding:5px 6px;border-radius:7px;border:1px solid #e1d9ff;background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8}
-.drawerNav .drawerItem[data-route="community"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="flashcards"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="tutor"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="quiz"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="ncert"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="papers"]:after{content:"NEW"}
-.drawerNav .drawerItem[data-route="notes"]:after{content:"NEW"}
+/* Page badges describe the purpose of each destination; NEW is reserved for Community. */
+.drawerNav .drawerItem{position:relative;padding-right:92px}
+.drawerNav .drawerItem:after{
+ position:absolute;right:9px;top:50%;transform:translateY(-50%);
+ display:inline-flex;align-items:center;justify-content:center;gap:3px;
+ max-width:86px;white-space:nowrap;font-size:9px;line-height:1;font-weight:950;letter-spacing:.015em;
+ padding:5px 6px;border-radius:7px;border:1px solid #e1d9ff;
+ background:linear-gradient(100deg,#e8e4ff,#ffe7f3);color:#6c45d8
+}
+.drawerNav .drawerItem[data-route="community"]:after{content:"🔥 TRENDING";background:linear-gradient(100deg,#fff0da,#ffe0ee);border-color:#ffdbb1;color:#a34b16}
+.drawerNav .drawerItem[data-route="flashcards"]:after{content:"🎯 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="tutor"]:after{content:"✨ AI";background:linear-gradient(100deg,#e8e4ff,#fce7f3);color:#6c45d8}
+.drawerNav .drawerItem[data-route="quiz"]:after{content:"🧠 TRY";background:linear-gradient(100deg,#e8f5ff,#e7e4ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="ncert"]:after{content:"📘 NCERT";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
+.drawerNav .drawerItem[data-route="papers"]:after{content:"✍️ PRACTICE";background:linear-gradient(100deg,#fff0da,#fff7de);border-color:#f4e2a4;color:#94620a}
+.drawerNav .drawerItem[data-route="notes"]:after{content:"📚 STUDY";background:linear-gradient(100deg,#e8f5ff,#eef0ff);color:#3c54ac}
+.drawerNav .drawerItem[data-route="classes"]:after{content:"🎓 LEARN";background:linear-gradient(100deg,#e1f9ee,#e8f5ff);border-color:#bcebd4;color:#167755}
+.drawerNav .drawerItem[data-route="subjects"]:after{content:"🧭 EXPLORE";background:linear-gradient(100deg,#f0eaff,#ffe8f4);color:#7541b8}
 @keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:900px){
  .mpMenuLabel{right:52px!important;left:auto!important;top:8px!important;min-height:36px;padding:0 9px;font-size:10px;border-radius:11px}
