@@ -1088,6 +1088,23 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 }
 @media(prefers-reduced-motion:reduce){.drawerDiscover:after,#pageDiscoveryGuide{animation:none!important}}
 </style>
+
+<style id="studyai-page-discovery-desktop-fix">
+/* Show More Pages on desktop AND mobile; use the compact drawer layout on every screen. */
+@media(min-width:901px){
+  .side{display:none!important}
+  .main{margin-left:0!important;padding-top:76px!important}
+}
+.menuBtn{display:block!important;left:15px!important;top:13px!important;z-index:130!important;width:44px;height:44px;font-size:22px}
+.mpMenuLabel{display:block!important;left:15px!important;top:63px!important;z-index:131!important;pointer-events:auto!important;cursor:pointer!important}
+#pageDiscoveryGuide{left:72px!important;top:16px!important;right:auto!important;bottom:auto!important;width:min(355px,calc(100vw - 90px))!important;z-index:150!important}
+#pageDiscoveryGuide[hidden]{display:none!important}
+#pageDiscoveryGuide:before{left:-9px;top:20px}
+@media(max-width:900px){
+  #pageDiscoveryGuide{left:12px!important;right:12px!important;top:auto!important;bottom:18px!important;width:auto!important}
+  #pageDiscoveryGuide:before{display:none}
+}
+</style>
 </head>
 
 <body>
@@ -1339,7 +1356,29 @@ const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.i
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function pairs(html){
   if(!html||/Notes aa rahe hain/.test(html))return[];
-  const d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];
+  const d=new DOMParser().parseFromString('<body>'+html+'
+<script id="studyai-page-discovery-click-fix">
+(function(){
+ const label=document.querySelector('.mpMenuLabel');
+ const button=document.getElementById('menuBtn');
+ const drawer=document.getElementById('appDrawer');
+ const overlay=document.getElementById('drawerOverlay');
+ const guide=document.getElementById('pageDiscoveryGuide');
+ if(!drawer||!overlay||!guide)return;
+ function showHelp(){
+   drawer.classList.add('open');overlay.classList.add('show');
+   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
+   if(!seen)guide.hidden=false;
+ }
+ label&&label.addEventListener('click',showHelp);
+ button&&button.addEventListener('click',function(){
+   let seen=false;try{seen=localStorage.getItem('studyai-page-tour-seen')==='1'}catch(e){}
+   if(!seen){guide.hidden=false;drawer.classList.add('open');overlay.classList.add('show')}
+ });
+})();
+</script>
+
+</body>','text/html'),out=[];
   d.querySelectorAll('li').forEach(li=>{
     const b=li.firstElementChild;if(!b||b.tagName!=='B')return;
     const t=b.textContent.replace(/[\s:：=\-–]+$/,'').trim(),r=li.textContent.slice(b.textContent.length).replace(/^[\s:：=\-–]+/,'').replace(/\s+/g,' ').trim();
