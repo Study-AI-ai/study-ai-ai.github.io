@@ -1060,7 +1060,7 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
  border:1px solid #d7d2ff;border-radius:999px;padding:7px 12px;
  color:#5649d8;background:linear-gradient(120deg,#fff,#f0efff,#eefaff);
  box-shadow:0 8px 22px rgba(70,60,190,.18);font-size:12px;font-weight:900;
- white-space:nowrap;cursor:pointer;animation:mpColorFlow 2.5s linear infinite,mpFloat 2s ease-in-out infinite
+ white-space:nowrap;cursor:pointer;pointer-events:auto!important;animation:mpColorFlow 2.5s linear infinite,mpFloat 2s ease-in-out infinite
 }
 .mpMenuLabel:hover{transform:translateY(-2px);box-shadow:0 10px 26px rgba(70,60,190,.24)}
 #morePagesBackdrop{position:fixed;inset:0;display:none;align-items:flex-start;justify-content:center;padding:86px 16px 20px;background:rgba(20,28,60,.28);backdrop-filter:blur(3px);z-index:140}
@@ -1079,8 +1079,8 @@ body.dark #community .scSocialDock button:hover {background:linear-gradient(135d
 #morePagesPopup .mp-x{position:absolute;right:12px;top:12px;border:0;background:#f0eff9;color:#646b84;border-radius:10px;width:30px;height:30px;font-size:20px;cursor:pointer}
 @keyframes morePagesPop{from{opacity:0;transform:translateY(-8px) scale(.97)}to{opacity:1;transform:translateY(0) scale(1)}}
 @media(max-width:900px){
- .menuBtn{left:15px!important;top:13px!important}
- .mpMenuLabel{left:7px;top:62px}
+ .menuBtn{left:15px!important;right:auto!important;top:13px!important}
+ .mpMenuLabel{left:7px!important;right:auto!important;top:62px!important}
  #morePagesBackdrop{padding:90px 12px 18px;align-items:flex-start}
 }
 @media(min-width:901px){
@@ -5164,7 +5164,7 @@ hub();
  const later=document.getElementById('morePagesLater');
  if(!popup)return;
  function openMenu(){if(drawer)drawer.classList.add('open');if(overlay)overlay.classList.add('show');}
- function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');}
+ function closePopup(){popup.classList.remove('show');popup.setAttribute('aria-hidden','true');try{localStorage.setItem('studyai-more-pages-popup-v2-seen','1')}catch(e){}}
  function showPopup(){popup.classList.add('show');popup.setAttribute('aria-hidden','false');}
  function firstVisit(){
    let seen=false;try{seen=localStorage.getItem('studyai-more-pages-popup-v2-seen')==='1'}catch(e){}
