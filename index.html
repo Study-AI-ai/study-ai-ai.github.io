@@ -6069,6 +6069,20 @@ body:has(#tutor.active) #tutorPop{display:none!important}
 #noteBox .adv-note-formula{padding:13px;text-align:center;border:1px solid #d8d0ff;border-radius:13px;background:linear-gradient(120deg,#efecff,#fff 55%,#fff0f7);color:#4936a6;font-size:17px;font-weight:900}
 #noteBox .adv-note-memory{padding:13px;border:1px solid #f1d59b;border-left:5px solid #f1b943;border-radius:13px;background:linear-gradient(110deg,#fff8d9,#fffdf2);margin:13px 0}#noteBox .adv-note-example{padding:13px;border:1px solid #ccefe1;border-left:5px solid #45b995;border-radius:13px;background:linear-gradient(110deg,#edfff7,#fff);margin:13px 0}#noteBox .adv-note-mistake{padding:13px;border:1px solid #f0c7d0;border-left:5px solid #eb7d93;border-radius:13px;background:linear-gradient(110deg,#fff0f3,#fffafa);margin:13px 0}
 </style>
+<style id="advancedNotesToolbarStyles">
+.advancedNoteTools{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin:12px 0 5px;padding:10px;border:1px solid #ded8f4;border-radius:14px;background:linear-gradient(110deg,#f3f0ff,#fff 60%,#fff1f7);box-shadow:0 6px 17px #49318b0b}
+.advancedNoteTools button{display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:33px;padding:7px 10px;border:1px solid #dfdaee;border-radius:9px;background:#fff;color:#4e4569;font-size:11px;font-weight:850;cursor:pointer;transition:transform .15s,border-color .15s,background .15s}
+.advancedNoteTools button:hover{transform:translateY(-1px);border-color:#b9a8f1;background:#faf7ff}
+.advancedNoteTools button.on{background:linear-gradient(110deg,#dff9ec,#effff7);color:#087c57;border-color:#afe6cd}
+.advancedNoteTools select{height:33px;max-width:100%;padding:5px 8px;border:1px solid #dfdaee;border-radius:9px;background:#fff;color:#4e4569;font-size:11px;font-weight:800}
+.advancedNoteTools .advFontLabel{min-width:40px;text-align:center;color:#6b51b5;font-size:11px;font-weight:950}
+.advReadProgressTrack{height:5px;margin:9px 1px 0;overflow:hidden;border-radius:99px;background:#eeeaf8}
+.advReadProgressTrack span{display:block;width:0;height:100%;border-radius:inherit;background:linear-gradient(90deg,#6255ec,#a04ede,#ed4b9e);transition:width .15s}
+.advReadProgressLabel{display:flex;justify-content:space-between;gap:10px;margin:5px 2px 13px;color:#928ba2;font-size:9px}
+.advReadProgressLabel b{color:#7356c6;font-variant-numeric:tabular-nums}
+@media(max-width:620px){.advancedNoteTools{gap:6px;padding:8px}.advancedNoteTools button{font-size:10px;min-height:32px;padding:6px 8px}.advancedNoteTools select{font-size:10px;padding:5px 6px}.advancedNoteTools .advFontLabel{min-width:34px}}
+@media print{.advancedNoteTools,.advReadProgressTrack,.advReadProgressLabel{display:none!important}}
+</style>
 <style id="advancedNotesDedicatedGeneratorStyles">
 .advancedNoteBuilder{position:relative;z-index:1;margin:22px 0;padding:18px;border:1px solid #e2d7ff;border-radius:19px;background:linear-gradient(140deg,#fff 0%,#fbf9ff 58%,#fff5fb 100%);box-shadow:0 12px 30px #49318c0b}
 .advancedNoteBuilderHead{display:flex;align-items:center;gap:11px;margin-bottom:16px}.advancedNoteSpark{display:grid;place-items:center;flex:0 0 39px;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#6654ee,#a64cdb 60%,#ed4c9b);color:white;font-size:20px;box-shadow:0 6px 14px #8b58d52e}.advancedNoteBuilderHead>div{display:grid;gap:4px;min-width:0;flex:1}.advancedNoteBuilderHead b{font-size:14px;color:#302747}.advancedNoteBuilderHead small{font-size:11px;line-height:1.55;color:#7c768f}
@@ -6175,10 +6189,94 @@ function sanitizeAdvancedNotes(raw){
  box.querySelectorAll("svg").forEach(svg=>{if(!svg.hasAttribute("viewBox")){svg.remove();return;}svg.setAttribute("role","img");svg.setAttribute("width","100%");svg.setAttribute("height","auto");});
  return box.innerHTML;
 }
+
+const ADV_NOTES_ZOOM_STEPS=[90,100,115,130,150];
+let advNotesSpeechRun=0;
+function advancedNotesCurrentKey(){
+ const c=document.getElementById("advNoteClass")?.value||"10";
+ const s=document.getElementById("advNoteSubject")?.value||"";
+ const ch=document.getElementById("advNoteChapter")?.value||"";
+ return {c,s,ch,key:[c,s,ch].join("|")};
+}
+function bindAdvancedNoteTools(){
+ const bar=document.getElementById("advancedNoteTools"),article=document.getElementById("advancedNoteArticle");
+ if(!bar||!article)return;
+ const ctx=advancedNotesCurrentKey();
+ const getDone=()=>{try{return JSON.parse(localStorage.getItem("sfc3_done")||"{}")||{};}catch(e){return {};}};
+ const doneBtn=bar.querySelector('[data-adv-tool="done"]');
+ const renderDone=()=>{const done=!!getDone()[ctx.key];if(doneBtn){doneBtn.classList.toggle("on",done);doneBtn.textContent=done?"✅ Complete":"☑️ Complete mark karo";doneBtn.setAttribute("aria-pressed",String(done));}};
+ renderDone();
+ const zoomRead=()=>{let z=Number(localStorage.getItem("studyaiAdvancedNotesZoom"));if(!Number.isFinite(z)||!ADV_NOTES_ZOOM_STEPS.includes(z))z=90;article.style.fontSize=(14*z/100)+"px";const lbl=document.getElementById("advFontLbl");if(lbl)lbl.textContent=z+"%";return z;};
+ zoomRead();
+ const rate=bar.querySelector('[data-adv-tool="rate"]');
+ if(rate)rate.value=localStorage.getItem("studyaiAdvancedNotesRate")||".95";
+ const stop=()=>{advNotesSpeechRun++;try{window.speechSynthesis?.cancel();}catch(e){}const read=bar.querySelector('[data-adv-tool="read"]');if(read)read.textContent="🔊 Padh ke sunao";};
+ const speak=()=>{
+  if(!("speechSynthesis" in window)||typeof SpeechSynthesisUtterance==="undefined"){const status=document.getElementById("advancedNoteStatus");if(status)status.textContent="Is browser/device par text-to-speech support nahi hai.";return;}
+  const read=bar.querySelector('[data-adv-tool="read"]'),sp=window.speechSynthesis;
+  if(sp.speaking&&!sp.paused){sp.pause();if(read)read.textContent="▶ Chalu karo";return;}
+  if(sp.paused){sp.resume();if(read)read.textContent="⏸ Ruko";return;}
+  stop();
+  const clone=article.cloneNode(true);
+  const sourceTitle=clone.querySelectorAll(".advancedNoteResultHead,.advancedNoteTools,.advReadProgressTrack,.advReadProgressLabel,button,script,style");sourceTitle.forEach(n=>n.remove());
+  clone.querySelectorAll("svg").forEach(svg=>{const t=svg.querySelector("title");if(t)svg.replaceWith(document.createTextNode(t.textContent));else svg.remove();});
+  const text=String(clone.innerText||clone.textContent||"").replace(/\s+/g," ").trim();if(!text)return;
+  const chunks=[];let cur="";
+  (text.match(/[^.!?।]+[.!?।]?/g)||[text]).forEach(part=>{if((cur+part).length>180){if(cur)chunks.push(cur);cur=part;}else cur+=part;});if(cur)chunks.push(cur);
+  const id=++advNotesSpeechRun,lang=/[\u0900-\u097F]/.test(text)?"hi-IN":"en-IN";let index=0;
+  const next=()=>{if(id!==advNotesSpeechRun)return;if(index>=chunks.length){if(read)read.textContent="🔊 Padh ke sunao";return;}const u=new SpeechSynthesisUtterance(chunks[index++]);u.lang=lang;u.rate=Number(rate?.value||".95");u.onend=next;u.onerror=next;sp.speak(u);};
+  if(read)read.textContent="⏸ Ruko";
+  next();
+ };
+ bar.addEventListener("click",e=>{
+  const b=e.target.closest("button[data-adv-tool]");if(!b)return;
+  const action=b.dataset.advTool;
+  if(action==="done"){
+   const saved=getDone();
+   if(saved[ctx.key])delete saved[ctx.key];else saved[ctx.key]=Date.now();
+   try{localStorage.setItem("sfc3_done",JSON.stringify(saved));}catch(e){}
+   renderDone();return;
+  }
+  if(action==="read"){speak();return;}
+  if(action==="stop"){stop();return;}
+  if(action==="dec"||action==="inc"){
+   const z=zoomRead(),ix=ADV_NOTES_ZOOM_STEPS.indexOf(z),next=Math.max(0,Math.min(ADV_NOTES_ZOOM_STEPS.length-1,ix+(action==="inc"?1:-1)));
+   try{localStorage.setItem("studyaiAdvancedNotesZoom",String(ADV_NOTES_ZOOM_STEPS[next]));}catch(e){}
+   zoomRead();return;
+  }
+  if(action==="quiz"){
+   if(typeof window.saiOpen==="function")window.saiOpen(ctx.c,ctx.s,ctx.ch,"quiz");
+   else location.hash="quiz";
+  }
+ });
+ rate?.addEventListener("change",()=>{try{localStorage.setItem("studyaiAdvancedNotesRate",rate.value);}catch(e){}});
+ const progressUpdate=()=>{
+  const a=document.getElementById("advancedNoteArticle"),bar=document.getElementById("advReadProgressBar"),label=document.getElementById("advReadProgressPercent");
+  if(!a||!bar||!label)return;
+  const rect=a.getBoundingClientRect(),scrollable=Math.max(1,rect.height-window.innerHeight);
+  const p=Math.max(0,Math.min(100,Math.round((-rect.top)/scrollable*100)));
+  bar.style.width=p+"%";label.textContent=p+"%";
+ };
+ if(window.__advNoteProgressHandler)window.removeEventListener("scroll",window.__advNoteProgressHandler);
+ window.__advNoteProgressHandler=progressUpdate;
+ window.addEventListener("scroll",progressUpdate,{passive:true});window.addEventListener("resize",progressUpdate);progressUpdate();
+}
+
 function showAdvancedNote(raw,cached){
   const out=document.getElementById("advancedNoteOutput");if(!out)return;
   const html=sanitizeAdvancedNotes(raw);
-  out.innerHTML='<div class="advancedNoteResultHead"><span>✦</span><div><b>Advanced Notes '+(cached?'· Saved':'· Ready')+'</b><small>Concepts · Worked examples · Revision · Practice</small></div><button type="button" class="advancedNotePrint" onclick="window.print()">Print / Save PDF</button></div><article class="advancedNoteArticle">'+html+'</article>';
+  const ctx=advancedPracticeContext();
+  out.innerHTML='<div class="advancedNoteResultHead"><span>✦</span><div><b>Advanced Notes '+(cached?'· Saved':'· Ready')+'</b><small>Concepts · Worked examples · Revision · Practice</small></div><button type="button" class="advancedNotePrint" onclick="window.print()">Print / Save PDF</button></div>'+
+  '<div class="saiTools advancedNoteTools" id="advancedNoteTools" aria-label="Advanced Notes tools">'+
+    '<button type="button" data-adv-tool="done">☑️ Complete mark karo</button>'+
+    '<button type="button" data-adv-tool="read">🔊 Padh ke sunao</button>'+
+    '<button type="button" data-adv-tool="stop" title="Reading rok do">⏹</button>'+
+    '<select data-adv-tool="rate" aria-label="Reading speed"><option value=".8">Slow</option><option value=".95" selected>Normal</option><option value="1.15">Fast</option></select>'+
+    '<button type="button" data-adv-tool="dec" title="Text chhota karo">A−</button><span class="advFontLabel" id="advFontLbl">90%</span><button type="button" data-adv-tool="inc" title="Text bada karo">A+</button>'+
+    '<button type="button" data-adv-tool="quiz">🧠 Quiz do</button>'+
+  '</div><div class="advReadProgressTrack" aria-label="Reading progress"><span id="advReadProgressBar"></span></div><div class="advReadProgressLabel"><span>Reading progress</span><b id="advReadProgressPercent">0%</b></div>'+
+  '<article class="advancedNoteArticle" id="advancedNoteArticle">'+html+'</article>';
+  bindAdvancedNoteTools();
 }
 async function genAdvancedAINotes(){
   const cls=document.getElementById("advNoteClass"),sub=document.getElementById("advNoteSubject"),chapter=document.getElementById("advNoteChapter");
