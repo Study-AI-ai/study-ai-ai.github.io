@@ -1628,22 +1628,29 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
     <div class="notesAdvancedHero">
       <span class="notesAdvancedEyebrow"><span>✦</span> STUDYAI · ADVANCED AI NOTES · FREE FOR NOW</span>
       <h2>Go beyond the basics. <span>Master every chapter.</span></h2>
-      <p class="notesAdvancedLead">Advanced AI Notes are free for everyone for now. Generate a full, structured study pack with concept-by-concept explanations, worked examples, comparison tables, common mistakes, memory aids, solved exam questions and a quick-revision sheet—separate from Basic Notes.</p>
+      <p class="notesAdvancedLead">Advanced AI Notes are free for everyone for now. Generate a dedicated, high-detail study pack with simple explanations, step-by-step examples, comparison tables, common mistakes, memory tricks and exam-ready revision—all on this page.</p>
       <div class="advancedNoteBuilder">
-        <div class="advancedNoteBuilderHead"><span class="advancedNoteSpark">✦</span><div><b>Create your Advanced Notes</b><small>Choose class, subject and chapter. AI will build a dedicated high-detail set of notes.</small></div></div>
+        <div class="advancedNoteBuilderHead"><span class="advancedNoteSpark">✦</span><div><b>Create your Advanced Notes</b><small>Select your class, subject and chapter. These notes are generated separately from Basic Notes.</small></div><span class="advancedNoteFreePill">FREE</span></div>
         <div class="advancedNoteSelectors"><label>Class<select id="advNoteClass" aria-label="Advanced Notes class"></select></label><label>Subject<select id="advNoteSubject" aria-label="Advanced Notes subject"></select></label><label>Chapter<select id="advNoteChapter" aria-label="Advanced Notes chapter"></select></label></div>
-        <div class="advancedNoteActions"><button type="button" id="generateAdvancedNotesBtn" class="notesAdvancedCTA" onclick="genAdvancedAINotes()">✦ Generate Advanced Notes <span>FREE</span></button><span class="advancedNoteMeta">Detailed • Exam-focused • Saved in this browser</span></div>
+        <div class="advancedNoteActions"><button type="button" id="generateAdvancedNotesBtn" class="notesAdvancedCTA" onclick="genAdvancedAINotes()">✦ Generate Advanced Notes <span>FREE</span></button><span class="advancedNoteMeta">Detailed • Visual sections • Exam-focused</span></div>
         <div id="advancedNoteStatus" aria-live="polite"></div>
         <div id="advancedNoteOutput"></div>
       </div>
+      <section class="advancedExplainBox" aria-label="Ask AI to explain a confusing topic">
+        <div class="advancedExplainHeader"><span class="advancedExplainOrb">✧</span><div><b>Still confused about something? Ask AI.</b><small>Ask about any topic in this chapter. Get a simpler explanation, analogy or step-by-step example.</small></div><span class="advancedExplainMiniTag">AI HELP</span></div>
+        <div class="advancedExplainQuick" aria-label="Suggested questions"><button type="button" onclick="advancedExplainQuick('Explain this chapter topic in much simpler words.')">🧒 Explain more simply</button><button type="button" onclick="advancedExplainQuick('Give me an easy real-life example for this topic.')">💡 Give an example</button><button type="button" onclick="advancedExplainQuick('Explain the process step by step and show where students often get confused.')">🪜 Step by step</button></div>
+        <div id="advancedExplainChat" class="advancedExplainChat" aria-live="polite"><div class="advancedExplainWelcome"><span>✦</span><p>Namaste! 😊 Is chapter ka koi bhi confusing point yahan likho. Main use aur easy Hinglish mein, examples ke saath samjhaunga.</p></div></div>
+        <div class="advancedExplainComposer"><textarea id="advancedExplainInput" rows="1" maxlength="1800" placeholder="Which topic is confusing? Ask me to explain it again…"></textarea><button type="button" id="advancedExplainSend" aria-label="Send question to AI" onclick="askAdvancedAI()">➤</button></div>
+        <div class="advancedExplainFoot">Your selected class, subject, chapter and generated notes (if available) help the AI give a more relevant explanation.</div>
+      </section>
       <div class="notesAdvancedFeatures">
         <div class="notesAdvancedFeature"><span>🧠</span><b>Concept-by-concept learning</b><small>Understand the why, not just the definition.</small></div>
         <div class="notesAdvancedFeature"><span>✍️</span><b>Step-by-step examples</b><small>Worked solutions, formulas and comparisons.</small></div>
         <div class="notesAdvancedFeature"><span>⚡</span><b>Quick revision kit</b><small>Key points, memory tricks and recap sheets.</small></div>
         <div class="notesAdvancedFeature"><span>🎯</span><b>Exam practice</b><small>Important questions and answer frameworks.</small></div>
       </div>
-      <div class="notesAdvancedBottom"><div><b>Separate quality level, separate notes ✨</b><small>Advanced Notes use their own detailed prompt and saved result. Basic Notes remain unchanged.</small></div><span class="advancedNoteFreePill">FREE FOR NOW</span></div>
-      <p class="notesAdvancedFine">For best results, check formulas, dates and syllabus-specific details against your current textbook or teacher's instructions. Generated notes are AI-created and may need checking.</p>
+      <div class="notesAdvancedBottom"><div><b>One chapter. A complete learning experience. ✨</b><small>Generate your Advanced Notes, then ask the AI box about anything that still feels difficult.</small></div><span class="advancedNoteFreePill">FREE FOR NOW</span></div>
+      <p class="notesAdvancedFine">AI-generated content can make mistakes. For exam-critical facts, formulas and syllabus details, cross-check with your current textbook or teacher.</p>
     </div>
   </div>
   <div id="notesBasicArea" role="tabpanel" aria-labelledby="basicNotesTab"><div class="bar"><select id="noteClass"></select><select id="noteSubject"></select><select id="noteChapter"></select></div><div id="noteBox"></div></div>
@@ -6037,69 +6044,128 @@ body:has(#tutor.active) #tutorPop{display:none!important}
 </style>
 <style id="advancedNotesDedicatedGeneratorStyles">
 .advancedNoteBuilder{position:relative;z-index:1;margin:22px 0;padding:18px;border:1px solid #e2d7ff;border-radius:19px;background:linear-gradient(140deg,#fff 0%,#fbf9ff 58%,#fff5fb 100%);box-shadow:0 12px 30px #49318c0b}
-.advancedNoteBuilderHead{display:flex;align-items:center;gap:11px;margin-bottom:16px}.advancedNoteSpark{display:grid;place-items:center;flex:0 0 39px;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#6654ee,#a64cdb 60%,#ed4c9b);color:white;font-size:20px;box-shadow:0 6px 14px #8b58d52e}.advancedNoteBuilderHead>div{display:grid;gap:4px;min-width:0}.advancedNoteBuilderHead b{font-size:14px;color:#302747}.advancedNoteBuilderHead small{font-size:11px;line-height:1.55;color:#7c768f}
+.advancedNoteBuilderHead{display:flex;align-items:center;gap:11px;margin-bottom:16px}.advancedNoteSpark{display:grid;place-items:center;flex:0 0 39px;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#6654ee,#a64cdb 60%,#ed4c9b);color:white;font-size:20px;box-shadow:0 6px 14px #8b58d52e}.advancedNoteBuilderHead>div{display:grid;gap:4px;min-width:0;flex:1}.advancedNoteBuilderHead b{font-size:14px;color:#302747}.advancedNoteBuilderHead small{font-size:11px;line-height:1.55;color:#7c768f}
 .advancedNoteSelectors{display:grid;grid-template-columns:.75fr 1.15fr 1.8fr;gap:10px}.advancedNoteSelectors label{display:grid;gap:6px;min-width:0;color:#6d6385;font-size:10px;font-weight:850}.advancedNoteSelectors select{width:100%;min-width:0;height:42px;padding:0 10px;border:1px solid #e3dcef;border-radius:11px;background:#fff;color:#37314c;font:inherit;font-size:12px;outline:none}.advancedNoteSelectors select:focus{border-color:#9d87f4;box-shadow:0 0 0 3px #8f7cf31b}
 .advancedNoteActions{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-top:13px}.advancedNoteActions .notesAdvancedCTA{min-height:43px}.advancedNoteActions .notesAdvancedCTA:disabled{opacity:.65;cursor:wait;transform:none}.advancedNoteMeta{font-size:10px;line-height:1.5;color:#8a849a}.advancedNoteFreePill{display:inline-flex;align-items:center;justify-content:center;padding:8px 12px;border:1px solid #bfead7;border-radius:999px;background:#e9fff4;color:#07865c;font-size:10px;font-weight:950;letter-spacing:.08em}
 .advancedNoteStatusCard{margin:12px 0;padding:12px 14px;border:1px solid #e6ddfb;border-radius:12px;background:#f8f5ff;color:#65527e;font-size:12px;line-height:1.65}.advancedNoteStatusCard.success{border-color:#c5eedc;background:#f0fff7;color:#087c57}.advancedNoteStatusCard.error{border-color:#f2d1d9;background:#fff6f7;color:#9e334d}.advancedNoteRetry{margin-top:8px;padding:7px 11px;border:1px solid #e0c9f6;border-radius:9px;background:#fff;color:#7742b7;font-weight:800;cursor:pointer}
 .advancedNoteResultHead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0 0;padding:14px;border:1px solid #e5def6;border-radius:15px 15px 0 0;background:linear-gradient(110deg,#f5f0ff,#fff4fa)}.advancedNoteResultHead>span{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:linear-gradient(135deg,#6955eb,#bd4bd0);color:#fff}.advancedNoteResultHead>div{display:grid;gap:4px;flex:1;min-width:140px}.advancedNoteResultHead b{font-size:12px;color:#382e58}.advancedNoteResultHead small{font-size:10px;color:#7b748c}.advancedNotePrint{padding:8px 10px;border:1px solid #ded2f4;border-radius:9px;background:#fff;color:#6944a6;font-size:10px;font-weight:850;cursor:pointer}
 .advancedNoteArticle{padding:clamp(17px,3vw,30px);border:1px solid #e8e3f1;border-top:0;border-radius:0 0 16px 16px;background:#fff;color:#29283b;font-size:13px;line-height:1.8;overflow-wrap:anywhere}.advancedNoteArticle h2{margin:0 0 16px;font-size:clamp(21px,3vw,29px);line-height:1.25;color:#3c3285}.advancedNoteArticle h3{margin:25px 0 9px;padding-bottom:7px;border-bottom:1px solid #eee8fa;font-size:17px;line-height:1.4;color:#5b45b7}.advancedNoteArticle h4{margin:18px 0 6px;font-size:14px;color:#38305f}.advancedNoteArticle p{margin:8px 0}.advancedNoteArticle ul,.advancedNoteArticle ol{padding-left:23px}.advancedNoteArticle li{margin:5px 0}.advancedNoteArticle table{width:100%;margin:14px 0;border-collapse:collapse;font-size:12px}.advancedNoteArticle th,.advancedNoteArticle td{padding:9px;border:1px solid #e7e2f0;text-align:left;vertical-align:top}.advancedNoteArticle th{background:#f1edff;color:#493b83}.advancedNoteArticle .adv-note-box{margin:15px 0;padding:13px 15px;border:1px solid #e6def9;border-left:4px solid #8a6de3;border-radius:10px;background:#faf8ff}.advancedNoteArticle .adv-note-box b{color:#6045a7}.advancedNoteArticle code{padding:2px 5px;border-radius:5px;background:#f0edf9}
-@media(max-width:620px){.advancedNoteBuilder{padding:13px}.advancedNoteSelectors{grid-template-columns:1fr}.advancedNoteSelectors select{height:44px}.advancedNoteActions .notesAdvancedCTA{width:100%}.advancedNotePrint{margin-left:auto}}
+.advancedExplainBox{position:relative;overflow:hidden;margin:20px 0;padding:17px;border:1px solid #dcd5ff;border-radius:21px;background:radial-gradient(circle at 100% 0%,#ffe8f4 0,transparent 33%),linear-gradient(145deg,#fff,#faf8ff 62%,#fff8fc);box-shadow:0 15px 34px #5436ab0e}.advancedExplainHeader{display:flex;align-items:center;gap:11px}.advancedExplainOrb{display:grid;place-items:center;width:39px;height:39px;flex:0 0 39px;border-radius:14px;background:linear-gradient(135deg,#6155ed,#a14cdb 60%,#ee4c9c);color:white;font-size:23px;box-shadow:0 6px 16px #8959d832}.advancedExplainHeader>div{display:grid;gap:5px;flex:1;min-width:0}.advancedExplainHeader b{font-size:14px;color:#302747}.advancedExplainHeader small{font-size:11px;line-height:1.55;color:#777187}.advancedExplainMiniTag{font-size:8px;font-weight:950;letter-spacing:.11em;color:#8155c5;background:#f0eaff;border:1px solid #e1d6fb;border-radius:8px;padding:6px}
+.advancedExplainQuick{display:flex;gap:7px;flex-wrap:wrap;margin:14px 0 10px}.advancedExplainQuick button{padding:7px 10px;border:1px solid #e0d9f0;border-radius:999px;background:#fff;color:#665787;font-size:10px;font-weight:800;cursor:pointer}.advancedExplainQuick button:hover{border-color:#b9a5ff;background:#f5f0ff}.advancedExplainChat{display:flex;flex-direction:column;gap:10px;max-height:430px;min-height:90px;overflow:auto;padding:9px 2px 12px}.advancedExplainWelcome{display:flex;align-items:flex-start;gap:9px;padding:10px 12px;border:1px solid #e6dff7;border-radius:13px 13px 13px 4px;background:#fff;color:#5e5970}.advancedExplainWelcome>span{color:#8054da;font-size:17px}.advancedExplainWelcome p{margin:0;font-size:12px;line-height:1.7}.advancedExplainMessage{max-width:94%;padding:10px 12px;border:1px solid #e7e3f0;border-radius:13px;background:#fff;color:#393548}.advancedExplainMessage.user{align-self:flex-end;border-color:#d9d0ff;background:linear-gradient(120deg,#f1edff,#fff3fa)}.advancedExplainMessage.assistant{align-self:flex-start}.advancedExplainRole{display:block;margin-bottom:5px;font-size:10px;color:#7651bb}.advancedExplainMessageText{font-size:12px;line-height:1.75;white-space:pre-wrap;overflow-wrap:anywhere}
+.advancedExplainComposer{display:flex;align-items:flex-end;gap:8px;padding:8px;border:1px solid #dcd4f2;border-radius:16px;background:#fff;box-shadow:0 5px 17px #6545aa0a}.advancedExplainComposer:focus-within{border-color:#9d8bea;box-shadow:0 0 0 3px #8b72e617}.advancedExplainComposer textarea{width:100%;min-height:42px;max-height:150px;resize:vertical;border:0;outline:0;padding:10px;color:#332e47;font:inherit;font-size:12px;line-height:1.55;background:transparent}.advancedExplainComposer button{display:grid;place-items:center;flex:0 0 39px;width:39px;height:39px;border:0;border-radius:12px;background:linear-gradient(135deg,#6355ec,#a34dd9 60%,#e84e9f);color:#fff;font-size:20px;cursor:pointer;box-shadow:0 5px 12px #8954d82b}.advancedExplainComposer button:disabled{opacity:.55;cursor:wait}.advancedExplainFoot{margin:8px 2px 0;color:#928ba2;font-size:9px;line-height:1.6}
+@media(max-width:620px){.advancedNoteBuilder{padding:13px}.advancedNoteSelectors{grid-template-columns:1fr}.advancedNoteSelectors select{height:44px}.advancedNoteActions .notesAdvancedCTA{width:100%}.advancedNotePrint{margin-left:auto}.advancedExplainBox{padding:13px}.advancedExplainHeader b{font-size:12px}.advancedExplainMiniTag{display:none}.advancedExplainMessage{max-width:100%}}
 @media print{body *{visibility:hidden!important}.advancedNoteArticle,.advancedNoteArticle *{visibility:visible!important}.advancedNoteArticle{position:absolute;left:0;top:0;width:100%;border:0;font-size:11pt}.advancedNoteResultHead,.advancedNotePrint{display:none!important}}
 </style>
 <script id="advancedNotesDedicatedGeneratorScript">
 
-const ADVANCED_NOTES_RULE = "You are StudyAI's expert school educator, curriculum planner and exam-notes author. Create genuinely high-quality, detailed, student-friendly notes for the exact class, subject and chapter requested. These are ADVANCED NOTES and must be substantially deeper and more useful than a short/basic summary. Write in simple Hinglish (Roman Hindi plus standard English academic terms) unless the subject requires another language; keep terminology accurate and explain every difficult term the first time it appears. Be accurate, teach step by step, and never invent textbook quotations, page numbers, syllabus claims or facts. If the chapter title is ambiguous, briefly state the interpretation you are using. Output HTML fragment only, no Markdown fences, scripts, event handlers, greeting or follow-up question.\nUse this complete structure, adapting where appropriate:\n1. Chapter title and a 2-3 sentence overview.\n2. Learning goals: 4-6 measurable goals.\n3. Before you begin: prerequisites / key terms students should know.\n4. Detailed concept-by-concept explanation with multiple subheadings. Explain what it is, why it matters, how it works, and a clear example. For maths/science, show every important step and units; for languages/humanities, explain context, meaning, evidence and examples. Do not pad with repetitive text.\n5. A useful glossary.\n6. Comparison table(s) when the chapter has concepts worth comparing.\n7. Worked examples: at least 3 carefully solved examples, with reasoning for each step. For non-numerical subjects, use worked interpretation, writing or case-study examples instead.\n8. Common mistakes: at least 5 common errors and their correction.\n9. Memory tricks: practical mnemonics or recall cues that fit the topic; don't force one if it doesn't help.\n10. Exam-ready answers: 5 likely practice questions with model answers, mixed short and long responses. Mark them as practice, never guarantee they will appear in an exam.\n11. Quick revision sheet: 10-15 concise high-value points.\n12. Self-check: 5 short questions followed by a separate answer key.\nQuality requirements: target 1400-2000 words where the chapter needs it; prioritize depth and correctness over length. Do not invent facts. Use semantic HTML only. Allowed tags: h2, h3, h4, strong, ul, ol, li, p, table, thead, tbody, tr, th, td, div, span, code, sup, sub. Keep equations readable using ×, ÷, √, x², fractions and units. No external links. Ensure every section adds new learning value.";
+const ADVANCED_NOTES_RULE = "You are StudyAI Advanced Notes, an expert school teacher and learning designer. Create genuinely superior notes for the exact class, subject and chapter in the user's request. These must be significantly more complete, structured and easier to understand than a short/basic notes generator. Use simple Hinglish (Roman Hindi plus correct academic English terms), short paragraphs, clear headings, beginner-friendly definitions and practical examples. Explain what a concept means, why it matters, how it works, and when to use it. Never invent facts, textbook page numbers, quotes or exam guarantees.\nReturn an HTML fragment only (no Markdown fences, scripts, styles, event handlers, greetings or follow-up questions). Include: (1) chapter overview and learning goals; (2) prerequisite ideas and key terms; (3) detailed concept-by-concept explanations with helpful examples; (4) formulas/definitions with symbol meanings and step-by-step derivations or reasoning where relevant; (5) at least 3 worked examples with every important step explained, or worked text/case examples for non-numerical subjects; (6) comparison table when useful; (7) at least 5 common mistakes and how to avoid them; (8) practical memory cues; (9) 5 practice questions with model answers, from short to longer; (10) a 10-15 point quick revision sheet; (11) 5 self-check questions plus answer key. Aim for 1400-2000 words when the chapter needs that depth; never pad with repeated content. Use semantic h2/h3/h4, p, strong, ul/ol/li, table/tr/th/td and div. Use class=\"adv-note-box\" for important callouts. Format maths clearly with ×, ÷, √, x², fractions and units. Prioritise correctness and comprehension over length.";
+const ADVANCED_EXPLAIN_RULE = "You are the friendly StudyAI classroom tutor. Explain the student's exact doubt in very simple Hinglish for their selected school class. Answer directly and patiently, with short sentences. If useful, use a familiar real-life analogy, then a clear example and step-by-step reasoning. Define difficult words, do not merely repeat the notes, and explain the part a student may be missing. Keep the response well structured with short headings and bullets; usually 150-350 words, longer only if the doubt needs it. Do not make the student feel bad for not understanding. Do not invent facts; for curriculum-sensitive details, be careful. End with one tiny check-for-understanding question only when it naturally helps.";
 function renderAdvancedNoteSelectors(){
-  const cls=document.getElementById("advNoteClass"), sub=document.getElementById("advNoteSubject"), ch=document.getElementById("advNoteChapter");
+  const cls=document.getElementById("advNoteClass"),sub=document.getElementById("advNoteSubject"),ch=document.getElementById("advNoteChapter");
   if(!cls||!sub||!ch)return;
   const catalog=window.STUDYAI_CHAPTER_CATALOG||{};
   const classes=Object.keys(catalog).filter(k=>catalog[k]&&Object.keys(catalog[k]).length).sort((a,b)=>Number(a)-Number(b));
   const preferred=localStorage.getItem("class")||"10";
   cls.innerHTML=classes.map(k=>'<option value="'+k+'">Class '+k+'</option>').join("");
   cls.value=classes.includes(preferred)?preferred:(classes.includes("10")?"10":classes[0]||"");
+  const resetHelp=()=>{window.__advancedExplainHistory=[];const chat=document.getElementById("advancedExplainChat");if(chat)chat.innerHTML='<div class="advancedExplainWelcome"><span>✦</span><p>Namaste! 😊 Is chapter ka koi bhi confusing point yahan likho. Main use aur easy Hinglish mein, examples ke saath samjhaunga.</p></div>';const out=document.getElementById("advancedNoteOutput");if(out)out.innerHTML="";const status=document.getElementById("advancedNoteStatus");if(status)status.textContent="";};
   const fillChapters=()=>{
-    const chapters=(catalog[cls.value]||{})[sub.value]||[];
-    const old=ch.value;
+    const chapters=(catalog[cls.value]||{})[sub.value]||[],old=ch.value;
     ch.innerHTML=chapters.map(v=>'<option value="'+v.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'">'+v+'</option>').join("");
     if(chapters.includes(old))ch.value=old;
   };
+  const loadCurrent=()=>{
+    resetHelp();
+    const cached=localStorage.getItem("advancedNotes:"+cls.value+"|"+sub.value+"|"+ch.value);
+    if(cached)showAdvancedNote(cached,true);
+  };
   const fillSubjects=()=>{
-    const subjects=Object.keys(catalog[cls.value]||{});
-    const old=sub.value;
+    const subjects=Object.keys(catalog[cls.value]||{}),old=sub.value;
     sub.innerHTML=subjects.map(v=>'<option value="'+v.replace(/&/g,"&amp;").replace(/"/g,"&quot;")+'">'+v+'</option>').join("");
     if(subjects.includes(old))sub.value=old;
     fillChapters();
   };
-  cls.onchange=()=>{fillSubjects();document.getElementById("advancedNoteOutput").innerHTML="";};
-  sub.onchange=()=>{fillChapters();document.getElementById("advancedNoteOutput").innerHTML="";};
-  ch.onchange=()=>{document.getElementById("advancedNoteOutput").innerHTML="";};
-  fillSubjects();
-  const cached=localStorage.getItem("advancedNotes:"+cls.value+"|"+sub.value+"|"+ch.value);
-  if(cached)showAdvancedNote(cached,true);
+  cls.onchange=()=>{fillSubjects();loadCurrent();};
+  sub.onchange=()=>{fillChapters();loadCurrent();};
+  ch.onchange=loadCurrent;
+  fillSubjects();loadCurrent();
+  const input=document.getElementById("advancedExplainInput");
+  if(input)input.addEventListener("keydown",e=>{if(e.key==="Enter"&&!e.shiftKey){e.preventDefault();askAdvancedAI();}});
 }
-function showAdvancedNote(html,cached){
-  const out=document.getElementById("advancedNoteOutput");
-  if(!out)return;
-  out.innerHTML='<div class="advancedNoteResultHead"><span>✦</span><div><b>Advanced Notes '+(cached?'· Saved':'· Ready')+'</b><small>Review the concepts, examples and practice answers below.</small></div><button type="button" class="advancedNotePrint" onclick="window.print()">Print / Save PDF</button></div><article class="advancedNoteArticle">'+html+'</article>';
+function sanitizeAdvancedNotes(raw){
+  const box=document.createElement("div");box.innerHTML=String(raw||"");
+  box.querySelectorAll("script,style,iframe,object,embed,form,button,input,textarea,link,meta,svg,math").forEach(el=>el.remove());
+  const allowed=new Set(["H2","H3","H4","P","STRONG","B","EM","I","UL","OL","LI","TABLE","THEAD","TBODY","TR","TH","TD","DIV","SPAN","CODE","SUP","SUB","BLOCKQUOTE"]);
+  box.querySelectorAll("*").forEach(el=>{
+    if(!allowed.has(el.tagName)){el.replaceWith(...Array.from(el.childNodes));return;}
+    Array.from(el.attributes).forEach(a=>{
+      if(a.name==="class"&&a.value==="adv-note-box")return;
+      if((a.name==="colspan"||a.name==="rowspan")&&el.tagName==="TD"|| (a.name==="colspan"||a.name==="rowspan")&&el.tagName==="TH")return;
+      el.removeAttribute(a.name);
+    });
+  });
+  return box.innerHTML;
+}
+function showAdvancedNote(raw,cached){
+  const out=document.getElementById("advancedNoteOutput");if(!out)return;
+  const html=sanitizeAdvancedNotes(raw);
+  out.innerHTML='<div class="advancedNoteResultHead"><span>✦</span><div><b>Advanced Notes '+(cached?'· Saved':'· Ready')+'</b><small>Concepts · Worked examples · Revision · Practice</small></div><button type="button" class="advancedNotePrint" onclick="window.print()">Print / Save PDF</button></div><article class="advancedNoteArticle">'+html+'</article>';
 }
 async function genAdvancedAINotes(){
-  const cls=document.getElementById("advNoteClass"), sub=document.getElementById("advNoteSubject"), chapter=document.getElementById("advNoteChapter");
-  const status=document.getElementById("advancedNoteStatus"), btn=document.getElementById("generateAdvancedNotesBtn");
+  const cls=document.getElementById("advNoteClass"),sub=document.getElementById("advNoteSubject"),chapter=document.getElementById("advNoteChapter");
+  const status=document.getElementById("advancedNoteStatus"),btn=document.getElementById("generateAdvancedNotesBtn");
   if(!cls||!sub||!chapter||!chapter.value){if(status)status.textContent="Pehle class, subject aur chapter choose karo.";return;}
   const c=cls.value,s=sub.value,ch=chapter.value,key="advancedNotes:"+c+"|"+s+"|"+ch;
-  const cached=localStorage.getItem(key);
-  if(cached){showAdvancedNote(cached,true);if(status)status.textContent="Tumhare saved Advanced Notes load ho gaye.";return;}
-  const oldText=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Creating detailed notes…";status.innerHTML='<div class="advancedNoteStatusCard">✦ Advanced Notes ban rahe hain. Detailed explanations aur examples ki wajah se thoda waqt lag sakta hai.</div>';
+  const oldText=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Creating detailed notes…";
+  status.innerHTML='<div class="advancedNoteStatusCard">✦ Advanced Notes ban rahe hain. Concepts, worked examples aur revision sections taiyaar ho rahe hain.</div>';
   try{
-    const message="Create premium-quality ADVANCED AI NOTES for Class "+c+", subject "+s+", chapter/topic: "+ch+". These must be separate from Basic Notes, comprehensive, well structured, correct, useful for revision and exam practice. Follow the full required structure in your system prompt. Use the exact selected chapter and do not drift to another topic.";
-    const reply=await aiAsk({message:message,cls:c,ctx:"ADVANCED NOTES | "+s+" | "+ch,system:ADVANCED_NOTES_RULE,timeout:150000,maxTokens:5000,onSlow:()=>{status.innerHTML='<div class="advancedNoteStatusCard">Still working on your detailed notes… please keep this page open.</div>';}});
-    let html=String(reply||"").replace(/```html|```/gi,"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/<style[\s\S]*?<\/style>/gi,"").replace(/\son\w+\s*=\s*("[^"]*"|'[^']*')/gi,"").replace(/\s(?:href|src)\s*=\s*("[^"]*"|'[^']*')/gi,"").trim();
-    if(html.length<1200)throw new Error("The AI response was too short to make complete Advanced Notes.");
+    const message="Create high-quality Advanced AI Notes for Class "+c+", subject "+s+", chapter: "+ch+". Keep these more detailed and easier to understand than Basic Notes. Follow the full structure in your system prompt. Explain concepts gradually with correct examples. Selected chapter is the boundary; do not drift to another topic.";
+    const reply=await aiAsk({message:message,cls:c,ctx:"ADVANCED NOTES | Class "+c+" | "+s+" | "+ch,system:ADVANCED_NOTES_RULE,timeout:150000,maxTokens:5000,onSlow:()=>{status.innerHTML='<div class="advancedNoteStatusCard">Still working on your detailed notes… keep this page open.</div>';}});
+    const html=sanitizeAdvancedNotes(reply);
+    if(html.replace(/<[^>]+>/g," ").trim().length<1100)throw new Error("The notes response was too short. Please try again.");
     if(!/<(h2|h3|h4|p|ul|ol|table)\b/i.test(html))throw new Error("The AI response did not return structured notes. Please try again.");
-    localStorage.setItem(key,html);
-    showAdvancedNote(html,false);status.innerHTML='<div class="advancedNoteStatusCard success">✓ Advanced Notes created and saved in this browser.</div>';
+    localStorage.setItem(key,html);showAdvancedNote(html,false);
+    status.innerHTML='<div class="advancedNoteStatusCard success">✓ Advanced Notes created and saved in this browser. Ask the AI box below about anything that still feels confusing.</div>';
   }catch(e){status.innerHTML='<div class="advancedNoteStatusCard error">'+String(aiErr(e)).replace(/</g,"&lt;")+'<br><button type="button" class="advancedNoteRetry" onclick="genAdvancedAINotes()">Try again</button></div>';}
   finally{btn.disabled=false;btn.innerHTML=oldText;}
+}
+function advancedExplainQuick(text){const input=document.getElementById("advancedExplainInput");if(!input)return;input.value=text;askAdvancedAI();}
+function advancedExplainAppend(role,text){
+  const chat=document.getElementById("advancedExplainChat");if(!chat)return null;
+  const welcome=chat.querySelector(".advancedExplainWelcome");if(welcome)welcome.remove();
+  const bubble=document.createElement("div");bubble.className="advancedExplainMessage "+(role==="user"?"user":"assistant");
+  const name=document.createElement("b");name.className="advancedExplainRole";name.textContent=role==="user"?"You":"StudyAI Tutor";
+  const body=document.createElement("div");body.className="advancedExplainMessageText";body.textContent=text;
+  bubble.append(name,body);chat.appendChild(bubble);chat.scrollTop=chat.scrollHeight;return body;
+}
+async function askAdvancedAI(){
+  const input=document.getElementById("advancedExplainInput"),btn=document.getElementById("advancedExplainSend"),status=document.getElementById("advancedNoteStatus");
+  if(!input||!btn)return;
+  const question=input.value.trim();if(!question)return;
+  const cls=document.getElementById("advNoteClass"),sub=document.getElementById("advNoteSubject"),chapter=document.getElementById("advNoteChapter");
+  const c=cls?.value||localStorage.getItem("class")||"10",s=sub?.value||"General",ch=chapter?.value||"Selected topic";
+  const history=window.__advancedExplainHistory||(window.__advancedExplainHistory=[]);
+  const output=document.getElementById("advancedNoteOutput");
+  const noteText=output?String(output.innerText||"").slice(-4200):"";
+  history.push({role:"student",content:question});
+  const transcript=history.slice(-6).map(m=>(m.role==="student"?"Student":"Tutor")+": "+m.content).join("\n");
+  const message="Class "+c+"; subject "+s+"; chapter/topic "+ch+".\n\nStudent's latest doubt: "+question+"\n\nRecent conversation:\n"+transcript+"\n\nAdvanced notes context (if available):\n"+noteText+"\n\nAnswer the latest doubt directly. Use much simpler wording than a textbook and make the explanation clearer than the original notes.";
+  input.value="";input.disabled=true;btn.disabled=true;
+  advancedExplainAppend("user",question);
+  const answerEl=advancedExplainAppend("assistant","Soch raha hoon…");
+  try{
+    const reply=await aiAsk({message:message.slice(0,7900),cls:c,ctx:"ADVANCED NOTES EXPLAINER | "+s+" | "+ch,system:ADVANCED_EXPLAIN_RULE,timeout:100000,maxTokens:1800});
+    const answer=String(reply||"I could not make a clear answer. Please try asking in a different way.").trim();
+    history.push({role:"tutor",content:answer});
+    if(answerEl)answerEl.textContent=answer;
+  }catch(e){
+    if(answerEl)answerEl.textContent=aiErr(e)+" Please try again.";
+    history.pop();
+    input.value=question;
+  }finally{
+    input.disabled=false;btn.disabled=false;input.focus();
+    const chat=document.getElementById("advancedExplainChat");if(chat)chat.scrollTop=chat.scrollHeight;
+  }
 }
 
 </script>
