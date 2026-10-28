@@ -1556,7 +1556,7 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
 </section>
 
 <section id="flashcards" class="section">
-<div class="top"><div><h1>Flashcards 🗂️</h1><p class="muted">Topic ya chapter chuno — AI tumhare class aur subject ke hisaab se cards bana dega. Notes paste karna zaroori nahi.</p></div></div>
+<div class="top fcPageHeader"><div><span class="fcHeaderEyebrow">✦ ACTIVE RECALL STUDIO</span><h1>Flashcards 🗂️</h1><p class="muted">Topic ya chapter chuno — AI tumhare class aur subject ke hisaab se cards bana dega. Notes paste karna zaroori nahi.</p></div><button type="button" class="fcUpgradeTop" onclick="location.hash='pro'" aria-label="Explore StudyAI Pro and Pro Max plans"><span class="fcUpgradeTopIcon">✦</span><span class="fcUpgradeTopText"><small>LEVEL UP YOUR STUDY</small><b>Upgrade to Pro Max</b><em>More ways to revise <span aria-hidden="true">→</span></em></span><span class="fcUpgradeCorner" aria-hidden="true">↗</span></button></div>
 <div class="fcChips" id="fcChips"></div>
 <div class="card fcPick">
  <label>Class<select id="fcC"></select></label><label>Subject<select id="fcS"></select></label><label>Chapter<select id="fcH"></select></label>
@@ -1618,7 +1618,29 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
 
 <section id="subjects" class="section"><div class="top"><div><h1>Subjects</h1><p class="muted">Choose class and subject. Class 10 now has 25 study tracks, including separate English/Hindi book branches.</p></div></div><div class="notice" style="margin-bottom:14px">Class 10 mein Hindi Course A aur Hindi Course B alternatives hain. Optional / skill subjects school ke offering par depend karte hain. Board exam se pehle apne current CBSE syllabus se chapter list match kar lena.</div><div class="bar"><select id="subClass"></select><input id="subSearch" placeholder="Search subject" oninput="renderSubjects()"></div><div class="cards" id="subjectCards"></div></section>
 
-<section id="notes" class="section"><div class="top"><div><h1>Study Notes</h1><p class="muted">Full chapter notes with exam tips.</p></div></div><div class="bar"><select id="noteClass"></select><select id="noteSubject"></select><select id="noteChapter"></select></div><div id="noteBox"></div></section>
+<section id="notes" class="section">
+  <div class="top notesPageHeader"><div><h1>Study Notes</h1><p class="muted">Choose quick chapter revision or explore deeper Pro Max study guides.</p></div><button type="button" class="notesHeaderUpgrade" onclick="location.hash='pro'">✦ Explore Pro Max</button></div>
+  <div class="notesVersionTabs" role="tablist" aria-label="Choose notes version">
+    <button type="button" id="basicNotesTab" class="notesVersionTab active" role="tab" aria-selected="true" aria-controls="notesBasicArea" onclick="setNotesMode('basic')"><span class="notesVersionIcon">📖</span><span class="notesVersionText"><b>Basic Notes</b><small>Simple chapter notes for everyday revision</small></span><span class="notesVersionCheck">✓</span></button>
+    <button type="button" id="advancedNotesTab" class="notesVersionTab notesVersionMax" role="tab" aria-selected="false" aria-controls="notesAdvancedGate" onclick="setNotesMode('advanced')"><span class="notesVersionIcon">✦</span><span class="notesVersionText"><b>Advanced Notes</b><small>Deeper concepts, solved examples & exam prep</small></span><span class="notesMaxRibbon" aria-label="Pro Max only">MAX</span></button>
+  </div>
+  <div id="notesAdvancedGate" class="notesAdvancedGate" role="tabpanel" aria-labelledby="advancedNotesTab" hidden>
+    <div class="notesAdvancedHero">
+      <span class="notesAdvancedEyebrow"><span>✦</span> STUDYAI PRO MAX · ADVANCED NOTES</span>
+      <h2>Go beyond the basics. <span>Master every chapter.</span></h2>
+      <p class="notesAdvancedLead">StudyAI Pro Max Advanced Notes are made for students who want more than a short summary. Get a deeper, exam-focused study guide with clear explanations and practical revision tools—all organised chapter by chapter.</p>
+      <div class="notesAdvancedFeatures">
+        <div class="notesAdvancedFeature"><span>🧠</span><b>Concept-by-concept learning</b><small>Understand the why, not just the definition.</small></div>
+        <div class="notesAdvancedFeature"><span>✍️</span><b>Step-by-step examples</b><small>Worked solutions, formulas and comparisons.</small></div>
+        <div class="notesAdvancedFeature"><span>⚡</span><b>Quick revision kit</b><small>Key points, memory tricks and recap sheets.</small></div>
+        <div class="notesAdvancedFeature"><span>🎯</span><b>Exam practice</b><small>Important questions and answer frameworks.</small></div>
+      </div>
+      <div class="notesAdvancedBottom"><div><b>Made for your next level.</b><small>Unlock the Advanced Notes experience with StudyAI Pro Max.</small></div><button type="button" class="notesAdvancedCTA" onclick="location.hash='pro';setTimeout(()=>document.getElementById('saiProPlans')?.scrollIntoView({behavior:'smooth',block:'start'}),320)">Unlock Pro Max <span>₹999/year ↗</span></button></div>
+      <p class="notesAdvancedFine">Pro Max access needs secure, server-verified subscription activation. Checkout is currently a plan-selection preview and will not charge you.</p>
+    </div>
+  </div>
+  <div id="notesBasicArea" role="tabpanel" aria-labelledby="basicNotesTab"><div class="bar"><select id="noteClass"></select><select id="noteSubject"></select><select id="noteChapter"></select></div><div id="noteBox"></div></div>
+</section>
 
 <section id="quiz" class="section"><div class="top"><div><h1>Practice Quiz</h1><p class="muted">Chapter-wise quizzes with instant scoring.</p></div></div><div class="bar"><select id="quizClass"></select><select id="quizSubject"></select><select id="quizChapter"></select></div><div id="quizPicker"></div><div id="quizBox"></div></section>
 
@@ -1869,13 +1891,14 @@ window.PLACEHOLDER_NOTE = PLACEHOLDER_NOTE;
           <li>All StudyAI Pro features for 12 months*</li>
           <li><b>“Haan, screen samjhao”</b> screen-explanation feature*</li>
           <li>Year-round enhanced AI Tutor, notes, quizzes and flashcards*</li>
+          <li><b>Advanced Notes MAX:</b> deeper concepts, solved examples, memory tricks & exam questions*</li>
           <li>Premium Pro Max profile identity after verification*</li>
           <li>Priority access to eligible new study tools as they launch*</li>
         </ul>
         <div class="sai-pro-smallPrint">*Feature limits and availability depend on secure backend configuration. Planned integrations are not live yet.</div>
       </article>
     </div>
-    <div class="sai-pro-compareWrap"><div class="sai-pro-compareHead"><div><span class="sai-pro-kicker">COMPARE PLANS</span><h2>Pro vs Pro Max</h2></div><span class="sai-pro-comparePill">Pick your study rhythm.</span></div><div class="sai-pro-tableScroll"><table class="sai-pro-compareTable"><thead><tr><th>Study feature</th><th>Monthly Pro</th><th>Yearly Pro Max</th></tr></thead><tbody><tr><td>AI Tutor enhanced allowance*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>“Haan, screen samjhao”*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Premium chapter notes*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Enhanced AI quizzes & flashcards*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Premium profile identity*</td><td>After verification</td><td>Pro Max identity*</td></tr><tr><td>Future eligible tools</td><td>As released*</td><td>Priority access*</td></tr><tr><td>Price</td><td><b>₹99/month</b></td><td><b>₹999/year</b></td></tr></tbody></table></div><p class="sai-pro-compareFoot">*Payment verification, subscription expiry, account access and screen-context integration must be implemented securely on the server before these benefits can be activated. This HTML is not a live checkout.</p></div>
+    <div class="sai-pro-compareWrap"><div class="sai-pro-compareHead"><div><span class="sai-pro-kicker">COMPARE PLANS</span><h2>Pro vs Pro Max</h2></div><span class="sai-pro-comparePill">Pick your study rhythm.</span></div><div class="sai-pro-tableScroll"><table class="sai-pro-compareTable"><thead><tr><th>Study feature</th><th>Monthly Pro</th><th>Yearly Pro Max</th></tr></thead><tbody><tr><td>AI Tutor enhanced allowance*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>“Haan, screen samjhao”*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Premium chapter notes*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Advanced Notes MAX*</td><td>Pro Max only</td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Enhanced AI quizzes & flashcards*</td><td><span class="sai-pro-yes">✓</span></td><td><span class="sai-pro-yes">✓</span></td></tr><tr><td>Premium profile identity*</td><td>After verification</td><td>Pro Max identity*</td></tr><tr><td>Future eligible tools</td><td>As released*</td><td>Priority access*</td></tr><tr><td>Price</td><td><b>₹99/month</b></td><td><b>₹999/year</b></td></tr></tbody></table></div><p class="sai-pro-compareFoot">*Payment verification, subscription expiry, account access and screen-context integration must be implemented securely on the server before these benefits can be activated. This HTML is not a live checkout.</p></div>
     <div class="sai-pro-faqBlock"><div class="sai-pro-sectionHead"><div><span class="sai-pro-kicker">GOOD TO KNOW</span><h2>Questions, answered.</h2></div></div><details class="sai-pro-faq"><summary>Does choosing Pro charge me right now?</summary><p>No. This is the plan-selection preview. Secure checkout is not connected in this HTML yet, so the button will not take payment or activate Pro.</p></details><details class="sai-pro-faq"><summary>Will my existing StudyAI tools disappear?</summary><p>No. The core StudyAI study experience should remain useful; paid plans add enhanced usage and premium study workflows.</p></details><details class="sai-pro-faq"><summary>When will photo solving and screen explanation work?</summary><p>After the relevant image-capable AI endpoint, permission flow and server-side limits are integrated and tested.</p></details><details class="sai-pro-faq"><summary>Will payment automatically activate Pro?</summary><p>That requires a real payment gateway, a server-verified payment webhook, a user-linked subscription record and expiry checks. Do not treat a UPI payment or a browser-side flag as proof of subscription.</p></details></div>
     <div class="sai-pro-bottomCta"><div class="sai-pro-bottomIcon">✦</div><div><h2>Your next chapter starts here.</h2><p>Explore the plan now; keep learning with StudyAI Free while secure checkout is being integrated.</p></div><button type="button" class="sai-pro-mainBtn" onclick="document.getElementById('saiProPlans').scrollIntoView({behavior:'smooth',block:'start'})">View plans <span>↑</span></button></div>
   </div>
@@ -2658,7 +2681,7 @@ function init(){
   const c=localStorage.getItem("class")||"10";
   ids.forEach(id=>{const el=document.getElementById(id); if(el) el.value=c;});
   document.getElementById("instruction").value=localStorage.getItem("instruction")||document.getElementById("instruction").value;
-  renderClasses(); renderSubjects(); renderNotes(); renderQuizSelectors();
+  renderClasses(); renderSubjects(); renderNotes(); renderQuizSelectors(); setNotesMode("basic");
   const sc=document.getElementById("subClass"), nc=document.getElementById("noteClass"), qc=document.getElementById("quizClass"), ns=document.getElementById("noteSubject"), nch=document.getElementById("noteChapter");
   const qs=document.getElementById("quizSubject"), qch=document.getElementById("quizChapter");
   if(sc) sc.onchange=renderSubjects; if(nc) nc.onchange=renderNotes; if(qc) qc.onchange=renderQuizSelectors; if(ns) ns.onchange=renderNotes; if(nch) nch.onchange=renderNotes; if(noteClass) noteClass.onchange=renderNotes;
@@ -2669,6 +2692,18 @@ function renderClasses(){const classCards=document.getElementById("classCards");
 function pick(c){localStorage.setItem("class",c);setClass.value=c;subClass.value=c;noteClass.value=c;quizClass.value=c;classPill.textContent="Class "+c;renderSubjects();renderNotes();location.hash="subjects";toast("Class "+c+" selected")}
 function renderSubjects(){const subClass=document.getElementById("subClass"), subSearch=document.getElementById("subSearch"), subjectCards=document.getElementById("subjectCards"); let c=subClass.value,q=(subSearch.value||"").toLowerCase();subjectCards.innerHTML=S[c].filter(x=>x.toLowerCase().includes(q)).map(x=>`<div class="card click" onclick="openSubject('${x}')"><div class="icon">📘</div><h3>${x}</h3><p class="muted">Notes • Quiz • AI help</p></div>`).join("")}
 function openSubject(s){const noteSubject=document.getElementById("noteSubject"); noteSubject.value=s;renderNotes();location.hash="notes"}
+function setNotesMode(mode){
+  const advanced=mode==="advanced";
+  const basicArea=document.getElementById("notesBasicArea");
+  const advancedGate=document.getElementById("notesAdvancedGate");
+  const basicTab=document.getElementById("basicNotesTab");
+  const advancedTab=document.getElementById("advancedNotesTab");
+  if(basicArea)basicArea.hidden=advanced;
+  if(advancedGate)advancedGate.hidden=!advanced;
+  if(basicTab){basicTab.classList.toggle("active",!advanced);basicTab.setAttribute("aria-selected",String(!advanced));}
+  if(advancedTab){advancedTab.classList.toggle("active",advanced);advancedTab.setAttribute("aria-selected",String(advanced));}
+  try{localStorage.setItem("studyaiNotesMode",advanced?"advanced":"basic");}catch(_){ }
+}
 function renderNotes(){
   const noteClass=document.getElementById("noteClass");
   const noteSubject=document.getElementById("noteSubject");
@@ -5917,6 +5952,80 @@ body:has(#tutor.active) #tutorPop{display:none!important}
 @keyframes saiLimitFade{from{opacity:0}to{opacity:1}}
 @media(max-width:520px){.saiTutorLimitModal{padding:22px 16px 17px;border-radius:21px}.saiTutorLimitPlans{grid-template-columns:1fr}.saiTutorLimitPlan{padding:13px;display:grid;grid-template-columns:1fr auto;gap:5px 12px}.saiTutorLimitPlanTag{grid-column:1/-1;justify-self:start}.saiTutorLimitPrice{grid-column:2;grid-row:2;align-self:center}.saiTutorLimitPlan>span:last-child{grid-column:1/-1}.saiTutorHeaderProBtn{padding:0 8px;font-size:11px}.saiTutorPageHeaderActions{gap:5px!important}}
 @media(prefers-reduced-motion:reduce){.saiTutorLimitOverlay.is-visible{animation:none}.saiTutorLimitPlan,.saiTutorHeaderProBtn{transition:none}}
+</style>
+<style id="studyaiNotesFlashcardsAndTutorPolish">
+/* Compact choices in the floating Tutor: use small pill controls instead of tall cards. */
+.tutorPop .tutorActions{display:flex!important;align-items:center;justify-content:flex-start;gap:6px!important;flex-wrap:wrap;margin:4px 0 2px}
+.tutorPop .tutorActions button{display:inline-flex;align-items:center;justify-content:center;gap:4px;min-height:30px;width:auto;max-width:100%;padding:6px 9px!important;border:1px solid #e3e2ec;border-radius:999px!important;background:#fbfbfd;color:#4d4a5b;font-size:10.5px!important;font-weight:800;line-height:1.15;white-space:nowrap;box-shadow:none}
+.tutorPop .tutorActions button:hover{background:#f4efff;border-color:#c7b7ff}
+.tutorPop .tutorActions .saiTutorPremiumAction{border-color:#d9c7ff!important;background:linear-gradient(110deg,#f4eeff,#fff0f7)!important;color:#6135ad!important}
+.tutorPop .tutorActions .saiTutorPremiumAction .saiProFeatureBadge{margin-left:2px!important}
+.tutorPop.big .tutorActions{display:flex!important;grid-template-columns:none!important;gap:6px!important}
+.tutorPop.big .tutorActions button{padding:7px 9px!important;font-size:11px!important}
+/* Diagonal premium ribbon: visible at a glance, while staying small. */
+.saiProFeatureBadge,.notesMaxRibbon{display:inline-flex!important;align-items:center;justify-content:center;flex:0 0 auto;position:relative;margin-left:6px;padding:3px 8px 4px!important;border:1px solid #ffffff70!important;border-radius:3px 7px 3px 7px!important;background:linear-gradient(112deg,#6438df 0%,#ad35cf 52%,#ed3e91 100%)!important;color:#fff!important;font-size:8px!important;font-weight:1000!important;line-height:1.1!important;letter-spacing:.13em!important;white-space:nowrap;text-shadow:0 1px 1px #25104a50;box-shadow:0 3px 7px #8050d13b;transform:rotate(-10deg) skewX(-5deg);transform-origin:center}
+.saiTutorPhotoBtn .saiProFeatureBadge{align-self:center;margin-left:auto!important}
+.notesMaxRibbon{margin-left:auto!important;font-size:9px!important;padding:5px 10px 6px!important;transform:rotate(-10deg) skewX(-5deg)}
+/* Notes version switch and Advanced Notes Pro Max gate. */
+.notesPageHeader{align-items:center;gap:12px;flex-wrap:wrap}
+.notesPageHeader h1{margin-bottom:4px}
+.notesHeaderUpgrade{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:38px;padding:0 13px;border:1px solid #d9ccff;border-radius:12px;background:linear-gradient(110deg,#f3edff,#fff0f7);color:#693ab6;font-size:12px;font-weight:900;white-space:nowrap;cursor:pointer;box-shadow:0 5px 15px #8654d414}
+.notesHeaderUpgrade:hover{transform:translateY(-1px);box-shadow:0 8px 18px #8654d425}
+.notesVersionTabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:0 0 17px}
+.notesVersionTab{display:flex;align-items:center;gap:12px;min-width:0;min-height:76px;padding:13px 15px;border:1px solid #e2e4ef;border-radius:17px;background:rgba(255,255,255,.92);color:var(--text);text-align:left;cursor:pointer;box-shadow:0 7px 20px #26315b08;transition:transform .18s,border-color .18s,box-shadow .18s,background .18s}
+.notesVersionTab:hover{transform:translateY(-2px);border-color:#c8bdff;box-shadow:0 12px 26px #4939a512}
+.notesVersionTab.active{border-color:#aca0ff;background:linear-gradient(110deg,#f0edff,#fff 58%,#fff0f7);box-shadow:0 8px 24px #7059d315,inset 0 0 0 1px #8d7bff25}
+.notesVersionIcon{display:grid;place-items:center;flex:0 0 40px;width:40px;height:40px;border-radius:13px;background:linear-gradient(135deg,#ece8ff,#ffe9f5);font-size:20px}
+.notesVersionText{display:grid;gap:5px;min-width:0;flex:1}
+.notesVersionText b{font-size:13px;line-height:1.2}
+.notesVersionText small{font-size:10px;line-height:1.45;color:var(--muted)}
+.notesVersionCheck{display:grid;place-items:center;flex:0 0 20px;width:20px;height:20px;border-radius:50%;background:#e7e3ff;color:#5c48ca;font-size:11px;font-weight:950;opacity:0}
+.notesVersionTab.active .notesVersionCheck{opacity:1}
+.notesVersionTab.notesVersionMax{border-color:#ead9f8;background:linear-gradient(112deg,#fff,#fff4fb 65%,#f3efff)}
+.notesVersionTab.notesVersionMax.active{border-color:#b79ae9;background:linear-gradient(112deg,#f6edff,#fff1f9);box-shadow:0 8px 25px #b23fa716}
+.notesAdvancedGate[hidden],#notesBasicArea[hidden]{display:none!important}
+.notesAdvancedHero{position:relative;overflow:hidden;padding:clamp(20px,3.5vw,34px);border:1px solid #e4d9ff;border-radius:25px;background:radial-gradient(circle at 0% 0%,#e9e4ff 0,transparent 33%),radial-gradient(circle at 100% 10%,#ffe2f0 0,transparent 32%),linear-gradient(145deg,#fff 0%,#fcfaff 56%,#fff7fb 100%);box-shadow:0 20px 48px #40318a10}
+.notesAdvancedHero:after{content:"MAX";position:absolute;right:15px;top:18px;transform:rotate(12deg);color:#bda8fa;font-family:Sora,sans-serif;font-size:clamp(34px,5vw,58px);font-weight:900;letter-spacing:-3px;opacity:.2;pointer-events:none}
+.notesAdvancedEyebrow{position:relative;z-index:1;display:inline-flex;align-items:center;gap:7px;padding:6px 10px;border:1px solid #e4d8ff;border-radius:999px;background:#f5efff;color:#7542bd;font-size:9px;font-weight:950;letter-spacing:.11em}
+.notesAdvancedHero h2{position:relative;z-index:1;max-width:720px;margin:16px 0 10px;font-family:Sora,sans-serif;font-size:clamp(25px,4vw,38px);line-height:1.13;letter-spacing:-1.15px;color:#292343}
+.notesAdvancedHero h2 span{display:block;background:linear-gradient(100deg,#635bff,#a34ee5 58%,#e64c9d);-webkit-background-clip:text;background-clip:text;color:transparent}
+.notesAdvancedLead{position:relative;z-index:1;max-width:780px;margin:0;color:#64647b;font-size:13px;line-height:1.75}
+.notesAdvancedFeatures{position:relative;z-index:1;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:22px 0}
+.notesAdvancedFeature{display:flex;flex-direction:column;align-items:flex-start;gap:8px;min-width:0;min-height:130px;padding:15px;border:1px solid #e8e3f4;border-radius:16px;background:#ffffffc9;box-shadow:0 6px 15px #372a6406}
+.notesAdvancedFeature>span{display:grid;place-items:center;width:35px;height:35px;border-radius:11px;background:linear-gradient(135deg,#eeebff,#ffe7f2);font-size:18px}
+.notesAdvancedFeature b{font-size:11px;line-height:1.35;color:#302746}
+.notesAdvancedFeature small{font-size:10px;line-height:1.5;color:#797589}
+.notesAdvancedBottom{position:relative;z-index:1;display:flex;align-items:center;justify-content:space-between;gap:15px;flex-wrap:wrap;padding:17px;border:1px solid #e7defa;border-radius:17px;background:linear-gradient(110deg,#f4efff,#fff0f7)}
+.notesAdvancedBottom>div{display:grid;gap:5px;min-width:0;flex:1}
+.notesAdvancedBottom b{font-size:13px;color:#33275b}
+.notesAdvancedBottom small{font-size:11px;line-height:1.5;color:#716d84}
+.notesAdvancedCTA{display:flex;align-items:center;justify-content:center;gap:9px;min-height:43px;padding:0 15px;border:0;border-radius:12px;background:linear-gradient(110deg,#5e50e8,#9a48df 60%,#e44b9e);color:#fff;font-size:11px;font-weight:900;cursor:pointer;box-shadow:0 8px 20px #8651d72e;white-space:nowrap}
+.notesAdvancedCTA:hover{transform:translateY(-2px);box-shadow:0 12px 25px #8651d73b}
+.notesAdvancedCTA span{font-size:10px;opacity:.92}
+.notesAdvancedFine{position:relative;z-index:1;margin:12px 2px 0;color:#8b879a;font-size:9px;line-height:1.55}
+/* Flashcards: polished hero, stronger study surface, and a persistent upgrade entry at the top. */
+#flashcards .fcPageHeader{position:relative;overflow:hidden;align-items:center;gap:16px;flex-wrap:wrap;padding:22px 23px;margin-bottom:18px;border:1px solid #ded7ff;border-radius:22px;background:radial-gradient(circle at 100% 0%,#ffe1f16b 0,transparent 33%),radial-gradient(circle at 0% 100%,#d9d7ff65 0,transparent 38%),linear-gradient(120deg,#fff 0%,#fcfaff 62%,#fff8fc 100%);box-shadow:0 13px 34px #5848a20c}
+#flashcards .fcPageHeader>div:first-child{min-width:230px;flex:1}
+#flashcards .fcHeaderEyebrow{display:inline-flex;align-items:center;gap:6px;margin-bottom:7px;color:#7359c6;font-size:9px;font-weight:950;letter-spacing:.15em}
+#flashcards .fcPageHeader h1{margin:0 0 5px;background:linear-gradient(100deg,#37318c,#6854e8 60%,#c84dba);-webkit-background-clip:text;background-clip:text;color:transparent}
+#flashcards .fcPageHeader p{max-width:720px;margin:0;line-height:1.6}
+.fcUpgradeTop{position:relative;isolation:isolate;display:flex;align-items:center;gap:10px;min-width:205px;max-width:100%;padding:11px 12px;border:1px solid #ded2ff;border-radius:15px;background:linear-gradient(115deg,#f2edff,#fff 55%,#fff0f7);color:#312a53;text-align:left;cursor:pointer;box-shadow:0 8px 21px #6b4ab416;transition:transform .18s,box-shadow .18s,border-color .18s}
+.fcUpgradeTop:before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(110deg,#7662f00d,#e7459d0b);pointer-events:none}
+.fcUpgradeTop:hover{transform:translateY(-2px);border-color:#b9a6ff;box-shadow:0 13px 27px #6b4ab421}
+.fcUpgradeTopIcon{display:grid;place-items:center;flex:0 0 36px;width:36px;height:36px;border-radius:12px;background:linear-gradient(135deg,#6958ef,#b84bd8 63%,#ed4d9b);color:#fff;font-size:18px;box-shadow:0 5px 12px #8d59d333}
+.fcUpgradeTopText{display:grid;gap:3px;min-width:0;flex:1}
+.fcUpgradeTopText small{color:#8d79c5;font-size:8px;font-weight:950;letter-spacing:.09em;white-space:nowrap}
+.fcUpgradeTopText b{font-size:11px;color:#4a347e;line-height:1.2}
+.fcUpgradeTopText em{font-size:9px;color:#858097;font-style:normal}
+.fcUpgradeCorner{align-self:flex-start;color:#a34bd4;font-size:15px;font-weight:900}
+#flashcards .fcPick{border-color:#e5e0fa;background:linear-gradient(120deg,rgba(255,255,255,.97),rgba(249,247,255,.98));box-shadow:0 10px 25px #38297b0a}
+#flashcards .fcStage{border-color:#dedaf2;box-shadow:0 15px 36px #38297b12}
+#flashcards .fcModes button:hover{border-color:#c8bdff;transform:translateY(-1px)}
+#flashcards .fcModes button.on{background:linear-gradient(115deg,#594be9,#9660e8 62%,#d44ba9);box-shadow:0 9px 20px #7652e52c}
+#flashcards .fcModes button:focus-visible,#flashcards .fcUpgradeTop:focus-visible,#notes .notesVersionTab:focus-visible,#notes .notesAdvancedCTA:focus-visible{outline:3px solid #9c8cff;outline-offset:3px}
+@media(max-width:700px){.notesAdvancedFeatures{grid-template-columns:repeat(2,minmax(0,1fr))}.fcUpgradeTop{flex:1 1 100%;width:100%;min-width:0}#flashcards .fcPageHeader{padding:18px}}
+@media(max-width:520px){.notesVersionTabs{grid-template-columns:1fr;gap:8px}.notesVersionTab{min-height:68px;padding:11px}.notesAdvancedFeatures{gap:8px}.notesAdvancedFeature{min-height:118px;padding:11px}.notesAdvancedBottom{padding:13px}.notesAdvancedCTA{width:100%}.notesHeaderUpgrade{font-size:11px;padding:0 10px}.tutorPop .tutorActions{gap:5px!important}.tutorPop .tutorActions button{font-size:10px!important;padding:6px 7px!important}}
+@media(prefers-reduced-motion:reduce){.notesVersionTab,.notesHeaderUpgrade,.notesAdvancedCTA,.fcUpgradeTop,#flashcards .fcModes button{transition:none!important}}
 </style>
 <script id="saiTutorLimitPopupScript">
 (function(){
