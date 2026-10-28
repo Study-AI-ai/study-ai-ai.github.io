@@ -6202,11 +6202,11 @@ function bindAdvancedNoteTools(){
  const bar=document.getElementById("advancedNoteTools"),article=document.getElementById("advancedNoteArticle");
  if(!bar||!article)return;
  const ctx=advancedNotesCurrentKey();
- const getDone=()=>{try{return JSON.parse(localStorage.getItem("sfc3_done")||"{}")||{};}catch(e){return {};}};
+ const getDone=()=>{try{return JSON.parse(localStorage.getItem("sai_done")||"{}")||{};}catch(e){return {};}};
  const doneBtn=bar.querySelector('[data-adv-tool="done"]');
  const renderDone=()=>{const done=!!getDone()[ctx.key];if(doneBtn){doneBtn.classList.toggle("on",done);doneBtn.textContent=done?"✅ Complete":"☑️ Complete mark karo";doneBtn.setAttribute("aria-pressed",String(done));}};
  renderDone();
- const zoomRead=()=>{let z=Number(localStorage.getItem("studyaiAdvancedNotesZoom"));if(!Number.isFinite(z)||!ADV_NOTES_ZOOM_STEPS.includes(z))z=90;article.style.fontSize=(14*z/100)+"px";const lbl=document.getElementById("advFontLbl");if(lbl)lbl.textContent=z+"%";return z;};
+ const zoomRead=()=>{let z=Number(localStorage.getItem("studyaiAdvancedNotesZoom"));if(!Number.isFinite(z)||!ADV_NOTES_ZOOM_STEPS.includes(z))z=100;article.style.fontSize=(14*z/100)+"px";const lbl=document.getElementById("advFontLbl");if(lbl)lbl.textContent=z+"%";return z;};
  zoomRead();
  const rate=bar.querySelector('[data-adv-tool="rate"]');
  if(rate)rate.value=localStorage.getItem("studyaiAdvancedNotesRate")||".95";
@@ -6233,8 +6233,14 @@ function bindAdvancedNoteTools(){
   const action=b.dataset.advTool;
   if(action==="done"){
    const saved=getDone();
-   if(saved[ctx.key])delete saved[ctx.key];else saved[ctx.key]=Date.now();
-   try{localStorage.setItem("sfc3_done",JSON.stringify(saved));}catch(e){}
+   if(saved[ctx.key])delete saved[ctx.key];else {
+    saved[ctx.key]=Date.now();
+    try{
+      const d=new Date(),today=d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");
+      const days=JSON.parse(localStorage.getItem("sai_days")||"{}");days[today]=1;localStorage.setItem("sai_days",JSON.stringify(days));
+    }catch(e){}
+   }
+   try{localStorage.setItem("sai_done",JSON.stringify(saved));}catch(e){}
    renderDone();return;
   }
   if(action==="read"){speak();return;}
