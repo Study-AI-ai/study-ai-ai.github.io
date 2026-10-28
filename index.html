@@ -2786,10 +2786,10 @@ async function genAINotes(){
  document.querySelectorAll(".genBtn").forEach(b=>{b.disabled=true;b.textContent="⏳ Notes ban rahe hain… 20-40 second"});
  const message=`Class ${c}, ${s}, chapter: "${ch}". Is chapter ke poore notes banao.`;
  try{
-  const reply=await aiAsk({message,cls:c,ctx:s+" | "+ch,system:NOTES_RULE,timeout:100000,onSlow:()=>{st.innerHTML='<div class="notice">Server jaag raha hai, pehli baar 30-60 second lag sakte hain. Page band mat karo…</div>'}});
-  let h=String(reply||"").replace(/```html|```/g,"").replace(/<script[\s\S]*?<\/script>/gi,"").replace(/ on\w+="[^"]*"/gi,"").trim();
+  const reply=await aiAsk({message,cls:c,ctx:s+" | "+ch,system:ADVANCED_NOTES_RULE,timeout:150000,maxTokens:5000,onSlow:()=>{st.innerHTML='<div class="notice">Advanced-quality notes ban rahe hain. Detailed explanations ke liye thoda waqt lag sakta hai…</div>'}});
+  let h=sanitizeAdvancedNotes(String(reply||"").replace(/```html|```/g,"").trim());
   if(h.length<300)throw new Error("short");
-  if(!/<(h4|p|ul|div)/i.test(h))h=h.split(/\n{2,}/).map(x=>"<p>"+x.replace(/</g,"&lt;")+"</p>").join("");
+  if(!/<(h2|h3|h4|p|ul|ol|div|table)\b/i.test(h))throw new Error("structured notes missing");
   localStorage.setItem("notes:"+c+"|"+s+"|"+ch,pretty(h));
   renderNotes();
  }catch(e){
@@ -6056,6 +6056,19 @@ body:has(#tutor.active) #tutorPop{display:none!important}
 @media(max-width:520px){.notesVersionTabs{grid-template-columns:1fr;gap:8px}.notesVersionTab{min-height:68px;padding:11px}.notesAdvancedFeatures{gap:8px}.notesAdvancedFeature{min-height:118px;padding:11px}.notesAdvancedBottom{padding:13px}.notesAdvancedCTA{width:100%}.notesHeaderUpgrade{font-size:11px;padding:0 10px}.tutorPop .tutorActions{gap:5px!important}.tutorPop .tutorActions button{font-size:10px!important;padding:6px 7px!important}}
 @media(prefers-reduced-motion:reduce){.notesVersionTab,.notesHeaderUpgrade,.notesAdvancedCTA,.fcUpgradeTop,#flashcards .fcModes button{transition:none!important}}
 </style>
+<style id="studyaiSwappedNotesMethodStyles">
+/* Advanced prompt-generated sections remain attractive in the Basic Notes canvas. */
+.advancedNoteArticle .kp{background:linear-gradient(120deg,#e5f3ff,#f2f7ff);border:1px solid #94caff;border-left:5px solid #4c9ce8;border-radius:13px;padding:13px 15px;margin:13px 0}
+.advancedNoteArticle .fm{background:linear-gradient(110deg,#eeeaff,#fff 60%,#f9efff);border:2px dashed #8874ed;border-radius:13px;text-align:center;padding:14px;margin:14px 0;font-size:17px;font-weight:850;color:#4d3aa5}
+.advancedNoteArticle .pwt{width:100%;border-collapse:collapse;margin:13px 0;font-size:12px;display:table}.advancedNoteArticle .pwt th{background:#6858df;color:white;padding:9px;text-align:left}.advancedNoteArticle .pwt td{padding:8px;border:1px solid #ded9ed}
+.advancedNoteArticle .ex{background:linear-gradient(120deg,#e8fff4,#fff);border:1px solid #a8e8cf;border-left:5px solid #41b98e;border-radius:13px;padding:13px 15px;margin:13px 0}
+.advancedNoteArticle .tip{background:linear-gradient(120deg,#fff8d8,#fffdf3);border:1px solid #f1d57c;border-left:5px solid #e7b83d;border-radius:13px;padding:13px 15px;margin:13px 0}
+.advancedNoteArticle .qr{background:linear-gradient(120deg,#fff0df,#fff9f2);border:1px solid #ffc68c;border-radius:13px;padding:13px 15px;margin:13px 0}.advancedNoteArticle .qs{background:linear-gradient(120deg,#fff0f2,#fff9fb);border:1px solid #f2c4cf;border-radius:13px;padding:13px 15px;margin:13px 0}
+#noteBox .adv-note-box{margin:13px 0;padding:13px 15px;border:1px solid #d7e4ff;border-left:5px solid #7f8df1;border-radius:13px;background:linear-gradient(120deg,#f0f7ff,#f7f2ff 72%,#fff7fc)}
+#noteBox .adv-note-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(155px,1fr));gap:10px;margin:14px 0}#noteBox .adv-note-card{padding:12px;border:1px solid #e3def6;border-radius:13px;background:linear-gradient(145deg,#fff,#f5f1ff)}
+#noteBox .adv-note-formula{padding:13px;text-align:center;border:1px solid #d8d0ff;border-radius:13px;background:linear-gradient(120deg,#efecff,#fff 55%,#fff0f7);color:#4936a6;font-size:17px;font-weight:900}
+#noteBox .adv-note-memory{padding:13px;border:1px solid #f1d59b;border-left:5px solid #f1b943;border-radius:13px;background:linear-gradient(110deg,#fff8d9,#fffdf2);margin:13px 0}#noteBox .adv-note-example{padding:13px;border:1px solid #ccefe1;border-left:5px solid #45b995;border-radius:13px;background:linear-gradient(110deg,#edfff7,#fff);margin:13px 0}#noteBox .adv-note-mistake{padding:13px;border:1px solid #f0c7d0;border-left:5px solid #eb7d93;border-radius:13px;background:linear-gradient(110deg,#fff0f3,#fffafa);margin:13px 0}
+</style>
 <style id="advancedNotesDedicatedGeneratorStyles">
 .advancedNoteBuilder{position:relative;z-index:1;margin:22px 0;padding:18px;border:1px solid #e2d7ff;border-radius:19px;background:linear-gradient(140deg,#fff 0%,#fbf9ff 58%,#fff5fb 100%);box-shadow:0 12px 30px #49318c0b}
 .advancedNoteBuilderHead{display:flex;align-items:center;gap:11px;margin-bottom:16px}.advancedNoteSpark{display:grid;place-items:center;flex:0 0 39px;width:39px;height:39px;border-radius:13px;background:linear-gradient(135deg,#6654ee,#a64cdb 60%,#ed4c9b);color:white;font-size:20px;box-shadow:0 6px 14px #8b58d52e}.advancedNoteBuilderHead>div{display:grid;gap:4px;min-width:0;flex:1}.advancedNoteBuilderHead b{font-size:14px;color:#302747}.advancedNoteBuilderHead small{font-size:11px;line-height:1.55;color:#7c768f}
@@ -6138,7 +6151,7 @@ function sanitizeAdvancedNotes(raw){
  box.querySelectorAll("script,style,iframe,object,embed,form,button,input,textarea,link,meta,math,foreignObject").forEach(el=>el.remove());
  const htmlTags=new Set(["h2","h3","h4","p","strong","b","em","i","ul","ol","li","table","thead","tbody","tr","th","td","div","span","code","sup","sub","blockquote","br"]);
  const svgTags=new Set(["svg","g","path","rect","circle","ellipse","line","polyline","polygon","text","tspan","title","defs","marker"]);
- const classes=new Set(["adv-note-box","adv-note-grid","adv-note-card","adv-note-formula","adv-note-step","adv-note-memory","adv-note-mistake","adv-note-example","adv-note-takeaway","adv-note-diagram-wrap","adv-note-diagram","adv-note-highlight","adv-note-key","adv-note-compare","adv-note-pill"]);
+ const classes=new Set(["adv-note-box","adv-note-grid","adv-note-card","adv-note-formula","adv-note-step","adv-note-memory","adv-note-mistake","adv-note-example","adv-note-takeaway","adv-note-diagram-wrap","adv-note-diagram","adv-note-highlight","adv-note-key","adv-note-compare","adv-note-pill","kp","fm","pwt","ex","tip","qr","qs"]);
  const svgAttrs=new Set(["viewbox","width","height","xmlns","role","aria-label","fill","stroke","stroke-width","stroke-linecap","stroke-linejoin","x","y","x1","x2","y1","y2","cx","cy","r","rx","ry","d","points","transform","font-size","font-weight","text-anchor","dominant-baseline","opacity","fill-opacity","stroke-dasharray","stroke-dashoffset","id"]);
  const safeSvgValue=(n,v)=>{
   if(n==="xmlns")return v==="http://www.w3.org/2000/svg";
@@ -6173,10 +6186,10 @@ async function genAdvancedAINotes(){
   if(!cls||!sub||!chapter||!chapter.value){if(status)status.textContent="Pehle class, subject aur chapter choose karo.";return;}
   const c=cls.value,s=sub.value,ch=chapter.value,key="advancedNotes:"+c+"|"+s+"|"+ch;
   const oldText=btn.innerHTML;btn.disabled=true;btn.innerHTML="⏳ Creating detailed notes…";
-  status.innerHTML='<div class="advancedNoteStatusCard">✦ Advanced Notes ban rahe hain. Concepts, worked examples aur revision sections taiyaar ho rahe hain.</div>';
+  status.innerHTML='<div class="advancedNoteStatusCard">📘 Basic Notes generation method se notes taiyaar ho rahe hain — is page par Advanced Notes styling ke saath dikhenge.</div>';
   try{
     const message="Create high-quality Advanced AI Notes for Class "+c+", subject "+s+", chapter: "+ch+". Keep these more detailed and easier to understand than Basic Notes. Follow the full structure in your system prompt. Explain concepts gradually with correct examples. Selected chapter is the boundary; do not drift to another topic.";
-    const reply=await aiAsk({message:message,cls:c,ctx:"ADVANCED NOTES | Class "+c+" | "+s+" | "+ch,system:ADVANCED_NOTES_RULE,timeout:150000,maxTokens:5000,onSlow:()=>{status.innerHTML='<div class="advancedNoteStatusCard">Still working on your detailed notes… keep this page open.</div>';}});
+    const reply=await aiAsk({message:message,cls:c,ctx:"ADVANCED NOTES · BASIC GENERATOR | Class "+c+" | "+s+" | "+ch,system:NOTES_RULE,timeout:100000,maxTokens:3000,onSlow:()=>{status.innerHTML='<div class="advancedNoteStatusCard">Still creating your chapter notes… keep this page open.</div>';}});
     const html=sanitizeAdvancedNotes(reply);
     if(html.replace(/<[^>]+>/g," ").trim().length<1100)throw new Error("The notes response was too short. Please try again.");
     if(!/<(h2|h3|h4|p|ul|ol|table)\b/i.test(html))throw new Error("The AI response did not return structured notes. Please try again.");
