@@ -5417,28 +5417,74 @@ hub();
 </script>
 
 <div class="sai-pro-checkoutBackdrop" id="saiProCheckout" role="dialog" aria-modal="true" aria-labelledby="saiProCheckoutTitle" aria-hidden="true">
-  <div class="sai-pro-checkoutModal"><div class="sai-pro-modalBadge">✦ STUDYAI SUBSCRIPTION</div><h2 id="saiProCheckoutTitle">Your plan selection is ready.</h2><p id="saiProCheckoutDetails">You selected StudyAI Pro.</p><div class="sai-pro-modalWarning"><span>🔒</span><span><b>Secure checkout is not connected yet.</b><br>This preview will not take payment or activate a subscription. We need server-verified payment confirmation and expiry handling before purchases can go live.</span></div><div class="sai-pro-modalActions"><button class="sai-pro-modalClose" type="button" id="saiProCheckoutClose">Back to plans</button><button class="sai-pro-modalGo" type="button" id="saiProCheckoutSeePlans">Review plans</button></div><p class="sai-pro-checkoutFine">Support StudyAI donations are separate and do not activate Pro.</p></div>
+  <div class="sai-pro-checkoutModal"><div class="sai-pro-modalBadge">✦ STUDYAI SUBSCRIPTION</div><h2 id="saiProCheckoutTitle">Your plan selection is ready.</h2><p id="saiProCheckoutDetails">Sign in to your StudyAI account to continue.</p><div class="sai-pro-modalWarning"><span>🔒</span><span><b>Secure payment verification.</b><br>Online checkout stays disabled until account, server, database and paid-feature testing are complete.</span></div><div class="sai-pro-modalActions"><button class="sai-pro-modalClose" type="button" id="saiProCheckoutClose">Back to plans</button><button class="sai-pro-modalGo" type="button" id="saiProCheckoutPay" disabled>Checkout setup pending</button></div><p class="sai-pro-checkoutFine">₹99 for 30 days · ₹999 for 365 days</p></div>
 </div>
 <script id="saiProSubscriptionScript">
 (function(){
-  const overlay=document.getElementById('saiProCheckout');
-  const details=document.getElementById('saiProCheckoutDetails');
-  const title=document.getElementById('saiProCheckoutTitle');
-  function closeModal(){if(!overlay)return;overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');}
-  function openModal(plan){
-    if(!overlay)return;
-    const monthly=plan==='month';
-    if(title)title.textContent=monthly?'StudyAI Pro · Monthly':'StudyAI Pro Max · Yearly';
-    if(details)details.textContent=monthly?'Selected plan: StudyAI Pro — ₹99 per month. Secure checkout is not connected yet.':'Selected plan: StudyAI Pro Max — ₹999 per year. Secure checkout is not connected yet.';
-    overlay.classList.add('show');overlay.setAttribute('aria-hidden','false');
-    const c=document.getElementById('saiProCheckoutClose');if(c)c.focus();
-  }
-  document.querySelectorAll('[data-pro-checkout]').forEach(b=>b.addEventListener('click',()=>openModal(b.dataset.proCheckout||b.getAttribute('data-pro-checkout'))));
-  document.getElementById('saiProCheckoutClose')?.addEventListener('click',closeModal);
-  document.getElementById('saiProCheckoutSeePlans')?.addEventListener('click',()=>{closeModal();document.getElementById('saiProPlans')?.scrollIntoView({behavior:'smooth',block:'start'});});
-  overlay?.addEventListener('click',e=>{if(e.target===overlay)closeModal();});
-  document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal();});
-  document.querySelectorAll('#drawerNav [data-route="pro"]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('appDrawer')?.classList.remove('open');document.getElementById('drawerOverlay')?.classList.remove('show');}));
+ 'use strict';
+ const API=String(window.STUDYAI_PAYMENT_API_BASE||'https://studyai-backend-bqs8.onrender.com').replace(/\/$/,'');
+ const overlay=document.getElementById('saiProCheckout'),details=document.getElementById('saiProCheckoutDetails'),title=document.getElementById('saiProCheckoutTitle'),pay=document.getElementById('saiProCheckoutPay');
+ let plan='month',enabled=false,busy=false;
+ const setDetails=t=>{if(details)details.textContent=t;};
+ const setPay=(t,d)=>{if(pay){pay.textContent=t;pay.disabled=!!d;}};
+ async function loadConfig(){
+   enabled=false;setPay('Checking secure checkout…',true);
+   try{const r=await fetch(API+'/api/pro/config',{cache:'no-store'}),d=await r.json().catch(()=>({}));
+     enabled=!!(r.ok&&d.enabled===true);
+     if(enabled){setPay('Continue to secure checkout',false);setDetails(plan==='month'?'Selected plan: ₹99 for 30 days. Sign in to continue.':'Selected plan: ₹999 for 365 days. Sign in to continue.');}
+     else{setPay('Checkout setup pending',true);setDetails('Online payments are not enabled yet. No payment will be taken.');}
+   }catch(_){setPay('Checkout setup pending',true);enabled=false;setDetails('Payment service is not reachable yet. No payment has been taken.');}
+ }
+ async function loadRazorpay(){
+   if(window.Razorpay)return;
+   await new Promise((resolve,reject)=>{const s=document.createElement('script');s.src='https://checkout.razorpay.com/v1/checkout.js';s.async=true;s.onload=resolve;s.onerror=()=>reject(new Error('Secure checkout could not load.'));document.head.appendChild(s);});
+   if(!window.Razorpay)throw new Error('Secure checkout could not load.');
+ }
+ function openModal(k){
+   plan=k==='year'?'year':'month';
+   if(title)title.textContent=plan==='month'?'StudyAI Pro · Monthly':'StudyAI Pro Max · Yearly';
+   setDetails(plan==='month'?'Selected plan: ₹99 for 30 days.':'Selected plan: ₹999 for 365 days.');
+   overlay?.classList.add('show');overlay?.setAttribute('aria-hidden','false');loadConfig();
+ }
+ document.addEventListener('click',e=>{
+   const b=e.target?.closest?.('[data-pro-checkout]');if(!b)return;
+   e.preventDefault();e.stopImmediatePropagation();openModal(b.getAttribute('data-pro-checkout'));
+ },true);
+ async function startCheckout(){
+   if(busy)return;if(!enabled){setDetails('Online payments are not enabled yet. No payment has been taken.');return;}
+   busy=true;setPay('Preparing secure checkout…',true);
+   try{
+     const client=window.studyAISupabaseClient;if(!client)throw new Error('Account service unavailable. Refresh and sign in again.');
+     const result=await client.auth.getSession(),session=result?.data?.session;
+     if(!session?.access_token)throw new Error('Please sign in to your StudyAI account first.');
+     const or=await fetch(API+'/api/pro/create-order',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},body:JSON.stringify({plan}),cache:'no-store'});
+     const order=await or.json().catch(()=>({}));if(!or.ok||!order.order_id||!order.key_id)throw new Error(order.error||'Could not start secure checkout.');
+     await loadRazorpay();
+     const rz=new window.Razorpay({
+       key:order.key_id,order_id:order.order_id,amount:order.amount,currency:order.currency,name:'StudyAI',description:order.description,
+       prefill:{email:session.user?.email||''},theme:{color:'#635bff'},
+       handler:async response=>{
+         setDetails('Checking payment with the secure server…');setPay('Verifying payment…',true);
+         try{
+           const vr=await fetch(API+'/api/pro/verify-payment',{method:'POST',headers:{'Content-Type':'application/json','Authorization':'Bearer '+session.access_token},body:JSON.stringify(response),cache:'no-store'});
+           const v=await vr.json().catch(()=>({}));if(!vr.ok||v.ok!==true)throw new Error(v.error||'Payment verification needs support review.');
+           setDetails('Payment verified. Subscription record saved until '+(v.expires_at?new Date(v.expires_at).toLocaleString():'the expiry returned by the server')+'.');
+           setPay('Payment verified ✓',true);
+         }catch(err){setDetails(err.message||'Keep your payment reference and contact support before paying again.');setPay('Verification needs attention',true);}
+         busy=false;
+       },
+       modal:{ondismiss:()=>{busy=false;setPay('Continue to secure checkout',enabled);}}
+     });
+     rz.on('payment.failed',r=>{setDetails(r?.error?.description||'Payment did not complete. No subscription was activated.');setPay('Try secure checkout again',!enabled);});
+     rz.open();setPay('Secure checkout opened',true);
+   }catch(err){setDetails(err.message||'Secure checkout is unavailable.');setPay('Continue to secure checkout',!enabled);}
+   finally{busy=false;}
+ }
+ pay?.addEventListener('click',startCheckout);
+ document.getElementById('saiProCheckoutClose')?.addEventListener('click',()=>{overlay?.classList.remove('show');overlay?.setAttribute('aria-hidden','true');});
+ overlay?.addEventListener('click',e=>{if(e.target===overlay){overlay.classList.remove('show');overlay.setAttribute('aria-hidden','true');}});
+ document.addEventListener('keydown',e=>{if(e.key==='Escape'){overlay?.classList.remove('show');overlay?.setAttribute('aria-hidden','true');}});
+ document.querySelectorAll('#drawerNav [data-route="pro"]').forEach(b=>b.addEventListener('click',()=>{document.getElementById('appDrawer')?.classList.remove('open');document.getElementById('drawerOverlay')?.classList.remove('show');}));
 })();
 </script>
 

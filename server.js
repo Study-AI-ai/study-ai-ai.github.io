@@ -195,9 +195,12 @@ const SAI_RZP_ID = process.env.RAZORPAY_KEY_ID || "";
 const SAI_RZP_SECRET = process.env.RAZORPAY_KEY_SECRET || "";
 const SAI_RZP_WEBHOOK = process.env.RAZORPAY_WEBHOOK_SECRET || "";
 const SAI_PAYMENTS_ON = process.env.PRO_PAYMENTS_ENABLED === "true";
+const SAI_FEATURES_READY = process.env.PRO_FEATURES_READY === "true";
 
 function saiPaymentsReady() {
-  return SAI_PAYMENTS_ON && !!(SAI_SB_URL && SAI_SB_ANON && SAI_SB_SERVICE && SAI_RZP_ID && SAI_RZP_SECRET && SAI_RZP_WEBHOOK);
+  const keysAreTest = SAI_RZP_ID.startsWith("rzp_test_");
+  const keysAreLive = SAI_RZP_ID.startsWith("rzp_live_");
+  return SAI_PAYMENTS_ON && !!(SAI_SB_URL && SAI_SB_ANON && SAI_SB_SERVICE && SAI_RZP_ID && SAI_RZP_SECRET && SAI_RZP_WEBHOOK) && (keysAreTest || (keysAreLive && SAI_FEATURES_READY));
 }
 function saiSafeHexEqual(a, b) {
   try {
@@ -309,7 +312,7 @@ app.get("/api/pro/status", async (req, res) => {
   } catch (_) { return res.status(503).json({ error: "Subscription status is not available." }); }
 });
 app.post("/api/pro/razorpay-webhook", async (req, res) => {
-  if (!SAI_PAYMENTS_ON || !SAI_RZP_WEBHOOK || !SAI_RZP_SECRET || !SAI_SB_SERVICE) return res.status(503).json({ error: "Payment webhook is not configured." });
+  if (!saiPaymentsReady()) return res.status(503).json({ error: "Payment webhook is not configured or live features are not ready." });
   const signature = String(req.headers["x-razorpay-signature"] || ""), raw = req.rawBody;
   if (!raw || !signature) return res.status(400).json({ error: "Webhook signature is missing." });
   const expected = crypto.createHmac("sha256", SAI_RZP_WEBHOOK).update(raw).digest("hex");
