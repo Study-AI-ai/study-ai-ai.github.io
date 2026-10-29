@@ -6413,5 +6413,28 @@ function revealAdvancedPracticeSolution(){const q=window.__advancedPracticeChall
   };
 })();
 </script>
+
+<script id="saiProMonthClickFix">
+(function () {
+  document.addEventListener('click', function (event) {
+    const button = event.target && event.target.closest ? event.target.closest('[data-pro-checkout="month"], [data-pro-checkout="year"]') : null;
+    if (!button) return;
+    const overlay = document.getElementById('saiProCheckout');
+    if (!overlay) return;
+    event.preventDefault();
+    event.stopImmediatePropagation();
+    const monthly = button.getAttribute('data-pro-checkout') === 'month';
+    const title = document.getElementById('saiProCheckoutTitle');
+    const details = document.getElementById('saiProCheckoutDetails');
+    if (title) title.textContent = monthly ? 'StudyAI Pro · Monthly' : 'StudyAI Pro Max · Yearly';
+    if (details) details.textContent = monthly
+      ? 'Selected plan: StudyAI Pro — ₹99 per month. Secure checkout is not connected yet.'
+      : 'Selected plan: StudyAI Pro Max — ₹999 per year. Secure checkout is not connected yet.';
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden', 'false');
+  }, true);
+})();
+</script>
+
 </body>
 </html>
