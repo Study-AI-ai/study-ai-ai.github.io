@@ -223,7 +223,10 @@ async function saiProUser(req) {
   } catch (_) { return { error: [503, "Could not verify your account. Please retry."] }; }
 }
 function saiAdminHeaders(extra = {}) {
-  return Object.assign({ apikey: SAI_SB_SERVICE, Authorization: "Bearer " + SAI_SB_SERVICE, "Content-Type": "application/json" }, extra);
+  const headers = { apikey: SAI_SB_SERVICE, "Content-Type": "application/json" };
+  // Legacy service_role JWTs need Authorization; new sb_secret_ keys are sent via apikey only.
+  if (SAI_SB_SERVICE.startsWith("eyJ")) headers.Authorization = "Bearer " + SAI_SB_SERVICE;
+  return Object.assign(headers, extra);
 }
 async function saiDb(path, options = {}) {
   return fetch(SAI_SB_URL + "/rest/v1/" + path, Object.assign({ headers: saiAdminHeaders(), signal: AbortSignal.timeout(12000) }, options));
