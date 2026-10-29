@@ -13,7 +13,7 @@ const crypto = require("crypto");
 const app = express();
 app.set("trust proxy", 1);
 app.use(cors());
-app.use(express.json({ limit: "200kb" }));
+app.use(express.json({ limit: "200kb", verify: (req, res, buf) => { req.rawBody = Buffer.from(buf); } }));
 
 const PER_KEY = +process.env.PER_KEY_CONCURRENCY || 2;
 const DAILY_LIMIT = +process.env.DAILY_LIMIT_PER_IP || 60;
@@ -182,4 +182,152 @@ app.post("/api/chat", async (req, res) => {
 });
 
 app.get("/", (req, res) => res.json({ ok: true, queue: queue.length, providers: providers.length, cached: cache.size }));
+
+/* STUDYAI_RAZORPAY_INTEGRATION — disabled by default until adult-managed setup is complete. */
+const SAI_PLANS = Object.freeze({
+  month: { amount: 9900, days: 30, name: "StudyAI Pro · 30 days" },
+  year: { amount: 99900, days: 365, name: "StudyAI Pro Max · 365 days" }
+});
+const SAI_SB_URL = String(process.env.SUPABASE_URL || "https://xrziavazhzbiejdzioiz.supabase.co").replace(/\/+$/, "");
+const SAI_SB_ANON = process.env.SUPABASE_ANON_KEY || "sb_publishable_FBBST75QSQBYnkk1X2wn-Q_7hlJawpi";
+const SAI_SB_SERVICE = process.env.SUPABASE_SERVICE_ROLE_KEY || "";
+const SAI_RZP_ID = process.env.RAZORPAY_KEY_ID || "";
+const SAI_RZP_SECRET = process.env.RAZORPAY_KEY_SECRET || "";
+const SAI_RZP_WEBHOOK = process.env.RAZORPAY_WEBHOOK_SECRET || "";
+const SAI_PAYMENTS_ON = process.env.PRO_PAYMENTS_ENABLED === "true";
+
+function saiPaymentsReady() {
+  return SAI_PAYMENTS_ON && !!(SAI_SB_URL && SAI_SB_ANON && SAI_SB_SERVICE && SAI_RZP_ID && SAI_RZP_SECRET && SAI_RZP_WEBHOOK);
+}
+function saiSafeHexEqual(a, b) {
+  try {
+    if (!/^[a-f0-9]{64}$/i.test(a) || !/^[a-f0-9]{64}$/i.test(b)) return false;
+    const x = Buffer.from(a, "hex"), y = Buffer.from(b, "hex");
+    return crypto.timingSafeEqual(x, y);
+  } catch (_) { return false; }
+}
+async function saiProUser(req) {
+  const token = String(req.headers.authorization || "").match(/^Bearer\s+(.+)$/i)?.[1];
+  if (!token) return { error: [401, "Sign in to your StudyAI account first."] };
+  try {
+    const r = await fetch(SAI_SB_URL + "/auth/v1/user", {
+      headers: { apikey: SAI_SB_ANON, Authorization: "Bearer " + token },
+      signal: AbortSignal.timeout(10000)
+    });
+    if (!r.ok) return { error: [401, "Your login session expired. Sign in again."] };
+    const user = await r.json().catch(() => null);
+    return user && user.id ? { user } : { error: [401, "Sign in to your StudyAI account first."] };
+  } catch (_) { return { error: [503, "Could not verify your account. Please retry."] }; }
+}
+function saiAdminHeaders(extra = {}) {
+  return Object.assign({ apikey: SAI_SB_SERVICE, Authorization: "Bearer " + SAI_SB_SERVICE, "Content-Type": "application/json" }, extra);
+}
+async function saiDb(path, options = {}) {
+  return fetch(SAI_SB_URL + "/rest/v1/" + path, Object.assign({ headers: saiAdminHeaders(), signal: AbortSignal.timeout(12000) }, options));
+}
+function saiRzpHeaders(extra = {}) {
+  return Object.assign({ Authorization: "Basic " + Buffer.from(SAI_RZP_ID + ":" + SAI_RZP_SECRET).toString("base64"), "Content-Type": "application/json" }, extra);
+}
+async function saiFetchPayment(id) {
+  const r = await fetch("https://api.razorpay.com/v1/payments/" + encodeURIComponent(id), { headers: saiRzpHeaders(), signal: AbortSignal.timeout(15000) });
+  const p = await r.json().catch(() => ({}));
+  if (!r.ok) throw new Error("Payment provider verification failed.");
+  return p;
+}
+async function saiFindOrder(orderId, userId) {
+  const q = new URLSearchParams({ select: "razorpay_order_id,user_id,plan,amount,currency,status,razorpay_payment_id,expires_at", razorpay_order_id: "eq." + orderId });
+  if (userId) q.set("user_id", "eq." + userId);
+  const r = await saiDb("studyai_payment_orders?" + q.toString());
+  if (!r.ok) throw new Error("Could not read the StudyAI order.");
+  const rows = await r.json().catch(() => []);
+  return Array.isArray(rows) ? rows[0] || null : null;
+}
+async function saiActivate(order, paymentId) {
+  const r = await saiDb("rpc/studyai_activate_paid_order", { method: "POST", body: JSON.stringify({ p_razorpay_order_id: order.razorpay_order_id, p_payment_id: paymentId, p_user_id: order.user_id }) });
+  const x = await r.json().catch(() => ({}));
+  if (!r.ok || x.ok !== true) throw new Error("Verified payment could not be recorded. Support review is required.");
+  return x;
+}
+
+app.get("/api/pro/config", (req, res) => { res.set("Cache-Control", "no-store"); res.json({ enabled: saiPaymentsReady(), currency: "INR" }); });
+app.post("/api/pro/create-order", async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  if (!saiPaymentsReady()) return res.status(503).json({ error: "Checkout is disabled until the merchant, database and server settings are complete." });
+  const auth = await saiProUser(req);
+  if (auth.error) return res.status(auth.error[0]).json({ error: auth.error[1] });
+  const key = String((req.body || {}).plan || ""), plan = SAI_PLANS[key];
+  if (!plan) return res.status(400).json({ error: "Choose a valid StudyAI plan." });
+  try {
+    const ro = await fetch("https://api.razorpay.com/v1/orders", {
+      method: "POST", headers: saiRzpHeaders(),
+      body: JSON.stringify({ amount: plan.amount, currency: "INR", receipt: "sai_" + Date.now().toString(36) + "_" + crypto.randomBytes(4).toString("hex"), notes: { studyai_user_id: auth.user.id, studyai_plan: key } }),
+      signal: AbortSignal.timeout(15000)
+    });
+    const d = await ro.json().catch(() => ({}));
+    if (!ro.ok || !d.id) { console.error("StudyAI gateway order error:", ro.status); return res.status(502).json({ error: "Secure checkout could not start. Please retry later." }); }
+    const saved = await saiDb("studyai_payment_orders", {
+      method: "POST", headers: saiAdminHeaders({ Prefer: "return=minimal" }),
+      body: JSON.stringify({ razorpay_order_id: d.id, user_id: auth.user.id, plan: key, amount: plan.amount, currency: "INR", status: "created" })
+    });
+    if (!saved.ok) { console.error("StudyAI order storage failed:", saved.status, await saved.text().catch(() => "")); return res.status(503).json({ error: "Payment setup is incomplete. Do not pay yet; contact StudyAI support." }); }
+    return res.json({ key_id: SAI_RZP_ID, order_id: d.id, amount: plan.amount, currency: "INR", name: "StudyAI", description: plan.name });
+  } catch (e) { console.error("StudyAI create-order failure:", e.message); return res.status(502).json({ error: "Secure checkout is temporarily unavailable." }); }
+});
+app.post("/api/pro/verify-payment", async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  if (!saiPaymentsReady()) return res.status(503).json({ error: "Checkout is not enabled." });
+  const auth = await saiProUser(req);
+  if (auth.error) return res.status(auth.error[0]).json({ error: auth.error[1] });
+  const b = req.body || {}, orderId = String(b.razorpay_order_id || ""), paymentId = String(b.razorpay_payment_id || ""), signature = String(b.razorpay_signature || "");
+  if (!/^order_[A-Za-z0-9]+$/.test(orderId) || !/^pay_[A-Za-z0-9]+$/.test(paymentId) || !/^[a-f0-9]{64}$/i.test(signature)) return res.status(400).json({ error: "Payment response is incomplete. Do not pay again until status is checked." });
+  try {
+    const order = await saiFindOrder(orderId, auth.user.id);
+    if (!order) return res.status(404).json({ error: "This order does not belong to your StudyAI account." });
+    const expected = crypto.createHmac("sha256", SAI_RZP_SECRET).update(orderId + "|" + paymentId).digest("hex");
+    if (!saiSafeHexEqual(expected, signature)) return res.status(400).json({ error: "Payment signature verification failed." });
+    const p = await saiFetchPayment(paymentId);
+    if (p.order_id !== orderId || p.status !== "captured" || Number(p.amount) !== Number(order.amount) || p.currency !== "INR") return res.status(400).json({ error: "Provider has not confirmed a captured payment for this exact plan." });
+    if (order.status === "paid") {
+      if (order.razorpay_payment_id !== paymentId) return res.status(409).json({ error: "This order was already processed." });
+      return res.json({ ok: true, already_processed: true, plan: order.plan, expires_at: order.expires_at });
+    }
+    const saved = await saiActivate(order, paymentId);
+    return res.json({ ok: true, plan: order.plan, expires_at: saved.expires_at });
+  } catch (e) { console.error("StudyAI verify failure:", e.message); return res.status(503).json({ error: "Payment verification could not finish. Keep your payment reference and contact support before retrying." }); }
+});
+app.get("/api/pro/status", async (req, res) => {
+  res.set("Cache-Control", "no-store");
+  const auth = await saiProUser(req);
+  if (auth.error) return res.status(auth.error[0]).json({ error: auth.error[1] });
+  if (!SAI_SB_SERVICE) return res.status(503).json({ error: "Subscription status is not configured." });
+  try {
+    const q = new URLSearchParams({ select: "plan,status,starts_at,expires_at,razorpay_order_id", user_id: "eq." + auth.user.id, status: "eq.active", expires_at: "gt." + new Date().toISOString(), order: "expires_at.desc", limit: "1" });
+    const r = await saiDb("studyai_subscriptions?" + q.toString());
+    if (!r.ok) return res.status(503).json({ error: "Subscription status is not available." });
+    const rows = await r.json().catch(() => []);
+    return res.json({ active: Array.isArray(rows) && rows.length > 0, subscription: Array.isArray(rows) ? rows[0] || null : null });
+  } catch (_) { return res.status(503).json({ error: "Subscription status is not available." }); }
+});
+app.post("/api/pro/razorpay-webhook", async (req, res) => {
+  if (!SAI_PAYMENTS_ON || !SAI_RZP_WEBHOOK || !SAI_RZP_SECRET || !SAI_SB_SERVICE) return res.status(503).json({ error: "Payment webhook is not configured." });
+  const signature = String(req.headers["x-razorpay-signature"] || ""), raw = req.rawBody;
+  if (!raw || !signature) return res.status(400).json({ error: "Webhook signature is missing." });
+  const expected = crypto.createHmac("sha256", SAI_RZP_WEBHOOK).update(raw).digest("hex");
+  if (!saiSafeHexEqual(expected, signature)) return res.status(400).json({ error: "Webhook signature is invalid." });
+  const body = req.body || {};
+  if (String(body.event || "") !== "payment.captured") return res.json({ ok: true, ignored: true });
+  const data = body.payload?.payment?.entity;
+  if (!data?.order_id || !data?.id) return res.status(400).json({ error: "Webhook payment details are missing." });
+  try {
+    const order = await saiFindOrder(String(data.order_id), null);
+    if (!order) return res.status(404).json({ error: "StudyAI order not found." });
+    const p = await saiFetchPayment(String(data.id));
+    if (p.order_id !== order.razorpay_order_id || p.status !== "captured" || Number(p.amount) !== Number(order.amount) || p.currency !== "INR") return res.status(400).json({ error: "Captured payment does not match this StudyAI order." });
+    await saiActivate(order, String(data.id));
+    return res.json({ ok: true });
+  } catch (e) { console.error("StudyAI webhook error:", e.message); return res.status(503).json({ error: "Webhook could not be processed; provider may retry." }); }
+});
+/* END STUDYAI_RAZORPAY_INTEGRATION */
+
+
 app.listen(process.env.PORT || 3000, () => console.log("StudyAI backend ready"));
