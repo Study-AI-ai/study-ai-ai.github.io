@@ -3,26 +3,7 @@
 <head>
 <meta name="google-site-verification" content="qsBuL593J3mqp-fdQxbffOlufstJ89ThTnhEsR2OInE" />
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<meta name="theme-color" content="#635bff"><title>StudyAI | AI Learning Hub for Classes 6–12</title>
-<meta name="description" content="StudyAI helps students in Classes 6–12 learn with an AI Tutor, NCERT resources, chapter notes, practice papers, quizzes and flashcards—all in one place.">
-<meta name="application-name" content="StudyAI">
-<meta property="og:type" content="website">
-<meta property="og:site_name" content="StudyAI">
-<meta property="og:title" content="StudyAI | AI Learning Hub for Classes 6–12">
-<meta property="og:description" content="Explore AI tutoring, NCERT resources, notes, practice papers, quizzes and flashcards for Classes 6–12 in one study space.">
-<meta property="og:url" content="https://study-ai-ai.github.io/">
-<meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="StudyAI | AI Learning Hub for Classes 6–12">
-<meta name="twitter:description" content="AI Tutor, NCERT resources, notes, practice papers, quizzes and flashcards for Classes 6–12.">
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "StudyAI",
-  "alternateName": ["Study AI", "study-ai-ai.github.io"],
-  "url": "https://study-ai-ai.github.io/"
-}
-</script>
+<meta name="theme-color" content="#635bff"><title>StudyAI — Student Web App</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Sora:wght@600;700;800&display=swap" rel="stylesheet">
@@ -636,7 +617,7 @@ body.notHome #accountOpen{visibility:hidden;pointer-events:none}
   .heroActions .saiAccentMore{width:23px !important;height:23px !important;font-size:13px !important}
 }
 </style>
-<link rel="icon" type="image/png" sizes="64x64" href="./studyai-favicon.png">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 512 512%22 width=%22512%22 height=%22512%22%3E %3Cdefs%3E %3ClinearGradient id=%22bg%22 x1=%220%22 y1=%220%22 x2=%221%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%235B5BFF%22/%3E %3Cstop offset=%220.55%22 stop-color=%22%23B04FD8%22/%3E %3Cstop offset=%221%22 stop-color=%22%23FF4FA3%22/%3E %3C/linearGradient%3E %3ClinearGradient id=%22shine%22 x1=%220%22 y1=%220%22 x2=%220%22 y2=%221%22%3E %3Cstop offset=%220%22 stop-color=%22%23fff%22 stop-opacity=%22.28%22/%3E %3Cstop offset=%221%22 stop-color=%22%23fff%22 stop-opacity=%220%22/%3E %3C/linearGradient%3E %3CclipPath id=%22c%22%3E%3Crect width=%22512%22 height=%22512%22 rx=%22116%22/%3E%3C/clipPath%3E %3C/defs%3E %3Crect width=%22512%22 height=%22512%22 rx=%22116%22 fill=%22url%28%23bg%29%22/%3E %3Crect width=%22512%22 height=%22256%22 fill=%22url%28%23shine%29%22 clip-path=%22url%28%23c%29%22/%3E %3Cpath d=%22M338 168C300 118 188 118 180 190C172 256 332 246 334 322C336 396 214 404 166 350%22 fill=%22none%22 stroke=%22%23fff%22 stroke-width=%2246%22 stroke-linecap=%22round%22 stroke-linejoin=%22round%22/%3E %3Cpath d=%22M396 78C401 118 410 128 450 133C410 138 401 148 396 188C391 148 382 138 342 133C382 128 391 118 396 78Z%22 fill=%22%23FFD95A%22/%3E %3Cpath d=%22M112 392C114 410 120 416 138 418C120 420 114 426 112 444C110 426 104 420 86 418C104 416 110 410 112 392Z%22 fill=%22%23fff%22 opacity=%22.85%22/%3E %3C/svg%3E ">
 
 <style id="studyai-donation-style">
 /* StudyAI Donation page */
@@ -1440,8 +1421,7 @@ const rng=a=>()=>{a|=0;a=a+0x6D2B79F5|0;let t=Math.imul(a^a>>>15,1|a);t=t+Math.i
 const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 function pairs(html){
   if(!html||/Notes aa rahe hain/.test(html))return[];
-  const d=new DOMParser().parseFromString('<body>'+html+'
-</body>','text/html'),out=[];
+  const d=new DOMParser().parseFromString('<body>'+html+'</body>','text/html'),out=[];
   d.querySelectorAll('li').forEach(li=>{
     const b=li.firstElementChild;if(!b||b.tagName!=='B')return;
     const t=b.textContent.replace(/[\s:：=\-–]+$/,'').trim(),r=li.textContent.slice(b.textContent.length).replace(/^[\s:：=\-–]+/,'').replace(/\s+/g,' ').trim();
@@ -6431,28 +6411,6 @@ function revealAdvancedPracticeSolution(){const q=window.__advancedPracticeChall
     const x=el.querySelector('.saiTutorLimitClose');if(x)setTimeout(()=>x.focus(),10);
     return true;
   };
-})();
-</script>
-<script id="saiProPlanClickFix">
-(function () {
-  if (window.__saiProPlanClickFixInstalled) return;
-  window.__saiProPlanClickFixInstalled = true;
-  document.addEventListener('click', function (event) {
-    const button = event.target.closest('[data-pro-checkout]');
-    const card = event.target.closest('.sai-pro-planCard');
-    if (!button && !card) return;
-    if (event.target.closest('a, input, select, textarea, [data-no-plan-open]')) return;
-    const plan = button ? button.getAttribute('data-pro-checkout') : ((card.querySelector('[data-pro-checkout]') || {}).getAttribute('data-pro-checkout') || 'month');
-    const overlay = document.getElementById('saiProCheckout');
-    if (!overlay) return;
-    const monthly = plan === 'month';
-    const title = document.getElementById('saiProCheckoutTitle');
-    const details = document.getElementById('saiProCheckoutDetails');
-    if (title) title.textContent = monthly ? 'StudyAI Pro · Monthly' : 'StudyAI Pro Max · Yearly';
-    if (details) details.textContent = monthly ? 'Selected plan: StudyAI Pro — ₹99 per month. Secure checkout is not connected yet.' : 'Selected plan: StudyAI Pro Max — ₹999 per year. Secure checkout is not connected yet.';
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden', 'false');
-  }, true);
 })();
 </script>
 </body>
