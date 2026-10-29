@@ -1441,33 +1441,6 @@ const esc=t=>String(t).replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;',
 function pairs(html){
   if(!html||/Notes aa rahe hain/.test(html))return[];
   const d=new DOMParser().parseFromString('<body>'+html+'
-<script id="saiProPlanClickFix">
-(function () {
-  if (window.__saiProPlanClickFixInstalled) return;
-  window.__saiProPlanClickFixInstalled = true;
-  document.addEventListener('click', function (event) {
-    const button = event.target.closest('[data-pro-checkout]');
-    const card = event.target.closest('.sai-pro-planCard');
-    if (!button && !card) return;
-    if (event.target.closest('a, input, select, textarea, [data-no-plan-open]')) return;
-    const plan = button
-      ? button.getAttribute('data-pro-checkout')
-      : ((card.querySelector('[data-pro-checkout]') || {}).getAttribute('data-pro-checkout') || 'month');
-    const overlay = document.getElementById('saiProCheckout');
-    if (!overlay) return;
-    const monthly = plan === 'month';
-    const title = document.getElementById('saiProCheckoutTitle');
-    const details = document.getElementById('saiProCheckoutDetails');
-    if (title) title.textContent = monthly ? 'StudyAI Pro · Monthly' : 'StudyAI Pro Max · Yearly';
-    if (details) details.textContent = monthly
-      ? 'Selected plan: StudyAI Pro — ₹99 per month. Secure checkout is not connected yet.'
-      : 'Selected plan: StudyAI Pro Max — ₹999 per year. Secure checkout is not connected yet.';
-    overlay.classList.add('show');
-    overlay.setAttribute('aria-hidden', 'false');
-  }, true);
-})();
-</script>
-
 </body>','text/html'),out=[];
   d.querySelectorAll('li').forEach(li=>{
     const b=li.firstElementChild;if(!b||b.tagName!=='B')return;
@@ -6458,6 +6431,28 @@ function revealAdvancedPracticeSolution(){const q=window.__advancedPracticeChall
     const x=el.querySelector('.saiTutorLimitClose');if(x)setTimeout(()=>x.focus(),10);
     return true;
   };
+})();
+</script>
+<script id="saiProPlanClickFix">
+(function () {
+  if (window.__saiProPlanClickFixInstalled) return;
+  window.__saiProPlanClickFixInstalled = true;
+  document.addEventListener('click', function (event) {
+    const button = event.target.closest('[data-pro-checkout]');
+    const card = event.target.closest('.sai-pro-planCard');
+    if (!button && !card) return;
+    if (event.target.closest('a, input, select, textarea, [data-no-plan-open]')) return;
+    const plan = button ? button.getAttribute('data-pro-checkout') : ((card.querySelector('[data-pro-checkout]') || {}).getAttribute('data-pro-checkout') || 'month');
+    const overlay = document.getElementById('saiProCheckout');
+    if (!overlay) return;
+    const monthly = plan === 'month';
+    const title = document.getElementById('saiProCheckoutTitle');
+    const details = document.getElementById('saiProCheckoutDetails');
+    if (title) title.textContent = monthly ? 'StudyAI Pro · Monthly' : 'StudyAI Pro Max · Yearly';
+    if (details) details.textContent = monthly ? 'Selected plan: StudyAI Pro — ₹99 per month. Secure checkout is not connected yet.' : 'Selected plan: StudyAI Pro Max — ₹999 per year. Secure checkout is not connected yet.';
+    overlay.classList.add('show');
+    overlay.setAttribute('aria-hidden', 'false');
+  }, true);
 })();
 </script>
 </body>
