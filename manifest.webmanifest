@@ -3,7 +3,7 @@
   "name": "StudyAI",
   "short_name": "StudyAI",
   "description": "AI Learning Hub for Classes 6-12 with AI Tutor, notes and practice",
-  "start_url": "./index.html#home",
+  "start_url": "./index.html?studyai_app=1#home",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
