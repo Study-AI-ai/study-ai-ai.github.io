@@ -11,8 +11,7 @@ const requiredFiles = [
   'index.html',
   'icon-192.png',
   'icon-512.png',
-  'studyai-intro.webp',
-  'favicon.ico'
+  'studyai-intro.webp'
 ];
 
 fs.rmSync(webDir, { recursive: true, force: true });
@@ -21,10 +20,6 @@ fs.mkdirSync(webDir, { recursive: true });
 for (const name of requiredFiles) {
   const source = path.join(repoRoot, name);
   if (!fs.existsSync(source)) {
-    if (name === 'favicon.ico') {
-      console.warn(`Optional asset not found: ${name}`);
-      continue;
-    }
     throw new Error(`Required StudyAI website file is missing: ${source}`);
   }
   fs.copyFileSync(source, path.join(webDir, name));
@@ -33,14 +28,15 @@ for (const name of requiredFiles) {
 const indexPath = path.join(webDir, 'index.html');
 let html = fs.readFileSync(indexPath, 'utf8');
 
-// A native Capacitor build must not launch the browser/PWA install prompt.
-html = html.replace(/<script\\b[^>]*\\bsrc=["']install\\.js["'][^>]*><\\/script>/gi, '');
-html = html.replace(/<link\\b[^>]*\\brel=["']manifest["'][^>]*>/gi, '');
+// In the APK, Capacitor provides the app container and install lifecycle.
+// Remove the website-only PWA install prompt and manifest link.
+html = html.replace('<script src="install.js" defer></script>', '');
+html = html.replace('<link rel="manifest" href="manifest.webmanifest">', '');
 
-// The native APK runs from its own packaged web bundle. Its offline startup
-// must not be intercepted by the website's separate PWA service worker.
+// This APK contains its own app shell. Do not register the website's
+// service worker inside the Capacitor WebView.
 html = html.replace(
-  /if\\s*\\(\\s*['"]serviceWorker['"]\\s+in\\s+navigator[^)]*\\)\\s*\\)\\s*\\{\\s*navigator\\.serviceWorker\\.register\\(['"]sw\\.js['"]\\)\\.catch\\(\\(\\)\\s*=>\\s*\\{\\s*\\}\\)\\s*\\}\\s*/g,
+  "navigator.serviceWorker.register('sw.js').catch(()=>{})",
   ''
 );
 if (html.includes("navigator.serviceWorker.register('sw.js')")) {
@@ -49,4 +45,4 @@ if (html.includes("navigator.serviceWorker.register('sw.js')")) {
 
 fs.writeFileSync(indexPath, html, 'utf8');
 console.log('Prepared StudyAI native web bundle from the repository root.');
-console.log(`Copied: ${requiredFiles.filter(name => fs.existsSync(path.join(webDir, name))).join(', ')}`);
+console.log(`Copied: ${requiredFiles.join(', ')}`);
