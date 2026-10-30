@@ -11,7 +11,9 @@ const requiredFiles = [
   'index.html',
   'icon-192.png',
   'icon-512.png',
-  'studyai-intro.webp'
+  'studyai-intro.webp',
+  'app-polish.js',
+  'studyai-logo.svg'
 ];
 
 fs.rmSync(webDir, { recursive: true, force: true });
@@ -30,7 +32,7 @@ let html = fs.readFileSync(indexPath, 'utf8');
 
 // In the APK, Capacitor provides the app container and install lifecycle.
 // Remove the website-only PWA install prompt and manifest link.
-html = html.replace('<script src="install.js" defer></script>', '');
+html = html.replace('<script src="install.js" defer></script>', '<script src="app-polish.js" defer></script>');
 html = html.replace('<link rel="manifest" href="manifest.webmanifest">', '');
 
 // This APK contains its own app shell. Do not register the website's
