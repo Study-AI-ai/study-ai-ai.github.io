@@ -5,6 +5,10 @@ on:
     branches: [main]
     paths:
       - "index.html"
+      - "install.js"
+      - "app-polish.js"
+      - "studyai-logo.svg"
+      - "manifest.webmanifest"
       - "icon-192.png"
       - "icon-512.png"
       - "studyai-intro.webp"
