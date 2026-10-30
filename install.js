@@ -41,3 +41,68 @@ window.addEventListener('appinstalled',()=>{if(modal)modal.querySelector('.help'
 btn.onclick=show;function mount(){if(!document.getElementById(btn.id))document.body.appendChild(btn)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',mount);else mount();
 })();
+
+/* StudyAI performance and touch polish */
+(function(){
+  if (window.__studyAIPerformanceReady) return;
+  window.__studyAIPerformanceReady = true;
+
+  const perfStyle = document.createElement('style');
+  perfStyle.id = 'studyai-performance-polish';
+  perfStyle.textContent = `
+    html {
+      scroll-behavior: auto !important;
+      -webkit-tap-highlight-color: transparent;
+    }
+    body, button, a, input, select, textarea, [role="button"] {
+      -webkit-tap-highlight-color: transparent;
+    }
+    button, a, [role="button"] {
+      touch-action: manipulation;
+    }
+    img {
+      image-rendering: auto;
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        scroll-behavior: auto !important;
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  `;
+  (document.head || document.documentElement).appendChild(perfStyle);
+
+  function prepareImages(root) {
+    const images = [];
+    if (root && root.tagName === 'IMG') images.push(root);
+    if (root && root.querySelectorAll) images.push(...root.querySelectorAll('img'));
+    for (const img of images) {
+      if (img.loading || img.dataset.eager === 'true') continue;
+      const rect = img.getBoundingClientRect();
+      if (rect.top > window.innerHeight * 1.25) img.loading = 'lazy';
+      img.decoding = 'async';
+    }
+  }
+
+  function start() {
+    prepareImages(document);
+    if ('MutationObserver' in window && document.body) {
+      const observer = new MutationObserver(records => {
+        for (const record of records) {
+          for (const node of record.addedNodes) {
+            if (node.nodeType === 1) prepareImages(node);
+          }
+        }
+      });
+      observer.observe(document.body, { childList: true, subtree: true });
+    }
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', start, { once: true });
+  } else {
+    start();
+  }
+})();
