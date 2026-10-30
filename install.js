@@ -80,10 +80,7 @@
   } else {
     mount();
   }
-  if ('MutationObserver' in window && document.documentElement) {
-    const observer = new MutationObserver(mount);
-    observer.observe(document.documentElement, { childList: true, subtree: true });
-  }
+  // Both the dashboard accent box and Settings section exist in the initial document.
   document.addEventListener('keydown', function (event) {
     if (event.key === 'Escape' && dialog && dialog.classList.contains('open')) closeDialog();
   });
