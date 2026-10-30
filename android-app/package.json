@@ -6,14 +6,17 @@
   "scripts": {
     "prepare:web": "node scripts/prepare-web.mjs",
     "android:add": "cap add android",
-    "android:sync": "cap sync android"
+    "android:sync": "cap sync android",
+    "android:assets": "node scripts/prepare-brand-assets.mjs && npx capacitor-assets generate --android"
   },
   "dependencies": {
     "@capacitor/android": "8.6.0",
     "@capacitor/core": "8.6.0"
   },
   "devDependencies": {
-    "@capacitor/cli": "8.6.0"
+    "@capacitor/cli": "8.6.0",
+    "@capacitor/assets": "3.0.5",
+    "sharp": "0.35.5"
   },
   "engines": {
     "node": ">=22"
