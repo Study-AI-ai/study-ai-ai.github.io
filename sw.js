@@ -1,7 +1,14 @@
-/* StudyAI PWA: keep installed-app launch separate from browser install UI */
-const CACHE_VERSION = 'studyai-v19';
-const APP_SHELL = ['./', './index.html', './manifest.webmanifest', './icon-192.png', './install.js'];
-const BROWSER_EXTRAS = `<style id="studyai-touch-polish">
+/* StudyAI PWA: device-aware install menu and stable standalone launch */
+const CACHE_VERSION = 'studyai-v20';
+const APP_SHELL = [
+  './',
+  './index.html',
+  './manifest.webmanifest',
+  './icon-192.png',
+  './icon-512.png',
+  './install.js'
+];
+const BROWSER_EXTRAS = `<link rel="icon" type="image/png" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png"><meta name="theme-color" content="#635bff"><meta name="description" content="StudyAI | AI Learning Hub for Classes 6-12 | AI Tutor"><title>StudyAI | AI Learning Hub for Classes 6-12 | AI Tutor</title><style id="studyai-touch-polish">
 html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
 body, button, a, input, select, textarea, [role="button"] { -webkit-tap-highlight-color: transparent; }
 button, a, [role="button"] { touch-action: manipulation; }
@@ -17,9 +24,9 @@ async function addBrowserExtras(response) {
 
   const html = await response.text();
   if (html.includes('studyai-install-loader') || html.includes('studyai-touch-polish')) {
-    const existingHeaders = new Headers(response.headers);
-    ['content-length', 'content-encoding', 'etag', 'content-md5'].forEach(name => existingHeaders.delete(name));
-    return new Response(html, { status: response.status, statusText: response.statusText, headers: existingHeaders });
+    const headers = new Headers(response.headers);
+    ['content-length', 'content-encoding', 'etag', 'content-md5'].forEach(name => headers.delete(name));
+    return new Response(html, { status: response.status, statusText: response.statusText, headers });
   }
 
   const updatedHtml = html.replace(/<\/head>/i, BROWSER_EXTRAS + '</head>');
@@ -56,13 +63,12 @@ self.addEventListener('fetch', event => {
     const isInstalledAppLaunch = url.searchParams.get('studyai_app') === '1';
     event.respondWith((async () => {
       try {
-        const freshRequest = new Request(request, { cache: 'no-store' });
-        const networkResponse = await fetch(freshRequest);
+        const networkResponse = await fetch(new Request(request, { cache: 'no-store' }));
         if (!networkResponse || !networkResponse.ok) {
           return (await caches.match(request)) || networkResponse;
         }
 
-        // Installed StudyAI starts from the untouched original page HTML.
+        // Standalone app launches receive the original app document unchanged.
         const finalResponse = isInstalledAppLaunch
           ? networkResponse
           : await addBrowserExtras(networkResponse);
