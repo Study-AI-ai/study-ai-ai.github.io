@@ -88,3 +88,13 @@
     if (event.key === 'Escape' && dialog && dialog.classList.contains('open')) closeDialog();
   });
 })();
+
+/* Load the shared touch/branding polish on website and standalone web app. */
+(function(){
+  if (document.querySelector('script[data-studyai-polish-loader]')) return;
+  const script = document.createElement('script');
+  script.src = './app-polish.js';
+  script.defer = true;
+  script.dataset.studyaiPolishLoader = '1';
+  (document.head || document.documentElement).appendChild(script);
+})();
