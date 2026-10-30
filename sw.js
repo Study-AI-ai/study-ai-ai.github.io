@@ -1,12 +1,14 @@
 /* StudyAI PWA: device-aware install menu and stable standalone launch */
-const CACHE_VERSION = 'studyai-v23';
+const CACHE_VERSION = 'studyai-v24';
 const APP_SHELL = [
   './',
   './index.html',
   './manifest.webmanifest',
   './icon-192.png',
   './icon-512.png',
-  './install.js'
+  './install.js',
+  './app-polish.js',
+  './studyai-logo.svg'
 ];
 const BROWSER_EXTRAS = `<link rel="icon" type="image/png" href="./icon-192.png"><link rel="apple-touch-icon" href="./icon-192.png"><meta name="theme-color" content="#635bff"><meta name="description" content="StudyAI | AI Learning Hub for Classes 6-12 | AI Tutor"><title>StudyAI | AI Learning Hub for Classes 6-12 | AI Tutor</title><style id="studyai-touch-polish">
 html { -webkit-tap-highlight-color: transparent; scroll-behavior: smooth; }
