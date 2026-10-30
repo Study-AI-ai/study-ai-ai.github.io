@@ -79,6 +79,18 @@
     @media (max-width: 900px) {
       .card { -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
     }
+    @media (hover: none), (pointer: coarse) {
+      /* Keep the colourful look, but avoid repaint-heavy infinite effects on touch devices. */
+      .heroHome { animation-duration: 24s !important; }
+      .heroHome::before { animation: none !important; }
+      .progress span { animation: none !important; }
+      .floatTutor { animation-duration: 7s !important; }
+      .floatTutor::after { animation: none !important; }
+      .aiOrb { animation: none !important; filter: none !important; }
+      .tutorHead { animation-duration: 18s !important; }
+      #community .scProfileHero { animation: none !important; }
+      #community .scProfileHero::after { animation: none !important; }
+    }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after {
         scroll-behavior: auto !important;
