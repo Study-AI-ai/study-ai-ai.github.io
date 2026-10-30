@@ -25,4 +25,4 @@ The first CI APK is debug-signed for device testing. Do not treat it as a Play S
 - Capacitor 8.6.0
 - Node.js 22+
 - Android SDK and Java 21 in CI
-- Android 8.0+ (API 26+) device
+- Android 7.0+ (API 24+) device
