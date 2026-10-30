@@ -58,6 +58,7 @@
       object-fit: cover; border-radius: 11px;
     }
     .drawerBrand span { font-weight: 950; }
+    #saiInstallSettingsCard .saiInstallSettingsIcon img { display:block; width:100%; height:100%; object-fit:cover; border-radius:11px; }
     #saiInstallDialog .saiInstallLogo img {
       display: block; width: 100%; height: 100%; object-fit: cover;
       border-radius: 14px;
@@ -124,7 +125,7 @@
       link.type = 'image/svg+xml';
       link.href = './studyai-logo.svg';
     });
-    document.querySelectorAll('.saiInstallLogo').forEach(holder => {
+    document.querySelectorAll('.saiInstallLogo, .saiInstallSettingsIcon').forEach(holder => {
       if (holder.querySelector('img')) return;
       const logo = document.createElement('img');
       setBrandImage(logo);
