@@ -1,5 +1,5 @@
 /* StudyAI PWA: device-aware install menu and stable standalone launch */
-const CACHE_VERSION = 'studyai-v22';
+const CACHE_VERSION = 'studyai-v23';
 const APP_SHELL = [
   './',
   './index.html',
