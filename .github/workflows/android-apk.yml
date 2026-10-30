@@ -76,6 +76,10 @@ jobs:
         working-directory: android-app
         run: npx cap add android
 
+      - name: Generate official StudyAI Android icon and splash screen
+        working-directory: android-app
+        run: npm run android:assets
+
       - name: Sync native Android project
         working-directory: android-app
         run: npx cap sync android
