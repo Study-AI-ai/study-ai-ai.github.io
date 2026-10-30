@@ -1,0 +1,9 @@
+{
+  "appId": "com.studyai.app",
+  "appName": "StudyAI",
+  "webDir": "www",
+  "backgroundColor": "#f4f7ff",
+  "android": {
+    "allowMixedContent": false
+  }
+}
