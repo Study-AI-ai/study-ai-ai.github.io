@@ -1,0 +1,22 @@
+{
+  "name": "studyai-android-app",
+  "version": "1.0.0",
+  "private": true,
+  "description": "StudyAI Android application built with Capacitor",
+  "scripts": {
+    "prepare:web": "node scripts/prepare-web.mjs",
+    "android:add": "cap add android",
+    "android:sync": "cap sync android"
+  },
+  "dependencies": {
+    "@capacitor/android": "8.6.0",
+    "@capacitor/core": "8.6.0"
+  },
+  "devDependencies": {
+    "@capacitor/assets": "3.0.5",
+    "@capacitor/cli": "8.6.0"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}
