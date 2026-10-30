@@ -453,6 +453,7 @@ table.pwt{width:100%;border-collapse:collapse;margin:12px 0;font-size:14.5px;dis
 @media(prefers-reduced-motion:reduce){.fcCard,.fcDrag{transition:none}.fcConf i{animation-duration:.01s}}
 </style>
 <link rel="manifest" href="manifest.webmanifest">
+<script src="install.js" defer></script>
 <link rel="apple-touch-icon" href="icon-192.png">
 <meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="StudyAI"><meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -3992,15 +3993,12 @@ function initAccent(){
 }
 
 /* ---------- Settings extras: font, install, backup ---------- */
-let deferred=null;
 function settingsExtras(){
   const sec=$('settings');if(!sec||$('saiSet'))return;
   sec.insertAdjacentHTML('beforeend',`<div class="card" id="saiSet" style="margin-top:14px"><h3 style="margin-top:0">Reading size 🔠</h3><div class="saiRow"><button class="saiBtn" id="fsDec">A−</button><b id="fsLbl"></b><button class="saiBtn" id="fsInc">A+</button><button class="saiBtn" id="fsRes">Normal</button></div><p class="muted">Notes, quiz, tutor chat aur revision sheet ka text bada ya chhota hota hai.</p>
-  <h3>App install karo 📲</h3><div class="saiRow"><button class="btn" id="pwaBtn">Home screen par add karo</button></div><p class="muted" id="pwaNote">Android/Chrome par button se install hota hai. iPhone par Safari me Share ▸ "Add to Home Screen" dabao.</p>
   <h3>Backup 💾</h3><div class="saiRow"><button class="saiBtn" id="bkExp">⬇️ Backup download</button><button class="saiBtn" id="bkImp">⬆️ Backup restore</button><input type="file" id="bkFile" accept="application/json" hidden></div><p class="muted">Progress, plan, flashcards aur chat ek file me save hoti hai.</p></div>`);
   const lbl=()=>{$('fsLbl').textContent=Math.round(ZOOMS[LS.g('font',1)]*100)+'%'};lbl();
   $('fsDec').onclick=()=>{setFont(LS.g('font',1)-1);lbl()};$('fsInc').onclick=()=>{setFont(LS.g('font',1)+1);lbl()};$('fsRes').onclick=()=>{setFont(1);lbl()};
-  $('pwaBtn').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null}else say('Browser menu me "Install app" ya "Add to Home Screen" chuno')};
   $('bkExp').onclick=()=>{const o={};for(let i=0;i<localStorage.length;i++){const k=localStorage.key(i);o[k]=localStorage.getItem(k)}dl('studyai-backup-'+ymd(new Date())+'.json',JSON.stringify(o),'application/json')};
   $('bkImp').onclick=()=>$('bkFile').click();
   $('bkFile').onchange=async e=>{const f=e.target.files[0];if(!f)return;try{const o=JSON.parse(await f.text());if(typeof o!=='object')throw 0;if(!confirm('Backup restore karein? Mojooda data badal sakta hai.'))return;Object.entries(o).forEach(([k,v])=>localStorage.setItem(k,v));say('Restore ho gaya, page reload ho raha hai');setTimeout(()=>location.reload(),900)}catch(er){say('Ye valid backup file nahi hai')}};
@@ -4008,7 +4006,6 @@ function settingsExtras(){
 
 /* ---------- PWA ---------- */
 function pwa(){
-  addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e});
   const off=$('saiOff');
   addEventListener('offline',()=>{off.textContent='Offline ho. Notes aur quiz chalenge, AI Tutor ke liye internet chahiye.';off.style.display='block'});
   addEventListener('online',()=>{off.style.display='none';say('Wapas online ✅')});
