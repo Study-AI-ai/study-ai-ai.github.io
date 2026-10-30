@@ -1,15 +1,20 @@
 {
+  "id": "./",
   "name": "StudyAI",
   "short_name": "StudyAI",
   "description": "AI Learning Hub for Classes 6-12 with AI Tutor, notes and practice",
-  "start_url": "./",
+  "start_url": "./index.html#home",
   "scope": "./",
   "display": "standalone",
   "orientation": "any",
   "background_color": "#ffffff",
   "theme_color": "#635bff",
   "icons": [
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png"},
-    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"}
+    {
+      "src": "./icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    }
   ]
 }
