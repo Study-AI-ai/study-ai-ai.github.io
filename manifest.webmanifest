@@ -1,23 +1,15 @@
 {
   "name": "StudyAI",
   "short_name": "StudyAI",
-  "description": "AI-powered study app for students",
-  "start_url": "./index.html",
+  "description": "AI Learning Hub for Classes 6-12 with AI Tutor, notes and practice",
+  "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "orientation": "portrait-primary",
+  "orientation": "any",
   "background_color": "#ffffff",
-  "theme_color": "#6366f1",
+  "theme_color": "#635bff",
   "icons": [
-    {
-      "src": "./icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
-    },
-    {
-      "src": "./icon-512.png",
-      "sizes": "512x512",
-      "type": "image/png"
-    }
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"./icon-192.png","sizes":"192x192","type":"image/png","purpose":"any maskable"}
   ]
 }
